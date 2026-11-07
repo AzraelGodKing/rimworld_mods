@@ -6,9 +6,14 @@ Detailed notes for **Niceties** only.
 
 Player-facing version **2.0.0** (`About.xml` `modVersion`). Stamp `niceties2` (`niceties2-net10, 1.7 build` or `niceties2, 1.6 build` in Player.log). Ships for RimWorld **1.6** and **1.7** from the same source; 1.6 is not frozen.
 
-AZR-509 AZR-518 AZR-531 AZR-547 AZR-549 AZR-550 AZR-551 AZR-533 AZR-568 AZR-653 AZR-654 AZR-655 AZR-656 AZR-699 AZR-700 AZR-701 AZR-702 AZR-703
+AZR-509 AZR-518 AZR-531 AZR-547 AZR-549 AZR-550 AZR-551 AZR-533 AZR-568 AZR-569 AZR-570 AZR-571 AZR-580 AZR-653 AZR-654 AZR-655 AZR-656 AZR-699 AZR-700 AZR-701 AZR-702 AZR-703
 
 ### Added
+- **Strata stairwells** (AZR-569) — `IEncloseGrid.IsExit`: a region that touches any `MapPortal` (Strata's stairs up/down/gravship, vanilla pit gates and cave exits) is open. No Strata reference.
+- **`NicetiesBuildInfo.BuildStamp`** (AZR-569, AZR-588) — public const read by the Azrael hub; also passed to `ModVersionLog`.
+- **`COMPATIBILITY.md`** (AZR-570) — sister mods, DLCs, declared conflicts, soft compat and known risks, Multiplayer, and add/remove behaviour, with 1.6 and 1.7 columns. Every row is "Untested" until checked in game. No package IDs were added to `incompatibleWith` or `loadAfter`.
+- **Tests** (AZR-571, AZR-532) — `Tests/Niceties.Tests` (in CI): flood-fill cases (ring closure, gap, 8×8 vs 9×9 at the default limit, a bigger limit, builder inside, unfinished frame, in-place swap, stairs as exit, scratch reuse, two starts in one open area), the step-aside tie-break, the wear table, presets (never touch master toggles, round-trip, Default = reset knobs, Custom), per-feature reset and clamping. Signature tests read the 1.6 and 1.7 Krafs ref packs with Mono.Cecil and fail if `CalculateDrawLocs(List<Vector2>, out float, int)`, `Pawn.CheckForDisturbedSleep(Pawn)`, `ColonistBar.get_Visible`, `Room.GetRoomRoleLabel`, `ApparelProperties.CorrectGenderForWearing(Gender)`, `ThoughtWorker_WrongApparelGender.CurrentStateInternal(Pawn)` or `PawnGenerator.GeneratePawn(PawnGenerationRequest)` change. Settings model split into `Pure/NicetiesSimFlags.cs` (game-free) and the scribing part.
+- **Launch copy** (AZR-580) — site page: overview, feature tabs, good-to-know and compatibility rewritten for 2.0 (Hunters Use Melee! added to the conflicts list, Strata to compatible).
 - **Cryptosleep roster** (AZR-568) — with `cryptosleepRoster` (UI-only, default on) the "+N" note is a button: a `FloatMenu` of the hidden pawns, each jumping to and selecting the holding building (`CameraJumper.TryJumpAndSelect`). Local only, no sync.
 - **Hide categories** (AZR-568) — UI-only `hideGrowthVats` (`Building_GrowthVat`) and `hidePods` (`CompBiosculpterPod`, `Building_SubcoreScanner`), off by default, shown when the DLC is active. The note reads "+N hidden" when anyone besides casket pawns is hidden.
 - **Melee revenge cap** (AZR-568) — sim knob `meleeHuntMaxRevengeChance` (default 1 = off; Hard preset 0.5) against `PawnUtility.GetManhunterOnDamageChance(prey)`. Postfix on `Pawn.GetInspectString` adds the reason on hunt-designated animals melee hunters skip.

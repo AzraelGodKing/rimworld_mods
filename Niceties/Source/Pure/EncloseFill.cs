@@ -12,6 +12,12 @@ namespace Niceties
 
         /// <summary>True when a pawn could stand here once the planned walls are up, ignoring the walls themselves.</summary>
         bool Walkable(int index);
+
+        /// <summary>
+        /// True when this cell leads somewhere else, such as stairs or another map portal.
+        /// A region touching an exit is never closed (AZR-569).
+        /// </summary>
+        bool IsExit(int index);
     }
 
     /// <summary>Reusable buffers, so a flood fill allocates nothing once warm (AZR-549).</summary>
@@ -114,6 +120,12 @@ namespace Niceties
                     continue;
                 }
 
+                if (grid.IsExit(start))
+                {
+                    s.Open[start] = gen;
+                    continue;
+                }
+
                 if (Flood(ref grid, start, maxRegion, s, gen))
                 {
                     closed.AddRange(s.Fill);
@@ -169,6 +181,11 @@ namespace Niceties
                     if (s.Visit[n] == gen)
                     {
                         continue;
+                    }
+
+                    if (grid.IsExit(n))
+                    {
+                        return false;
                     }
 
                     if (!grid.Walkable(n))

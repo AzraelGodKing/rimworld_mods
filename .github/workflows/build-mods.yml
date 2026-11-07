@@ -154,6 +154,9 @@ jobs:
       - name: Living World logic tests
         run: dotnet test Tests/LivingWorld.Tests/LivingWorld.Tests.csproj -c Release --nologo
 
+      - name: Niceties logic and signature tests
+        run: dotnet test Tests/Niceties.Tests/Niceties.Tests.csproj -c Release --nologo
+
       - name: Pack docs/downloads zips (with DLLs)
         if: github.event_name != 'pull_request'
         shell: bash

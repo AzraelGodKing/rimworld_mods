@@ -164,12 +164,12 @@ namespace Niceties
 
             NicetiesSettings local = NicetiesMod.Settings;
             IThingHolder? holder = pawn.ParentHolder;
-            if (local.hideGrowthVats && holder is Building_GrowthVat)
+            if (local.ui.hideGrowthVats && holder is Building_GrowthVat)
             {
                 return true;
             }
 
-            return local.hidePods && (holder is CompBiosculpterPod || holder is Building_SubcoreScanner);
+            return local.ui.hidePods && (holder is CompBiosculpterPod || holder is Building_SubcoreScanner);
         }
 
         /// <summary>The spawned building holding a hidden pawn: casket, vat, pod or scanner.</summary>
@@ -205,7 +205,7 @@ namespace Niceties
 
         internal static void DrawHiddenCount(ColonistBar bar)
         {
-            if (hiddenCount <= 0 || !IsVisible(bar) || !NicetiesMod.Settings.showCryptosleepCount
+            if (hiddenCount <= 0 || !IsVisible(bar) || !NicetiesMod.Settings.ui.showCryptosleepCount
                 || !NicetiesSim.Settings.hideCryptosleep)
             {
                 return;
@@ -227,7 +227,7 @@ namespace Niceties
                 }
 
                 TooltipHandler.TipRegion(rect, tooltip);
-                if (NicetiesMod.Settings.cryptosleepRoster)
+                if (NicetiesMod.Settings.ui.cryptosleepRoster)
                 {
                     Widgets.DrawHighlightIfMouseover(rect);
                     if (Widgets.ButtonInvisible(rect))
@@ -259,7 +259,7 @@ namespace Niceties
                 ? "Niceties_CryptoHiddenCount".Translate(hiddenCount)
                 : "Niceties_HiddenCount".Translate(hiddenCount);
             tooltip = "Niceties_CryptoHiddenCountTip".Translate();
-            if (NicetiesMod.Settings.cryptosleepRoster)
+            if (NicetiesMod.Settings.ui.cryptosleepRoster)
             {
                 tooltip += "\n\n" + "Niceties_CryptoRosterTip".Translate();
             }

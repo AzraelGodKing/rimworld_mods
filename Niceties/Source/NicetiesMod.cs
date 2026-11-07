@@ -26,7 +26,7 @@ namespace Niceties
         public override void DoSettingsWindowContents(Rect inRect)
         {
             NicetiesSimFlags before = Settings.sim;
-            var beforeUi = Settings.UiState();
+            NicetiesUiPrefs beforeUi = Settings.ui;
 
             Listing_Standard listing = new Listing_Standard { maxOneColumn = true };
             float viewHeight = Mathf.Max(settingsContentHeight, inRect.height);
@@ -66,23 +66,23 @@ namespace Niceties
                     "Niceties_Settings_HideCryptoTip", ref sim.hideCryptosleep))
             {
                 listing.CheckboxLabeled("Niceties_Settings_CryptoCount".Translate(),
-                    ref Settings.showCryptosleepCount, "Niceties_Settings_CryptoCountTip".Translate());
-                if (Settings.showCryptosleepCount)
+                    ref Settings.ui.showCryptosleepCount, "Niceties_Settings_CryptoCountTip".Translate());
+                if (Settings.ui.showCryptosleepCount)
                 {
                     listing.CheckboxLabeled("Niceties_Settings_CryptoRoster".Translate(),
-                        ref Settings.cryptosleepRoster, "Niceties_Settings_CryptoRosterTip".Translate());
+                        ref Settings.ui.cryptosleepRoster, "Niceties_Settings_CryptoRosterTip".Translate());
                 }
 
                 if (ModsConfig.BiotechActive)
                 {
                     listing.CheckboxLabeled("Niceties_Settings_HideVats".Translate(),
-                        ref Settings.hideGrowthVats, "Niceties_Settings_HideVatsTip".Translate());
+                        ref Settings.ui.hideGrowthVats, "Niceties_Settings_HideVatsTip".Translate());
                 }
 
                 if (ModsConfig.IdeologyActive || ModsConfig.BiotechActive)
                 {
                     listing.CheckboxLabeled("Niceties_Settings_HidePods".Translate(),
-                        ref Settings.hidePods, "Niceties_Settings_HidePodsTip".Translate());
+                        ref Settings.ui.hidePods, "Niceties_Settings_HidePodsTip".Translate());
                 }
             }
 
@@ -100,7 +100,7 @@ namespace Niceties
                 if (ModsConfig.RoyaltyActive)
                 {
                     listing.CheckboxLabeled("Niceties_Settings_NobleAlert".Translate(),
-                        ref Settings.sharedRoomNobleAlert, "Niceties_Settings_NobleAlertTip".Translate());
+                        ref Settings.ui.sharedRoomNobleAlert, "Niceties_Settings_NobleAlertTip".Translate());
                 }
             }
 
@@ -108,11 +108,11 @@ namespace Niceties
                     "Niceties_Settings_LeaveAWayOutTip", ref sim.enableLeaveAWayOut))
             {
                 listing.CheckboxLabeled("Niceties_Settings_EncloseOverlay".Translate(),
-                    ref Settings.showEncloseOverlay, "Niceties_Settings_EncloseOverlayTip".Translate());
+                    ref Settings.ui.showEncloseOverlay, "Niceties_Settings_EncloseOverlayTip".Translate());
                 listing.Label("Niceties_Settings_MaxRoom".Translate(sim.leaveAWayOutMaxRoom),
                     tooltip: "Niceties_Settings_MaxRoomTip".Translate());
                 sim.leaveAWayOutMaxRoom = Mathf.RoundToInt(listing.Slider(sim.leaveAWayOutMaxRoom,
-                    NicetiesSettings.MinMaxRoom, NicetiesSettings.MaxMaxRoom));
+                    NicetiesLimits.MinMaxRoom, NicetiesLimits.MaxMaxRoom));
             }
 
             listing.GapLine();
@@ -125,7 +125,7 @@ namespace Niceties
             listing.End();
             Widgets.EndScrollView();
             Settings.sim.Clamp();
-            if (Settings.sim != before || !Settings.UiState().Equals(beforeUi))
+            if (Settings.sim != before || Settings.ui != beforeUi)
             {
                 Settings.Write();
                 NicetiesSim.SyncFromModSettings();
@@ -166,7 +166,7 @@ namespace Niceties
                 ref sim.unarmedHunting, "Niceties_Settings_UnarmedHuntTip".Translate());
             listing.Label("Niceties_Settings_MeleeSize".Translate(sim.meleeHuntMaxBodySize.ToString("F1")));
             sim.meleeHuntMaxBodySize = listing.Slider(sim.meleeHuntMaxBodySize,
-                NicetiesSettings.MinMeleeCap, NicetiesSettings.MaxMeleeCap);
+                NicetiesLimits.MinMeleeCap, NicetiesLimits.MaxMeleeCap);
             string? example = MeleeHunt.ReferenceAnimalLabel(sim.meleeHuntMaxBodySize);
             listing.Label(example != null
                 ? "Niceties_Settings_MeleeSizeExample".Translate(example)
