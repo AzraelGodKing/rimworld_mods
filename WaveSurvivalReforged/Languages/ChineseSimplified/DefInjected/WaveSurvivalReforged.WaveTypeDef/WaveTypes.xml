@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <WSR_Wave_Assault.label>袭击</WSR_Wave_Assault.label>
+  <WSR_Wave_DropPods.label>空投舱袭击</WSR_Wave_DropPods.label>
+  <WSR_Wave_CenterDrop.label>基地内空投</WSR_Wave_CenterDrop.label>
+  <WSR_Wave_Siege.label>围攻</WSR_Wave_Siege.label>
+  <WSR_Wave_Sappers.label>工兵</WSR_Wave_Sappers.label>
+  <WSR_Wave_Breachers.label>破墙者</WSR_Wave_Breachers.label>
+  <WSR_Wave_Manhunters.label>猎杀人类的兽群</WSR_Wave_Manhunters.label>
+  <WSR_Wave_AnimalInsanity.label>大规模动物发狂</WSR_Wave_AnimalInsanity.label>
+  <WSR_Wave_Mechanoids.label>机械体</WSR_Wave_Mechanoids.label>
+  <WSR_Wave_MechCluster.label>机械集群</WSR_Wave_MechCluster.label>
+  <WSR_Wave_Shamblers.label>蹒跚者群</WSR_Wave_Shamblers.label>
+  <WSR_Wave_Fleshbeasts.label>血肉兽</WSR_Wave_Fleshbeasts.label>
+  <WSR_Wave_Sightstealers.label>窃视者</WSR_Wave_Sightstealers.label>
+  <WSR_Boss_Siege.label>大围攻</WSR_Boss_Siege.label>
+  <WSR_Boss_Assault.label>战团</WSR_Boss_Assault.label>
+  <WSR_Boss_Mechanoids.label>机械巢群</WSR_Boss_Mechanoids.label>
+  <WSR_Boss_MechCluster.label>机械要塞</WSR_Boss_MechCluster.label>
+  <WSR_Boss_Chimeras.label>奇美拉突袭</WSR_Boss_Chimeras.label>
+</LanguageData>

@@ -42,7 +42,9 @@ namespace WaveSurvivalReforged
             if (waves == null)
                 return "";
             TaggedString text = "WSR_WaveTimerExplanation".Translate(waves.WaveNum, Remaining(waves, shortForm: false));
-            if (waves.NextWaveIsSpecial)
+            if (waves.NextWavePool == WavePool.Boss)
+                text += "\n\n" + "WSR_WaveTimerBoss".Translate();
+            else if (waves.NextWavePool == WavePool.Special)
                 text += "\n\n" + "WSR_WaveTimerSpecial".Translate();
             return text;
         }

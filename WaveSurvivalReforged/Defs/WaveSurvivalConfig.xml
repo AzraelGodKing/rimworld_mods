@@ -10,14 +10,32 @@
     <!-- Hours after landing that waves land. Landing at 6 AM with 6 here means noon raids. -->
     <raidHourOffset>6</raidHourOffset>
 
-    <!-- Special waves: sieges, sappers, manhunter packs, and mass animal insanity. -->
+    <!-- Extra days before the next wave after a special or boss wave. -->
+    <breatherDays>0.5</breatherDays>
+    <!-- A wave that cannot start (no home map, nobody able to attack) tries again this many hours later. -->
+    <postponeHours>3</postponeHours>
+
+    <!-- Every 4th wave comes from the Special pool and every 10th from the Boss pool
+         (Boss wins). The wave types themselves are in WaveTypes.xml. bossWaveInterval 0 turns bosses off. -->
     <specialWaveInterval>4</specialWaveInterval>
     <specialWaveMinWave>1</specialWaveMinWave>
+    <bossWaveInterval>10</bossWaveInterval>
 
-    <!-- The per-wave increase is scaled by the difficulty's threat scale. -->
-    <startingThreatPoints>50</startingThreatPoints>
-    <threatPointIncreasePerWave>50</threatPointIncreasePerWave>
-    <siegeBonusPoints>150</siegeBonusPoints>
+    <!-- Threat points by wave number, before the difficulty's threat scale.
+         Linear early (+50 a wave like 1.0), steeper later. -->
+    <pointsByWave>
+      <points>
+        <li>(1, 50)</li>
+        <li>(10, 500)</li>
+        <li>(20, 1100)</li>
+        <li>(30, 1800)</li>
+        <li>(50, 3500)</li>
+        <li>(100, 8000)</li>
+      </points>
+    </pointsByWave>
+    <!-- 0 = waves follow the curve only. 1 = waves follow colony wealth like a vanilla storyteller. -->
+    <wealthBlend>0</wealthBlend>
+    <!-- Chance that a wave type with canSplit comes as two half-size raids. -->
     <doubleRaidChance>0.25</doubleRaidChance>
 
     <!-- Daily chances (0 to 1). -->

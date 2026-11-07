@@ -5,13 +5,19 @@
 
   <WSR_WaveTimerLabel>Wave {0}: {1}</WSR_WaveTimerLabel>
   <WSR_WaveTimerExplanation>Wave {0} arrives in {1}.</WSR_WaveTimerExplanation>
-  <WSR_WaveTimerSpecial>This is a special wave: expect a siege, sappers, or maddened animals.</WSR_WaveTimerSpecial>
+  <WSR_WaveTimerSpecial>This is a special wave: a siege, sappers, breachers, mechanoids, or maddened animals.</WSR_WaveTimerSpecial>
 
   <WSR_NeedBeaconLabel>Build a trade beacon</WSR_NeedBeaconLabel>
   <WSR_NeedBeaconExplanation>Wave Survival drops supplies by pod at your orbital trade beacon once a day. Until you build one, no supplies arrive.\n\nBuild one as soon as you can.</WSR_NeedBeaconExplanation>
 
-  <WSR_WaveArrived>Wave {0} has arrived!</WSR_WaveArrived>
-  <WSR_SpecialWaveArrived>Special wave {0} has arrived!</WSR_SpecialWaveArrived>
+  <WSR_WaveArrived>Wave {0} has arrived: {1}!</WSR_WaveArrived>
+  <WSR_SpecialWaveArrived>Special wave {0} has arrived: {1}!</WSR_SpecialWaveArrived>
   <WSR_SupplyDropArrived>A supply drop has landed at the trade beacon.</WSR_SupplyDropArrived>
+
+  <WSR_WaveTimerBoss>This is a boss wave: one and a half times the usual strength.</WSR_WaveTimerBoss>
+  <WSR_BossWaveArrived>Boss wave {0} has arrived: {1}!</WSR_BossWaveArrived>
+  <WSR_WaveWithFaction>{0} ({1})</WSR_WaveWithFaction>
+  <WSR_WavePostponed>Wave {0} could not start: nobody hostile is able to attack. Trying again in {1}.</WSR_WavePostponed>
+  <WSR_WavePostponedNoHome>Wave {0} is waiting for you to have a home map. Trying again in {1}.</WSR_WavePostponedNoHome>
 
 </LanguageData>

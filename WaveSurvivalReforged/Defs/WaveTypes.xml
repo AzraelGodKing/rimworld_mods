@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- Wave types. pool: Normal, Special (every specialWaveInterval-th wave) or Boss
+       (every bossWaveInterval-th wave). A wave picks a type from its pool by weight among
+       types whose minWave has been reached, then a hostile faction able to carry it out.
+       Game defs are named by string; a type whose incident, raidStrategy, arrivalMode or
+       factions are not loaded is skipped. bonusPoints is scaled by the difficulty's threat scale. -->
+
+  <!-- Normal waves -->
+
+  <WaveSurvivalReforged.WaveTypeDef>
+    <defName>WSR_Wave_Assault</defName>
+    <label>raid</label>
+    <raidStrategy>ImmediateAttack</raidStrategy>
+    <weight>10</weight>
+    <canSplit>true</canSplit>
+  </WaveSurvivalReforged.WaveTypeDef>
+
+  <WaveSurvivalReforged.WaveTypeDef>
+    <defName>WSR_Wave_DropPods</defName>
+    <label>drop pod raid</label>
+    <raidStrategy>ImmediateAttack</raidStrategy>
+    <arrivalMode>EdgeDrop</arrivalMode>
+    <minWave>6</minWave>
+    <weight>2</weight>
+  </WaveSurvivalReforged.WaveTypeDef>
+
+  <WaveSurvivalReforged.WaveTypeDef>
+    <defName>WSR_Wave_CenterDrop</defName>
+    <label>drop pods in the base</label>
+    <raidStrategy>ImmediateAttack</raidStrategy>
+    <arrivalMode>CenterDrop</arrivalMode>
+    <minWave>15</minWave>
+    <weight>1</weight>
+    <pointsFactor>0.9</pointsFactor>
+  </WaveSurvivalReforged.WaveTypeDef>
+
+  <!-- Special waves -->
+
+  <WaveSurvivalReforged.WaveTypeDef>
+    <defName>WSR_Wave_Siege</defName>
+    <label>siege</label>
+    <pool>Special</pool>
+    <raidStrategy>Siege</raidStrategy>
+    <bonusPoints>150</bonusPoints>
+    <weight>2</weight>
+  </WaveSurvivalReforged.WaveTypeDef>
+
+  <WaveSurvivalReforged.WaveTypeDef>
+    <defName>WSR_Wave_Sappers</defName>
+    <label>sappers</label>
+    <pool>Special</pool>
+    <raidStrategy>ImmediateAttackSappers</raidStrategy>
+    <bonusPoints>150</bonusPoints>
+    <weight>2</weight>
+  </WaveSurvivalReforged.WaveTypeDef>
+
+  <WaveSurvivalReforged.WaveTypeDef>
+    <defName>WSR_Wave_Breachers</defName>
+    <label>breachers</label>
+    <pool>Special</pool>
+    <raidStrategy>ImmediateAttackBreaching</raidStrategy>
+    <bonusPoints>150</bonusPoints>
+    <minWave>8</minWave>
+    <weight>1</weight>
+  </WaveSurvivalReforged.WaveTypeDef>
+
+  <WaveSurvivalReforged.WaveTypeDef>
+    <defName>WSR_Wave_Manhunters</defName>
+    <label>manhunter pack</label>
+    <pool>Special</pool>
+    <kind>Incident</kind>
+    <incident>ManhunterPack</incident>
+    <weight>2</weight>
+  </WaveSurvivalReforged.WaveTypeDef>
+
+  <WaveSurvivalReforged.WaveTypeDef>
+    <defName>WSR_Wave_AnimalInsanity</defName>
+    <label>mass animal insanity</label>
+    <pool>Special</pool>
+    <kind>Incident</kind>
+    <incident>AnimalInsanityMass</incident>
+    <weight>1</weight>
+  </WaveSurvivalReforged.WaveTypeDef>
+
+  <WaveSurvivalReforged.WaveTypeDef>
+    <defName>WSR_Wave_Mechanoids</defName>
+    <label>mechanoids</label>
+    <pool>Special</pool>
+    <raidStrategy>ImmediateAttack</raidStrategy>
+    <factions>
+      <li>Mechanoid</li>
+    </factions>
+    <minWave>8</minWave>
+    <weight>1</weight>
+  </WaveSurvivalReforged.WaveTypeDef>
+
+  <WaveSurvivalReforged.WaveTypeDef MayRequire="Ludeon.RimWorld.Royalty">
+    <defName>WSR_Wave_MechCluster</defName>
+    <label>mech cluster</label>
+    <pool>Special</pool>
+    <kind>Incident</kind>
+    <incident>MechCluster</incident>
+    <minWave>12</minWave>
+    <weight>1</weight>
+  </WaveSurvivalReforged.WaveTypeDef>
+
+  <WaveSurvivalReforged.WaveTypeDef MayRequire="Ludeon.RimWorld.Anomaly">
+    <defName>WSR_Wave_Shamblers</defName>
+    <label>shambler swarm</label>
+    <pool>Special</pool>
+    <kind>Incident</kind>
+    <incident>ShamblerSwarm</incident>
+    <weight>1</weight>
+  </WaveSurvivalReforged.WaveTypeDef>
+
+  <WaveSurvivalReforged.WaveTypeDef MayRequire="Ludeon.RimWorld.Anomaly">
+    <defName>WSR_Wave_Fleshbeasts</defName>
+    <label>fleshbeasts</label>
+    <pool>Special</pool>
+    <kind>Incident</kind>
+    <incident>FleshbeastAttack</incident>
+    <minWave>6</minWave>
+    <weight>1</weight>
+  </WaveSurvivalReforged.WaveTypeDef>
+
+  <WaveSurvivalReforged.WaveTypeDef MayRequire="Ludeon.RimWorld.Anomaly">
+    <defName>WSR_Wave_Sightstealers</defName>
+    <label>sightstealers</label>
+    <pool>Special</pool>
+    <kind>Incident</kind>
+    <incident>SightstealerSwarm</incident>
+    <minWave>8</minWave>
+    <weight>1</weight>
+  </WaveSurvivalReforged.WaveTypeDef>
+
+  <!-- Boss waves -->
+
+  <WaveSurvivalReforged.WaveTypeDef>
+    <defName>WSR_Boss_Siege</defName>
+    <label>great siege</label>
+    <pool>Boss</pool>
+    <raidStrategy>Siege</raidStrategy>
+    <pointsFactor>1.5</pointsFactor>
+    <bonusPoints>300</bonusPoints>
+    <weight>2</weight>
+  </WaveSurvivalReforged.WaveTypeDef>
+
+  <WaveSurvivalReforged.WaveTypeDef>
+    <defName>WSR_Boss_Assault</defName>
+    <label>warband</label>
+    <pool>Boss</pool>
+    <raidStrategy>ImmediateAttack</raidStrategy>
+    <pointsFactor>1.5</pointsFactor>
+    <weight>2</weight>
+  </WaveSurvivalReforged.WaveTypeDef>
+
+  <WaveSurvivalReforged.WaveTypeDef>
+    <defName>WSR_Boss_Mechanoids</defName>
+    <label>mechanoid hive</label>
+    <pool>Boss</pool>
+    <raidStrategy>ImmediateAttack</raidStrategy>
+    <factions>
+      <li>Mechanoid</li>
+    </factions>
+    <pointsFactor>1.5</pointsFactor>
+    <weight>1</weight>
+  </WaveSurvivalReforged.WaveTypeDef>
+
+  <WaveSurvivalReforged.WaveTypeDef MayRequire="Ludeon.RimWorld.Royalty">
+    <defName>WSR_Boss_MechCluster</defName>
+    <label>mech fortress</label>
+    <pool>Boss</pool>
+    <kind>Incident</kind>
+    <incident>MechCluster</incident>
+    <pointsFactor>1.5</pointsFactor>
+    <minWave>20</minWave>
+    <weight>1</weight>
+  </WaveSurvivalReforged.WaveTypeDef>
+
+  <WaveSurvivalReforged.WaveTypeDef MayRequire="Ludeon.RimWorld.Anomaly">
+    <defName>WSR_Boss_Chimeras</defName>
+    <label>chimera assault</label>
+    <pool>Boss</pool>
+    <kind>Incident</kind>
+    <incident>ChimeraAssault</incident>
+    <pointsFactor>1.25</pointsFactor>
+    <minWave>20</minWave>
+    <weight>1</weight>
+  </WaveSurvivalReforged.WaveTypeDef>
+
+</Defs>
