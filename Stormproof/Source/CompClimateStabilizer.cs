@@ -3,87 +3,41 @@ using Verse;
 
 namespace Stormproof
 {
-    public class CompProperties_ClimateStabilizer : CompProperties
+    public class CompProperties_ClimateStabilizer : CompProperties_HazardDefender
     {
-        public float activePowerConsumption = 1800f;
-
         public CompProperties_ClimateStabilizer()
         {
             compClass = typeof(CompClimateStabilizer);
+            activePowerConsumption = 1800f;
         }
     }
 
-    public class CompClimateStabilizer : ThingComp, IHazardDefender, IHazardPowerRamp
+    public class CompClimateStabilizer : CompHazardDefender
     {
-        private CompPowerTrader powerComp;
-        private CompFlickable flickComp;
-        private CompBreakdownable breakdownComp;
+        // Optional DLC defs are null when the DLC is absent; AnyConditionActive skips nulls.
+        // Built on first use, after DefOfs are bound.
+        private static GameConditionDef[] hazards;
 
-        public CompProperties_ClimateStabilizer Props =>
-            (CompProperties_ClimateStabilizer)props;
-
-        private bool HazardActive =>
-            parent.Spawned &&
-            HazardProtection.AnyConditionActive(
-                parent.Map,
+        protected override GameConditionDef[] Hazards => hazards ?? (hazards = new[]
+            {
                 GameConditionDefOf.HeatWave,
                 GameConditionDefOf.ColdSnap,
                 GameConditionDefOf.VolcanicWinter,
                 StormproofDefOf.Stormproof_HeatDome,
                 StormproofDefOf.Stormproof_PolarFront,
-                StormproofDefOf.DeepFreeze);
+                StormproofDefOf.DeepFreeze
+            });
 
-        public float ForecastDrawWatts =>
-            HazardActive ? Props.activePowerConsumption : (powerComp?.Props.PowerConsumption ?? 0f);
+        protected override bool AllowedInSettings => StormproofMod.Settings.allowClimateStabilizer;
 
-        public bool Protecting =>
-            HazardActive &&
-            !parent.Destroyed &&
-            (flickComp == null || flickComp.SwitchIsOn) &&
-            (breakdownComp == null || !breakdownComp.BrokenDown) &&
-            powerComp != null &&
-            powerComp.PowerNet != null &&
-            powerComp.PowerNet.CurrentStoredEnergy() > 1f;
+        protected override string StandbyKey => "Stormproof_ClimateStabilizer_Standby";
 
-        public override void PostSpawnSetup(bool respawningAfterLoad)
-        {
-            base.PostSpawnSetup(respawningAfterLoad);
-            powerComp = parent.GetComp<CompPowerTrader>();
-            flickComp = parent.GetComp<CompFlickable>();
-            breakdownComp = parent.GetComp<CompBreakdownable>();
-            StormproofRegistry.ClimateStabilizers.Add(this);
-        }
+        protected override string ProtectingKey => "Stormproof_ClimateStabilizer_Protecting";
 
-        public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)
-        {
-            base.PostDeSpawn(map, mode);
-            StormproofRegistry.ClimateStabilizers.Remove(this);
-        }
+        protected override string DownKey => "Stormproof_ClimateStabilizer_Down";
 
-        public override void CompTick()
-        {
-            base.CompTick();
-            if (!parent.IsHashIntervalTick(30) || powerComp == null)
-            {
-                return;
-            }
-            float wanted = HazardActive
-                ? Props.activePowerConsumption
-                : powerComp.Props.PowerConsumption;
-            powerComp.PowerOutput = -wanted;
-        }
+        protected override void Register() => StormproofRegistry.ClimateStabilizers.Add(this);
 
-        public override string CompInspectStringExtra()
-        {
-            if (!HazardActive)
-            {
-                return "Stormproof_ClimateStabilizer_Standby".Translate(
-                    Props.activePowerConsumption.ToString("F0"));
-            }
-            return Protecting
-                ? "Stormproof_ClimateStabilizer_Protecting".Translate(
-                    Props.activePowerConsumption.ToString("F0"))
-                : "Stormproof_ClimateStabilizer_Down".Translate();
-        }
+        protected override void Unregister(Map map) => StormproofRegistry.ClimateStabilizers.Remove(this, map);
     }
 }

@@ -22,6 +22,12 @@ namespace Stormproof
 
         private static readonly List<Building> empCandidates = new List<Building>();
 
+        public override int TransitionTicks => 300;
+
+        // The base class returns 0, which would keep the purple tint from ever showing.
+        public override float SkyTargetLerpFactor(Map map) =>
+            GameConditionUtility.LerpInOutValue(this, TransitionTicks);
+
         public override SkyTarget? SkyTarget(Map map)
         {
             return new SkyTarget(0.85f, IonSkyColors, 1f, 1f);
@@ -51,30 +57,6 @@ namespace Stormproof
             }
         }
 
-        private static bool Shielded(Thing t)
-        {
-            if (t?.Map == null)
-            {
-                return false;
-            }
-
-            foreach (CompEmpDampener dampener in StormproofRegistry.Dampeners)
-            {
-                if (dampener?.parent == null || !dampener.parent.Spawned
-                    || dampener.parent.Map != t.Map)
-                {
-                    continue;
-                }
-
-                if (dampener.Covers(t))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         // Static bleed: every charged battery on the map slowly leaks unless an
         // EMP dampener covers it. Storm capacitors aren't CompPowerBattery, so
         // they are naturally immune - as advertised.
@@ -88,7 +70,7 @@ namespace Stormproof
                 for (int j = 0; j < batteries.Count; j++)
                 {
                     CompPowerBattery battery = batteries[j];
-                    if (battery.StoredEnergy <= 0f || Shielded(battery.parent))
+                    if (battery.StoredEnergy <= 0f || CompEmpDampener.Shielded(battery.parent))
                     {
                         continue;
                     }
@@ -133,16 +115,7 @@ namespace Stormproof
         // surge protector absorbs them exactly like a natural "Zzzt!".
         private void TriggerZzzt(Map map)
         {
-            IncidentDef zzzt = DefDatabase<IncidentDef>.GetNamedSilentFail("ShortCircuit");
-            if (zzzt == null)
-            {
-                return;
-            }
-            IncidentParms parms = StorytellerUtility.DefaultParmsNow(zzzt.category, map);
-            if (zzzt.Worker.CanFireNow(parms))
-            {
-                zzzt.Worker.TryExecute(parms);
-            }
+            ZzztUtility.TryFire(map);
         }
     }
 }

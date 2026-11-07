@@ -38,7 +38,7 @@ namespace Stormproof
         public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)
         {
             base.PostDeSpawn(map, mode);
-            StormproofRegistry.SurgeProtectors.Remove(this);
+            StormproofRegistry.SurgeProtectors.Remove(this, map);
         }
 
         public void Absorb()

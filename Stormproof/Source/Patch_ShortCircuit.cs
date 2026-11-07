@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using RimWorld;
@@ -5,34 +6,59 @@ using Verse;
 
 namespace Stormproof
 {
+    public static class ZzztUtility
+    {
+        // Same test vanilla's worker uses, without the storyteller's refire and
+        // cooldown checks in CanFireNow: forced Zzzts (ion storm, spire surge)
+        // must still reach a ready surge protector.
+        public static bool Shortable(Map map) =>
+            map != null && ShortCircuitUtility.GetShortCircuitablePowerConduits(map).Any();
+
+        public static void TryFire(Map map)
+        {
+            IncidentDef zzzt = StormproofIncidentDefOf.ShortCircuit;
+            if (zzzt == null || !Shortable(map))
+            {
+                return;
+            }
+            zzzt.Worker.TryExecute(StorytellerUtility.DefaultParmsNow(zzzt.category, map));
+        }
+
+        public static CompSurgeProtector ReadyProtector(Map map)
+        {
+            List<CompSurgeProtector> protectors = StormproofRegistry.SurgeProtectors.On(map);
+            for (int i = 0; i < protectors.Count; i++)
+            {
+                if (protectors[i].ReadyToAbsorb)
+                {
+                    return protectors[i];
+                }
+            }
+            return null;
+        }
+    }
+
     // A ready surge protector eats the "Zzzt!" short circuit incident:
     // no explosion, no battery drain, just sparks at the protector.
     [HarmonyPatch(typeof(IncidentWorker_ShortCircuit), "TryExecuteWorker")]
     public static class Patch_ShortCircuit
     {
-        public static bool Prefix(IncidentWorker_ShortCircuit __instance, IncidentParms parms,
-            ref bool __result, ref bool __state)
+        public static bool Prefix(IncidentParms parms, ref bool __result, ref bool __state)
         {
             __state = false;
-            Map map = (Map)parms.target;
-            if (map == null)
+            Map map = parms?.target as Map;
+            // Never Absorb() a no-op Zzzt: vanilla would find nothing to short.
+            if (!ZzztUtility.Shortable(map))
             {
                 return true;
             }
-            // Never Absorb() a no-op Zzzt (e.g. storm spire roll with no shortable net).
-            if (!__instance.CanFireNow(parms))
-            {
-                return true;
-            }
-            CompSurgeProtector protector = StormproofRegistry
-                .On(StormproofRegistry.SurgeProtectors, map)
-                .FirstOrDefault(p => p.ReadyToAbsorb);
+            CompSurgeProtector protector = ZzztUtility.ReadyProtector(map);
             if (protector == null)
             {
                 return true;
             }
             protector.Absorb();
-            map.GetComponent<MapComponent_Stormproof>()?.NoteZzzt(absorbed: true);
+            MapComponent_Stormproof.For(map)?.NoteZzzt(absorbed: true);
             __state = true;
             __result = true;
             return false;
@@ -40,16 +66,11 @@ namespace Stormproof
 
         public static void Postfix(IncidentParms parms, bool __result, bool __state)
         {
-            if (__state)
+            if (__state || !__result)
             {
                 return;
             }
-            if (!__result)
-            {
-                return;
-            }
-            Map map = parms?.target as Map;
-            map?.GetComponent<MapComponent_Stormproof>()?.NoteZzzt(absorbed: false);
+            MapComponent_Stormproof.For(parms?.target as Map)?.NoteZzzt(absorbed: false);
         }
     }
 }

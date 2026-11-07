@@ -14,7 +14,7 @@ namespace Stormproof
             {
                 return 0f;
             }
-            MapComponent_Stormproof comp = thing.Map.GetComponent<MapComponent_Stormproof>();
+            MapComponent_Stormproof comp = MapComponent_Stormproof.For(thing.Map);
             return comp == null ? 0f : comp.BrownoutFor(thing);
         }
 
@@ -75,8 +75,18 @@ namespace Stormproof
     {
         public static IEnumerable<MethodBase> TargetMethods()
         {
-            yield return AccessTools.DeclaredMethod(typeof(Building_Heater), nameof(Building_Heater.TickRare));
-            yield return AccessTools.DeclaredMethod(typeof(Building_Cooler), nameof(Building_Cooler.TickRare));
+            // A game update that moves TickRare to the base class must not hand
+            // Harmony a null target and take the whole patch class down.
+            MethodBase heater = AccessTools.DeclaredMethod(typeof(Building_Heater), nameof(Building_Heater.TickRare));
+            if (heater != null)
+            {
+                yield return heater;
+            }
+            MethodBase cooler = AccessTools.DeclaredMethod(typeof(Building_Cooler), nameof(Building_Cooler.TickRare));
+            if (cooler != null)
+            {
+                yield return cooler;
+            }
         }
 
         public static void Prefix(Building_TempControl __instance, out float __state)
@@ -97,7 +107,9 @@ namespace Stormproof
             control.targetTemperature = __state + (room - __state) * 0.45f * b;
         }
 
-        public static void Postfix(Building_TempControl __instance, float __state)
+        // Finalizer, not Postfix: an exception inside TickRare must not leave the
+        // thermostat target shifted for good.
+        public static void Finalizer(Building_TempControl __instance, float __state)
         {
             if (float.IsNaN(__state))
             {
@@ -122,7 +134,7 @@ namespace Stormproof
             }
             foreach (Map map in cond.AffectedMaps)
             {
-                map.GetComponent<MapComponent_Stormproof>()?.NotifyCondition(cond, started: true);
+                MapComponent_Stormproof.For(map)?.NotifyCondition(cond, started: true);
             }
         }
     }
@@ -138,7 +150,7 @@ namespace Stormproof
             }
             foreach (Map map in __instance.AffectedMaps)
             {
-                map.GetComponent<MapComponent_Stormproof>()?.NotifyCondition(__instance, started: false);
+                MapComponent_Stormproof.For(map)?.NotifyCondition(__instance, started: false);
             }
         }
     }

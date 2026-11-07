@@ -3,84 +3,39 @@ using Verse;
 
 namespace Stormproof
 {
-    public class CompProperties_SkyRestorer : CompProperties
+    public class CompProperties_SkyRestorer : CompProperties_HazardDefender
     {
-        public float activePowerConsumption = 1500f;
-
         public CompProperties_SkyRestorer()
         {
             compClass = typeof(CompSkyRestorer);
+            activePowerConsumption = 1500f;
         }
     }
 
-    public class CompSkyRestorer : ThingComp, IHazardDefender, IHazardPowerRamp
+    public class CompSkyRestorer : CompHazardDefender
     {
-        private CompPowerTrader powerComp;
-        private CompFlickable flickComp;
-        private CompBreakdownable breakdownComp;
+        // Optional DLC defs are null when the DLC is absent; AnyConditionActive skips nulls.
+        // Built on first use, after DefOfs are bound.
+        private static GameConditionDef[] hazards;
 
-        public CompProperties_SkyRestorer Props => (CompProperties_SkyRestorer)props;
-
-        private bool HazardActive =>
-            parent.Spawned &&
-            HazardProtection.AnyConditionActive(
-                parent.Map,
+        protected override GameConditionDef[] Hazards => hazards ?? (hazards = new[]
+            {
                 GameConditionDefOf.Eclipse,
                 GameConditionDefOf.VolcanicWinter,
                 StormproofDefOf.VolcanicAsh,
-                StormproofDefOf.DarkenedSkies);
+                StormproofDefOf.DarkenedSkies
+            });
 
-        public float ForecastDrawWatts =>
-            HazardActive ? Props.activePowerConsumption : (powerComp?.Props.PowerConsumption ?? 0f);
+        protected override bool AllowedInSettings => StormproofMod.Settings.allowSkyRestorer;
 
-        public bool Protecting =>
-            HazardActive &&
-            !parent.Destroyed &&
-            (flickComp == null || flickComp.SwitchIsOn) &&
-            (breakdownComp == null || !breakdownComp.BrokenDown) &&
-            powerComp != null &&
-            powerComp.PowerNet != null &&
-            powerComp.PowerNet.CurrentStoredEnergy() > 1f;
+        protected override string StandbyKey => "Stormproof_SkyRestorer_Standby";
 
-        public override void PostSpawnSetup(bool respawningAfterLoad)
-        {
-            base.PostSpawnSetup(respawningAfterLoad);
-            powerComp = parent.GetComp<CompPowerTrader>();
-            flickComp = parent.GetComp<CompFlickable>();
-            breakdownComp = parent.GetComp<CompBreakdownable>();
-            StormproofRegistry.SkyRestorers.Add(this);
-        }
+        protected override string ProtectingKey => "Stormproof_SkyRestorer_Protecting";
 
-        public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)
-        {
-            base.PostDeSpawn(map, mode);
-            StormproofRegistry.SkyRestorers.Remove(this);
-        }
+        protected override string DownKey => "Stormproof_SkyRestorer_Down";
 
-        public override void CompTick()
-        {
-            base.CompTick();
-            if (!parent.IsHashIntervalTick(30) || powerComp == null)
-            {
-                return;
-            }
-            float wanted = HazardActive
-                ? Props.activePowerConsumption
-                : powerComp.Props.PowerConsumption;
-            powerComp.PowerOutput = -wanted;
-        }
+        protected override void Register() => StormproofRegistry.SkyRestorers.Add(this);
 
-        public override string CompInspectStringExtra()
-        {
-            if (!HazardActive)
-            {
-                return "Stormproof_SkyRestorer_Standby".Translate(
-                    Props.activePowerConsumption.ToString("F0"));
-            }
-            return Protecting
-                ? "Stormproof_SkyRestorer_Protecting".Translate(
-                    Props.activePowerConsumption.ToString("F0"))
-                : "Stormproof_SkyRestorer_Down".Translate();
-        }
+        protected override void Unregister(Map map) => StormproofRegistry.SkyRestorers.Remove(this, map);
     }
 }

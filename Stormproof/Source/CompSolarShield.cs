@@ -54,7 +54,7 @@ namespace Stormproof
         public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)
         {
             base.PostDeSpawn(map, mode);
-            StormproofRegistry.Shields.Remove(this);
+            StormproofRegistry.Shields.Remove(this, map);
         }
 
         public override void CompTick()

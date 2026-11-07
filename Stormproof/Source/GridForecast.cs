@@ -171,8 +171,10 @@ namespace Stormproof
         private static List<ShedderSim> CollectShedders(Map map, PowerNet net)
         {
             List<ShedderSim> sims = null;
-            foreach (CompLoadShedder shedder in StormproofRegistry.On(StormproofRegistry.LoadShedders, map))
+            List<CompLoadShedder> all = StormproofRegistry.LoadShedders.On(map);
+            for (int i = 0; i < all.Count; i++)
             {
+                CompLoadShedder shedder = all[i];
                 if (shedder.ForecastSupplyNet != net)
                 {
                     continue;
@@ -302,12 +304,12 @@ namespace Stormproof
             {
                 float sky = map.skyManager.CurSkyGlow;
                 float mul = Mathf.Clamp(sky / celestial, 0.08f, 1.4f);
-                map.GetComponent<MapComponent_Stormproof>()?.RememberDaySkyMul(
+                MapComponent_Stormproof.For(map)?.RememberDaySkyMul(
                     map.weatherManager.curWeather, mul);
                 return mul;
             }
 
-            MapComponent_Stormproof comp = map.GetComponent<MapComponent_Stormproof>();
+            MapComponent_Stormproof comp = MapComponent_Stormproof.For(map);
             float cached = comp != null
                 ? comp.DaySkyMulFor(map.weatherManager.curWeather)
                 : -1f;

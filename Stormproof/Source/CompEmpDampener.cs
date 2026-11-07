@@ -30,6 +30,24 @@ namespace Stormproof
             t.Map == parent.Map &&
             t.Position.DistanceTo(parent.Position) <= Props.protectRadius;
 
+        // Any powered dampener on the thing's map covers it.
+        public static bool Shielded(Thing t)
+        {
+            if (t?.Map == null)
+            {
+                return false;
+            }
+            var dampeners = StormproofRegistry.Dampeners.On(t.Map);
+            for (int i = 0; i < dampeners.Count; i++)
+            {
+                if (dampeners[i].Covers(t))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
@@ -40,7 +58,7 @@ namespace Stormproof
         public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)
         {
             base.PostDeSpawn(map, mode);
-            StormproofRegistry.Dampeners.Remove(this);
+            StormproofRegistry.Dampeners.Remove(this, map);
         }
 
         public override string CompInspectStringExtra()

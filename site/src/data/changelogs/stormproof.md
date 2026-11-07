@@ -6,16 +6,31 @@ Detailed notes for **Stormproof** only.
 
 ## [2.0.0]
 
-Player-facing version **2.0.0** (`About.xml` `modVersion`). Stamp `stormproof2-net10`. Ships for RimWorld **1.6** and **1.7** from the same source; 1.6 is not frozen.
+Player-facing version **2.0.0** (`About.xml` `modVersion`). Stamp `stormproof2-fixes`. Ships for RimWorld **1.6** and **1.7** from the same source; 1.6 is not frozen.
 
-AZR-492 AZR-493 AZR-500 AZR-667 AZR-668
+AZR-492 AZR-493 AZR-494 AZR-495 AZR-498 AZR-500 AZR-667 AZR-668
 
 ### Changed
 - **Two builds, one source** (AZR-493) — official 1.6 loads `1.6/Assemblies` (net472, 1.6 refs). 1.7 loads `1.7/Assemblies`, now a .NET 10 build against the 1.7 refs (`Krafs.Rimworld.Ref` 1.7.4998-unstable, Harmony 3.0.0-rc.4).
 - **Weather timer access** (AZR-500) — on 1.7 `WeatherDecider.curWeatherDuration` is read with `[UnsafeAccessor]` instead of reflection. A missing field logs one warning and the forecaster and storm caller degrade quietly, as on 1.6.
+- **Hazard defenders** (AZR-495) — the barrier, stabilizer, sky restorer and condenser share one base class. The heat dome and polar front check the stabilizer in their own `TemperatureOffset` instead of through two Harmony patches. Def-name strings in code are `[DefOf]` fields. Ties between spires, protectors and capacitors break by thing id, the same on every load.
 - **Code cleanup** (AZR-500, AZR-668) — one battery-total helper replaces four copies; mod settings are never null, so the 20+ null checks are gone; incident chances use `[DefOf]` fields instead of def-name strings and are applied once defs exist; simulation code uses `System.Math`; the fire suppressor and the grid forecast no longer share static scratch lists between calls.
 - **ROADMAP** (AZR-667) — dropped the dead AZR-109 line and the deleted Strata V4 roadmap link.
 - Dropped unused `docs/img/ArmoredConduit.png`. Atlas script segment output is opt-in (`-OutSegment`); default writes atlas + menu icon only. No gameplay change.
+
+### Fixed
+- **Storm caller vs dry lightning** (AZR-494) — calling a storm during a dry lightning front now ends the front first (logged in the almanac), so the rainy thunderstorm actually arrives. Before, the front's forced dry weather undid the call on the next weather tick.
+- **Ion storm sky** (AZR-494) — the purple tint now shows, fading in and out over 300 ticks. The condition never set a sky lerp factor, so vanilla's 0 hid it.
+- **Ion storm underground** (AZR-494) — can no longer be registered on underground maps, matching every other Stormproof condition.
+- **Bolt on the spire** (AZR-495) — a caught bolt is now drawn on the spire. Only the damage moved before; the bolt was drawn from the event's own cell. Strikes with no cell set pick one up front, so the drawn bolt and the damage always agree.
+- **Disabled defenders** (AZR-495) — a barrier, stabilizer, sky restorer, condenser or fire suppressor switched off in mod settings stays at idle draw during its hazard and says so in its inspect pane.
+- **Heater and cooler thermostat** (AZR-495) — the brownout shift is undone in a Harmony finalizer, so an error inside `TickRare` can't leave the target changed. A missing heater or cooler target no longer fails the whole patch class.
+- **Surge protector** (AZR-495) — absorbs every Zzzt that has something to short, including forced ones from the ion storm and storm spires. The storyteller's refire check no longer lets them slip past.
+- **Missed strikes** (AZR-495) — strikes on a map with no storm spire are counted as missed in the almanac.
+- **Temporary maps** (AZR-495) — building registries are kept per map and dropped when a map is removed, so quest and ambush maps no longer leave stale entries.
+- **Almanac after load** (AZR-498) — the open weather entry keeps its real start time; loading no longer resets it to the load tick.
+- **Weather forecaster after load** (AZR-498) — keeps the weather it last saw, so a change during the save still warns.
+- **Save version** (AZR-498) — maps save `stormproofSaveSchema` (2). Saves without it are treated as version 1; every existing `stormproof*` key is unchanged.
 
 ## [1.7.0]
 

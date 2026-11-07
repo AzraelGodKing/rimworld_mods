@@ -25,54 +25,22 @@ namespace Stormproof
     [HarmonyPatch(typeof(GameCondition_HeatWave), nameof(GameCondition_HeatWave.TemperatureOffset))]
     public static class Patch_HeatWave_TemperatureOffset
     {
-        public static void Postfix(GameCondition_HeatWave __instance, ref float __result)
-        {
-            ZeroIfClimateProtected(__instance, ref __result);
-        }
-
-        internal static void ZeroIfClimateProtected(GameCondition condition, ref float result)
-        {
-            if (result == 0f || condition == null)
-            {
-                return;
-            }
-            foreach (Map map in condition.AffectedMaps)
-            {
-                if (HazardProtection.ClimateProtecting(map))
-                {
-                    result = 0f;
-                    return;
-                }
-            }
-        }
+        public static void Postfix(GameCondition_HeatWave __instance, ref float __result) =>
+            __result = HazardProtection.ClimateOffset(__instance, __result);
     }
 
     [HarmonyPatch(typeof(GameCondition_ColdSnap), nameof(GameCondition_ColdSnap.TemperatureOffset))]
     public static class Patch_ColdSnap_TemperatureOffset
     {
         public static void Postfix(GameCondition_ColdSnap __instance, ref float __result) =>
-            Patch_HeatWave_TemperatureOffset.ZeroIfClimateProtected(__instance, ref __result);
+            __result = HazardProtection.ClimateOffset(__instance, __result);
     }
 
     [HarmonyPatch(typeof(GameCondition_VolcanicWinter), nameof(GameCondition_VolcanicWinter.TemperatureOffset))]
     public static class Patch_VolcanicWinter_TemperatureOffset
     {
         public static void Postfix(GameCondition_VolcanicWinter __instance, ref float __result) =>
-            Patch_HeatWave_TemperatureOffset.ZeroIfClimateProtected(__instance, ref __result);
-    }
-
-    [HarmonyPatch(typeof(GameCondition_HeatDome), nameof(GameCondition_HeatDome.TemperatureOffset))]
-    public static class Patch_HeatDome_TemperatureOffset
-    {
-        public static void Postfix(GameCondition_HeatDome __instance, ref float __result) =>
-            Patch_HeatWave_TemperatureOffset.ZeroIfClimateProtected(__instance, ref __result);
-    }
-
-    [HarmonyPatch(typeof(GameCondition_PolarFront), nameof(GameCondition_PolarFront.TemperatureOffset))]
-    public static class Patch_PolarFront_TemperatureOffset
-    {
-        public static void Postfix(GameCondition_PolarFront __instance, ref float __result) =>
-            Patch_HeatWave_TemperatureOffset.ZeroIfClimateProtected(__instance, ref __result);
+            __result = HazardProtection.ClimateOffset(__instance, __result);
     }
 
     [HarmonyPatch(typeof(GameCondition_NoSunlight), nameof(GameCondition_NoSunlight.SkyTarget))]

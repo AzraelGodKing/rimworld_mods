@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
 using UnityEngine;
@@ -56,7 +57,7 @@ namespace Stormproof
         public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)
         {
             base.PostDeSpawn(map, mode);
-            StormproofRegistry.Spires.Remove(this);
+            StormproofRegistry.Spires.Remove(this, map);
         }
 
         // Called by the lightning patch after a redirected bolt lands on us.
@@ -118,7 +119,7 @@ namespace Stormproof
             {
                 strikesCaught++;
                 int needed = Props.fulguriteStrikesNeeded <= 0 ? 8 : Props.fulguriteStrikesNeeded;
-                if (needed > 0 && strikesCaught % needed == 0)
+                if (strikesCaught % needed == 0)
                 {
                     fulguriteReady++;
                     Messages.Message(
@@ -132,22 +133,26 @@ namespace Stormproof
             }
             float remaining = Props.energyPerStrike;
             // Storm capacitors get first pick: they exist to store strike energy.
-            foreach (CompStormCapacitor capacitor in StormproofRegistry
-                         .On(StormproofRegistry.Capacitors, parent.Map)
-                         .Where(c => c.Net == powerComp.PowerNet)
-                         .OrderByDescending(c => c.AmountCanAccept))
+            List<CompStormCapacitor> banks = new List<CompStormCapacitor>();
+            List<CompStormCapacitor> all = StormproofRegistry.Capacitors.On(parent.Map);
+            for (int i = 0; i < all.Count; i++)
             {
-                if (remaining <= 0f)
+                if (all[i].Net == powerComp.PowerNet)
                 {
-                    break;
+                    banks.Add(all[i]);
                 }
-                float acceptCap = System.Math.Min(capacitor.AmountCanAccept, remaining);
+            }
+            CapacitorOrder.SortMostRoomFirst(banks);
+            for (int i = 0; i < banks.Count && remaining > 0f; i++)
+            {
+                float acceptCap = System.Math.Min(banks[i].AmountCanAccept, remaining);
                 if (acceptCap > 0f)
                 {
-                    capacitor.AddEnergy(acceptCap);
+                    banks[i].AddEnergy(acceptCap);
                     remaining -= acceptCap;
                 }
             }
+            // Batteries: most room first; equal room keeps net order.
             foreach (CompPowerBattery battery in powerComp.PowerNet.batteryComps
                          .OrderByDescending(b => b.AmountCanAccept))
             {
@@ -171,15 +176,7 @@ namespace Stormproof
             }
             if (!SurgeRiskEliminated && Rand.Chance(Props.zzztChancePerStrike * ZzztFactor()))
             {
-                IncidentDef zzzt = DefDatabase<IncidentDef>.GetNamedSilentFail("ShortCircuit");
-                if (zzzt != null)
-                {
-                    IncidentParms parms = new IncidentParms { target = parent.Map };
-                    // Don't burn a surge protector (or spam TryExecute) when vanilla
-                    // would find nothing shortable on the map.
-                    if (zzzt.Worker.CanFireNow(parms))
-                        zzzt.Worker.TryExecute(parms);
-                }
+                ZzztUtility.TryFire(parent.Map);
             }
         }
 

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RimWorld;
 using Verse;
 
@@ -11,6 +12,33 @@ namespace Stormproof
         public CompProperties_StormCapacitor()
         {
             compClass = typeof(CompStormCapacitor);
+        }
+    }
+
+    internal static class CapacitorOrder
+    {
+        // Stable insertion sort (lists are a handful of banks): fullest first,
+        // equal charge keeps thing-id order, so every machine drains the same bank.
+        internal static void SortFullestFirst(List<CompStormCapacitor> banks) =>
+            Sort(banks, c => c.StoredEnergy);
+
+        internal static void SortMostRoomFirst(List<CompStormCapacitor> banks) =>
+            Sort(banks, c => c.AmountCanAccept);
+
+        private static void Sort(List<CompStormCapacitor> banks, System.Func<CompStormCapacitor, float> key)
+        {
+            for (int i = 1; i < banks.Count; i++)
+            {
+                CompStormCapacitor item = banks[i];
+                float k = key(item);
+                int j = i - 1;
+                while (j >= 0 && key(banks[j]) < k)
+                {
+                    banks[j + 1] = banks[j];
+                    j--;
+                }
+                banks[j + 1] = item;
+            }
         }
     }
 
@@ -55,7 +83,7 @@ namespace Stormproof
         public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)
         {
             base.PostDeSpawn(map, mode);
-            StormproofRegistry.Capacitors.Remove(this);
+            StormproofRegistry.Capacitors.Remove(this, map);
         }
 
         public override void CompTick()
