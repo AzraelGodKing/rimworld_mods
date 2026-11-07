@@ -155,14 +155,20 @@ namespace Niceties
                     }
 
                     int n = nz * w + nx;
-                    if (s.Visit[n] == gen || s.Blocked[n] == gen)
+                    if (s.Blocked[n] == gen)
                     {
                         continue;
                     }
 
+                    // Before the visited check: cells of an earlier open flood are visited too.
                     if (s.Open[n] == gen)
                     {
                         return false;
+                    }
+
+                    if (s.Visit[n] == gen)
+                    {
+                        continue;
                     }
 
                     if (!grid.Walkable(n))
