@@ -17,10 +17,10 @@ namespace Nemesis
     /// </summary>
     public static class NemesisHuntSites
     {
-        public const string SiteDefName = "Nemesis_HuntSite";
+        public const string HuntSiteDefId = "Nemesis_HuntSite";
         private const int TimeoutDays = 12;
 
-        public static WorldObjectDef? SiteDef => DefDatabase<WorldObjectDef>.GetNamedSilentFail(SiteDefName);
+        public static WorldObjectDef? SiteDef => DefDatabase<WorldObjectDef>.GetNamedSilentFail(HuntSiteDefId);
 
         /// <summary>
         /// Place a camp for this hunt. False when no camp can be made (no faction, def or tile);
