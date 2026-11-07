@@ -7,10 +7,19 @@ Date Night 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting 
 [*] [b]Ask out tonight[/b] — select a colonist with a partner and press Ask out tonight. They go on one date at the next free evening hour, with no schedule painting.
 [*] [b]Romance panel[/b] — the Romance button shows the couple's stage, time together, anniversary, last date, favourite spot and double-date rapport.
 [*] [b]Gift picker[/b] — add gifts from a searchable list. Names that no longer match an item show in red instead of being ignored silently.
+[*] [b]Smarter dates[/b] — how much the two like each other, Kind or Abrasive partners, a fine meal and an impressive room now shape how a date goes. Couples lean toward what they enjoy: gourmands toward dinner, ascetics toward walks and stars, night owls toward stargazing, artists toward picnics.
+[*] [b]Both partners give gifts[/b] — the giver alternates by day.
+[*] [b]Fishing dates[/b] (Odyssey) — by one of your fishing zones.
+[*] [b]Trying for a baby[/b] (Biotech) — a toggle on a lover pair who can conceive. Lovin comes more often until she is pregnant. Pregnant partners skip dancing and long walks.
+[*] [b]Proposals[/b] — a run of wonderful dates makes a proposal more likely.
+[*] [b]Multiplayer[/b] — Date Night's buttons are synced when the Multiplayer mod is on. All players need the host's Date Night settings. Not tested yet.
 [/list]
 [b]Changed[/b]
 [list]
 [*] [b]Settings[/b] are grouped into sections and scroll, so long translations fit on small screens.
+[*] [b]Nobles[/b] only eat meals their title allows on a dinner date.
+[*] [b]Ideology[/b] — an ideoligion that disapproves of lovin gives no good mood for Lovin hours.
+[*] [b]Homesteader[/b] — the harvest maypole is the first choice for dance dates. [b]Niceties[/b] — the Lovin bed claim leaves rooms Niceties shares alone.
 [*] [b]Schedule tab Date button[/b] no longer moves one cell right for every mod that touches the schedule grid. If a mod Date Night does not know about adds a button, use the new column offset setting.
 [*] [b]RimWorld 1.7[/b] — the 1.7 folder now has its own .NET 10 build made against the 1.7 game files. 1.6 keeps its own build from the same source.
 [*] [b]RimJobWorld[/b] — the RJW checks are bound once at startup instead of called through reflection every second, so scheduled Lovin costs less with RJW on.

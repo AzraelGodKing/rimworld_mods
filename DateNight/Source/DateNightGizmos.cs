@@ -41,6 +41,23 @@ namespace DateNight
                 yield break;
             }
 
+            if (ModsConfig.BiotechActive && LovePartnerRelationUtility.LovePartnerRelationExists(pawn, partner))
+            {
+                bool trying = DateNightBaby.IsTrying(pawn, partner);
+                if (trying || DateNightBaby.CanConceive(pawn, partner))
+                {
+                    Pawn lover = partner;
+                    yield return new Command_Toggle
+                    {
+                        defaultLabel = "DateNight_Gizmo_Baby".Translate(),
+                        defaultDesc = "DateNight_Gizmo_BabyDesc".Translate(lover.LabelShort),
+                        icon = DateNightTex.Baby,
+                        isActive = () => trying,
+                        toggleAction = () => DateNightBaby.SetTrying(pawn, lover, !trying)
+                    };
+                }
+            }
+
             PlannedDate? plan = DateNightAskOut.PlanFor(pawn);
             if (plan != null)
             {
@@ -83,6 +100,8 @@ namespace DateNight
         // Vanilla heart mote; no extra texture to ship.
         public static readonly Texture2D Romance = ContentFinder<Texture2D>.Get("Things/Mote/Heart", reportFailure: false)
             ?? BaseContent.BadTex;
+        public static readonly Texture2D Baby = ContentFinder<Texture2D>.Get("UI/Icons/Genes/Gene_Fertile", reportFailure: false)
+            ?? Romance;
         public static readonly Texture2D AskOut = ContentFinder<Texture2D>.Get("UI/Commands/AsColonist", reportFailure: false)
             ?? Romance;
     }

@@ -32,6 +32,8 @@ namespace DateNight
         private DateActivity activity = DateActivity.Unresolved;
         private DateActivity coupleActivity = DateActivity.Unresolved;
         private bool giftDelivered;
+        // Ate a fine or lavish meal on this date: counts toward quality (AZR-559).
+        private bool ateFineMeal;
         // Grace while the partner's DateNight_GoOnDate job is starting (AZR-523).
         private const int PartnerJobGraceTicks = 250;
         private int partnerGraceStartTick = -1;
@@ -52,6 +54,7 @@ namespace DateNight
             Scribe_Values.Look(ref activity, "activity", DateActivity.Unresolved);
             Scribe_Values.Look(ref coupleActivity, "coupleActivity", DateActivity.Unresolved);
             Scribe_Values.Look(ref giftDelivered, "giftDelivered", false);
+            Scribe_Values.Look(ref ateFineMeal, "ateFineMeal", false);
             // Legacy key from older saves; field removed (AZR-523).
             bool inHangPhaseLegacy = false;
             Scribe_Values.Look(ref inHangPhaseLegacy, "inHangPhase", false);
@@ -90,6 +93,8 @@ namespace DateNight
                     return "DateNight_Report_Gift".Translate(name);
                 case DateActivity.Recreation:
                     return "DateNight_Report_Recreation".Translate(name);
+                case DateActivity.Fishing:
+                    return "DateNight_Report_Fishing".Translate(name);
                 default:
                     return "DateNight_Report_Hangout".Translate(name);
             }
@@ -225,7 +230,7 @@ namespace DateNight
                 }
                 if (ticksLeft <= 0 && totalTicks > 0)
                 {
-                    DateNightDateUtility.NotifyDateFinished(pawn, partner, CoupleActivity, job.GetTarget(SpotInd));
+                    DateNightDateUtility.NotifyDateFinished(pawn, partner, CoupleActivity, job.GetTarget(SpotInd), ateFineMeal);
                     DateNightDateUtility.ApplyDateCooldown(pawn, partner);
                 }
                 else if (totalTicks > 0 && totalTicks - ticksLeft > 600)
@@ -270,8 +275,8 @@ namespace DateNight
                 pawn, DateNightActivities.Resolve(pawn, partner));
             activity = coupleActivity;
 
-            // Only the initiator hands over a gift; the partner waits at the spot.
-            if (activity == DateActivity.Gift && !DateNightActivities.IsInitiator(pawn, partner))
+            // Only today's giver hands over a gift; the partner waits at the spot.
+            if (activity == DateActivity.Gift && !DateNightActivities.IsGiftGiver(pawn, partner))
             {
                 activity = DateActivity.Hangout;
             }
@@ -554,7 +559,12 @@ namespace DateNight
             // Thing.Ingested does the eating itself (thoughts, ingestion side effects);
             // vanilla's FinalizeIngest toil then adds the food need and the
             // NutritionEaten record, so this mirrors that toil (AZR-538).
+            FoodPreferability preferability = meal.def.ingestible?.preferability ?? FoodPreferability.Undefined;
             float nutrition = meal.Ingested(pawn, wanted);
+            if (preferability >= FoodPreferability.MealFine)
+            {
+                ateFineMeal = true;
+            }
             if (pawn.needs?.food != null)
             {
                 pawn.needs.food.CurLevel += nutrition;
@@ -568,7 +578,7 @@ namespace DateNight
             {
                 return;
             }
-            JoyKindDef kind = activity == DateActivity.Stargaze
+            JoyKindDef kind = activity == DateActivity.Stargaze || activity == DateActivity.Fishing
                 ? JoyKindDefOf.Meditative
                 : JoyKindDefOf.Social;
             float rate = activity == DateActivity.Recreation ? PassiveJoyPerTick * 2f : PassiveJoyPerTick;

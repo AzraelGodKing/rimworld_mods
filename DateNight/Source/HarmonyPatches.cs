@@ -415,6 +415,12 @@ namespace DateNight
                 return;
             }
 
+            // Trying for a baby (Biotech): Lovin comes about twice as often.
+            if (DateNightBaby.IsTrying(pawn, partner) && DateNightBaby.CanConceive(pawn, partner))
+            {
+                __result *= 0.5f;
+            }
+
             // A good date leaves a spark: better lovin chance for a day after.
             if (DateNightMod.Settings.postDateLovinBoost
                 && (DateNightDateUtility.HadRecentGoodDate(pawn)
@@ -435,6 +441,13 @@ namespace DateNight
 
         public static void Postfix(Pawn pawn, ref int __result)
         {
+            // A couple trying for a baby wants the short cooldown; it switches off
+            // by itself once she is pregnant, so pregnancy-safe still holds then.
+            if (DateNightUtility.IsLovinSchedule(pawn) && DateNightBaby.ActiveFor(pawn))
+            {
+                __result = DateNightUtility.AlwaysDoLovinCooldownTicks;
+                return;
+            }
             if (DateNightMod.Settings.pregnancySafeCooldown)
             {
                 return;

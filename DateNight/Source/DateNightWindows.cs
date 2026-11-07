@@ -188,6 +188,11 @@ namespace DateNight
             {
                 return;
             }
+            // Niceties assigns beds in rooms it marked shared; one owner per bed.
+            if (DateNightNicetiesSoftCompat.InSharedRoom(bed))
+            {
+                return;
+            }
 
             int foreign = 0;
             bool ownedByPair = false;
@@ -337,8 +342,8 @@ namespace DateNight
             window.success = true;
             if (lovinOnly && !window.awarded)
             {
-                DateNightDateUtility.TryGainThought(pawn, partner, DateNightDefOf.DateNight_MadeIt);
-                DateNightDateUtility.TryGainThought(partner, pawn, DateNightDefOf.DateNight_MadeIt);
+                DateNightDateUtility.TryGainLovinThought(pawn, partner, DateNightDefOf.DateNight_MadeIt);
+                DateNightDateUtility.TryGainLovinThought(partner, pawn, DateNightDefOf.DateNight_MadeIt);
                 window.awarded = true;
             }
         }
@@ -362,8 +367,8 @@ namespace DateNight
             {
                 if (window.lovin)
                 {
-                    DateNightDateUtility.TryGainThought(a, b, DateNightDefOf.DateNight_MadeIt);
-                    DateNightDateUtility.TryGainThought(b, a, DateNightDefOf.DateNight_MadeIt);
+                    DateNightDateUtility.TryGainLovinThought(a, b, DateNightDefOf.DateNight_MadeIt);
+                    DateNightDateUtility.TryGainLovinThought(b, a, DateNightDefOf.DateNight_MadeIt);
                 }
                 return;
             }

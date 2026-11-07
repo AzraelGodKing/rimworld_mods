@@ -467,6 +467,11 @@ namespace DateNight
         {
             DateActivity activity = DateNightActivities.Resolve(hostA, hostB);
             activity = CoerceForGroup(activity);
+            if (activity == DateActivity.Dance
+                && (DateNightBaby.IsPregnant(guestA) || DateNightBaby.IsPregnant(guestB)))
+            {
+                activity = DateActivity.Hangout;
+            }
             LocalTargetInfo venue = DateNightActivities.FindVenueRoot(activity, hostA, hostB);
 
             var session = new DoubleDateSession

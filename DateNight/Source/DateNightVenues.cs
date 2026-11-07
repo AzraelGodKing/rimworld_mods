@@ -144,17 +144,39 @@ namespace DateNight
                     continue;
                 }
 
-                fav.notifiedBreakup = true;
-                fav.wereLovers = false;
-                fav.score = 0f;
-                DateNightRomance.NotifyBreakup(a, b);
-                ThoughtDef? over = DateNightDefOf.DateNight_DatesOver;
-                // Old breakups from saves made before this existed reset silently.
-                if (over != null && EndedRecently(a, b))
-                {
-                    DateNightDateUtility.TryGainThought(a, b, over);
-                    DateNightDateUtility.TryGainThought(b, a, over);
-                }
+                HandleBreakup(fav, a, b);
+            }
+        }
+
+        /// <summary>
+        /// Called by <see cref="DateNightApi.NotifyBreakup"/> so a sister mod that
+        /// causes a breakup gets the reaction now, not at the next poll.
+        /// </summary>
+        public static void NotifyBreakup(Pawn a, Pawn b)
+        {
+            if (LovePartnerRelationUtility.LovePartnerRelationExists(a, b))
+            {
+                return;
+            }
+            FavoriteVenue? fav = Get(a, b);
+            if (fav != null && !fav.notifiedBreakup && fav.wereLovers)
+            {
+                HandleBreakup(fav, a, b);
+            }
+        }
+
+        private static void HandleBreakup(FavoriteVenue fav, Pawn a, Pawn b)
+        {
+            fav.notifiedBreakup = true;
+            fav.wereLovers = false;
+            fav.score = 0f;
+            DateNightRomance.NotifyBreakup(a, b);
+            ThoughtDef? over = DateNightDefOf.DateNight_DatesOver;
+            // Old breakups from saves made before this existed reset silently.
+            if (over != null && EndedRecently(a, b))
+            {
+                DateNightDateUtility.TryGainThought(a, b, over);
+                DateNightDateUtility.TryGainThought(b, a, over);
             }
         }
 
