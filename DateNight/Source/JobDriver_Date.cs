@@ -548,11 +548,15 @@ namespace DateNight
             {
                 wanted = 0.3f;
             }
+            // Thing.Ingested does the eating itself (thoughts, ingestion side effects);
+            // vanilla's FinalizeIngest toil then adds the food need and the
+            // NutritionEaten record, so this mirrors that toil (AZR-538).
             float nutrition = meal.Ingested(pawn, wanted);
             if (pawn.needs?.food != null)
             {
                 pawn.needs.food.CurLevel += nutrition;
             }
+            pawn.records?.AddTo(RecordDefOf.NutritionEaten, nutrition);
         }
 
         private void PassiveJoyTick()

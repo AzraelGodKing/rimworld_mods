@@ -19,15 +19,19 @@ namespace DateNight
         public static void ExposeData()
         {
             List<BedClaim>? list = null;
+            // Saved since 2.0.0 so a window open across a save still awards
+            // made-it / stood-up when it closes (AZR-539). 1.x saves have none.
+            List<SocialWindow>? windows = null;
             if (Scribe.mode == LoadSaveMode.Saving)
             {
                 list = new List<BedClaim>(Claims.Values);
+                windows = new List<SocialWindow>(Windows.Values);
             }
 
             Scribe_Collections.Look(ref list, "dateNightBedClaims", LookMode.Deep);
+            Scribe_Collections.Look(ref windows, "dateNightSocialWindows", LookMode.Deep);
             if (Scribe.mode == LoadSaveMode.LoadingVars)
             {
-                // Unsaved ephemeral windows must not survive into a loaded/new game.
                 Windows.Clear();
                 Claims.Clear();
                 if (list != null)
@@ -41,13 +45,18 @@ namespace DateNight
                         }
                     }
                 }
+                if (windows != null)
+                {
+                    for (int i = 0; i < windows.Count; i++)
+                    {
+                        SocialWindow window = windows[i];
+                        if (window != null)
+                        {
+                            Windows[DateNightActivities.CoupleKey(window.pawnA, window.pawnB)] = window;
+                        }
+                    }
+                }
             }
-        }
-
-        /// <summary>Clears only ephemeral SocialWindows (keeps bed Claims).</summary>
-        public static void ClearWindowsOnly()
-        {
-            Windows.Clear();
         }
 
         /// <summary>Call from the GameComponent ctor; a new game never runs ExposeData.</summary>
@@ -466,7 +475,7 @@ namespace DateNight
         }
 
 
-        private class SocialWindow
+        private class SocialWindow : IExposable
         {
             public int pawnA;
             public int pawnB;
@@ -477,6 +486,19 @@ namespace DateNight
             public int availB;
             public int unavailA;
             public int unavailB;
+
+            public void ExposeData()
+            {
+                Scribe_Values.Look(ref pawnA, "pawnA");
+                Scribe_Values.Look(ref pawnB, "pawnB");
+                Scribe_Values.Look(ref lovin, "lovin");
+                Scribe_Values.Look(ref success, "success");
+                Scribe_Values.Look(ref awarded, "awarded");
+                Scribe_Values.Look(ref availA, "availA");
+                Scribe_Values.Look(ref availB, "availB");
+                Scribe_Values.Look(ref unavailA, "unavailA");
+                Scribe_Values.Look(ref unavailB, "unavailB");
+            }
         }
 
         private class BedClaim : IExposable

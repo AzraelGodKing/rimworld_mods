@@ -231,12 +231,6 @@ namespace DateNight
                 return;
             }
 
-            Texture2D tex = shown.ColorTexture;
-            if (tex == null)
-            {
-                return;
-            }
-
             Rect inner = rect.ContractedBy(2f);
             bool hasDropdown = date != null && lovin != null && inner.width >= DropWidth + 20f;
             bool wholeOpensMenu = date != null && lovin != null && !hasDropdown;
@@ -247,7 +241,8 @@ namespace DateNight
                 ? new Rect(inner.x, inner.y, inner.width - DropWidth, inner.height)
                 : inner;
 
-            GUI.DrawTexture(inner, tex);
+            // Same fill vanilla gives each assignment, without a raw Unity draw call (AZR-538).
+            Widgets.DrawBoxSolid(inner, shown.color);
 
             if (Widgets.ButtonInvisible(main))
             {
@@ -563,18 +558,7 @@ namespace DateNight
             {
                 return true;
             }
-            if (DateNightDefOf.DateNight_GoOnDate == null)
-            {
-                return true;
-            }
-
-            LocalTargetInfo spot = DateNightDateUtility.FindDateSpot(pawn, partner);
-            Job job = JobMaker.MakeJob(DateNightDefOf.DateNight_GoOnDate);
-            job.SetTarget(TargetIndex.A, partner);
-            job.SetTarget(TargetIndex.B, spot);
-            job.locomotionUrgency = LocomotionUrgency.Jog;
-            job.ignoreForbidden = true;
-            __result = job;
+            __result = DateNightDateUtility.MakeDateJob(pawn, partner);
             return false;
         }
     }

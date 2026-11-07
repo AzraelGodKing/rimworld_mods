@@ -12,6 +12,8 @@ namespace DateNight
 
         private readonly List<Pawn> culprits = new List<Pawn>();
         private readonly List<MismatchRow> rows = new List<MismatchRow>();
+        private readonly HashSet<long> seen = new HashSet<long>();
+        private readonly HashSet<Pawn> onRoster = new HashSet<Pawn>();
         private AlertReport cachedReport = AlertReport.Inactive;
         private int lastScanTick = -9999;
 
@@ -139,7 +141,12 @@ namespace DateNight
                 return;
             }
 
-            HashSet<long> seen = new HashSet<long>();
+            seen.Clear();
+            onRoster.Clear();
+            for (int i = 0; i < colonists.Count; i++)
+            {
+                onRoster.Add(colonists[i]);
+            }
             for (int i = 0; i < colonists.Count; i++)
             {
                 Pawn pawn = colonists[i];
@@ -148,12 +155,12 @@ namespace DateNight
                     continue;
                 }
 
-                Pawn? partner = DateNightRomance.FindDatePartner(pawn);
+                Pawn? partner = DateNightRomance.FindCommittedPartner(pawn);
                 if (partner == null || !IsEligible(partner) || partner.thingIDNumber == pawn.thingIDNumber)
                 {
                     continue;
                 }
-                if (!colonists.Contains(partner))
+                if (!onRoster.Contains(partner))
                 {
                     continue;
                 }
