@@ -412,8 +412,10 @@ namespace Azrael.ModChecks
                         string field = parts[parts.Length - 1];
                         if (field == "Settings" || field.Length < 2)
                             continue;
+                        // A struct field can scribe itself: "field.Expose()" counts (Niceties settings).
                         if (text.IndexOf("Look(ref " + field, StringComparison.Ordinal) < 0
-                            && text.IndexOf("Look(ref this." + field, StringComparison.Ordinal) < 0)
+                            && text.IndexOf("Look(ref this." + field, StringComparison.Ordinal) < 0
+                            && text.IndexOf(field + ".Expose()", StringComparison.Ordinal) < 0)
                             errors.Add("Scribe missing Look(ref " + field + ") in " + Rel(repo, file));
                     }
                 }
