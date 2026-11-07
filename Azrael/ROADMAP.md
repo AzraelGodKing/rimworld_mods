@@ -1,5 +1,10 @@
 # Azrael — ROADMAP
 
+## Release
+
+- First public release is **1.0.0** for RimWorld **1.6 and 1.7** from one source (decided 2026-11-07, AZR-586). No frozen 1.6 build: `1.6/Assemblies` (net472) and `1.7/Assemblies` (net10) come from the same code. The "Azrael 2" Linear tickets are delivered in 1.0.0.
+- Multiplayer: soft support like Date Night (decided 2026-11-07). The safe-removal Deconstruct runs through a Multiplayer sync method registered by reflection; no Multiplayer DLL ships.
+
 ## Shipped (this package)
 
 - [x] Scenario **The Deep Homestead** (forced Azrael, MayRequire Homesteader/Strata)

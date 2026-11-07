@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using HarmonyLib;
 using RimWorld;
@@ -37,7 +38,7 @@ namespace Azrael
         internal static bool TryFindMountainTile(out PlanetTile tile)
         {
             tile = PlanetTile.Invalid;
-            PlanetLayer layer = Find.WorldGrid?.Surface;
+            PlanetLayer? layer = Find.WorldGrid?.Surface;
             if (layer == null)
             {
                 return false;

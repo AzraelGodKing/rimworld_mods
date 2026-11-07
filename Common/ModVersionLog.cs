@@ -27,6 +27,11 @@ namespace AzraelCommon
             {
                 writeTime = File.GetLastWriteTime(path).ToString("yyyy-MM-dd HH:mm:ss");
             }
+            else
+            {
+                // RimWorld 1.7 (CoreCLR) loads mod DLLs from bytes, so Location is empty.
+                path = content?.RootDir ?? "unknown";
+            }
 
             string msg = logPrefix + " v" + version + " loaded from " + path + " (modified " + writeTime + ")";
             if (!string.IsNullOrEmpty(extra))

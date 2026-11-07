@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using AzraelCommon;
 using HarmonyLib;
@@ -9,7 +10,7 @@ namespace Azrael
     public class AzraelMod : Mod
     {
         private Vector2 scrollPos;
-        private string copiedNotice;
+        private string? copiedNotice;
         private float copiedUntil;
 
         public AzraelMod(ModContentPack content) : base(content)

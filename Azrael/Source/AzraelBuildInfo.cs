@@ -1,3 +1,4 @@
+#nullable enable
 namespace Azrael
 {
     // Read by SeriesHub through the series-wide <Namespace>.<Namespace>BuildInfo.BuildStamp convention.
