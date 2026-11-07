@@ -19,8 +19,8 @@ A faithful-plus rebuild of Nanohive2 for RimWorld.
 ## Install
 
 1. Copy the `NanoHiveReforged` folder into your RimWorld `Mods` directory.
-2. Build `Source/NanoHiveReforged.csproj` so `1.6/Assemblies/NanoHiveReforged.dll` exists, and `Source/NanoHiveReforged.1.7.csproj` for `1.7/Assemblies/`.
-3. Enable **NanoHive Reforged** in mod list.
+2. Build both projects (below) so `1.6/Assemblies/NanoHiveReforged.dll` and `1.7/Assemblies/NanoHiveReforged.dll` exist. `LoadFolders.xml` loads only the folder for the running game version.
+3. Enable **NanoHive Reforged** in the mod list.
 
 ## Texture
 
@@ -33,4 +33,11 @@ dotnet build NanoHiveReforged/Source/NanoHiveReforged.csproj -c Release
 dotnet build NanoHiveReforged/Source/NanoHiveReforged.1.7.csproj -c Release
 ```
 
-The project references RimWorld through `Krafs.Rimworld.Ref` (1.6.4871), same as the other mods. The 1.6 DLL is written to `1.6/Assemblies/NanoHiveReforged.dll`; the sibling 1.7 project writes `1.7/Assemblies/`.
+No local RimWorld install is needed. Both projects reference the game through NuGet `Krafs.Rimworld.Ref`:
+
+| Project | Game | Target | Output |
+|---|---|---|---|
+| `NanoHiveReforged.csproj` | 1.6 (`1.6.4871`) | `net472` | `1.6/Assemblies/` |
+| `NanoHiveReforged.1.7.csproj` | 1.7 (`1.7.4998-unstable`) | `net10.0` (needs the .NET 10 SDK) | `1.7/Assemblies/` |
+
+Both link `Common/ModPack.cs` and `Common/ModVersionLog.cs` (no Harmony). CI builds both and runs the headless mod checks. DLLs are not in git, so rebuild both (or take the 1.7 DLL from CI) before a Workshop upload.

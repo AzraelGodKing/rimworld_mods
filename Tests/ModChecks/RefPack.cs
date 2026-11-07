@@ -30,6 +30,7 @@ namespace Azrael.ModChecks
             ("Stormproof", "Stormproof"),
             ("Strata", "Strata"),
             ("WaveSurvivalReforged", "WaveSurvivalReforged"),
+            ("NanoHiveReforged", "NanoHiveReforged"),
         };
 
         public static RefPack Load(string repo)
