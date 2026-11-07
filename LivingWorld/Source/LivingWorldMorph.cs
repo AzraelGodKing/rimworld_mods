@@ -102,7 +102,8 @@ namespace LivingWorld
                 {
                     continue;
                 }
-                if (s.Faction.def.hidden || !s.Faction.def.humanlikeFaction)
+                if (s.Faction.def.hidden || !s.Faction.def.humanlikeFaction
+                    || LivingWorldMod.Settings?.IsExcluded(s.Faction.def) == true)
                 {
                     continue;
                 }

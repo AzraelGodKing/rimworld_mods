@@ -680,7 +680,7 @@ namespace LivingWorld
             {
                 return false;
             }
-            if (f.def.hidden || !f.def.humanlikeFaction)
+            if (f.def.hidden || !f.def.humanlikeFaction || LivingWorldMod.Settings?.IsExcluded(f.def) == true)
             {
                 return false;
             }

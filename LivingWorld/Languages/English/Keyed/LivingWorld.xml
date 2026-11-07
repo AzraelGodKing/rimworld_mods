@@ -133,4 +133,21 @@
   <LivingWorld_Settings_PrepareRemovalConfirm>Remove Living World objects from this game and turn the simulation off? The chronicle is kept.</LivingWorld_Settings_PrepareRemovalConfirm>
   <LivingWorld_Settings_PrepareRemovalDone>Living World: removed {0} objects and conditions. Save the game, then remove the mod.</LivingWorld_Settings_PrepareRemovalDone>
   <LivingWorld_Settings_HostOnly>Living World: in Multiplayer only the host's settings apply to the game. Your Mod Options are saved for your own games.</LivingWorld_Settings_HostOnly>
+  <LivingWorld_Settings_AppliesOnClose>In a game, these settings apply to that game when you close this window (saved with the game).</LivingWorld_Settings_AppliesOnClose>
+  <LivingWorld_Settings_Presets>Pace presets (numbers only; toggles stay):</LivingWorld_Settings_Presets>
+  <LivingWorld_Preset_Quiet>Quiet</LivingWorld_Preset_Quiet>
+  <LivingWorld_Preset_Default>Default</LivingWorld_Preset_Default>
+  <LivingWorld_Preset_Turbulent>Turbulent</LivingWorld_Preset_Turbulent>
+  <LivingWorld_Settings_ChronicleCapacity>Chronicle keeps: {0} entries</LivingWorld_Settings_ChronicleCapacity>
+  <LivingWorld_Settings_Excluded>Factions in the simulation:</LivingWorld_Settings_Excluded>
+  <LivingWorld_Settings_ExcludedDesc>Untick a faction kind to leave it alone: no wars, flips, outposts or caravans for it.</LivingWorld_Settings_ExcludedDesc>
+  <LivingWorld_Chronicle_HeardOnly>Heard only</LivingWorld_Chronicle_HeardOnly>
+  <LivingWorld_Chronicle_NoMatch>No entries match the filters.</LivingWorld_Chronicle_NoMatch>
+  <LivingWorld_Chronicle_AllFactions>All factions</LivingWorld_Chronicle_AllFactions>
+  <LivingWorld_WorldState_Status>Fallout on its way: {0}. Your road: {1} tiles. Caravans on the move: {2}.</LivingWorld_WorldState_Status>
+  <LivingWorld_WorldState_JumpTip>Click to jump to a settlement on this front; click again for the other side.</LivingWorld_WorldState_JumpTip>
+  <LivingWorld_PairJoin>{0} — {1}</LivingWorld_PairJoin>
+  <LivingWorld_InspectJoin>{0} · {1}</LivingWorld_InspectJoin>
+  <LivingWorld_Hazard_Hunger>hunger</LivingWorld_Hazard_Hunger>
+  <LivingWorld_Hazard_Wounds>festering wounds</LivingWorld_Hazard_Wounds>
 </LanguageData>

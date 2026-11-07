@@ -29,6 +29,17 @@ namespace LivingWorld
         /// <summary>0.25–2 multiplier on escalate / battle / betrayal chances.</summary>
         public float warRate = 1f;
 
+        /// <summary>How many entries the chronicle keeps (48–240).</summary>
+        public int chronicleCapacity = 96;
+
+        /// <summary>Comma-separated FactionDef names left out of the simulation.</summary>
+        public string excludedFactionDefs = string.Empty;
+
+        // Parsed excludedFactionDefs, rebuilt when the string changes. Not saved.
+        private string excludedParsedFrom;
+        private readonly System.Collections.Generic.HashSet<string> excludedSet =
+            new System.Collections.Generic.HashSet<string>();
+
         public override void ExposeData()
         {
             Scribe_Values.Look(ref enabled, "enabled", true);
@@ -49,6 +60,49 @@ namespace LivingWorld
             Scribe_Values.Look(ref proximityTiles, "proximityTiles", 30);
             Scribe_Values.Look(ref maxConcurrentWars, "maxConcurrentWars", 2);
             Scribe_Values.Look(ref warRate, "warRate", 1f);
+            Scribe_Values.Look(ref chronicleCapacity, "chronicleCapacity", 96);
+            Scribe_Values.Look(ref excludedFactionDefs, "excludedFactionDefs", string.Empty);
+            excludedFactionDefs ??= string.Empty;
+        }
+
+        public bool IsExcluded(RimWorld.FactionDef def)
+        {
+            if (def == null || string.IsNullOrEmpty(excludedFactionDefs))
+            {
+                return false;
+            }
+            if (!ReferenceEquals(excludedParsedFrom, excludedFactionDefs))
+            {
+                excludedParsedFrom = excludedFactionDefs;
+                excludedSet.Clear();
+                foreach (string name in excludedFactionDefs.Split(','))
+                {
+                    if (name.Length > 0)
+                    {
+                        excludedSet.Add(name);
+                    }
+                }
+            }
+            return excludedSet.Contains(def.defName);
+        }
+
+        public void SetExcluded(RimWorld.FactionDef def, bool excluded)
+        {
+            if (def == null || IsExcluded(def) == excluded)
+            {
+                return;
+            }
+            var names = new System.Collections.Generic.List<string>(excludedSet);
+            if (excluded)
+            {
+                names.Add(def.defName);
+            }
+            else
+            {
+                names.Remove(def.defName);
+            }
+            names.Sort(string.CompareOrdinal);
+            excludedFactionDefs = string.Join(",", names);
         }
 
         public void ResetToDefaults()
@@ -71,6 +125,50 @@ namespace LivingWorld
             proximityTiles = 30;
             maxConcurrentWars = 2;
             warRate = 1f;
+            chronicleCapacity = 96;
+            excludedFactionDefs = string.Empty;
+        }
+
+        public enum Preset
+        {
+            Quiet,
+            Default,
+            Turbulent,
+        }
+
+        /// <summary>Pace presets change numbers only; feature toggles stay as they are.</summary>
+        public void ApplyPreset(Preset preset)
+        {
+            switch (preset)
+            {
+                case Preset.Quiet:
+                    newsVerbosity = 0;
+                    tickInterval = 20000;
+                    resolutionsPerPulse = 1;
+                    maxLettersPerQuadrum = 4;
+                    maxMorphsPerYear = 3;
+                    maxConcurrentWars = 1;
+                    warRate = 0.5f;
+                    break;
+                case Preset.Turbulent:
+                    newsVerbosity = 2;
+                    tickInterval = 6000;
+                    resolutionsPerPulse = 2;
+                    maxLettersPerQuadrum = 14;
+                    maxMorphsPerYear = 12;
+                    maxConcurrentWars = 4;
+                    warRate = 1.6f;
+                    break;
+                default:
+                    newsVerbosity = 1;
+                    tickInterval = 10000;
+                    resolutionsPerPulse = 1;
+                    maxLettersPerQuadrum = 8;
+                    maxMorphsPerYear = 6;
+                    maxConcurrentWars = 2;
+                    warRate = 1f;
+                    break;
+            }
         }
 
         public LivingWorldSettings Clone()
@@ -80,8 +178,9 @@ namespace LivingWorld
             return copy;
         }
 
-        // Sync payload for Multiplayer: every public bool/int/float field as name=value;
-        // invariant culture so every client parses the same values.
+        // Sync payload for Multiplayer: every public bool/int/float/string field as
+        // name=value; invariant culture so every client parses the same values. String
+        // values (defName lists) never contain ';' or '='.
         private static readonly System.Reflection.FieldInfo[] syncedFields = SyncedFields();
 
         private static System.Reflection.FieldInfo[] SyncedFields()
@@ -91,7 +190,8 @@ namespace LivingWorld
                          System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance
                          | System.Reflection.BindingFlags.DeclaredOnly))
             {
-                if (f.FieldType == typeof(bool) || f.FieldType == typeof(int) || f.FieldType == typeof(float))
+                if (f.FieldType == typeof(bool) || f.FieldType == typeof(int) || f.FieldType == typeof(float)
+                    || f.FieldType == typeof(string))
                 {
                     list.Add(f);
                 }
@@ -108,7 +208,7 @@ namespace LivingWorld
                 System.Reflection.FieldInfo f = syncedFields[i];
                 object v = f.GetValue(this);
                 sb.Append(f.Name).Append('=').Append(
-                    v is float fl ? fl.ToString("R", System.Globalization.CultureInfo.InvariantCulture) : v.ToString())
+                    v is float fl ? fl.ToString("R", System.Globalization.CultureInfo.InvariantCulture) : v?.ToString() ?? string.Empty)
                     .Append(';');
             }
             return sb.ToString();
@@ -151,16 +251,48 @@ namespace LivingWorld
                     {
                         f.SetValue(this, x);
                     }
+                    else if (f.FieldType == typeof(string))
+                    {
+                        f.SetValue(this, value);
+                    }
                     break;
                 }
             }
         }
 
+        private static Vector2 scrollPos;
+        private static float lastViewHeight = 1200f;
+
         public static void DoSettingsWindow(Rect inRect)
         {
             LivingWorldSettings s = LivingWorldMod.Global;
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 20f, lastViewHeight);
+            Widgets.BeginScrollView(inRect, ref scrollPos, viewRect);
             Listing_Standard listing = new Listing_Standard();
-            listing.Begin(inRect);
+            listing.Begin(viewRect);
+
+            if (Current.ProgramState == ProgramState.Playing)
+            {
+                listing.Label("LivingWorld_Settings_AppliesOnClose".Translate());
+                listing.Gap(6f);
+            }
+
+            listing.Label("LivingWorld_Settings_Presets".Translate());
+            Rect row = listing.GetRect(28f);
+            float w = (row.width - 16f) / 3f;
+            if (Widgets.ButtonText(new Rect(row.x, row.y, w, row.height), "LivingWorld_Preset_Quiet".Translate()))
+            {
+                s.ApplyPreset(Preset.Quiet);
+            }
+            if (Widgets.ButtonText(new Rect(row.x + w + 8f, row.y, w, row.height), "LivingWorld_Preset_Default".Translate()))
+            {
+                s.ApplyPreset(Preset.Default);
+            }
+            if (Widgets.ButtonText(new Rect(row.x + 2f * (w + 8f), row.y, w, row.height), "LivingWorld_Preset_Turbulent".Translate()))
+            {
+                s.ApplyPreset(Preset.Turbulent);
+            }
+            listing.GapLine();
 
             listing.CheckboxLabeled("LivingWorld_Settings_Enabled".Translate(), ref s.enabled,
                 "LivingWorld_Settings_EnabledDesc".Translate());
@@ -201,8 +333,24 @@ namespace LivingWorld
             s.maxConcurrentWars = Mathf.RoundToInt(listing.Slider(s.maxConcurrentWars, 1f, 5f));
             listing.Label("LivingWorld_Settings_WarRate".Translate(s.warRate.ToString("F2")));
             s.warRate = listing.Slider(s.warRate, 0.25f, 2f);
+            listing.Label("LivingWorld_Settings_ChronicleCapacity".Translate(s.chronicleCapacity));
+            s.chronicleCapacity = Mathf.RoundToInt(listing.Slider(s.chronicleCapacity, 48f, 240f) / 8f) * 8;
+            listing.GapLine();
 
-            listing.Gap();
+            listing.Label("LivingWorld_Settings_Excluded".Translate(), -1f,
+                "LivingWorld_Settings_ExcludedDesc".Translate());
+            foreach (RimWorld.FactionDef def in SimFactionDefs())
+            {
+                bool included = !s.IsExcluded(def);
+                bool was = included;
+                listing.CheckboxLabeled(def.LabelCap, ref included);
+                if (included != was)
+                {
+                    s.SetExcluded(def, !included);
+                }
+            }
+            listing.GapLine();
+
             if (listing.ButtonText("LivingWorld_Settings_Reset".Translate(), null, 0.25f))
             {
                 s.ResetToDefaults();
@@ -221,7 +369,29 @@ namespace LivingWorld
                 listing.Label("LivingWorld_Settings_PrepareRemovalDesc".Translate());
             }
 
+            lastViewHeight = listing.CurHeight + 12f;
             listing.End();
+            Widgets.EndScrollView();
+        }
+
+        private static System.Collections.Generic.List<RimWorld.FactionDef> simFactionDefs;
+
+        /// <summary>Faction kinds the sim can track: humanlike, not hidden, not the player's.</summary>
+        private static System.Collections.Generic.List<RimWorld.FactionDef> SimFactionDefs()
+        {
+            if (simFactionDefs == null)
+            {
+                simFactionDefs = new System.Collections.Generic.List<RimWorld.FactionDef>();
+                foreach (RimWorld.FactionDef def in DefDatabase<RimWorld.FactionDef>.AllDefsListForReading)
+                {
+                    if (def.humanlikeFaction && !def.hidden && !def.isPlayer)
+                    {
+                        simFactionDefs.Add(def);
+                    }
+                }
+                simFactionDefs.SortBy(d => d.label ?? d.defName);
+            }
+            return simFactionDefs;
         }
 
         private static string VerbosityLabel(int level)

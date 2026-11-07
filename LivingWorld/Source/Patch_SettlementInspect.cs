@@ -19,7 +19,7 @@ namespace LivingWorld
             string line = mood.ProsperityLabelKey().Translate();
             if (!string.IsNullOrEmpty(mood.epithet))
             {
-                line = line + " · " + mood.epithet.Translate();
+                line = "LivingWorld_InspectJoin".Translate(line, mood.epithet.Translate());
             }
 
             if (string.IsNullOrEmpty(__result))

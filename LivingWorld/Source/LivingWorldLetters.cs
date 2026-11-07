@@ -1,4 +1,5 @@
 using RimWorld;
+using RimWorld.Planet;
 using Verse;
 
 namespace LivingWorld
@@ -24,7 +25,9 @@ namespace LivingWorld
             string label = LabelFor(ev.kind);
             string text = PrefixFor(ev) + "\n\n" + TextFor(ev);
             LetterDef letterDef = LetterDefFor(ev.severity);
-            Find.LetterStack.ReceiveLetter(label, text, letterDef);
+            PlanetTile where = ev.Where;
+            LookTargets look = where.Valid ? new LookTargets(new GlobalTargetInfo(where)) : null;
+            Find.LetterStack.ReceiveLetter(label, text, letterDef, look);
             ev.seenByPlayer = true;
         }
 
@@ -34,10 +37,9 @@ namespace LivingWorld
             {
                 case NewsSeverity.Major:
                     return LetterDefOf.NegativeEvent;
-                case NewsSeverity.Minor:
-                    return LetterDefOf.NeutralEvent;
                 default:
-                    return LetterDefOf.PositiveEvent;
+                    // Distant news is neither good nor bad for the colony.
+                    return LivingWorldDefOf.LivingWorld_WorldNews;
             }
         }
 

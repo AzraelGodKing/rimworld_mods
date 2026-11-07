@@ -15,7 +15,8 @@ namespace LivingWorld
         internal const int CurrentSaveVersion = 2;
         private const int FalloutExpiryTicks = 60000 * 60;
 
-        private const int ChronicleCapacity = 96;
+        private static int ChronicleCapacity =>
+            System.Math.Max(48, System.Math.Min(240, LivingWorldMod.Settings?.chronicleCapacity ?? 96));
         private const int EvictedCorrectionCapacity = 64;
 
         private List<WorldEvent> chronicle = new List<WorldEvent>();
@@ -93,6 +94,8 @@ namespace LivingWorld
         internal List<WorldEvent> EvictedPendingCorrections => evictedPendingCorrections;
 
         public IReadOnlyList<FactionPairState> Pairs => pairs;
+
+        public int PendingFalloutCount => pendingFallout.Count;
 
         internal List<FactionPairState> PairsMutable => pairs;
 
@@ -385,7 +388,8 @@ namespace LivingWorld
             }
 
             chronicle.Add(ev);
-            int overflow = chronicle.Count - ChronicleCapacity;
+            int capacity = ChronicleCapacity;
+            int overflow = chronicle.Count - capacity;
             if (overflow > 0)
             {
                 for (int i = 0; i < overflow; i++)

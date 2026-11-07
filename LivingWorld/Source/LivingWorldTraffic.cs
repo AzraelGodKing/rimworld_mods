@@ -256,7 +256,8 @@ namespace LivingWorld
             {
                 Settlement s = all[i];
                 Faction f = s?.Faction;
-                if (f == null || f.IsPlayer || f.defeated || f.def == null || f.def.hidden || !f.def.humanlikeFaction)
+                if (f == null || f.IsPlayer || f.defeated || f.def == null || f.def.hidden || !f.def.humanlikeFaction
+                    || LivingWorldMod.Settings?.IsExcluded(f.def) == true)
                 {
                     continue;
                 }
