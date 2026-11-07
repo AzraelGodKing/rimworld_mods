@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -17,7 +18,7 @@ namespace DateNight
 
         public static void ExposeData()
         {
-            List<BedClaim> list = null;
+            List<BedClaim>? list = null;
             if (Scribe.mode == LoadSaveMode.Saving)
             {
                 list = new List<BedClaim>(Claims.Values);
@@ -58,7 +59,7 @@ namespace DateNight
 
         public static void NotifyScheduleTick(Pawn pawn, bool onLovin, bool onDate)
         {
-            Pawn partner = DateNightRomance.FindDatePartner(pawn);
+            Pawn? partner = DateNightRomance.FindDatePartner(pawn);
             if (partner == null)
             {
                 return;
@@ -72,7 +73,7 @@ namespace DateNight
             long key = DateNightActivities.CoupleKey(pawn.thingIDNumber, partner.thingIDNumber);
             if (overlapLovin || overlapDate)
             {
-                if (Windows.TryGetValue(key, out SocialWindow existing)
+                if (Windows.TryGetValue(key, out SocialWindow? existing)
                     && existing.lovin != overlapLovin)
                 {
                     FinalizeWindow(existing);
@@ -83,7 +84,7 @@ namespace DateNight
                     Windows.Remove(key);
                 }
 
-                if (!Windows.TryGetValue(key, out SocialWindow window))
+                if (!Windows.TryGetValue(key, out SocialWindow? window))
                 {
                     window = new SocialWindow
                     {
@@ -98,11 +99,11 @@ namespace DateNight
 
                 if (overlapLovin && pawn.Spawned && partner.Spawned && pawn.Map == partner.Map)
                 {
-                    Building_Bed bed = DateNightUtility.GetRendezvousBed(pawn);
+                    Building_Bed? bed = DateNightUtility.GetRendezvousBed(pawn);
                     EnsureBedClaim(pawn, partner, bed);
                 }
             }
-            else if (Windows.TryGetValue(key, out SocialWindow ending)
+            else if (Windows.TryGetValue(key, out SocialWindow? ending)
                 && !DateNightUtility.IsLovinSchedule(partner)
                 && !DateNightUtility.IsDateSchedule(partner)
                 && !onLovin
@@ -116,7 +117,7 @@ namespace DateNight
 
         public static void NotifyLeftSharedSchedule(Pawn pawn)
         {
-            Pawn partner = DateNightRomance.FindDatePartner(pawn);
+            Pawn? partner = DateNightRomance.FindDatePartner(pawn);
             if (partner == null)
             {
                 return;
@@ -127,7 +128,7 @@ namespace DateNight
             }
 
             long key = DateNightActivities.CoupleKey(pawn.thingIDNumber, partner.thingIDNumber);
-            if (Windows.TryGetValue(key, out SocialWindow window))
+            if (Windows.TryGetValue(key, out SocialWindow? window))
             {
                 FinalizeWindow(window);
                 Windows.Remove(key);
@@ -145,9 +146,9 @@ namespace DateNight
             MarkSuccess(pawn, partner, lovinOnly: false);
         }
 
-        public static void EnsureBedClaim(Pawn pawn, Pawn partner, Building_Bed bed)
+        public static void EnsureBedClaim(Pawn pawn, Pawn partner, Building_Bed? bed)
         {
-            if (DateNightMod.Settings != null && !DateNightMod.Settings.allowWindowBedClaim)
+            if (!DateNightMod.Settings.allowWindowBedClaim)
             {
                 return;
             }
@@ -295,7 +296,7 @@ namespace DateNight
             }
 
             long key = DateNightActivities.CoupleKey(pawn.thingIDNumber, partner.thingIDNumber);
-            if (!Windows.TryGetValue(key, out SocialWindow window))
+            if (!Windows.TryGetValue(key, out SocialWindow? window))
             {
                 window = new SocialWindow
                 {
@@ -322,8 +323,8 @@ namespace DateNight
             }
             window.awarded = true;
 
-            Pawn a = FindPawn(window.pawnA);
-            Pawn b = FindPawn(window.pawnB);
+            Pawn? a = FindPawn(window.pawnA);
+            Pawn? b = FindPawn(window.pawnB);
             if (a == null || b == null || a.Dead || b.Dead)
             {
                 return;
@@ -353,15 +354,15 @@ namespace DateNight
 
         private static void ReleaseBedClaim(long key)
         {
-            if (!Claims.TryGetValue(key, out BedClaim claim))
+            if (!Claims.TryGetValue(key, out BedClaim? claim))
             {
                 return;
             }
             Claims.Remove(key);
 
-            Pawn a = FindPawn(claim.pawnA);
-            Pawn b = FindPawn(claim.pawnB);
-            Building_Bed bed = FindBed(a, b, claim.bedId);
+            Pawn? a = FindPawn(claim.pawnA);
+            Pawn? b = FindPawn(claim.pawnB);
+            Building_Bed? bed = FindBed(a, b, claim.bedId);
 
             if (claim.claimedA && a?.ownership != null && a.ownership.OwnedBed == bed)
             {
@@ -376,14 +377,14 @@ namespace DateNight
             RestoreBed(b, claim.prevBedB, bed);
         }
 
-        private static void RestoreBed(Pawn pawn, int prevBedId, Building_Bed windowBed)
+        private static void RestoreBed(Pawn? pawn, int prevBedId, Building_Bed? windowBed)
         {
             if (pawn?.ownership == null || prevBedId == 0 || pawn.ownership.OwnedBed != null)
             {
                 return;
             }
 
-            Building_Bed prev = FindBedOnMaps(prevBedId);
+            Building_Bed? prev = FindBedOnMaps(prevBedId);
             if (prev == null || prev == windowBed || prev.Destroyed || !prev.Spawned || prev.Medical)
             {
                 return;
@@ -418,7 +419,7 @@ namespace DateNight
         }
 
 
-        private static Pawn FindPawn(int id)
+        private static Pawn? FindPawn(int id)
         {
             List<Pawn> pawns = PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_FreeColonists;
             if (pawns == null)
@@ -435,7 +436,7 @@ namespace DateNight
             return null;
         }
 
-        private static Building_Bed FindBed(Pawn a, Pawn b, int bedId)
+        private static Building_Bed? FindBed(Pawn? a, Pawn? b, int bedId)
         {
             if (a?.ownership?.OwnedBed != null && a.ownership.OwnedBed.thingIDNumber == bedId)
             {
@@ -448,7 +449,7 @@ namespace DateNight
             return FindBedOnMaps(bedId);
         }
 
-        private static Building_Bed FindBedOnMaps(int bedId)
+        private static Building_Bed? FindBedOnMaps(int bedId)
         {
             List<Map> maps = Find.Maps;
             for (int m = 0; m < maps.Count; m++)

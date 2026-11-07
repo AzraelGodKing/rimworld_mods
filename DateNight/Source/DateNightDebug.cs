@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using LudeonTK;
 using RimWorld;
@@ -24,7 +25,7 @@ namespace DateNight
                 return;
             }
 
-            if (TryMakeLovers(pair[0], pair[1], out string detail))
+            if (TryMakeLovers(pair[0], pair[1], out string? detail))
             {
                 Messages.Message($"[Date Night] {pair[0].LabelShort} and {pair[1].LabelShort} are now lovers. {detail}",
                     MessageTypeDefOf.NeutralEvent, historical: false);
@@ -46,7 +47,7 @@ namespace DateNight
                 return;
             }
 
-            Pawn selected = Find.Selector?.SingleSelectedThing as Pawn;
+            Pawn? selected = Find.Selector?.SingleSelectedThing as Pawn;
             if (selected == null || !selected.RaceProps.Humanlike || selected.Dead || selected == clicked)
             {
                 Messages.Message("[Date Night] Select one humanlike, then click their partner.",
@@ -54,7 +55,7 @@ namespace DateNight
                 return;
             }
 
-            if (TryMakeLovers(selected, clicked, out string detail))
+            if (TryMakeLovers(selected, clicked, out string? detail))
             {
                 Messages.Message($"[Date Night] {selected.LabelShort} and {clicked.LabelShort} are now lovers. {detail}",
                     MessageTypeDefOf.NeutralEvent, historical: false);
@@ -74,10 +75,10 @@ namespace DateNight
             foreach (Pawn p in SelectedHumanlikes())
             {
                 Building_Bed bed = p.CurrentBed();
-                Pawn partner = bed != null
+                Pawn? partner = bed != null
                     ? LovePartnerRelationUtility.GetPartnerInMyBed(p)
                     : null;
-                string why = bed == null ? "not in bed"
+                string? why = bed == null ? "not in bed"
                     : bed.SleepingSlotsCount <= 1 ? "single bed"
                     : partner == null ? "no love partner in this bed"
                     : p.CurJobDef == JobDefOf.Lovin ? "already lovin"
@@ -107,7 +108,7 @@ namespace DateNight
             int n = 0;
             foreach (Pawn p in SelectedHumanlikes())
             {
-                string why = p.ageTracker == null || !p.ageTracker.Adult || !p.DevelopmentalStage.Adult() ? "not an adult"
+                string? why = p.ageTracker == null || !p.ageTracker.Adult || !p.DevelopmentalStage.Adult() ? "not an adult"
                     : p.CurJobDef == DateNightDefOf.DateNight_SelfLovin ? "already private time"
                     : p.CurJobDef == JobDefOf.Lovin ? "already lovin"
                     : LovePartnerRelationUtility.GetPartnerInMyBed(p) != null ? "love partner is in this bed — use Force lovin"
@@ -253,7 +254,7 @@ namespace DateNight
         {
             foreach (Pawn p in SelectedHumanlikes())
             {
-                Building_Bed bed = DateNightUtility.GetRendezvousBed(p);
+                Building_Bed? bed = DateNightUtility.GetRendezvousBed(p);
                 Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(p, allowDead: false);
                 Messages.Message(
                     $"[Date Night] {p.LabelShort}: partner={partner?.LabelShort ?? "none"} rendezvous={bed?.LabelCap ?? "none"} (slots={bed?.SleepingSlotsCount ?? 0}) current={p.CurrentBed()?.LabelCap ?? "none"} job={p.CurJobDef?.defName ?? "none"}",
@@ -265,45 +266,51 @@ namespace DateNight
             allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void PaintLovinAllDay()
         {
-            if (DateNightDefOf.DateNight_Lovin == null)
-            {
-                Messages.Message("[Date Night] Lovin TimeAssignmentDef missing.",
-                    MessageTypeDefOf.RejectInput, historical: false);
-                return;
-            }
-
-            int n = 0;
-            foreach (Pawn p in SelectedHumanlikes())
-            {
-                if (p.timetable == null)
-                {
-                    continue;
-                }
-                for (int h = 0; h < 24; h++)
-                {
-                    p.timetable.SetAssignment(h, DateNightDefOf.DateNight_Lovin);
-                }
-                n++;
-            }
-
-            Messages.Message(n > 0
-                    ? $"[Date Night] Painted Lovin all day on {n} pawn(s)."
-                    : "[Date Night] Select colonists with a timetable.",
-                n > 0 ? MessageTypeDefOf.NeutralEvent : MessageTypeDefOf.RejectInput,
-                historical: false);
+            PaintAllDay(DateNightDefOf.DateNight_Lovin);
         }
 
         [DebugAction(Cat, "Paint Date on selected (all hours)",
             allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void PaintDateAllDay()
         {
-            if (DateNightDefOf.DateNight_Date == null)
-            {
-                Messages.Message("[Date Night] Date TimeAssignmentDef missing.",
-                    MessageTypeDefOf.RejectInput, historical: false);
-                return;
-            }
+            PaintAllDay(DateNightDefOf.DateNight_Date);
+        }
 
+        [DebugAction(Cat, "Force anniversary letter (selected pair)",
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceAnniversaryLetter()
+        {
+            if (TrySelectedCouple(out Pawn a, out Pawn b))
+            {
+                DateNightAnniversaries.DebugForceLetter(a, b);
+                Done($"Anniversary letter for {a.LabelShort} and {b.LabelShort}.");
+            }
+        }
+
+        [DebugAction(Cat, "Force missed-anniversary mood (selected pair)",
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void ForceMissedAnniversary()
+        {
+            if (TrySelectedCouple(out Pawn a, out Pawn b))
+            {
+                DateNightAnniversaries.DebugForceMissed(a, b);
+                Done($"Missed-anniversary mood for {a.LabelShort} and {b.LabelShort}.");
+            }
+        }
+
+        [DebugAction(Cat, "Set bond age to 1 year (selected pair)",
+            allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void SetBondAgeOneYear()
+        {
+            if (TrySelectedCouple(out Pawn a, out Pawn b))
+            {
+                DateNightAnniversaries.DebugSetBondAgeYears(a, b, 1);
+                Done($"{a.LabelShort} and {b.LabelShort} bond set to 1 year ago (next matching day-of-year fires the letter).");
+            }
+        }
+
+        private static void PaintAllDay(TimeAssignmentDef def)
+        {
             int n = 0;
             foreach (Pawn p in SelectedHumanlikes())
             {
@@ -313,115 +320,42 @@ namespace DateNight
                 }
                 for (int h = 0; h < 24; h++)
                 {
-                    p.timetable.SetAssignment(h, DateNightDefOf.DateNight_Date);
+                    p.timetable.SetAssignment(h, def);
                 }
                 n++;
             }
 
             Messages.Message(n > 0
-                    ? $"[Date Night] Painted Date all day on {n} pawn(s)."
+                    ? $"[Date Night] Painted {def.label} all day on {n} pawn(s)."
                     : "[Date Night] Select colonists with a timetable.",
                 n > 0 ? MessageTypeDefOf.NeutralEvent : MessageTypeDefOf.RejectInput,
                 historical: false);
         }
 
-        [DebugAction(Cat, "Force anniversary letter (selected pair)",
-            allowedGameStates = AllowedGameStates.PlayingOnMap)]
-        private static void ForceAnniversaryLetter()
+        /// <summary>Two selected pawns, or one selected pawn and their love partner.</summary>
+        private static bool TrySelectedCouple(out Pawn a, out Pawn b)
         {
             List<Pawn> pair = SelectedHumanlikes();
-            Pawn a;
-            Pawn b;
-            if (pair.Count == 2)
-            {
-                a = pair[0];
-                b = pair[1];
-            }
-            else if (pair.Count == 1)
-            {
-                a = pair[0];
-                b = LovePartnerRelationUtility.ExistingMostLikedLovePartner(a, allowDead: false);
-            }
-            else
-            {
-                a = null;
-                b = null;
-            }
-            if (a == null || b == null)
+            Pawn? first = pair.Count >= 1 && pair.Count <= 2 ? pair[0] : null;
+            Pawn? second = pair.Count == 2
+                ? pair[1]
+                : first != null ? LovePartnerRelationUtility.ExistingMostLikedLovePartner(first, allowDead: false) : null;
+            if (first == null || second == null)
             {
                 Messages.Message("[Date Night] Select a couple (or one pawn with a love partner).",
                     MessageTypeDefOf.RejectInput, historical: false);
-                return;
+                a = null!;
+                b = null!;
+                return false;
             }
-            DateNightAnniversaries.DebugForceLetter(a, b);
-            Messages.Message($"[Date Night] Anniversary letter for {a.LabelShort} and {b.LabelShort}.",
-                MessageTypeDefOf.NeutralEvent, historical: false);
+            a = first;
+            b = second;
+            return true;
         }
 
-        [DebugAction(Cat, "Force missed-anniversary mood (selected pair)",
-            allowedGameStates = AllowedGameStates.PlayingOnMap)]
-        private static void ForceMissedAnniversary()
+        private static void Done(string text)
         {
-            List<Pawn> pair = SelectedHumanlikes();
-            Pawn a;
-            Pawn b;
-            if (pair.Count == 2)
-            {
-                a = pair[0];
-                b = pair[1];
-            }
-            else if (pair.Count == 1)
-            {
-                a = pair[0];
-                b = LovePartnerRelationUtility.ExistingMostLikedLovePartner(a, allowDead: false);
-            }
-            else
-            {
-                a = null;
-                b = null;
-            }
-            if (a == null || b == null)
-            {
-                Messages.Message("[Date Night] Select a couple (or one pawn with a love partner).",
-                    MessageTypeDefOf.RejectInput, historical: false);
-                return;
-            }
-            DateNightAnniversaries.DebugForceMissed(a, b);
-            Messages.Message($"[Date Night] Missed-anniversary mood for {a.LabelShort} and {b.LabelShort}.",
-                MessageTypeDefOf.NeutralEvent, historical: false);
-        }
-
-        [DebugAction(Cat, "Set bond age to 1 year (selected pair)",
-            allowedGameStates = AllowedGameStates.PlayingOnMap)]
-        private static void SetBondAgeOneYear()
-        {
-            List<Pawn> pair = SelectedHumanlikes();
-            Pawn a;
-            Pawn b;
-            if (pair.Count == 2)
-            {
-                a = pair[0];
-                b = pair[1];
-            }
-            else if (pair.Count == 1)
-            {
-                a = pair[0];
-                b = LovePartnerRelationUtility.ExistingMostLikedLovePartner(a, allowDead: false);
-            }
-            else
-            {
-                a = null;
-                b = null;
-            }
-            if (a == null || b == null)
-            {
-                Messages.Message("[Date Night] Select a couple (or one pawn with a love partner).",
-                    MessageTypeDefOf.RejectInput, historical: false);
-                return;
-            }
-            DateNightAnniversaries.DebugSetBondAgeYears(a, b, 1);
-            Messages.Message($"[Date Night] {a.LabelShort} and {b.LabelShort} bond set to 1 year ago (next matching day-of-year fires the letter).",
-                MessageTypeDefOf.NeutralEvent, historical: false);
+            Messages.Message("[Date Night] " + text, MessageTypeDefOf.NeutralEvent, historical: false);
         }
 
         [DebugAction(Cat, "Log favourite venue for selected",
@@ -475,7 +409,7 @@ namespace DateNight
             }
         }
 
-        private static bool TryMakeLovers(Pawn a, Pawn b, out string detail)
+        private static bool TryMakeLovers(Pawn a, Pawn b, out string? detail)
         {
             detail = null;
             if (a == null || b == null || a == b)

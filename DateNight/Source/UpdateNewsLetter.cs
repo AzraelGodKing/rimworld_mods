@@ -1,8 +1,9 @@
-﻿namespace DateNight
+﻿#nullable enable
+namespace DateNight
 {
     internal static class UpdateNewsLetter
     {
-        internal static void TrySend(ref string lastAnnouncedVersion)
+        internal static void TrySend(ref string? lastAnnouncedVersion)
         {
             AzraelCommon.UpdateNews.TrySend(
                 ref lastAnnouncedVersion,

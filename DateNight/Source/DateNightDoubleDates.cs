@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
@@ -67,11 +68,11 @@ namespace DateNight
         /// <summary>How well two couples have got on across past double dates (-5..5).</summary>
         public static int RapportBetween(Pawn a1, Pawn b1, Pawn a2, Pawn b2)
         {
-            CoupleRapport r = FindRapport(a1.thingIDNumber, b1.thingIDNumber, a2.thingIDNumber, b2.thingIDNumber);
+            CoupleRapport? r = FindRapport(a1.thingIDNumber, b1.thingIDNumber, a2.thingIDNumber, b2.thingIDNumber);
             return r?.score ?? 0;
         }
 
-        private static CoupleRapport FindRapport(int a1, int b1, int a2, int b2)
+        private static CoupleRapport? FindRapport(int a1, int b1, int a2, int b2)
         {
             if (rapport == null)
             {
@@ -89,7 +90,7 @@ namespace DateNight
             return null;
         }
 
-        private static void AdjustRapport(DoubleDateSession session, ThoughtDef quality)
+        private static void AdjustRapport(DoubleDateSession session, ThoughtDef? quality)
         {
             int delta;
             if (quality == DateNightDefOf.DateNight_DateAwkward || quality == DateNightDefOf.DateNight_DateRuined)
@@ -105,7 +106,7 @@ namespace DateNight
                 delta = 1;
             }
 
-            CoupleRapport r = FindRapport(session.hostA, session.hostB, session.guestA, session.guestB);
+            CoupleRapport? r = FindRapport(session.hostA, session.hostB, session.guestA, session.guestB);
             if (r == null)
             {
                 r = new CoupleRapport
@@ -122,7 +123,7 @@ namespace DateNight
 
         public static bool Allowed
         {
-            get { return DateNightMod.Settings == null || DateNightMod.Settings.allowDoubleDates; }
+            get { return DateNightMod.Settings.allowDoubleDates; }
         }
 
         public static void Tick()
@@ -160,7 +161,7 @@ namespace DateNight
             }
         }
 
-        public static void BindIfPossible(Pawn pawn, Pawn partner)
+        public static void BindIfPossible(Pawn pawn, Pawn? partner)
         {
             if (!Allowed || pawn?.Map == null || partner == null)
             {
@@ -171,14 +172,13 @@ namespace DateNight
                 return;
             }
 
-            Pawn otherA;
-            Pawn otherB;
-            if (!TryFindOtherCouple(pawn, partner, out otherA, out otherB))
+            if (!TryFindOtherCouple(pawn, partner, out Pawn? otherA, out Pawn? otherB)
+                || otherA == null || otherB == null)
             {
                 return;
             }
 
-            DoubleDateSession existing = FindSession(otherA) ?? FindSession(otherB);
+            DoubleDateSession? existing = FindSession(otherA) ?? FindSession(otherB);
             if (existing != null)
             {
                 existing.TryJoinGuest(pawn, partner);
@@ -202,7 +202,7 @@ namespace DateNight
             sessions.Add(DoubleDateSession.Create(hostA, hostB, guestA, guestB));
         }
 
-        public static DoubleDateSession FindSession(Pawn pawn)
+        public static DoubleDateSession? FindSession(Pawn pawn)
         {
             if (pawn == null || sessions == null)
             {
@@ -220,13 +220,13 @@ namespace DateNight
 
         public static bool IsDoubleDate(Pawn pawn)
         {
-            DoubleDateSession session = FindSession(pawn);
+            DoubleDateSession? session = FindSession(pawn);
             return session != null && session.guestA != 0;
         }
 
-        public static int StandIndex(Pawn pawn, Pawn partner)
+        public static int StandIndex(Pawn pawn, Pawn? partner)
         {
-            DoubleDateSession session = FindSession(pawn);
+            DoubleDateSession? session = FindSession(pawn);
             if (session == null)
             {
                 return DateNightActivities.IsInitiator(pawn, partner) ? 0 : 1;
@@ -234,9 +234,9 @@ namespace DateNight
             return session.StandIndex(pawn.thingIDNumber);
         }
 
-        public static void NotifyFinished(Pawn pawn, Pawn partner, ThoughtDef quality)
+        public static void NotifyFinished(Pawn pawn, Pawn partner, ThoughtDef? quality)
         {
-            DoubleDateSession session = FindSession(pawn);
+            DoubleDateSession? session = FindSession(pawn);
             if (session == null || session.guestA == 0)
             {
                 return;
@@ -252,7 +252,7 @@ namespace DateNight
 
         public static DateActivity SharedActivity(Pawn pawn, DateActivity fallback)
         {
-            DoubleDateSession session = FindSession(pawn);
+            DoubleDateSession? session = FindSession(pawn);
             if (session == null)
             {
                 return fallback;
@@ -262,7 +262,7 @@ namespace DateNight
 
         public static int QualitySeed(Pawn pawn, Pawn partner)
         {
-            DoubleDateSession session = FindSession(pawn);
+            DoubleDateSession? session = FindSession(pawn);
             if (session != null)
             {
                 return session.qualitySeed;
@@ -273,7 +273,7 @@ namespace DateNight
         public static bool TryGetSharedVenue(Pawn pawn, out LocalTargetInfo venue)
         {
             venue = LocalTargetInfo.Invalid;
-            DoubleDateSession session = FindSession(pawn);
+            DoubleDateSession? session = FindSession(pawn);
             if (session == null)
             {
                 return false;
@@ -282,7 +282,7 @@ namespace DateNight
             return venue.IsValid;
         }
 
-        private static bool TryFindOtherCouple(Pawn pawn, Pawn partner, out Pawn otherA, out Pawn otherB)
+        private static bool TryFindOtherCouple(Pawn pawn, Pawn partner, out Pawn? otherA, out Pawn? otherB)
         {
             otherA = null;
             otherB = null;
@@ -292,8 +292,8 @@ namespace DateNight
                 return false;
             }
 
-            Pawn bestA = null;
-            Pawn bestB = null;
+            Pawn? bestA = null;
+            Pawn? bestB = null;
             int bestRapport = int.MinValue;
             int bestSeed = int.MaxValue;
             for (int i = 0; i < colonists.Count; i++)
@@ -349,15 +349,15 @@ namespace DateNight
 
         private static void ApplyNoShow(DoubleDateSession session)
         {
-            Pawn a = FindPawn(session.hostA);
-            Pawn b = FindPawn(session.hostB);
+            Pawn? a = FindPawn(session.hostA);
+            Pawn? b = FindPawn(session.hostB);
             GiveMood(a, DateNightDefOf.DateNight_DoubleDateNoShow);
             GiveMood(b, DateNightDefOf.DateNight_DoubleDateNoShow);
         }
 
-        private static void ApplySpillover(Pawn pawn, DoubleDateSession session, ThoughtDef quality)
+        private static void ApplySpillover(Pawn pawn, DoubleDateSession session, ThoughtDef? quality)
         {
-            List<int> others = session.OtherCoupleIds(pawn.thingIDNumber);
+            List<int>? others = session.OtherCoupleIds(pawn.thingIDNumber);
             if (others == null)
             {
                 return;
@@ -365,11 +365,11 @@ namespace DateNight
 
             bool awkward = quality == DateNightDefOf.DateNight_DateAwkward
                 || quality == DateNightDefOf.DateNight_DateRuined;
-            CoupleRapport pairRapport = FindRapport(session.hostA, session.hostB, session.guestA, session.guestB);
+            CoupleRapport? pairRapport = FindRapport(session.hostA, session.hostB, session.guestA, session.guestB);
             bool friendly = pairRapport != null && pairRapport.score >= FriendlyRapport;
             for (int i = 0; i < others.Count; i++)
             {
-                Pawn other = FindPawn(others[i]);
+                Pawn? other = FindPawn(others[i]);
                 if (other == null || other.Dead)
                 {
                     continue;
@@ -389,7 +389,7 @@ namespace DateNight
             }
         }
 
-        private static void GiveMood(Pawn pawn, ThoughtDef def)
+        private static void GiveMood(Pawn? pawn, ThoughtDef? def)
         {
             if (pawn?.needs?.mood?.thoughts?.memories == null || def == null)
             {
@@ -402,7 +402,7 @@ namespace DateNight
             pawn.needs.mood.thoughts.memories.TryGainMemory(def);
         }
 
-        private static Pawn FindPawn(int id)
+        private static Pawn? FindPawn(int id)
         {
             List<Pawn> pawns = PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_FreeColonists;
             if (pawns == null)
@@ -549,7 +549,7 @@ namespace DateNight
                     && now - createdTick > GuestWaitTicks * 2);
         }
 
-        public List<int> OtherCoupleIds(int id)
+        public List<int>? OtherCoupleIds(int id)
         {
             bool host = id == hostA || id == hostB;
             if (host)

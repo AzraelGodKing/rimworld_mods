@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Reflection;
 using HarmonyLib;
@@ -25,7 +26,7 @@ namespace DateNight
         private static bool bound;
         private static bool logged;
         private static bool active;
-        private static MethodInfo affectNeedForPawn;
+        private static MethodInfo? affectNeedForPawn;
         private static float niceGain = DefaultNiceGain;
         private static float wonderfulGain = DefaultWonderfulGain;
         private static float awkwardGain = DefaultAwkwardGain;
@@ -63,10 +64,10 @@ namespace DateNight
                 return true;
             }
 
-            Type driverType = pawn.jobs?.curDriver?.GetType();
+            Type? driverType = pawn.jobs?.curDriver?.GetType();
             while (driverType != null && driverType != typeof(JobDriver))
             {
-                string ns = driverType.Namespace;
+                string? ns = driverType.Namespace;
                 if (ns == "RomanceOnTheRim"
                     || (ns != null && ns.StartsWith("RomanceOnTheRim.", StringComparison.Ordinal)))
                 {
@@ -83,7 +84,7 @@ namespace DateNight
         /// RotR is missing or the pawn has no romance need (usually not lovers yet).
         /// Amount matches RotR stroll / lovin / kiss-scale tuning when those fields bind.
         /// </summary>
-        public static void NotifyDateFinished(Pawn pawn, ThoughtDef quality, bool anniversary = false)
+        public static void NotifyDateFinished(Pawn pawn, ThoughtDef? quality, bool anniversary = false)
         {
             Bind();
             if (!active || pawn == null)
@@ -112,7 +113,7 @@ namespace DateNight
             TryFillNeedDirect(pawn, amount);
         }
 
-        private static float AmountFor(ThoughtDef quality, bool anniversary)
+        private static float AmountFor(ThoughtDef? quality, bool anniversary)
         {
             float amount = niceGain;
             if (quality == DateNightDefOf.DateNight_DateWonderful)
@@ -215,7 +216,7 @@ namespace DateNight
                 {
                     return fallback;
                 }
-                object value = info.GetValue(null);
+                object? value = info.GetValue(null);
                 if (value is float)
                 {
                     return (float)value;

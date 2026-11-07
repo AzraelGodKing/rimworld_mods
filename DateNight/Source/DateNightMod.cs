@@ -1,3 +1,4 @@
+#nullable enable
 using AzraelCommon;
 using HarmonyLib;
 using UnityEngine;
@@ -7,12 +8,13 @@ namespace DateNight
 {
     public class DateNightMod : Mod
     {
-        public static DateNightSettings Settings;
+        // Set in the Mod constructor, before any def or game code runs.
+        public static DateNightSettings Settings { get; private set; } = null!;
 
         public DateNightMod(ModContentPack content) : base(content)
         {
             Settings = GetSettings<DateNightSettings>();
-            ModVersionLog.Write("[DateNight]", content, extra: "gradual-romance-v1");
+            ModVersionLog.Write("[DateNight]", content, extra: "datenight2-net10");
             // PatchAll runs after defs load — Harmony compiling TimeAssignmentSelector
             // patches otherwise touches TimeAssignmentDefOf before DefOfs exist.
         }

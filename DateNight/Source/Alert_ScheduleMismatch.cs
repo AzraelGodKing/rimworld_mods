@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using System.Text;
 using RimWorld;
@@ -125,8 +126,8 @@ namespace DateNight
             culprits.Clear();
             rows.Clear();
 
-            TimeAssignmentDef lovin = DateNightDefOf.DateNight_Lovin;
-            TimeAssignmentDef date = DateNightDefOf.DateNight_Date;
+            TimeAssignmentDef? lovin = DateNightDefOf.DateNight_Lovin;
+            TimeAssignmentDef? date = DateNightDefOf.DateNight_Date;
             if (lovin == null && date == null)
             {
                 return;
@@ -147,8 +148,8 @@ namespace DateNight
                     continue;
                 }
 
-                Pawn partner = DateNightRomance.FindDatePartner(pawn);
-                if (!IsEligible(partner) || partner.thingIDNumber == pawn.thingIDNumber)
+                Pawn? partner = DateNightRomance.FindDatePartner(pawn);
+                if (partner == null || !IsEligible(partner) || partner.thingIDNumber == pawn.thingIDNumber)
                 {
                     continue;
                 }
@@ -168,7 +169,7 @@ namespace DateNight
             }
         }
 
-        private void AppendSlot(Pawn a, Pawn b, TimeAssignmentDef def, string slotLabel)
+        private void AppendSlot(Pawn a, Pawn b, TimeAssignmentDef? def, string slotLabel)
         {
             if (def == null || slotLabel.NullOrEmpty())
             {
@@ -220,7 +221,7 @@ namespace DateNight
             }
         }
 
-        private static bool IsEligible(Pawn pawn)
+        private static bool IsEligible(Pawn? pawn)
         {
             if (pawn == null || pawn.Dead || pawn.timetable == null)
             {

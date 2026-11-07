@@ -1,3 +1,4 @@
+#nullable enable
 using RimWorld;
 using Verse;
 
@@ -12,7 +13,7 @@ namespace DateNight
         {
             get
             {
-                string text = CurStage?.description;
+                string? text = CurStage?.description;
                 if (text.NullOrEmpty())
                 {
                     text = def.description;

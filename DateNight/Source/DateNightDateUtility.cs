@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -7,7 +8,7 @@ namespace DateNight
 {
     public static class DateNightDateUtility
     {
-        public static bool CanDate(Pawn pawn, Pawn partner, bool force = false)
+        public static bool CanDate(Pawn pawn, Pawn? partner, bool force = false)
         {
             if (pawn == null || partner == null || pawn == partner)
             {
@@ -86,7 +87,7 @@ namespace DateNight
                 return;
             }
 
-            Pawn partner = DateNightRomance.FindDatePartner(pawn);
+            Pawn? partner = DateNightRomance.FindDatePartner(pawn);
             if (partner == null || !DateNightUtility.IsDateSchedule(partner))
             {
                 return;
@@ -110,8 +111,8 @@ namespace DateNight
                 return true;
             }
 
-            Pawn partner = DateNightRomance.FindDatePartner(pawn);
-            if (!CanDate(pawn, partner, force))
+            Pawn? partner = DateNightRomance.FindDatePartner(pawn);
+            if (partner == null || !CanDate(pawn, partner, force))
             {
                 return false;
             }
@@ -185,7 +186,7 @@ namespace DateNight
                 return;
             }
 
-            List<int> remove = null;
+            List<int>? remove = null;
             foreach (int id in dict.Keys)
             {
                 if (!PawnStillAlive(id))
@@ -214,10 +215,10 @@ namespace DateNight
             return FindPawnById(id) != null;
         }
 
-        private static Dictionary<int, Pawn> pawnById;
+        private static Dictionary<int, Pawn>? pawnById;
         private static int pawnByIdTick = -1;
 
-        internal static Pawn FindPawnById(int id)
+        internal static Pawn? FindPawnById(int id)
         {
             int now = Find.TickManager != null ? Find.TickManager.TicksGame : -1;
             if (pawnById == null || pawnByIdTick != now)
@@ -238,7 +239,7 @@ namespace DateNight
                 }
             }
 
-            pawnById.TryGetValue(id, out Pawn found);
+            pawnById.TryGetValue(id, out Pawn? found);
             return found;
         }
 
@@ -246,7 +247,7 @@ namespace DateNight
         /// Same durations as lovin: 10000–20000 ticks (~4–8 hours) by default,
         /// or ~100 ticks in Eager mode.
         /// </summary>
-        public static void ApplyDateCooldown(Pawn pawn, Pawn partner)
+        public static void ApplyDateCooldown(Pawn pawn, Pawn? partner)
         {
             int until = Find.TickManager.TicksGame + DateCooldownDuration();
             SetCanDateTick(pawn, until);
@@ -271,7 +272,7 @@ namespace DateNight
             return Find.TickManager.TicksGame >= until;
         }
 
-        private static void SetCanDateTick(Pawn pawn, int until)
+        private static void SetCanDateTick(Pawn? pawn, int until)
         {
             if (pawn == null)
             {
@@ -285,8 +286,7 @@ namespace DateNight
 
         private static int DateCooldownDuration()
         {
-            if (DateNightMod.Settings != null
-                && DateNightMod.Settings.eagerCooldown
+            if (DateNightMod.Settings.eagerCooldown
                 && !DateNightMod.Settings.pregnancySafeCooldown)
             {
                 return DateNightUtility.AlwaysDoLovinCooldownTicks;
@@ -303,7 +303,7 @@ namespace DateNight
             return Find.TickManager.TicksGame - tick <= GoodDateBoostTicks;
         }
 
-        public static void NotifyDateFinished(Pawn pawn, Pawn partner, DateActivity activity, LocalTargetInfo spot)
+        public static void NotifyDateFinished(Pawn pawn, Pawn? partner, DateActivity activity, LocalTargetInfo spot)
         {
             if (pawn?.needs?.mood?.thoughts?.memories == null || partner == null)
             {
@@ -314,7 +314,7 @@ namespace DateNight
                 return;
             }
 
-            ThoughtDef def = PickQualityThought(pawn, partner, activity, spot);
+            ThoughtDef? def = PickQualityThought(pawn, partner, activity, spot);
             if (def != null)
             {
                 pawn.needs.mood.thoughts.memories.TryGainMemory(def, partner);
@@ -334,7 +334,7 @@ namespace DateNight
             DateNightRotrSoftCompat.NotifyDateFinished(pawn, def,
                 DateNightAnniversaries.IsAnniversaryToday(pawn, partner));
 
-            if (DateNightMod.Settings == null || DateNightMod.Settings.postDateLovinBoost)
+            if (DateNightMod.Settings.postDateLovinBoost)
             {
                 lastGoodDateTicks[pawn.thingIDNumber] = Find.TickManager.TicksGame;
             }
@@ -347,9 +347,9 @@ namespace DateNight
         /// did something more special than standing around, and a seeded roll shared
         /// by both partners.
         /// </summary>
-        private static ThoughtDef PickQualityThought(Pawn pawn, Pawn partner, DateActivity activity, LocalTargetInfo spot)
+        private static ThoughtDef? PickQualityThought(Pawn pawn, Pawn partner, DateActivity activity, LocalTargetInfo spot)
         {
-            if (DateNightMod.Settings != null && !DateNightMod.Settings.enableDateQuality)
+            if (!DateNightMod.Settings.enableDateQuality)
             {
                 return DateNightDefOf.DateNight_HadADate;
             }
@@ -405,7 +405,7 @@ namespace DateNight
         }
 
         /// <summary>Date cut short by a draft, mental break, or an active threat.</summary>
-        public static void NotifyDateInterrupted(Pawn pawn, Pawn partner)
+        public static void NotifyDateInterrupted(Pawn pawn, Pawn? partner)
         {
             if (pawn?.needs?.mood?.thoughts?.memories == null)
             {
@@ -425,7 +425,7 @@ namespace DateNight
                 return;
             }
 
-            ThoughtDef def = DateNightDefOf.DateNight_DateRuined;
+            ThoughtDef? def = DateNightDefOf.DateNight_DateRuined;
             if (def != null)
             {
                 pawn.needs.mood.thoughts.memories.TryGainMemory(def);
@@ -450,7 +450,7 @@ namespace DateNight
                 return;
             }
 
-            ThoughtDef def = DateNightDefOf.DateNight_ReceivedGift;
+            ThoughtDef? def = DateNightDefOf.DateNight_ReceivedGift;
             if (def != null)
             {
                 receiver.needs.mood.thoughts.memories.TryGainMemory(def, giver);
@@ -459,7 +459,7 @@ namespace DateNight
 
         public static LocalTargetInfo FindDateSpot(Pawn pawn, Pawn partner)
         {
-            Thing gather = DateNightActivities.FindGatherSpotFor(pawn, partner);
+            Thing? gather = DateNightActivities.FindGatherSpotFor(pawn, partner);
             if (gather != null)
             {
                 return gather;
@@ -474,7 +474,7 @@ namespace DateNight
             return partner;
         }
 
-        internal static void TryGainThought(Pawn pawn, Pawn other, ThoughtDef def)
+        internal static void TryGainThought(Pawn? pawn, Pawn? other, ThoughtDef? def)
         {
             if (pawn?.needs?.mood?.thoughts?.memories == null || def == null || other == null)
             {
