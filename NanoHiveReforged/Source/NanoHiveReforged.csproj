@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <LangVersion>latest</LangVersion>
@@ -12,6 +12,11 @@
     <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
     <Nullable>disable</Nullable>
   </PropertyGroup>
+  <ItemGroup>
+    <!-- No Harmony: link only the Common files that do not need it. -->
+    <Compile Include="..\..\Common\ModPack.cs" Link="Common\ModPack.cs" />
+    <Compile Include="..\..\Common\ModVersionLog.cs" Link="Common\ModVersionLog.cs" />
+  </ItemGroup>
   <ItemGroup>
     <!-- 1.7-only sources. The 1.7 project compiles these; this project does not. -->
     <Compile Remove="RimWorld17\**" />

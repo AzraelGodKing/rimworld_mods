@@ -1,3 +1,12 @@
+2.0.0
+[h1]NanoHive Reforged — 2.0.0[/h1]
+One package for RimWorld 1.6 and 1.7. Saves from 1.x keep working.
+[b]Changed[/b]
+[list]
+[*] [b]Built for 1.7[/b] — the 1.7 DLL is built against the 1.7 game on .NET 10. The 1.6 DLL is still built for 1.6.
+[*] Player.log prints the NanoHive version and build on startup, and the Azrael series hub shows it.
+[/list]
+
 1.1.0
 [h1]NanoHive Reforged — 1.1.0[/h1]
 [b]Changed[/b]

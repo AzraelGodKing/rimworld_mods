@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using RimWorld;
 using Verse;
 
@@ -35,6 +35,7 @@ namespace NanoHiveReforged
         public NanoHiveReforgedMod(ModContentPack content) : base(content)
         {
             Settings = GetSettings<NanoHiveSettings>();
+            NanoHiveReforgedBuildInfo.LogStartup(content);
         }
 
         public override string SettingsCategory()

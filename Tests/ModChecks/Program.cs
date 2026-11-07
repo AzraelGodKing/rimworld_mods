@@ -25,6 +25,7 @@ namespace Azrael.ModChecks
             CheckSeriesRosterFromSource(repo, errors);
             CheckScribeParity(repo, errors);
             CheckKeyedLiterals(repo, errors);
+            CheckOwnTexPaths(repo, errors);
 
             using (RefPack pack = RefPack.Load(repo))
             {
@@ -51,12 +52,20 @@ namespace Azrael.ModChecks
         {
             "Azrael", "DateNight", "Deep Colony", "Homesteader", "LivingWorld",
             "Nemesis", "Niceties", "Stormproof", "Strata", "WaveSurvivalReforged",
+            "NanoHiveReforged",
         };
 
         // Not pinned in SeriesHub.Series; the hub still lists them at runtime via the azraelgodking.* scan.
         static readonly string[] OutsideSeriesRoster =
         {
-            "WaveSurvivalReforged",
+            "WaveSurvivalReforged", "NanoHiveReforged",
+        };
+
+        // Mods whose defs only use their own textures, so every texPath must exist
+        // under the mod's Textures folder (vanilla paths would fail here).
+        static readonly string[] OwnTexturesOnly =
+        {
+            "NanoHiveReforged",
         };
 
         static readonly string[] OurDefPrefixes =
@@ -448,6 +457,40 @@ namespace Azrael.ModChecks
                             continue;
                         errors.Add("Translate() prefix missing in English Keyed: " + prefix
                             + " (" + Rel(repo, file) + ")");
+                    }
+                }
+            }
+        }
+
+        static void CheckOwnTexPaths(string repo, List<string> errors)
+        {
+            foreach (string folder in OwnTexturesOnly)
+            {
+                string textures = Path.Combine(repo, folder, "Textures");
+                foreach (string defs in DefFolders(repo, folder))
+                {
+                    foreach (string file in Directory.GetFiles(defs, "*.xml", SearchOption.AllDirectories))
+                    {
+                        XDocument doc;
+                        try
+                        {
+                            doc = XDocument.Load(file);
+                        }
+                        catch
+                        {
+                            continue; // CollectDefNames already reports parse errors.
+                        }
+                        foreach (XElement el in doc.Descendants().Where(e => e.Name.LocalName == "texPath"))
+                        {
+                            string rel = ((string)el ?? "").Trim().Replace('\\', '/');
+                            if (rel.Length == 0)
+                                continue;
+                            string basePath = Path.Combine(textures, rel.Replace('/', Path.DirectorySeparatorChar));
+                            if (File.Exists(basePath + ".png") || File.Exists(basePath + "_north.png")
+                                || Directory.Exists(basePath))
+                                continue;
+                            errors.Add("texPath has no texture: " + rel + " (" + Rel(repo, file) + ")");
+                        }
                     }
                 }
             }

@@ -1,6 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <RootNamespace>NanoHiveReforged</RootNamespace>
     <AssemblyName>NanoHiveReforged</AssemblyName>
@@ -14,7 +14,11 @@
     <DefineConstants>$(DefineConstants);RIMWORLD_1_7</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4871" />
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+    <!-- No Harmony: link only the Common files that do not need it. -->
+    <Compile Include="..\..\Common\ModPack.cs" Link="Common\ModPack.cs" />
+    <Compile Include="..\..\Common\ModVersionLog.cs" Link="Common\ModVersionLog.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.7.4998-unstable" />
   </ItemGroup>
 </Project>
