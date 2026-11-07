@@ -31,14 +31,19 @@ namespace LivingWorld
         {
             Map map = (Map)parms.target;
             GameComponent_LivingWorld comp = GameComponent_LivingWorld.Get;
-            PendingFallout fallout = comp?.TryDequeueFallout(FalloutKind.Refugees);
-            Faction faction = fallout?.Loser();
-            if (faction == null || faction.defeated || faction.IsPlayer)
+            // Peek, not dequeue: the entry is only consumed once the refugees
+            // actually arrive, or dropped when it can never fire.
+            PendingFallout fallout = comp?.PeekFallout(FalloutKind.Refugees);
+            if (fallout == null)
             {
                 return false;
             }
-            if (faction.HostileTo(Faction.OfPlayer))
+            Faction faction = fallout.Loser();
+            if (faction == null || faction.defeated || faction.IsPlayer
+                || faction.HostileTo(Faction.OfPlayer))
             {
+                // The losing faction is gone or hostile now: these refugees never come.
+                comp.RemoveFallout(fallout);
                 return false;
             }
 
@@ -47,6 +52,7 @@ namespace LivingWorld
                     map,
                     CellFinder.EdgeRoadChance_Neutral))
             {
+                // No way in right now; keep it queued for a later try.
                 return false;
             }
 
@@ -80,6 +86,7 @@ namespace LivingWorld
             {
                 return false;
             }
+            comp.RemoveFallout(fallout);
 
             LordMaker.MakeNewLord(
                 faction,
@@ -88,31 +95,28 @@ namespace LivingWorld
                 spawned);
 
             var targets = new LookTargets(spawned);
-            string place = string.IsNullOrEmpty(fallout?.settlementLabel)
+            string place = string.IsNullOrEmpty(fallout.settlementLabel)
                 ? "LivingWorld_UnknownPlace".Translate().ToString()
                 : fallout.settlementLabel;
             Find.LetterStack.ReceiveLetter(
                 "LivingWorld_LetterLabel_RefugeeFlight".Translate(),
                 "LivingWorld_LetterText_RefugeeFlight".Translate(
                     faction.Name,
-                    fallout?.Winner()?.Name ?? "LivingWorld_UnknownFaction".Translate(),
+                    fallout.Winner()?.Name ?? "LivingWorld_UnknownFaction".Translate(),
                     place),
                 LetterDefOf.NeutralEvent,
                 targets);
 
-            if (comp != null)
-            {
-                WorldEvent ev = WorldEvent.Create(
-                    WorldEventKind.RefugeeFlight,
-                    NewsSeverity.Normal,
-                    faction,
-                    fallout?.Winner(),
-                    null);
-                ev.settlementLabel = place;
-                ev.Where = fallout?.Where ?? PlanetTile.Invalid;
-                ev.seenByPlayer = true;
-                comp.RecordAndPublish(ev);
-            }
+            WorldEvent ev = WorldEvent.Create(
+                WorldEventKind.RefugeeFlight,
+                NewsSeverity.Normal,
+                faction,
+                fallout.Winner(),
+                null);
+            ev.settlementLabel = place;
+            ev.Where = fallout.Where;
+            ev.seenByPlayer = true;
+            comp.RecordAndPublish(ev);
 
             return true;
         }
@@ -141,11 +145,16 @@ namespace LivingWorld
         {
             Map map = (Map)parms.target;
             GameComponent_LivingWorld comp = GameComponent_LivingWorld.Get;
-            PendingFallout fallout = comp?.TryDequeueFallout(FalloutKind.Warband);
+            PendingFallout fallout = comp?.PeekFallout(FalloutKind.Warband);
+            if (fallout == null)
+            {
+                return false;
+            }
             // Warband is from the winner chasing remnants — hostile if that faction hates player.
-            Faction faction = fallout?.Winner();
+            Faction faction = fallout.Winner();
             if (faction == null || faction.defeated || faction.IsPlayer)
             {
+                comp.RemoveFallout(fallout);
                 return false;
             }
 
@@ -184,6 +193,7 @@ namespace LivingWorld
             {
                 return false;
             }
+            comp.RemoveFallout(fallout);
 
             if (faction.HostileTo(Faction.OfPlayer))
             {
@@ -191,11 +201,13 @@ namespace LivingWorld
             }
             else
             {
-                LordMaker.MakeNewLord(
-                    faction,
-                    new LordJob_AssistColony(faction, spawned[0].Position),
-                    map,
-                    spawned);
+                // A friendly warband is passing through, not reinforcing: walk across
+                // the map and leave, like refugees do after their visit.
+                if (!RCellFinder.TryFindTravelDestFrom(entry, map, out IntVec3 exit))
+                {
+                    exit = entry;
+                }
+                LordMaker.MakeNewLord(faction, new LordJob_TravelAndExit(exit), map, spawned);
             }
 
             var targets = new LookTargets(spawned);
@@ -203,26 +215,23 @@ namespace LivingWorld
                 "LivingWorld_LetterLabel_WarbandPass".Translate(),
                 "LivingWorld_LetterText_WarbandPass".Translate(
                     faction.Name,
-                    fallout?.Loser()?.Name ?? "LivingWorld_UnknownFaction".Translate(),
-                    fallout?.settlementLabel ?? "LivingWorld_UnknownPlace".Translate()),
+                    fallout.Loser()?.Name ?? "LivingWorld_UnknownFaction".Translate(),
+                    fallout.settlementLabel ?? "LivingWorld_UnknownPlace".Translate()),
                 faction.HostileTo(Faction.OfPlayer)
                     ? LetterDefOf.ThreatSmall
                     : LetterDefOf.NeutralEvent,
                 targets);
 
-            if (comp != null)
-            {
-                WorldEvent ev = WorldEvent.Create(
-                    WorldEventKind.WarbandPass,
-                    NewsSeverity.Normal,
-                    faction,
-                    fallout?.Loser(),
-                    null);
-                ev.settlementLabel = fallout?.settlementLabel;
-                ev.Where = fallout?.Where ?? PlanetTile.Invalid;
-                ev.seenByPlayer = true;
-                comp.RecordAndPublish(ev);
-            }
+            WorldEvent ev = WorldEvent.Create(
+                WorldEventKind.WarbandPass,
+                NewsSeverity.Normal,
+                faction,
+                fallout.Loser(),
+                null);
+            ev.settlementLabel = fallout.settlementLabel;
+            ev.Where = fallout.Where;
+            ev.seenByPlayer = true;
+            comp.RecordAndPublish(ev);
 
             return true;
         }

@@ -13,6 +13,17 @@ First public release, for RimWorld 1.6 and 1.7. Player-facing version **1.0.0** 
 - Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457).
 - **Workshop preview** — added `About/Preview.png` (settlements, roads, and a caravan).
 
+### Fixed
+- **Master switch** — turning Living World off now also stops way-camp founding, the road letter, the road-worn condition and the way-camp rest bonus.
+- **Fallout is not lost** — refugees and warbands stay queued until they actually arrive. They are only dropped when the faction is gone (or, for refugees, hostile to you) or after 60 days.
+- **Friendly warbands leave** — a non-hostile warband now crosses the map and exits instead of loitering.
+- **War sites** are skipped when a battle has no settlement to anchor them.
+- **Debug commands** queued in one game no longer run in the next one you load.
+
+### Added
+- **Prepare for removal** — a Mod Options button (in game) that removes Living World war sites, way-camps, caravans and the road-worn condition, then turns the sim off, so the save loads clean without the mod.
+- **Save versioning** — saves carry a Living World data version for future upgrades. Moods for settlements that no longer exist and stale fallout are pruned on load and every sim pulse.
+
 Not released yet: Living World stays at 1.0.0 until its first Workshop / Nexus / GitHub release. The 1.1.0–1.2.0 numbers below were internal pre-release bumps that never shipped; their notes are kept as development history.
 
 ### Development history (after formerly 1.2.0)

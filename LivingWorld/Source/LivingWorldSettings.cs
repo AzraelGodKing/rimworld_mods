@@ -125,6 +125,19 @@ namespace LivingWorld
                 s.ResetToDefaults();
             }
 
+            if (Current.ProgramState == ProgramState.Playing && GameComponent_LivingWorld.Get != null)
+            {
+                listing.Gap();
+                if (listing.ButtonText("LivingWorld_Settings_PrepareRemoval".Translate(), null, 0.25f))
+                {
+                    Find.WindowStack.Add(Dialog_MessageBox.CreateConfirmation(
+                        "LivingWorld_Settings_PrepareRemovalConfirm".Translate(),
+                        LivingWorldRemoval.Run,
+                        destructive: true));
+                }
+                listing.Label("LivingWorld_Settings_PrepareRemovalDesc".Translate());
+            }
+
             listing.End();
         }
 

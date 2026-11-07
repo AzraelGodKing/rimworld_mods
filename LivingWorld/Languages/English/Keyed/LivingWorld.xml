@@ -128,4 +128,8 @@
   <LivingWorld_WarSite_BattlefieldInspect>Recent battlefield debris from an off-map war.</LivingWorld_WarSite_BattlefieldInspect>
   <LivingWorld_WarSite_RefugeeCampInspect>A temporary refugee camp spawned by distant fighting.</LivingWorld_WarSite_RefugeeCampInspect>
   <LivingWorld_WarSite_FadesIn>Fades in {0}.</LivingWorld_WarSite_FadesIn>
+  <LivingWorld_Settings_PrepareRemoval>Prepare this save for removal</LivingWorld_Settings_PrepareRemoval>
+  <LivingWorld_Settings_PrepareRemovalDesc>Removes Living World war sites, way-camps, caravans and the road-worn condition from the current game, and turns the simulation off. Save afterwards, then remove the mod.</LivingWorld_Settings_PrepareRemovalDesc>
+  <LivingWorld_Settings_PrepareRemovalConfirm>Remove Living World objects from this game and turn the simulation off? The chronicle is kept.</LivingWorld_Settings_PrepareRemovalConfirm>
+  <LivingWorld_Settings_PrepareRemovalDone>Living World: removed {0} objects and conditions. Save the game, then remove the mod.</LivingWorld_Settings_PrepareRemovalDone>
 </LanguageData>

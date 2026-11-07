@@ -20,7 +20,7 @@ namespace LivingWorld
 
         /// <summary>
         /// Kinds sibling mods can rely on (Homesteader HS1, Nemesis N3, Deep Colony DC1).
-        /// Enum values are saved and stay fixed.
+        /// Enum members are saved by name: never rename or remove one.
         /// </summary>
         public static readonly IReadOnlyList<WorldEventKind> StableHookKinds = new[]
         {

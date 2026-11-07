@@ -46,9 +46,9 @@ namespace LivingWorld
     {
         private const int LifetimeTicks = 60000 * 15; // ~15 days
 
-        public static void TrySpawnNear(int nearTile, Faction winner, Faction loser)
+        public static void TrySpawnNear(PlanetTile nearTile, Faction winner, Faction loser)
         {
-            if (nearTile < 0)
+            if (!nearTile.Valid)
             {
                 return;
             }
@@ -73,9 +73,8 @@ namespace LivingWorld
             Find.WorldObjects.Add(site);
         }
 
-        private static PlanetTile? FindOpenTileNear(int nearTile)
+        private static PlanetTile? FindOpenTileNear(PlanetTile center)
         {
-            PlanetTile center = nearTile;
             for (int i = 0; i < 30; i++)
             {
                 if (!TileFinder.TryFindPassableTileWithTraversalDistance(

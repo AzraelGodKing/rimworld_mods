@@ -1,5 +1,7 @@
 namespace LivingWorld
 {
+    // Saves store these enums by member name (Scribe_Values writes ToString()).
+    // Never rename or remove a member; add new ones at the end.
     public enum WorldEventKind : byte
     {
         Skirmish = 0,
