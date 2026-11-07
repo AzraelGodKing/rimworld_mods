@@ -54,6 +54,7 @@ namespace DeepColony
         public GameComp_DeepColony(Game game)
         {
             DeepColonyPlayerCommand.Reset();
+            PawnIdIndex.Reset();
         }
 
         // Dev-mode actions only (DebugActions_DeepColony).
@@ -537,6 +538,7 @@ namespace DeepColony
             if (funeralProcessedCorpses == null)
                 funeralProcessedCorpses = new HashSet<int>();
             ActiveMentoringSession.ResetSession();
+            MentorshipUtility.ResetCache();
             FamilyEchoUtility.ResetSession();
             BirthSafetyNet.ResetCache();
             LaborWedgeRecovery.ResetSession();

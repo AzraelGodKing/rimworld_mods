@@ -645,25 +645,6 @@ namespace DeepColony
             return names;
         }
 
-        private static Pawn FindPawn(int id)
-        {
-            if (Find.Maps != null)
-            {
-                foreach (Map map in Find.Maps)
-                {
-                    if (map?.mapPawns?.AllPawnsSpawned == null) continue;
-                    foreach (Pawn x in map.mapPawns.AllPawnsSpawned)
-                    {
-                        if (x != null && x.thingIDNumber == id) return x;
-                    }
-                }
-            }
-            if (Find.WorldPawns == null) return null;
-            foreach (Pawn p in Find.WorldPawns.AllPawnsAlive)
-            {
-                if (p != null && p.thingIDNumber == id) return p;
-            }
-            return null;
-        }
+        private static Pawn FindPawn(int id) => PawnIdIndex.Find(id);
     }
 }

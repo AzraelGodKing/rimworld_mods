@@ -66,6 +66,8 @@
   <DC_Settings_ShowPerkHediffsTip>Default off. Perk bonuses still apply; this only lists them on Health.</DC_Settings_ShowPerkHediffsTip>
   <DC_Settings_AnnounceVisitorPerks>Announce perk unlocks for visitors</DC_Settings_AnnounceVisitorPerks>
   <DC_Settings_AnnounceVisitorPerksTip>Default off. Visitors, guests, and raiders can spam "reached the skill for …" on the left of the screen when they spawn, which hitches on slower PCs. Colonist unlocks still show.</DC_Settings_AnnounceVisitorPerksTip>
+  <DC_Settings_NpcPerks>Perks for visitors and raiders</DC_Settings_NpcPerks>
+  <DC_Settings_NpcPerksTip>Default on. Visitors, traders and raiders get the perks their skills earn, like colonists. Turn off to skip that work when a big raid or caravan arrives; anyone who joins your colony still gets their perks then.</DC_Settings_NpcPerksTip>
   <DC_Settings_EnableQuietHours>Quiet Hours (room noise)</DC_Settings_EnableQuietHours>
   <DC_Settings_EnableQuietHoursTip>Workbenches, generators, turrets, and mining in a room make sleep, counsel, and mentoring worse. Walls contain the noise. The bedroom inspect warns before the mood hit. Soft is milder, Hard is louder. Not Strata infestation noise.</DC_Settings_EnableQuietHoursTip>
   <DC_Settings_QuietHoursIntensity>Quiet Hours intensity: {0}</DC_Settings_QuietHoursIntensity>

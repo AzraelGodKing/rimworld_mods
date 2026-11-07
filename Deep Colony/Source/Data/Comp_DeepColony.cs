@@ -167,11 +167,10 @@ namespace DeepColony
                         return true;
                 }
             }
-            foreach (PerkDef other in DefDatabase<PerkDef>.AllDefs)
+            List<PerkDef> excludedBy = PerkIndex.ExcludedBy(perk);
+            for (int i = 0; i < excludedBy.Count; i++)
             {
-                if (other?.exclusiveWith == null) continue;
-                if (!other.exclusiveWith.Contains(perk.defName)) continue;
-                if (HasPerk(other)) return true;
+                if (HasPerk(excludedBy[i])) return true;
             }
             return false;
         }
@@ -259,20 +258,15 @@ namespace DeepColony
                     RevokePerk(owned[i], announce);
             }
 
-            var toGrant = new List<PerkDef>();
-            foreach (PerkDef perk in DefDatabase<PerkDef>.AllDefsListForReading)
+            // Ascending required level, so a prerequisite is granted before what needs it.
+            bool respec = DeepColonySettings.Get.enablePerkRespec;
+            List<PerkDef> candidates = PerkIndex.AutoGrantable;
+            for (int i = 0; i < candidates.Count; i++)
             {
-                if (perk == null || HasPerk(perk) || !PerkVisible(perk)) continue;
-                if (perk.alternateBranch) continue;
-                if (DeepColonySettings.Get.enablePerkRespec && IsForgotten(perk)) continue;
+                PerkDef perk = candidates[i];
+                if (respec && IsForgotten(perk)) continue;
                 if (!CanUnlock(perk)) continue;
-                toGrant.Add(perk);
-            }
-            toGrant.Sort((a, b) => a.requiredLevel.CompareTo(b.requiredLevel));
-            for (int i = 0; i < toGrant.Count; i++)
-            {
-                if (HasPerk(toGrant[i]) || !CanUnlock(toGrant[i])) continue;
-                GrantPerkSilent(toGrant[i], announce);
+                GrantPerkSilent(perk, announce);
             }
 
             ArchetypeUtility.TryRefresh(pawn);
@@ -476,8 +470,11 @@ namespace DeepColony
         public void TryBackfillPerkGatePoints(bool announce = true)
         {
             if (perkGatesBackfilled) return;
-            perkGatesBackfilled = true;
             if (!DeepColonySettings.Get.enablePerks) return;
+            // NPC perks off: visitors and raiders skip the sync and hediffs. The flag stays
+            // unset, so a pawn who later joins gets their perks then (AZR-621).
+            if (!DeepColonySettings.Get.npcPerks && Pawn?.Faction?.IsPlayer != true) return;
+            perkGatesBackfilled = true;
             SyncPerksToSkillLevels(announce: announce);
         }
 
@@ -565,15 +562,8 @@ namespace DeepColony
         public Pawn TryGetLastCounselor()
         {
             if (lastCounselorId < 0) return null;
-            foreach (Map map in Find.Maps)
-            {
-                if (map?.mapPawns?.AllPawnsSpawned == null) continue;
-                foreach (Pawn p in map.mapPawns.AllPawnsSpawned)
-                {
-                    if (p.thingIDNumber == lastCounselorId) return p;
-                }
-            }
-            return null;
+            Pawn p = PawnIdIndex.Find(lastCounselorId);
+            return p != null && p.Spawned ? p : null;
         }
 
         public bool RollTraumaApplyChance(TraumaDef def)
@@ -707,12 +697,35 @@ namespace DeepColony
             {
                 defaultLabel = "DC_ViewPerks".Translate(),
                 defaultDesc = "DC_ViewPerksDesc".Translate(unlockedPerkDefNames.Count),
-                icon = ContentFinder<Texture2D>.Get("UI/PerkTree", false) ?? BaseContent.BadTex,
+                icon = DeepColonyTex.PerkTree,
                 action = () => Find.WindowStack.Add(new Window_PerkTree(pawn))
             };
         }
 
+        // The inspect string runs every frame while the pawn is selected and walks
+        // relations, memories and saved ids. Rebuilt every ~120 ticks, or every two
+        // seconds of real time so it still updates while paused (AZR-619).
+        private const int InspectCacheTicks = 120;
+        private const float InspectCacheSeconds = 2f;
+        [Unsaved] private string inspectCache;
+        [Unsaved] private int inspectCacheTick = int.MinValue;
+        [Unsaved] private float inspectCacheTime = float.MinValue;
+
         public override string CompInspectStringExtra()
+        {
+            int now = Find.TickManager.TicksGame;
+            float real = Time.realtimeSinceStartup;
+            if (now - inspectCacheTick >= InspectCacheTicks || now < inspectCacheTick
+                || real - inspectCacheTime >= InspectCacheSeconds)
+            {
+                inspectCache = BuildInspectString();
+                inspectCacheTick = now;
+                inspectCacheTime = real;
+            }
+            return inspectCache;
+        }
+
+        private string BuildInspectString()
         {
             var pawn = Pawn;
             if (pawn == null || !pawn.IsColonistPlayerControlled) return null;

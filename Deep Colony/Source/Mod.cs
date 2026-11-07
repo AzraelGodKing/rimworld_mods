@@ -60,6 +60,9 @@ namespace DeepColony
             listing.CheckboxLabeled("DC_Settings_AnnounceVisitorPerks".Translate(),
                 ref settings.announceVisitorPerkUnlocks,
                 "DC_Settings_AnnounceVisitorPerksTip".Translate());
+            listing.CheckboxLabeled("DC_Settings_NpcPerks".Translate(),
+                ref settings.npcPerks,
+                "DC_Settings_NpcPerksTip".Translate());
             listing.CheckboxLabeled("DC_Settings_EnableQuietHours".Translate(),
                 ref settings.enableQuietHours,
                 "DC_Settings_EnableQuietHoursTip".Translate());

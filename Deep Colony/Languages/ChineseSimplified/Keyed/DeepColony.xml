@@ -66,6 +66,8 @@
   <DC_Settings_ShowPerkHediffsTip>默认关闭。专长加成仍然生效，只是不列在健康页。</DC_Settings_ShowPerkHediffsTip>
   <DC_Settings_AnnounceVisitorPerks>为访客公布专长解锁</DC_Settings_AnnounceVisitorPerks>
   <DC_Settings_AnnounceVisitorPerksTip>默认关闭。访客、宾客和袭击者生成时会刷屏“达到了……所需的技能”，在低配电脑上会卡顿。殖民者解锁仍会显示。</DC_Settings_AnnounceVisitorPerksTip>
+  <DC_Settings_NpcPerks>访客与袭击者也获得技能专长</DC_Settings_NpcPerks>
+  <DC_Settings_NpcPerksTip>默认开启。访客、商人和袭击者会像殖民者一样获得其技能对应的专长。关闭后，大型袭击或商队到来时将跳过这部分计算；加入殖民地的人届时仍会获得专长。</DC_Settings_NpcPerksTip>
   <DC_Settings_EnableQuietHours>安静时辰（房间噪音）</DC_Settings_EnableQuietHours>
   <DC_Settings_EnableQuietHoursTip>工作台、发电机、炮塔和采矿会让睡眠、辅导和指导变差。墙壁挡住噪音。卧室检视会在心情惩罚前发出警告。柔和更轻，困难更响。不是地层的虫灾噪音。</DC_Settings_EnableQuietHoursTip>
   <DC_Settings_QuietHoursIntensity>安静时辰强度：{0}</DC_Settings_QuietHoursIntensity>

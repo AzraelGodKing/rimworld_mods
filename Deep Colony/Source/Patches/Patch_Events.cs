@@ -238,6 +238,8 @@ namespace DeepColony.Patches
                 }
 
                 InheritanceUtility.TryApplyInheritance(__instance);
+                // Joined with NPC perks off: grant the perks their skills earn now.
+                __instance.TryGetComp<Comp_DeepColony>()?.TryBackfillPerkGatePoints(announce: false);
             }
 
             if (__instance?.RaceProps == null || !__instance.RaceProps.Humanlike) return;

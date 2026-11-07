@@ -177,27 +177,7 @@ namespace DeepColony
             return null;
         }
 
-        private static Pawn FindPawnById(int id)
-        {
-            if (id < 0) return null;
-            foreach (Map map in Find.Maps)
-            {
-                if (map?.mapPawns?.AllPawns == null) continue;
-                foreach (Pawn p in map.mapPawns.AllPawns)
-                {
-                    if (p.thingIDNumber == id) return p;
-                }
-            }
-            List<Pawn> world = PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_FreeColonists;
-            if (world != null)
-            {
-                for (int i = 0; i < world.Count; i++)
-                {
-                    if (world[i].thingIDNumber == id) return world[i];
-                }
-            }
-            return null;
-        }
+        private static Pawn FindPawnById(int id) => PawnIdIndex.Find(id);
 
         private static void Gain(Pawn pawn, ThoughtDef def, Pawn other)
         {
