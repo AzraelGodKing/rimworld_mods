@@ -32,6 +32,12 @@ namespace LivingWorld
         /// <summary>How many entries the chronicle keeps (48–240).</summary>
         public int chronicleCapacity = 96;
 
+        /// <summary>
+        /// World-map overlay. A per-player view setting: not part of the game's settings
+        /// copy and never synced (see <see cref="ClientOnlyFields"/>).
+        /// </summary>
+        public bool overlaysEnabled;
+
         /// <summary>Comma-separated FactionDef names left out of the simulation.</summary>
         public string excludedFactionDefs = string.Empty;
 
@@ -61,6 +67,7 @@ namespace LivingWorld
             Scribe_Values.Look(ref maxConcurrentWars, "maxConcurrentWars", 2);
             Scribe_Values.Look(ref warRate, "warRate", 1f);
             Scribe_Values.Look(ref chronicleCapacity, "chronicleCapacity", 96);
+            Scribe_Values.Look(ref overlaysEnabled, "overlaysEnabled", false);
             Scribe_Values.Look(ref excludedFactionDefs, "excludedFactionDefs", string.Empty);
             excludedFactionDefs ??= string.Empty;
         }
@@ -181,6 +188,9 @@ namespace LivingWorld
         // Sync payload for Multiplayer: every public bool/int/float/string field as
         // name=value; invariant culture so every client parses the same values. String
         // values (defName lists) never contain ';' or '='.
+        /// <summary>View-only settings each player keeps for themselves.</summary>
+        private static readonly string[] ClientOnlyFields = { nameof(overlaysEnabled) };
+
         private static readonly System.Reflection.FieldInfo[] syncedFields = SyncedFields();
 
         private static System.Reflection.FieldInfo[] SyncedFields()
@@ -190,6 +200,10 @@ namespace LivingWorld
                          System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance
                          | System.Reflection.BindingFlags.DeclaredOnly))
             {
+                if (System.Array.IndexOf(ClientOnlyFields, f.Name) >= 0)
+                {
+                    continue;
+                }
                 if (f.FieldType == typeof(bool) || f.FieldType == typeof(int) || f.FieldType == typeof(float)
                     || f.FieldType == typeof(string))
                 {
@@ -314,6 +328,8 @@ namespace LivingWorld
                 "LivingWorld_Settings_RoadHazardsDesc".Translate());
             listing.CheckboxLabeled("LivingWorld_Settings_Traffic".Translate(), ref s.trafficEnabled,
                 "LivingWorld_Settings_TrafficDesc".Translate());
+            listing.CheckboxLabeled("LivingWorld_Overlay_Toggle".Translate(), ref s.overlaysEnabled,
+                "LivingWorld_Overlay_Desc".Translate());
             listing.GapLine();
 
             listing.Label("LivingWorld_Settings_Verbosity".Translate() + ": "

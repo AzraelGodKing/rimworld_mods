@@ -224,6 +224,17 @@ namespace LivingWorld
         private void DrawWorldState(Rect rect, GameComponent_LivingWorld comp)
         {
             float y = rect.y;
+            if (LivingWorldMod.Global != null)
+            {
+                bool on = LivingWorldMod.Global.overlaysEnabled;
+                Widgets.CheckboxLabeled(new Rect(rect.x, y, 260f, 24f), "LivingWorld_Overlay_Toggle".Translate(), ref on);
+                if (on != LivingWorldMod.Global.overlaysEnabled)
+                {
+                    LivingWorldMod.Global.overlaysEnabled = on;
+                    LivingWorldMod.Global.Write();
+                }
+                y += 26f;
+            }
             if (comp != null)
             {
                 GUI.color = new Color(0.75f, 0.75f, 0.75f);
