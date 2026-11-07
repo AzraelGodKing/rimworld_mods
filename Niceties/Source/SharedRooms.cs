@@ -6,6 +6,14 @@ using Verse;
 
 namespace Niceties
 {
+    /// <summary>Loaded once at startup instead of looked up every frame (AZR-532).</summary>
+    [StaticConstructorOnStartup]
+    internal static class SharedRoomTex
+    {
+        internal static readonly Texture2D Icon =
+            ContentFinder<Texture2D>.Get("UI/Commands/AssignOwner", reportFailure: false) ?? BaseContent.BadTex;
+    }
+
     public class CompProperties_SharedRoom : CompProperties
     {
         public CompProperties_SharedRoom()
@@ -42,7 +50,7 @@ namespace Niceties
             {
                 defaultLabel = "Niceties_ShareRoom".Translate(),
                 defaultDesc = "Niceties_ShareRoomTip".Translate(),
-                icon = ContentFinder<Texture2D>.Get("UI/Commands/AssignOwner", reportFailure: false),
+                icon = SharedRoomTex.Icon,
                 isActive = () => SharedRooms.IsMarked(bed),
                 toggleAction = () => SharedRooms.Toggle(bed!)
             };
@@ -109,13 +117,12 @@ namespace Niceties
 
         internal static bool Enabled()
         {
-            NicetiesSimFlags settings = NicetiesSim.Settings;
-            return settings.enableSharedRooms;
+            return NicetiesSim.Settings.enableSharedRooms;
         }
 
         internal static bool ShowsGizmo(Building_Bed? bed)
         {
-            if (!Enabled() || bed == null || !bed.Spawned)
+            if (bed == null || !bed.Spawned || !Enabled())
             {
                 return false;
             }
@@ -134,13 +141,22 @@ namespace Niceties
             return bed != null && IsMarked(bed.GetRoom());
         }
 
+        /// <summary>
+        /// Uncached: room roles are only recalculated when a room changes, and a mark
+        /// must show up in the very next recalculation.
+        /// </summary>
         internal static bool IsMarked(Room? room)
         {
-            if (!Enabled() || room == null || room.PsychologicallyOutdoors)
+            if (room == null || room.PsychologicallyOutdoors || !Enabled())
             {
                 return false;
             }
 
+            return ScanMarked(room);
+        }
+
+        private static bool ScanMarked(Room room)
+        {
             foreach (Building_Bed bed in room.ContainedBeds)
             {
                 if (bed.Medical || bed.ForPrisoners)
@@ -148,7 +164,7 @@ namespace Niceties
                     continue;
                 }
 
-                CompSharedRoom comp = bed.GetComp<CompSharedRoom>();
+                CompSharedRoom? comp = bed.GetComp<CompSharedRoom>();
                 if (comp != null && comp.Shared)
                 {
                     return true;
@@ -185,40 +201,10 @@ namespace Niceties
 
         internal static string? RoommateNames(Room? room)
         {
-            if (room == null)
-            {
-                return null;
-            }
-
-            List<string> names = new List<string>();
-            HashSet<Pawn> seen = new HashSet<Pawn>();
-            foreach (Building_Bed bed in room.ContainedBeds)
-            {
-                if (bed.Medical || bed.ForPrisoners)
-                {
-                    continue;
-                }
-
-                List<Pawn> owners = bed.OwnersForReading;
-                if (owners == null)
-                {
-                    continue;
-                }
-
-                for (int i = 0; i < owners.Count; i++)
-                {
-                    Pawn owner = owners[i];
-                    if (owner != null && seen.Add(owner))
-                    {
-                        names.Add(owner.LabelShort);
-                    }
-                }
-            }
-
-            return names.Count == 0 ? null : string.Join(", ", names);
+            return room == null ? null : Info(room).Names;
         }
 
-        internal static void SetMarked(Room room, bool marked)
+        internal static void SetMarked(Room? room, bool marked)
         {
             if (room == null)
             {
@@ -232,117 +218,172 @@ namespace Niceties
                     continue;
                 }
 
-                CompSharedRoom comp = bed.GetComp<CompSharedRoom>();
-                if (comp != null)
-                {
-                    comp.SetShared(marked);
-                }
+                bed.GetComp<CompSharedRoom>()?.SetShared(marked);
             }
 
+            RoomCache.Remove(room.ID);
             room.Notify_BedTypeChanged();
         }
 
         internal static bool HasRoommate(Pawn sleeper)
         {
-            if (sleeper == null)
-            {
-                return false;
-            }
-
             // Outdoor / caravan sleepers use vanilla disturbance — no owned-bed fallback (AZR-567).
-            Room room = sleeper.GetRoom();
+            Room? room = sleeper.GetRoom();
             if (room == null || room.PsychologicallyOutdoors)
             {
                 return false;
             }
 
-            foreach (Building_Bed bed in room.ContainedBeds)
-            {
-                if (bed.Medical || bed.ForPrisoners)
-                {
-                    continue;
-                }
-
-                if (bed.def?.building == null || !bed.def.building.bed_humanlike)
-                {
-                    continue;
-                }
-
-                List<Pawn> owners = bed.OwnersForReading;
-                if (owners == null)
-                {
-                    continue;
-                }
-
-                for (int i = 0; i < owners.Count; i++)
-                {
-                    Pawn owner = owners[i];
-                    if (owner != null && owner != sleeper && owner.RaceProps != null && owner.RaceProps.Humanlike)
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
+            return Info(room).HasRoommateFor(sleeper);
         }
 
         /// <summary>
         /// Skip disturbance only when the disturber owns a bed in the sleeper's room (AZR-567).
-        /// Visitors and non-roommate colonists still wake the sleeper.
+        /// Visitors and non-roommate colonists still wake the sleeper. Cheap checks run first,
+        /// and the room's owners come from a cache refreshed every 250 ticks (AZR-549).
         /// </summary>
-        internal static bool ShouldSkipDisturbedSleep(Pawn sleeper, Pawn source)
+        internal static bool ShouldSkipDisturbedSleep(Pawn sleeper, Pawn? source)
         {
+            if (source == null || source == sleeper)
+            {
+                return false;
+            }
+
             NicetiesSimFlags settings = NicetiesSim.Settings;
-            if (!Enabled() || !settings.skipDisturbedSleepWhenSharing)
+            if (!settings.enableSharedRooms || !settings.skipDisturbedSleepWhenSharing)
             {
                 return false;
             }
 
-            if (sleeper == null || source == null || source == sleeper)
+            // The same early outs vanilla takes before it would disturb anyone.
+            if (sleeper.needs?.mood == null || sleeper.Awake() || sleeper.Faction == null || !sleeper.Faction.IsPlayer)
             {
                 return false;
             }
 
-            Room room = sleeper.GetRoom();
+            Room? room = sleeper.GetRoom();
             if (room == null || room.PsychologicallyOutdoors)
             {
                 return false;
             }
 
-            if (!IsMarked(room) && !HasRoommate(sleeper))
+            RoomInfo info = Info(room);
+            if (!info.Marked && !info.HasRoommateFor(sleeper))
             {
                 return false;
             }
 
-            return SourceOwnsBedInRoom(source, room);
+            return info.Owners.Contains(source);
         }
 
-        private static bool SourceOwnsBedInRoom(Pawn source, Room room)
+        private const int RoomCacheTicks = 250;
+        private const int RoomCachePruneSize = 256;
+
+        private sealed class RoomInfo
         {
-            foreach (Building_Bed bed in room.ContainedBeds)
+            public int Tick = int.MinValue;
+            public bool Marked;
+            public readonly List<Pawn> Owners = new List<Pawn>();
+            public string? Names;
+
+            public bool HasRoommateFor(Pawn sleeper)
             {
-                if (bed.Medical || bed.ForPrisoners)
+                for (int i = 0; i < Owners.Count; i++)
                 {
-                    continue;
-                }
-
-                List<Pawn> owners = bed.OwnersForReading;
-                if (owners == null)
-                {
-                    continue;
-                }
-
-                for (int i = 0; i < owners.Count; i++)
-                {
-                    if (owners[i] == source)
+                    if (Owners[i] != sleeper)
                     {
                         return true;
                     }
                 }
+
+                return false;
+            }
+        }
+
+        private static readonly Dictionary<int, RoomInfo> RoomCache = new Dictionary<int, RoomInfo>();
+        private static readonly List<int> PruneScratch = new List<int>();
+        private static readonly List<string> NameScratch = new List<string>();
+
+        internal static void ClearCache()
+        {
+            RoomCache.Clear();
+        }
+
+        /// <summary>
+        /// Humanlike owners of the room's non-medical, non-prisoner beds, the shared mark and
+        /// the inspect names, rebuilt at most every 250 ticks or when the mark changes.
+        /// </summary>
+        private static RoomInfo Info(Room room)
+        {
+            int tick = Find.TickManager?.TicksGame ?? 0;
+            if (RoomCache.TryGetValue(room.ID, out RoomInfo? info)
+                && tick >= info.Tick && tick - info.Tick < RoomCacheTicks)
+            {
+                return info;
             }
 
-            return false;
+            if (info == null)
+            {
+                if (RoomCache.Count >= RoomCachePruneSize)
+                {
+                    Prune(tick);
+                }
+
+                info = new RoomInfo();
+                RoomCache[room.ID] = info;
+            }
+
+            info.Tick = tick;
+            info.Owners.Clear();
+            info.Marked = false;
+            NameScratch.Clear();
+            foreach (Building_Bed bed in room.ContainedBeds)
+            {
+                if (bed.Medical || bed.ForPrisoners || bed.def?.building == null || !bed.def.building.bed_humanlike)
+                {
+                    continue;
+                }
+
+                CompSharedRoom? comp = bed.GetComp<CompSharedRoom>();
+                if (comp != null && comp.Shared)
+                {
+                    info.Marked = true;
+                }
+
+                List<Pawn> owners = bed.OwnersForReading;
+                for (int i = 0; i < owners.Count; i++)
+                {
+                    Pawn owner = owners[i];
+                    if (owner?.RaceProps != null && owner.RaceProps.Humanlike && !info.Owners.Contains(owner))
+                    {
+                        info.Owners.Add(owner);
+                        NameScratch.Add(owner.LabelShort);
+                    }
+                }
+            }
+
+            info.Names = NameScratch.Count == 0 ? null : string.Join(", ", NameScratch);
+            NameScratch.Clear();
+            return info;
+        }
+
+        private static void Prune(int tick)
+        {
+            PruneScratch.Clear();
+            foreach (KeyValuePair<int, RoomInfo> kv in RoomCache)
+            {
+                if (tick < kv.Value.Tick || tick - kv.Value.Tick >= RoomCacheTicks)
+                {
+                    PruneScratch.Add(kv.Key);
+                }
+            }
+
+            for (int i = 0; i < PruneScratch.Count; i++)
+            {
+                RoomCache.Remove(PruneScratch[i]);
+            }
+
+            PruneScratch.Clear();
         }
     }
 }

@@ -4,6 +4,7 @@ Niceties 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting ev
 
 [b]Changed[/b]
 [list]
+[*] [b]Performance[/b] — the leave-a-way-out wall check reuses its buffers instead of allocating on every check, roommate sleep checks skip awake pawns first and remember each room's owners, throne rooms look at the colony's thrones instead of every thing in the room, and inspect lines are rebuilt about once a second. Big build queues and big colonies gain the most.
 [*] [b]RimWorld 1.7[/b] — the 1.7 folder now has its own .NET 10 build made against the 1.7 game files. 1.6 keeps its own build from the same source.
 [*] [b]Removing Niceties[/b] — the description no longer says it is safe to remove mid-save. Removing it logs a few harmless errors once on the next load.
 [*] [b]Wear any outfit[/b] — no longer edits apparel defs. Colonists can wear any cut with no wrong-gender thought, but raiders, traders and new joiners dress as vanilla again. Tick "Also let generated pawns wear any cut" for the 1.x behaviour.

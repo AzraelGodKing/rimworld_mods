@@ -26,27 +26,68 @@ namespace Niceties
         internal const string SmarterConstructionId = "dhultgren.smarterconstruction";
         private const int MaxRegionSize = 80;
         private const int CacheTicks = 15;
-
         private const int CachePruneSize = 64;
 
         private static bool scChecked;
         private static bool scLoaded;
 
+        /// <summary>Flood-fill result for one frame. Pooled, so cache misses do not allocate.</summary>
         private sealed class Geometry
         {
             public int Tick;
             public int MapId;
             public IntVec3 Anchor;
-            public HashSet<IntVec3> Blockers = null!;
-            public HashSet<IntVec3> Enclosed = null!;
-            public HashSet<IntVec3>? SafeSpots;
+            public readonly List<int> Blockers = new List<int>();
+            public readonly List<int> Enclosed = new List<int>();
+            public readonly List<IntVec3> SafeSpots = new List<IntVec3>();
+            public bool SafeSpotsReady;
+
+            public void Reset()
+            {
+                Blockers.Clear();
+                Enclosed.Clear();
+                SafeSpots.Clear();
+                SafeSpotsReady = false;
+            }
+        }
+
+        /// <summary>Map adapter for <see cref="EncloseFill"/>; a struct, so no boxing or virtual calls.</summary>
+        private readonly struct MapGrid : IEncloseGrid
+        {
+            private readonly Map map;
+
+            public MapGrid(Map map)
+            {
+                this.map = map;
+            }
+
+            public int Width => map.Size.x;
+
+            public int Height => map.Size.z;
+
+            public bool Walkable(int index)
+            {
+                IntVec3 loc = map.cellIndices.IndexToCell(index);
+                return map.pathing.Normal.pathGrid.Walkable(loc) || WalkableIgnoringFrames(map, loc);
+            }
         }
 
         private static readonly Dictionary<int, Geometry> GeometryCache = new Dictionary<int, Geometry>();
+        private static readonly Stack<Geometry> Pool = new Stack<Geometry>();
+        private static readonly Geometry Fresh = new Geometry();
         private static readonly List<int> PruneScratch = new List<int>();
+        private static readonly EncloseScratch FillScratch = new EncloseScratch();
+        private static readonly List<int> CandX = new List<int>();
+        private static readonly List<int> CandZ = new List<int>();
+        private static readonly List<bool> CandReach = new List<bool>();
 
         internal static void ClearCache()
         {
+            foreach (Geometry geo in GeometryCache.Values)
+            {
+                Release(geo);
+            }
+
             GeometryCache.Clear();
         }
 
@@ -68,20 +109,14 @@ namespace Niceties
                 }
             }
 
-            for (int i = 0; i < PruneScratch.Count; i++)
-            {
-                GeometryCache.Remove(PruneScratch[i]);
-            }
-
-            PruneScratch.Clear();
+            RemoveScratchKeys();
         }
 
         internal static bool Enabled
         {
             get
             {
-                NicetiesSimFlags settings = NicetiesSim.Settings;
-                if (!settings.enableLeaveAWayOut)
+                if (!NicetiesSim.Settings.enableLeaveAWayOut)
                 {
                     return false;
                 }
@@ -104,20 +139,17 @@ namespace Niceties
             }
         }
 
-        internal static bool IsImpassableBuild(Thing t)
+        internal static bool IsImpassableBuild(Thing? t)
         {
-            return t != null
-                && t.def != null
-                && t.def.entityDefToBuild != null
+            return t?.def?.entityDefToBuild != null
                 && t.def.entityDefToBuild.passability == Traversability.Impassable;
         }
 
         internal static OpenBuildsResult WouldEnclose(Thing target, Pawn pawn)
         {
-            OpenBuildsResult empty = new OpenBuildsResult();
-            if (target == null || target.Map == null)
+            if (target.Map == null)
             {
-                return empty;
+                return default;
             }
 
             return Compute(target, pawn, GeometryFor(target, allowCache: true));
@@ -126,44 +158,48 @@ namespace Niceties
         /// <summary>Final CompleteConstruction check must not reuse a stale cache (AZR-548).</summary>
         internal static OpenBuildsResult WouldEncloseFresh(Thing target, Pawn pawn)
         {
-            OpenBuildsResult empty = new OpenBuildsResult();
-            if (target == null || target.Map == null)
+            if (target.Map == null)
             {
-                return empty;
+                return default;
             }
 
             return Compute(target, pawn, GeometryFor(target, allowCache: false));
         }
 
-        internal static HashSet<IntVec3> FindSafeSpots(Thing target)
+        internal static List<IntVec3> FindSafeSpots(Thing target)
         {
-            if (target?.Map == null)
-            {
-                return new HashSet<IntVec3>();
-            }
-
             Geometry geo = GeometryFor(target, allowCache: true);
-            if (geo.SafeSpots != null)
+            if (geo.SafeSpotsReady)
             {
                 return geo.SafeSpots;
             }
 
-            HashSet<IntVec3> spots = new HashSet<IntVec3>();
-            foreach (IntVec3 cell in CardinalNeighbors(geo.Blockers))
+            Map map = target.Map;
+            MapGrid grid = new MapGrid(map);
+            for (int i = 0; i < geo.Blockers.Count; i++)
             {
-                if (geo.Enclosed.Contains(cell))
+                IntVec3 blocker = map.cellIndices.IndexToCell(geo.Blockers[i]);
+                for (int d = 0; d < 4; d++)
                 {
-                    continue;
-                }
+                    IntVec3 cell = blocker + GenAdj.CardinalDirections[d];
+                    if (!cell.InBounds(map))
+                    {
+                        continue;
+                    }
 
-                if (WalkableForEnclose(target.Map, cell, geo.Blockers))
-                {
-                    spots.Add(cell);
+                    int index = map.cellIndices.CellToIndex(cell);
+                    if (geo.Blockers.Contains(index) || geo.Enclosed.Contains(index)
+                        || geo.SafeSpots.Contains(cell) || !grid.Walkable(index))
+                    {
+                        continue;
+                    }
+
+                    geo.SafeSpots.Add(cell);
                 }
             }
 
-            geo.SafeSpots = spots;
-            return spots;
+            geo.SafeSpotsReady = true;
+            return geo.SafeSpots;
         }
 
         /// <summary>
@@ -172,8 +208,9 @@ namespace Niceties
         /// </summary>
         private static Geometry GeometryFor(Thing target, bool allowCache)
         {
+            Map map = target.Map;
             int tick = Find.TickManager.TicksGame;
-            int mapId = target.Map.uniqueID;
+            int mapId = map.uniqueID;
             if (allowCache
                 && GeometryCache.TryGetValue(target.thingIDNumber, out Geometry? cached)
                 && cached.MapId == mapId
@@ -183,26 +220,52 @@ namespace Niceties
                 return cached;
             }
 
-            if (GeometryCache.Count >= CachePruneSize)
+            Geometry geo;
+            if (!allowCache)
             {
-                Prune(tick);
+                geo = Fresh;
             }
+            else
+            {
+                if (GeometryCache.TryGetValue(target.thingIDNumber, out Geometry? stale))
+                {
+                    GeometryCache.Remove(target.thingIDNumber);
+                    Release(stale);
+                }
 
-            HashSet<IntVec3> blockers = Occupied(target);
-            Geometry geo = new Geometry
-            {
-                Tick = tick,
-                MapId = mapId,
-                Anchor = target.Position,
-                Blockers = blockers,
-                Enclosed = ClosedRegion(target.Map, blockers)
-            };
-            if (allowCache)
-            {
+                if (GeometryCache.Count >= CachePruneSize)
+                {
+                    Prune(tick);
+                }
+
+                geo = Pool.Count > 0 ? Pool.Pop() : new Geometry();
                 GeometryCache[target.thingIDNumber] = geo;
             }
 
+            geo.Reset();
+            geo.Tick = tick;
+            geo.MapId = mapId;
+            geo.Anchor = target.Position;
+            foreach (IntVec3 cell in GenAdj.OccupiedRect(target))
+            {
+                if (cell.InBounds(map))
+                {
+                    geo.Blockers.Add(map.cellIndices.CellToIndex(cell));
+                }
+            }
+
+            MapGrid grid = new MapGrid(map);
+            EncloseFill.ClosedRegions(ref grid, geo.Blockers, MaxRegionSize, FillScratch, geo.Enclosed);
             return geo;
+        }
+
+        private static void Release(Geometry geo)
+        {
+            if (!ReferenceEquals(geo, Fresh) && Pool.Count < CachePruneSize)
+            {
+                geo.Reset();
+                Pool.Push(geo);
+            }
         }
 
         private static void Prune(int tick)
@@ -216,25 +279,35 @@ namespace Niceties
                 }
             }
 
-            for (int i = 0; i < PruneScratch.Count; i++)
-            {
-                GeometryCache.Remove(PruneScratch[i]);
-            }
-
+            RemoveScratchKeys();
             if (GeometryCache.Count >= CachePruneSize)
             {
-                GeometryCache.Clear();
+                ClearCache();
             }
+        }
+
+        private static void RemoveScratchKeys()
+        {
+            for (int i = 0; i < PruneScratch.Count; i++)
+            {
+                if (GeometryCache.TryGetValue(PruneScratch[i], out Geometry? geo))
+                {
+                    GeometryCache.Remove(PruneScratch[i]);
+                    Release(geo);
+                }
+            }
+
+            PruneScratch.Clear();
         }
 
         internal static bool StepAsideThenRetry(Pawn pawn, Frame frame)
         {
-            if (pawn?.jobs == null || frame == null)
+            if (pawn.jobs == null)
             {
                 return false;
             }
 
-            HashSet<IntVec3> spots = FindSafeSpots(frame);
+            List<IntVec3> spots = FindSafeSpots(frame);
             if (spots.Count == 0)
             {
                 JobFailReason.Is("Niceties_OpenBuilds_WouldTrapSelf".Translate());
@@ -247,33 +320,26 @@ namespace Niceties
                 return false;
             }
 
-            IntVec3 dest = IntVec3.Invalid;
-            float bestDist = float.MaxValue;
-            int bestHash = int.MaxValue;
-            foreach (IntVec3 cell in spots)
+            CandX.Clear();
+            CandZ.Clear();
+            CandReach.Clear();
+            for (int i = 0; i < spots.Count; i++)
             {
-                if (!pawn.CanReach(cell, PathEndMode.OnCell, Danger.Some))
-                {
-                    continue;
-                }
-
-                float dist = pawn.Position.DistanceToSquared(cell);
-                int hash = cell.GetHashCode();
-                if (dist < bestDist || (dist == bestDist && hash < bestHash))
-                {
-                    bestDist = dist;
-                    bestHash = hash;
-                    dest = cell;
-                }
+                CandX.Add(spots[i].x);
+                CandZ.Add(spots[i].z);
+                CandReach.Add(pawn.CanReach(spots[i], PathEndMode.OnCell, Danger.Some));
             }
 
-            if (!dest.IsValid)
+            // Nearest, then lowest z, then lowest x: the same cell on every machine.
+            int pick = EncloseFill.PickStepAside(pawn.Position.x, pawn.Position.z, CandX, CandZ, CandReach);
+            if (pick < 0)
             {
                 JobFailReason.Is("Niceties_OpenBuilds_WouldTrapSelf".Translate());
                 pawn.jobs.EndCurrentJob(JobCondition.Incompletable);
                 return true;
             }
 
+            IntVec3 dest = spots[pick];
             if (pawn.CurJob == null)
             {
                 pawn.jobs.EndCurrentJob(JobCondition.Incompletable);
@@ -291,43 +357,33 @@ namespace Niceties
             return true;
         }
 
-        internal static bool IsConstructionFrame(Thing thing)
+        internal static bool IsConstructionFrame(Thing? thing)
         {
             if (thing == null)
             {
                 return false;
             }
 
-            if (thing is Frame)
-            {
-                return true;
-            }
-
-            return thing.def != null && thing.def.IsFrame;
+            return thing is Frame || (thing.def != null && thing.def.IsFrame);
         }
 
         private static OpenBuildsResult Compute(Thing target, Pawn pawn, Geometry geo)
         {
             OpenBuildsResult result = new OpenBuildsResult();
-            HashSet<IntVec3> enclosed = geo.Enclosed;
-            if (enclosed.Count == 0)
+            Map map = target.Map;
+            for (int c = 0; c < geo.Enclosed.Count; c++)
             {
-                return result;
-            }
-
-            foreach (IntVec3 cell in enclosed)
-            {
-                List<Thing> things = cell.GetThingList(target.Map);
+                List<Thing> things = map.thingGrid.ThingsListAtFast(geo.Enclosed[c]);
                 for (int i = 0; i < things.Count; i++)
                 {
                     Thing thing = things[i];
                     if (thing is Blueprint || IsConstructionFrame(thing))
                     {
                         result.EnclosesThings = true;
+                        continue;
                     }
 
-                    Pawn? other = thing as Pawn;
-                    if (other == null || other.Faction == null || !other.Faction.IsPlayer)
+                    if (thing is not Pawn other || other.Faction == null || !other.Faction.IsPlayer)
                     {
                         continue;
                     }
@@ -346,88 +402,14 @@ namespace Niceties
             return result;
         }
 
-        private static HashSet<IntVec3> ClosedRegion(Map map, HashSet<IntVec3> blockers)
-        {
-            HashSet<IntVec3> closed = new HashSet<IntVec3>();
-            HashSet<IntVec3> seen = new HashSet<IntVec3>();
-            foreach (IntVec3 start in CardinalNeighbors(blockers))
-            {
-                if (!seen.Add(start))
-                {
-                    continue;
-                }
-
-                HashSet<IntVec3> fill = Flood(map, start, blockers);
-                foreach (IntVec3 cell in fill)
-                {
-                    seen.Add(cell);
-                }
-
-                if (fill.Count > 0 && fill.Count < MaxRegionSize)
-                {
-                    closed.UnionWith(fill);
-                }
-            }
-
-            return closed;
-        }
-
-        private static HashSet<IntVec3> Flood(Map map, IntVec3 start, HashSet<IntVec3> blockers)
-        {
-            HashSet<IntVec3> fill = new HashSet<IntVec3>();
-            if (!WalkableForEnclose(map, start, blockers))
-            {
-                return fill;
-            }
-
-            Queue<IntVec3> queue = new Queue<IntVec3>();
-            queue.Enqueue(start);
-            while (queue.Count > 0 && fill.Count < MaxRegionSize)
-            {
-                IntVec3 cell = queue.Dequeue();
-                if (!fill.Add(cell))
-                {
-                    continue;
-                }
-
-                for (int i = 0; i < 4; i++)
-                {
-                    IntVec3 next = cell + GenAdj.CardinalDirections[i];
-                    if (!WalkableForEnclose(map, next, blockers) || fill.Contains(next))
-                    {
-                        continue;
-                    }
-
-                    queue.Enqueue(next);
-                }
-            }
-
-            return fill;
-        }
-
-        private static bool WalkableForEnclose(Map map, IntVec3 loc, HashSet<IntVec3> futureBlockers)
-        {
-            if (futureBlockers.Contains(loc) || !loc.InBounds(map))
-            {
-                return false;
-            }
-
-            if (map.pathing.Normal.pathGrid.Walkable(loc))
-            {
-                return true;
-            }
-
-            return WalkableIgnoringFrames(map, loc);
-        }
-
         internal static bool WalkableIgnoringFrames(Map map, IntVec3 loc)
         {
-            if (map == null || !loc.InBounds(map))
+            if (!loc.InBounds(map))
             {
                 return false;
             }
 
-            TerrainDef terrain = map.terrainGrid.TerrainAt(loc);
+            TerrainDef? terrain = map.terrainGrid.TerrainAt(loc);
             if (terrain != null && terrain.passability == Traversability.Impassable)
             {
                 return false;
@@ -438,7 +420,7 @@ namespace Niceties
             for (int i = 0; i < things.Count; i++)
             {
                 Thing thing = things[i];
-                if (thing == null || thing.def == null)
+                if (thing?.def == null)
                 {
                     continue;
                 }
@@ -461,32 +443,6 @@ namespace Niceties
             }
 
             return hasFrame;
-        }
-
-        private static HashSet<IntVec3> Occupied(Thing target)
-        {
-            HashSet<IntVec3> cells = new HashSet<IntVec3>();
-            foreach (IntVec3 cell in GenAdj.CellsOccupiedBy(target))
-            {
-                cells.Add(cell);
-            }
-
-            return cells;
-        }
-
-        private static HashSet<IntVec3> CardinalNeighbors(HashSet<IntVec3> cells)
-        {
-            HashSet<IntVec3> neighbors = new HashSet<IntVec3>();
-            foreach (IntVec3 cell in cells)
-            {
-                for (int i = 0; i < 4; i++)
-                {
-                    neighbors.Add(cell + GenAdj.CardinalDirections[i]);
-                }
-            }
-
-            neighbors.ExceptWith(cells);
-            return neighbors;
         }
     }
 }

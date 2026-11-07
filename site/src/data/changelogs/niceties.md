@@ -6,12 +6,19 @@ Detailed notes for **Niceties** only.
 
 Player-facing version **2.0.0** (`About.xml` `modVersion`). Stamp `niceties2` (`niceties2-net10, 1.7 build` or `niceties2, 1.6 build` in Player.log). Ships for RimWorld **1.6** and **1.7** from the same source; 1.6 is not frozen.
 
-AZR-509 AZR-518 AZR-531 AZR-547 AZR-550 AZR-551 AZR-653 AZR-654 AZR-699 AZR-700 AZR-701
+AZR-509 AZR-518 AZR-531 AZR-547 AZR-549 AZR-550 AZR-551 AZR-653 AZR-654 AZR-699 AZR-700 AZR-701
 
 ### Changed
 - **RimWorld 1.7 build** (AZR-518, AZR-531) — `Niceties.1.7.csproj` targets `net10.0` against `Krafs.Rimworld.Ref 1.7.4998-unstable` and Harmony 3. Every Niceties file is `#nullable enable` and both builds compile with no nullable warnings. `NicetiesMod.Settings` and `NicetiesSim.Settings` are never null, so the ~25 defensive null checks are gone. The build stamp names the folder.
 - **Removal wording** (AZR-551, AZR-570) — About, ROADMAP: "Safe to add mid-save; removing it logs a few harmless errors once on the next load."
 - **ROADMAP** (AZR-654) — header says 1.6 and 1.7.
+- **Performance** (AZR-549):
+  - Flood fill moved to `Pure/EncloseFill`: cell-index stamps with a generation counter, a fixed `int[]` queue and pooled `Geometry` objects, so a warm check allocates nothing. Regions proven open are stamped, so a second start in the same open area stops on contact. The game side is a `readonly struct MapGrid : IEncloseGrid` (no boxing). Same closed/open rule as 1.x (closed below 80 cells).
+  - Step-aside tie-break is nearest, then lowest z, then lowest x (`EncloseFill.PickStepAside`), instead of `IntVec3.GetHashCode`.
+  - Disturbed sleep: vanilla's own early outs (no mood need, awake, not player faction) run before any room work; owners, shared mark and inspect names come from a per-room cache (`Room.ID`, 250 ticks, dropped on mark change and new game). Room-role postfixes still scan uncached so a mark shows up in the next recalculation.
+  - Throne check walks `listerBuildings.AllBuildingsColonistOfClass<Building_Throne>()` instead of `room.ContainedAndAdjacentThings`.
+  - `GameComponent_NicetiesSim.Get()` is cached per `Game`.
+  - Apparel inspect line cached for the selected thing (60 ticks, language, settings change). Share-room gizmo icon loaded once in a `[StaticConstructorOnStartup]` holder (AZR-532).
 - **Wear any outfit** (AZR-550, AZR-653) — no def edits. Postfix on `ApparelProperties.CorrectGenderForWearing` answers true, and `ThoughtWorker_WrongApparelGender.CurrentStateInternal` returns inactive, while the toggle is on. A `[ThreadStatic]` depth counter around `PawnGenerator.GeneratePawn(PawnGenerationRequest)` (prefix + finalizer) keeps generation vanilla unless the new nested `wearAnyGenderGenerated` is on. Settings are read lazily from the snapshot, so the 1.x constructor-time `ApparelGender.Apply` from local Mod Options (the MP desync) is gone.
 - **Settings model** (AZR-533, AZR-700) — simulation fields live in `record struct NicetiesSimFlags`; copy is assignment and change detection is `==`, replacing the hand-written `CopyFrom` / fingerprints. Mod Options keys are unchanged. Presets apply `ApplyKnobsFrom` (nested knobs only); `ResetToDefaults` is the single full reset and includes `showCryptosleepCount`.
 - **Well-kept weapons removed** (AZR-550) — vanilla only deals daily `Deterioration` to worn apparel, so `enableWeaponCare` and the weapon inspect postfix on `ThingWithComps.GetInspectString` never had an effect. Wear math moved to `Pure/NicetiesRules.DailyWearChance`.
