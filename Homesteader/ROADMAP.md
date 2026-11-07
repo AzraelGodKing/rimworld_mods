@@ -21,8 +21,8 @@ Series-wide soft-compat, Azrael storyteller, and showcase scenario:
 
 ## Phase 1 — Pantry you feel
 
-- [ ] **HS-A01** **Harvest festival** — maypole annual ritual (Ideology-aware, works without); mood, trade attraction, seasonal food. Annual autumn mood event shipped; Ideology ritual, trade attraction, and seasonal food still open.
-- [ ] **HS-A02** **Well-stocked larder mood** — ThoughtWorker tiered buff from distinct preserved foods in cellars/pantries
+- [ ] **HS-A01** **Harvest festival** — maypole annual ritual (Ideology-aware, works without); mood, trade attraction, seasonal food. 2.0.0: per-map pantry, trader caravan pull, pumpkin pie / cider feast step, preserves named in the letter. Ideology precept and maypole ritual still open.
+- [x] **HS-A02** **Well-stocked larder mood** — ThoughtWorker tiered buff from distinct preserved foods in cellars/pantries (2.0.0, 3/6/9 kinds per map)
 - [x] **HS-A03** **Aging** — cheese / cider value tiers over time in cool storage (no ham def exists)
 
 ## Phase 2 — Yard & livestock
@@ -30,7 +30,7 @@ Series-wide soft-compat, Azrael storyteller, and showcase scenario:
 - [ ] **HS-A05** **Guard geese** — alarm animal / nest theme; map-edge alert at the farmyard
 - [ ] **HS-A06** **Prize livestock** — hidden quality across generations; festival + coop synergy
 - [ ] **HS-A07** **Dairy shed** — periodic milk (companion to chicken coop); new def, not GoatPen
-- [ ] **HS-A08** Bees need bloom in radius
+- [x] **HS-A08** Bees need bloom in radius (2.0.0)
 - [ ] **HS-A09** Scarecrow + rare fox-on-coop incident
 
 ## Phase 3 — Trade & brand
@@ -43,11 +43,11 @@ Series-wide soft-compat, Azrael storyteller, and showcase scenario:
 - [x] **Water building ladder** — barrel trickle → cistern stockpile+catch → tower capacity; hand-dug → deep well; still = boiled sidegrade; fountain drinks jugs
 - [ ] **HS-A11** **Waterwheel** — river water power; interacts with Stormproof droughts
 - [x] **HS-A12** Maple sugaring season
-- [ ] **HS-A13** Rain-aware barrels / drought empty
+- [x] **HS-A13** Rain-aware barrels / drought empty (2.0.0; drought = Odyssey drought condition)
 
 ## Phase 5 — Soft-compat consumers (do not move into Living World)
 
 - [ ] **HS-S01** Optional flavor when Living World reports outlander famine / refugees (string hooks only)
-- [ ] **HS-S02** Stormproof drought inspect on wells/cisterns
+- [x] **HS-S02** Drought inspect on rain barrels and cisterns (2.0.0; reads the Odyssey drought condition Stormproof defends against)
 - [ ] **HS-S03** Deep Colony Grand Chef + Homesteader meals (defName list; DC-C09)
 - [ ] **HS-S04** Nemesis pantry / smokehouse targeting remains a **Nemesis** soft-compat item (defName list), not a Homesteader world-sim

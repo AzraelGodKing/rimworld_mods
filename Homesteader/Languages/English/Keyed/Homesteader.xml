@@ -110,4 +110,17 @@
   <Homesteader_SettingsGameplayHeaderNewGames>Gameplay (defaults for new games). Each save keeps its own copy.</Homesteader_SettingsGameplayHeaderNewGames>
   <Homesteader_SettingsDisplayHeader>Display (this computer only)</Homesteader_SettingsDisplayHeader>
   <Homesteader_KatsFallbackRace>person</Homesteader_KatsFallbackRace>
+  <Homesteader_SettingsLarderMood>Well-stocked larder mood</Homesteader_SettingsLarderMood>
+  <Homesteader_SettingsLarderMoodTip>Colonists get a small mood boost when their map's cellars and pantries hold 3, 6 or 9 kinds of preserves.</Homesteader_SettingsLarderMoodTip>
+  <Homesteader_SettingsRainAwareWater>Rain-aware water catchers</Homesteader_SettingsRainAwareWater>
+  <Homesteader_SettingsRainAwareWaterTip>Rain barrels and cisterns fill faster in the rain and stop collecting during a drought.</Homesteader_SettingsRainAwareWaterTip>
+  <Homesteader_SettingsBeesNeedBloom>Bees need flowers</Homesteader_SettingsBeesNeedBloom>
+  <Homesteader_SettingsBeesNeedBloomTip>Beehives only make honey and wax with at least four flowering crops, herbs or decorative plants nearby, in their growing season.</Homesteader_SettingsBeesNeedBloomTip>
+  <Homesteader_SpawnerDrought>Drought: nothing to collect.</Homesteader_SpawnerDrought>
+  <Homesteader_SpawnerNoBloom>Nothing in bloom nearby: the bees are idle.</Homesteader_SpawnerNoBloom>
+  <Homesteader_SpawnerRain>Rain is filling it faster ({0} speed).</Homesteader_SpawnerRain>
+  <Homesteader_PantryLandrace>(landrace +{0}%)</Homesteader_PantryLandrace>
+  <Homesteader_HarvestFestivalLetterKinds>On the table: {0}.</Homesteader_HarvestFestivalLetterKinds>
+  <Homesteader_HarvestFestivalLetterFeast>Pumpkin pie and cider from the pantry made it a proper feast.</Homesteader_HarvestFestivalLetterFeast>
+  <Homesteader_HarvestFestivalLetterTrader>Word of the festival is spreading. A trader caravan should arrive within a few days.</Homesteader_HarvestFestivalLetterTrader>
 </LanguageData>

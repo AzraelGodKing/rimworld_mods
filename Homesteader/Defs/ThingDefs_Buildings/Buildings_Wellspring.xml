@@ -74,7 +74,7 @@
       <WoodLog>30</WoodLog>
     </costList>
     <comps>
-      <li Class="CompProperties_Spawner">
+      <li Class="Homesteader.CompProperties_HomesteaderSpawner">
         <thingToSpawn>Wellspring_Water</thingToSpawn>
         <spawnCount>3</spawnCount>
         <spawnIntervalRange>70000~110000</spawnIntervalRange>
@@ -83,6 +83,9 @@
         <writeTimeLeftToSpawn>true</writeTimeLeftToSpawn>
         <showMessageIfOwned>false</showMessageIfOwned>
         <saveKeysPrefix>rainwater</saveKeysPrefix>
+        <!-- Twice as fast in a downpour, stops in a drought (AZR-576). -->
+        <rainBoost>1.5</rainBoost>
+        <pauseInDrought>true</pauseInDrought>
       </li>
     </comps>
     <designationCategory>Production</designationCategory>
@@ -127,7 +130,7 @@
       <Steel>25</Steel>
     </costList>
     <comps>
-      <li Class="CompProperties_Spawner">
+      <li Class="Homesteader.CompProperties_HomesteaderSpawner">
         <thingToSpawn>Wellspring_Water</thingToSpawn>
         <spawnCount>8</spawnCount>
         <spawnIntervalRange>50000~80000</spawnIntervalRange>
@@ -136,6 +139,8 @@
         <writeTimeLeftToSpawn>true</writeTimeLeftToSpawn>
         <showMessageIfOwned>false</showMessageIfOwned>
         <saveKeysPrefix>cistern</saveKeysPrefix>
+        <rainBoost>1</rainBoost>
+        <pauseInDrought>true</pauseInDrought>
       </li>
     </comps>
     <building>

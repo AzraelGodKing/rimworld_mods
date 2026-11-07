@@ -110,4 +110,17 @@
   <Homesteader_SettingsGameplayHeaderNewGames>玩法（新游戏默认值）。每个存档保留自己的副本。</Homesteader_SettingsGameplayHeaderNewGames>
   <Homesteader_SettingsDisplayHeader>显示（仅限本电脑）</Homesteader_SettingsDisplayHeader>
   <Homesteader_KatsFallbackRace>人</Homesteader_KatsFallbackRace>
+  <Homesteader_SettingsLarderMood>食品柜充足带来的心情</Homesteader_SettingsLarderMood>
+  <Homesteader_SettingsLarderMoodTip>当所在地图的地窖和食品柜存有 3、6 或 9 种腌藏食物时，殖民者获得少量心情加成。</Homesteader_SettingsLarderMoodTip>
+  <Homesteader_SettingsRainAwareWater>集水受降雨影响</Homesteader_SettingsRainAwareWater>
+  <Homesteader_SettingsRainAwareWaterTip>雨水桶和蓄水池在下雨时集水更快，干旱期间停止集水。</Homesteader_SettingsRainAwareWaterTip>
+  <Homesteader_SettingsBeesNeedBloom>蜜蜂需要花</Homesteader_SettingsBeesNeedBloom>
+  <Homesteader_SettingsBeesNeedBloomTip>蜂箱附近至少要有四株处于生长季、正在开花的作物、草药或观赏植物，才会产出蜂蜜和蜂蜡。</Homesteader_SettingsBeesNeedBloomTip>
+  <Homesteader_SpawnerDrought>干旱：无水可集。</Homesteader_SpawnerDrought>
+  <Homesteader_SpawnerNoBloom>附近没有开花植物：蜜蜂闲着。</Homesteader_SpawnerNoBloom>
+  <Homesteader_SpawnerRain>雨水让它集得更快（速度 {0}）。</Homesteader_SpawnerRain>
+  <Homesteader_PantryLandrace>（地方品种 +{0}%）</Homesteader_PantryLandrace>
+  <Homesteader_HarvestFestivalLetterKinds>桌上有：{0}。</Homesteader_HarvestFestivalLetterKinds>
+  <Homesteader_HarvestFestivalLetterFeast>食品柜里的南瓜派和苹果酒让这成了一场真正的盛宴。</Homesteader_HarvestFestivalLetterFeast>
+  <Homesteader_HarvestFestivalLetterTrader>节日的消息正在传开。几天内应有商队到来。</Homesteader_HarvestFestivalLetterTrader>
 </LanguageData>
