@@ -123,4 +123,9 @@
   <Homesteader_HarvestFestivalLetterKinds>On the table: {0}.</Homesteader_HarvestFestivalLetterKinds>
   <Homesteader_HarvestFestivalLetterFeast>Pumpkin pie and cider from the pantry made it a proper feast.</Homesteader_HarvestFestivalLetterFeast>
   <Homesteader_HarvestFestivalLetterTrader>Word of the festival is spreading. A trader caravan should arrive within a few days.</Homesteader_HarvestFestivalLetterTrader>
+  <!-- Living World flavor (HS-S01) -->
+  <Homesteader_LwFamineStocked>Famine talk from {0}. Your homesteaders look over {1} kinds of preserves and feel lucky.</Homesteader_LwFamineStocked>
+  <Homesteader_LwFamineEmpty>Famine talk from {0}. Your homesteaders eye their empty shelves and think about putting food by.</Homesteader_LwFamineEmpty>
+  <Homesteader_LwRefugees>Refugees on the road from {0}. A full pantry goes a long way with hungry guests.</Homesteader_LwRefugees>
+  <Homesteader_LwFarAway>far away</Homesteader_LwFarAway>
 </LanguageData>

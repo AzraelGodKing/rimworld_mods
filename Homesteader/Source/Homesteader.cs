@@ -26,6 +26,7 @@ namespace Homesteader
 
             HomesteaderGameplayDefs.Apply(HomesteaderMod.Settings.gameplay);
             HomesteaderMultiplayer.RegisterAll();
+            LivingWorldFlavor.TryRegister();
         }
 
         internal static bool IsRottable(ThingDef? def) => Flag(rottable, def);

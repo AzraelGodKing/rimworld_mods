@@ -123,4 +123,9 @@
   <Homesteader_HarvestFestivalLetterKinds>桌上有：{0}。</Homesteader_HarvestFestivalLetterKinds>
   <Homesteader_HarvestFestivalLetterFeast>食品柜里的南瓜派和苹果酒让这成了一场真正的盛宴。</Homesteader_HarvestFestivalLetterFeast>
   <Homesteader_HarvestFestivalLetterTrader>节日的消息正在传开。几天内应有商队到来。</Homesteader_HarvestFestivalLetterTrader>
+  <!-- Living World flavor (HS-S01) -->
+  <Homesteader_LwFamineStocked>来自{0}的饥荒传闻。拓荒者们看着{1}种储藏食品，庆幸自己早有准备。</Homesteader_LwFamineStocked>
+  <Homesteader_LwFamineEmpty>来自{0}的饥荒传闻。拓荒者们望着空空的货架，想着该储备食物了。</Homesteader_LwFamineEmpty>
+  <Homesteader_LwRefugees>难民正从{0}逃来。满满的储藏室能让饥饿的客人吃饱。</Homesteader_LwRefugees>
+  <Homesteader_LwFarAway>远方</Homesteader_LwFarAway>
 </LanguageData>
