@@ -177,7 +177,7 @@ namespace DateNight
                      {
                          DateActivity.Hangout, DateActivity.Dinner, DateActivity.Picnic,
                          DateActivity.Walk, DateActivity.Stargaze, DateActivity.Dance,
-                         DateActivity.Gift, DateActivity.Recreation,
+                         DateActivity.Gift, DateActivity.Recreation, DateActivity.Fishing,
                      })
             {
                 DateActivity chosen = activity;

@@ -18,6 +18,8 @@ namespace DateNight
         Dance = 6,
         Gift = 7,
         Recreation = 8,
+        // Append only: saves store the number (AZR-559).
+        Fishing = 9,
     }
 
     /// <summary>
@@ -56,8 +58,8 @@ namespace DateNight
                 return other.CoupleActivity;
             }
 
-            Pawn initiator = IsInitiator(pawn, partner) ? pawn : partner;
-            Pawn otherPawn = initiator == pawn ? partner : pawn;
+            Pawn giver = IsGiftGiver(pawn, partner) ? pawn : partner;
+            Pawn receiver = giver == pawn ? partner : pawn;
 
             List<DateActivity> candidates = new List<DateActivity> { DateActivity.Hangout };
 
@@ -74,7 +76,9 @@ namespace DateNight
             {
                 candidates.Add(DateActivity.Picnic);
             }
-            if (niceOutside)
+            // Biotech: no dancing or long walks while either partner is pregnant (AZR-574).
+            bool pregnant = DateNightBaby.IsPregnant(pawn) || DateNightBaby.IsPregnant(partner);
+            if (niceOutside && !pregnant)
             {
                 candidates.Add(DateActivity.Walk);
             }
@@ -82,17 +86,21 @@ namespace DateNight
             {
                 candidates.Add(DateActivity.Stargaze);
             }
-            if (FindGatherSpotFor(pawn, partner) != null)
+            if (!pregnant && FindGatherSpotFor(pawn, partner) != null)
             {
                 candidates.Add(DateActivity.Dance);
             }
-            if (AllowGifts() && FindGiftFor(initiator, otherPawn) != null)
+            if (AllowGifts() && FindGiftFor(giver, receiver) != null)
             {
                 candidates.Add(DateActivity.Gift);
             }
             if (FindJoyBuildingFor(pawn, partner) != null)
             {
                 candidates.Add(DateActivity.Recreation);
+            }
+            if (niceOutside && FindFishingSpot(pawn, partner).IsValid)
+            {
+                candidates.Add(DateActivity.Fishing);
             }
 
             // Same seed on both partners: couple key + day + schedule hour block.
@@ -108,7 +116,7 @@ namespace DateNight
             }
             else
             {
-                picked = candidates[Rand.Range(0, candidates.Count)];
+                picked = WeightedPick(candidates, pawn, partner);
             }
             Rand.PopState();
             return picked;
@@ -119,6 +127,83 @@ namespace DateNight
             return DateNightMod.Settings.allowGiftDates;
         }
 
+        /// <summary>
+        /// Trait- and passion-weighted pick (AZR-559). Runs inside the couple's
+        /// seeded Rand state, and both partners see the same traits, so both still
+        /// resolve the same activity.
+        /// </summary>
+        private static DateActivity WeightedPick(List<DateActivity> candidates, Pawn a, Pawn b)
+        {
+            float total = 0f;
+            WeightScratch.Clear();
+            for (int i = 0; i < candidates.Count; i++)
+            {
+                float w = ActivityWeight(candidates[i], a, b);
+                WeightScratch.Add(w);
+                total += w;
+            }
+            float roll = Rand.Value * total;
+            for (int i = 0; i < candidates.Count; i++)
+            {
+                roll -= WeightScratch[i];
+                if (roll < 0f)
+                {
+                    return candidates[i];
+                }
+            }
+            return candidates[candidates.Count - 1];
+        }
+
+        private static readonly List<float> WeightScratch = new List<float>();
+
+        public static float ActivityWeight(DateActivity activity, Pawn a, Pawn b)
+        {
+            return ActivityWeight(activity, CoupleTaste.Of(a, b));
+        }
+
+        /// <summary>Pure weight from the couple's tastes; 1 for anything they have no taste for.</summary>
+        public static float ActivityWeight(DateActivity activity, CoupleTaste taste)
+        {
+            float w = 1f;
+            switch (activity)
+            {
+                case DateActivity.Dinner:
+                    if (taste.gourmand) w += 1.5f;
+                    if (taste.ascetic) w -= 0.5f;
+                    break;
+                case DateActivity.Picnic:
+                    if (taste.artistic) w += 1f;
+                    if (taste.gourmand) w += 0.5f;
+                    break;
+                case DateActivity.Walk:
+                    if (taste.ascetic) w += 1f;
+                    break;
+                case DateActivity.Stargaze:
+                    if (taste.ascetic) w += 1f;
+                    if (taste.nightOwl) w += 1.5f;
+                    break;
+                case DateActivity.Fishing:
+                    if (taste.animals) w += 1f;
+                    break;
+            }
+            return w < 0.25f ? 0.25f : w;
+        }
+
+        /// <summary>
+        /// Who carries the gift today. Alternates by day so both partners give
+        /// (was always the lower thing id, AZR-559).
+        /// </summary>
+        public static bool IsGiftGiver(Pawn pawn, Pawn? partner)
+        {
+            return partner == null || IsGiftGiver(pawn.thingIDNumber, partner.thingIDNumber, GenDate.DaysPassed);
+        }
+
+        public static bool IsGiftGiver(int pawnId, int partnerId, int day)
+        {
+            return (pawnId < partnerId) == (day % 2 == 0);
+        }
+
+        /// <summary>Walk leader and stand order. Stable per couple.</summary>
         public static bool IsInitiator(Pawn pawn, Pawn? partner)
         {
             return partner == null || pawn.thingIDNumber < partner.thingIDNumber;
@@ -189,6 +274,8 @@ namespace DateNight
                 return null;
             }
 
+            // Titled pawns only get meals their title allows; with none, the date
+            // is not a dinner or picnic (AZR-559).
             // Cheap filters and the score first, reach checks last and only until one
             // passes (AZR-542). Ties break on thing id so every client agrees.
             Candidates.Clear();
@@ -203,7 +290,7 @@ namespace DateNight
                 {
                     continue;
                 }
-                if (food.IsForbidden(pawn) || !FoodUtility.WillEat(pawn, food, null, careIfNotAcceptableForTitle: false))
+                if (food.IsForbidden(pawn) || !FoodUtility.WillEat(pawn, food, null, careIfNotAcceptableForTitle: true))
                 {
                     continue;
                 }
@@ -421,6 +508,15 @@ namespace DateNight
         private static readonly List<Building> VenueScratch = new List<Building>();
         private static readonly Comparison<Building> ById = (a, b) => a.thingIDNumber.CompareTo(b.thingIDNumber);
 
+        // Homesteader's harvest maypole is the natural dance floor (soft defName, AZR-574).
+        private const string MaypoleDefName = "Homesteader_HarvestMaypole";
+        private static readonly Comparison<Building> PreferredThenId = (a, b) =>
+        {
+            bool pa = a.def.defName == MaypoleDefName;
+            bool pb = b.def.defName == MaypoleDefName;
+            return pa != pb ? (pa ? -1 : 1) : a.thingIDNumber.CompareTo(b.thingIDNumber);
+        };
+
         /// <summary>
         /// Lowest-id colonist building of a kind that both can reach. One date start
         /// asked for the same gather spot three or more times (activity pick, venue,
@@ -455,7 +551,7 @@ namespace DateNight
                     VenueScratch.Add(building);
                 }
             }
-            VenueScratch.Sort(ById);
+            VenueScratch.Sort(kind == VenueKind.Gather ? PreferredThenId : ById);
 
             Building? found = null;
             for (int i = 0; i < VenueScratch.Count; i++)
@@ -626,6 +722,9 @@ namespace DateNight
                     }
                     break;
                 }
+                case DateActivity.Fishing:
+                    venue = FindFishingSpot(pawn, partner);
+                    break;
             }
 
             if (!venue.IsValid)
@@ -633,6 +732,89 @@ namespace DateNight
                 venue = DateNightDateUtility.FindDateSpot(pawn, partner);
             }
             return venue;
+        }
+
+        private static int fishingMemoTick = -1;
+        private static readonly Dictionary<long, IntVec3> FishingMemo = new Dictionary<long, IntVec3>();
+        private static readonly List<Zone_Fishing> FishingZones = new List<Zone_Fishing>();
+
+        /// <summary>
+        /// Odyssey fishing date (AZR-574): a standable cell beside one of the
+        /// player's fishing zones that both can reach. Zones in id order, cells in
+        /// zone order, so every client picks the same cell. Invalid without Odyssey.
+        /// </summary>
+        public static IntVec3 FindFishingSpot(Pawn pawn, Pawn partner)
+        {
+            if (!ModsConfig.OdysseyActive || pawn?.Map == null)
+            {
+                return IntVec3.Invalid;
+            }
+
+            int now = Find.TickManager.TicksGame;
+            if (fishingMemoTick != now)
+            {
+                fishingMemoTick = now;
+                FishingMemo.Clear();
+            }
+            long couple = CoupleKey(pawn, partner);
+            if (FishingMemo.TryGetValue(couple, out IntVec3 memo))
+            {
+                return memo;
+            }
+
+            Map map = pawn.Map;
+            FishingZones.Clear();
+            List<Zone> zones = map.zoneManager.AllZones;
+            for (int i = 0; i < zones.Count; i++)
+            {
+                if (zones[i] is Zone_Fishing fishing)
+                {
+                    FishingZones.Add(fishing);
+                }
+            }
+            FishingZones.Sort((x, y) => x.ID.CompareTo(y.ID));
+
+            IntVec3 found = IntVec3.Invalid;
+            for (int z = 0; z < FishingZones.Count && !found.IsValid; z++)
+            {
+                List<IntVec3> cells = FishingZones[z].Cells;
+                for (int i = 0; i < cells.Count && !found.IsValid; i++)
+                {
+                    for (int d = 0; d < 4; d++)
+                    {
+                        IntVec3 stand = cells[i] + GenAdj.CardinalDirections[d];
+                        if (stand.InBounds(map) && stand.Standable(map)
+                            && !(stand.GetZone(map) is Zone_Fishing)
+                            && !stand.IsForbidden(pawn)
+                            && pawn.CanReach(stand, PathEndMode.OnCell, Danger.Some)
+                            && partner.CanReach(stand, PathEndMode.OnCell, Danger.Some))
+                        {
+                            found = stand;
+                            break;
+                        }
+                    }
+                }
+            }
+            FishingZones.Clear();
+            FishingMemo[couple] = found;
+            return found;
+        }
+
+        private static bool IsByFishingZone(IntVec3 cell, Map map)
+        {
+            if (!ModsConfig.OdysseyActive)
+            {
+                return false;
+            }
+            for (int d = 0; d < 4; d++)
+            {
+                IntVec3 c = cell + GenAdj.CardinalDirections[d];
+                if (c.InBounds(map) && c.GetZone(map) is Zone_Fishing)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         /// <summary>Where this activity happens. Falls back to the generic date spot.</summary>
@@ -671,6 +853,11 @@ namespace DateNight
             {
                 Thing thing = venue.Thing ?? venue.Cell.GetEdifice(map);
                 return thing != null && thing.def.IsTable;
+            }
+            if (kind == DateActivity.Fishing)
+            {
+                IntVec3 c = venue.HasThing ? venue.Thing.Position : venue.Cell;
+                return c.InBounds(map) && IsByFishingZone(c, map);
             }
             if (kind == DateActivity.Stargaze || kind == DateActivity.Picnic || kind == DateActivity.Walk)
             {

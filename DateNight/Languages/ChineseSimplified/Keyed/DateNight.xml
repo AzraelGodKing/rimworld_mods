@@ -108,4 +108,7 @@
   <DateNight_Romance_NoRapport>还没有双人约会。</DateNight_Romance_NoRapport>
   <DateNight_Romance_NoPartner>{0}没有可以约会的对象。</DateNight_Romance_NoPartner>
   <DateNight_Romance_Planned>今晚{0}:00有约会。</DateNight_Romance_Planned>
+  <DateNight_Report_Fishing>正在和{0}钓鱼。</DateNight_Report_Fishing>
+  <DateNight_Gizmo_Baby>备孕</DateNight_Gizmo_Baby>
+  <DateNight_Gizmo_BabyDesc>此殖民者和{0}正在备孕。爱爱频率约为两倍，在爱爱时段使用短冷却。她怀孕后自动关闭。</DateNight_Gizmo_BabyDesc>
 </LanguageData>

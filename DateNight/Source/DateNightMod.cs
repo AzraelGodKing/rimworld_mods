@@ -175,6 +175,7 @@ namespace DateNight
             _ = DateNightRjwSoftCompat.Active;
             _ = DateNightRotrSoftCompat.Active;
             DateNightPatchCheck.Verify(HarmonyId);
+            DateNightMultiplayer.RegisterAll();
         }
     }
 }

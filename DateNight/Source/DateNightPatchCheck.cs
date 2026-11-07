@@ -38,6 +38,8 @@ namespace DateNight
                 ("JobGiver_GetJoy.TryGiveJob", AccessTools.Method(typeof(JobGiver_GetJoy), "TryGiveJob")),
                 ("Pawn.GetInspectString", AccessTools.Method(typeof(Pawn), nameof(Pawn.GetInspectString))),
                 ("Pawn.GetGizmos", AccessTools.Method(typeof(Pawn), nameof(Pawn.GetGizmos))),
+                ("InteractionWorker_MarriageProposal.RandomSelectionWeight",
+                    AccessTools.Method(typeof(InteractionWorker_MarriageProposal), nameof(InteractionWorker_MarriageProposal.RandomSelectionWeight))),
             };
             if (DateNightRjwSoftCompat.Active)
             {

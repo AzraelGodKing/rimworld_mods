@@ -585,7 +585,8 @@ namespace DateNight
             }
 
             ThoughtDef? thought = DateNightDefOf.DateNight_PrivateTime;
-            if (thought != null)
+            // An ideoligion that disapproves of lovin gives no good mood for it (AZR-574).
+            if (thought != null && DateNightHooks.IdeologyAllowsLovin(pawn))
             {
                 pawn.needs.mood.thoughts.memories.TryGainMemory(thought);
             }

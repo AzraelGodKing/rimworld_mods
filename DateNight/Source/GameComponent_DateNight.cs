@@ -151,6 +151,7 @@ namespace DateNight
                 DateNightRomance.PruneDeadPawns();
                 DateNightRomance.TickBonds();
                 DateNightHistory.PruneDeadPawns();
+                DateNightHistory.TickBabyPlans();
                 PruneScheduleFlags(wasOnLovin);
                 PruneScheduleFlags(wasOnDate);
             }

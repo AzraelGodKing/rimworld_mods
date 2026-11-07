@@ -1,6 +1,7 @@
 #nullable enable
 using System.Collections.Generic;
 using RimWorld;
+using UnityEngine;
 using Verse;
 using Verse.AI;
 
@@ -289,7 +290,8 @@ namespace DateNight
             return Find.TickManager.TicksGame - tick <= GoodDateBoostTicks;
         }
 
-        public static void NotifyDateFinished(Pawn pawn, Pawn? partner, DateActivity activity, LocalTargetInfo spot)
+        public static void NotifyDateFinished(Pawn pawn, Pawn? partner, DateActivity activity, LocalTargetInfo spot,
+            bool fineMeal)
         {
             if (pawn?.needs?.mood?.thoughts?.memories == null || partner == null)
             {
@@ -300,7 +302,7 @@ namespace DateNight
                 return;
             }
 
-            ThoughtDef? def = PickQualityThought(pawn, partner, activity, spot);
+            ThoughtDef? def = PickQualityThought(pawn, partner, activity, spot, fineMeal);
             if (def != null)
             {
                 pawn.needs.mood.thoughts.memories.TryGainMemory(def, partner);
@@ -330,56 +332,52 @@ namespace DateNight
         }
 
         /// <summary>
-        /// Wonderful / nice / awkward, from venue beauty, weather, whether the couple
-        /// did something more special than standing around, and a seeded roll shared
-        /// by both partners.
+        /// Wonderful / nice / awkward. Inputs are gathered here and scored by the
+        /// pure <see cref="QualityScore"/>; the roll is seeded per couple and day so
+        /// both partners agree on luck.
         /// </summary>
-        private static ThoughtDef? PickQualityThought(Pawn pawn, Pawn partner, DateActivity activity, LocalTargetInfo spot)
+        private static ThoughtDef? PickQualityThought(Pawn pawn, Pawn partner, DateActivity activity,
+            LocalTargetInfo spot, bool fineMeal)
         {
             if (!DateNightMod.Settings.enableDateQuality)
             {
                 return DateNightDefOf.DateNight_HadADate;
             }
 
-            Map map = pawn.Map;
-            int score = 0;
-            if (activity != DateActivity.Hangout && activity != DateActivity.Unresolved)
+            CoupleTaste taste = CoupleTaste.Of(pawn, partner);
+            var q = new DateQualityInputs
             {
-                score++;
-            }
+                special = activity != DateActivity.Hangout && activity != DateActivity.Unresolved,
+                anniversary = DateNightAnniversaries.IsAnniversaryToday(pawn, partner),
+                favorite = DateNightVenues.IsAtFavorite(pawn, partner, spot),
+                mutualOpinion = Mathf.Min(
+                    pawn.relations?.OpinionOf(partner) ?? 0,
+                    partner.relations?.OpinionOf(pawn) ?? 0),
+                kind = taste.kind,
+                abrasive = taste.abrasive,
+                fineMeal = fineMeal,
+                impressiveness = -1f,
+            };
 
+            Map map = pawn.Map;
             IntVec3 cell = spot.IsValid ? spot.Cell : pawn.Position;
             if (map != null && cell.InBounds(map))
             {
-                float beauty = BeautyUtility.AverageBeautyPerceptible(cell, map);
-                if (beauty >= 4f)
+                q.beauty = BeautyUtility.AverageBeautyPerceptible(cell, map);
+                q.rainedOn = !cell.Roofed(map) && DateNightActivities.IsRaining(map);
+                Room? room = cell.GetRoom(map);
+                if (room != null && !room.PsychologicallyOutdoors && room.ProperRoom)
                 {
-                    score++;
-                }
-                else if (beauty < 0f)
-                {
-                    score--;
-                }
-                if (!cell.Roofed(map) && DateNightActivities.IsRaining(map))
-                {
-                    score--;
+                    q.impressiveness = room.GetStat(RoomStatDefOf.Impressiveness);
                 }
             }
 
             Rand.PushState(Gen.HashCombineInt(
                 DateNightDoubleDates.QualitySeed(pawn, partner), GenDate.DaysPassed));
-            score += Rand.RangeInclusive(-1, 1);
+            q.roll = Rand.RangeInclusive(-1, 1);
             Rand.PopState();
 
-            if (DateNightAnniversaries.IsAnniversaryToday(pawn, partner))
-            {
-                score += 2;
-            }
-            if (DateNightVenues.IsAtFavorite(pawn, partner, spot))
-            {
-                score += 1;
-            }
-
+            int score = QualityScore(q);
             if (score >= 2 && DateNightDefOf.DateNight_DateWonderful != null)
             {
                 return DateNightDefOf.DateNight_DateWonderful;
@@ -389,6 +387,28 @@ namespace DateNight
                 return DateNightDefOf.DateNight_DateAwkward;
             }
             return DateNightDefOf.DateNight_HadADate;
+        }
+
+        /// <summary>
+        /// 2+ is wonderful, -1 or less awkward. Opinion, traits, a fine meal and an
+        /// impressive room joined beauty, weather and luck in 2.0.0 (AZR-559).
+        /// </summary>
+        public static int QualityScore(in DateQualityInputs q)
+        {
+            int score = q.roll;
+            if (q.special) score++;
+            if (q.beauty >= 4f) score++;
+            else if (q.beauty < 0f) score--;
+            if (q.rainedOn) score--;
+            if (q.anniversary) score += 2;
+            if (q.favorite) score++;
+            if (q.mutualOpinion >= 60) score++;
+            else if (q.mutualOpinion < 0) score--;
+            if (q.kind) score++;
+            if (q.abrasive) score--;
+            if (q.fineMeal) score++;
+            if (q.impressiveness >= 65f) score++;
+            return score;
         }
 
         /// <summary>Date cut short by a draft, mental break, or an active threat.</summary>
@@ -461,6 +481,19 @@ namespace DateNight
             return partner;
         }
 
+        /// <summary>
+        /// A good Lovin-window mood, nullified when the pawn's ideoligion disapproves
+        /// of lovin (AZR-574). Checked through the same InitiatedLovin history event
+        /// vanilla uses, so it follows whatever precepts the ideoligion has.
+        /// </summary>
+        internal static void TryGainLovinThought(Pawn? pawn, Pawn? other, ThoughtDef? def)
+        {
+            if (pawn != null && DateNightHooks.IdeologyAllowsLovin(pawn))
+            {
+                TryGainThought(pawn, other, def);
+            }
+        }
+
         internal static void TryGainThought(Pawn? pawn, Pawn? other, ThoughtDef? def)
         {
             if (pawn?.needs?.mood?.thoughts?.memories == null || def == null || other == null)
@@ -473,5 +506,22 @@ namespace DateNight
             }
             pawn.needs.mood.thoughts.memories.TryGainMemory(def, other);
         }
+    }
+
+    /// <summary>Everything the date quality score looks at (AZR-559).</summary>
+    public struct DateQualityInputs
+    {
+        public bool special;
+        public float beauty;
+        public bool rainedOn;
+        public int roll;
+        public bool anniversary;
+        public bool favorite;
+        public int mutualOpinion;
+        public bool kind;
+        public bool abrasive;
+        public bool fineMeal;
+        /// <summary>Room impressiveness, or -1 outdoors.</summary>
+        public float impressiveness;
     }
 }
