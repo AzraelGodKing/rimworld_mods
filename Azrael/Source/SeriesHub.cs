@@ -1,6 +1,5 @@
 #nullable enable
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
@@ -239,8 +238,9 @@ namespace Azrael
             bool rootCellar = DefPresent("Homesteader_RootCellar");
             bool wells = DefPresent("Wellspring_HandDugWell");
             bool lwSignals = TypePresent("LivingWorld.LivingWorldSignals");
+            // Deep Colony registers in its [StaticConstructorOnStartup]; never force it from here.
             bool dcConsumer = TypePresent("DeepColony.LivingWorldSoftCompat")
-                && GoodwillHandlerRegistered() != false;
+                && SisterContracts.LivingWorldHandlerRegistered("DeepColony.LivingWorldSoftCompat") != false;
 
             var rows = new List<BridgeRow>();
             rows.Add(Bridge(
@@ -539,41 +539,6 @@ namespace Azrael
             isAzrael = i == 0;
             display = i >= 0 ? roster.Mods[i].Display : pack.Name;
             return i >= 0;
-        }
-
-        /// <summary>
-        /// True/false when LivingWorldSignals.handlers is readable; null when it is not
-        /// (renamed field), so the bridge falls back to type presence.
-        /// </summary>
-        private static bool? GoodwillHandlerRegistered()
-        {
-            try
-            {
-                Type signals = AccessTools.TypeByName("LivingWorld.LivingWorldSignals");
-                Type consumer = AccessTools.TypeByName("DeepColony.LivingWorldSoftCompat");
-                if (signals == null || consumer == null)
-                {
-                    return false;
-                }
-                System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(consumer.TypeHandle);
-
-                if (!(AccessTools.Field(signals, "handlers")?.GetValue(null) is IEnumerable handlers))
-                {
-                    return null;
-                }
-                foreach (object h in handlers)
-                {
-                    if (h is Delegate d && d.Method?.DeclaringType == consumer)
-                    {
-                        return true;
-                    }
-                }
-                return false;
-            }
-            catch
-            {
-                return null;
-            }
         }
 
         private static string GoodwillStatus(bool livingWorld, bool deepColony, bool signals, bool consumer)

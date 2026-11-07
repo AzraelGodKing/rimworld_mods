@@ -76,16 +76,18 @@ namespace Azrael
     }
 
     // Every vanilla comp picks within a category by IncidentChanceFinal weight.
-    [HarmonyPatch(typeof(StorytellerComp), "IncidentChanceFinal")]
+    // Argument types are pinned and the incident is bound by position (__0), so an added
+    // overload or a parameter rename fails loudly in the hub instead of binding wrong.
+    [HarmonyPatch(typeof(StorytellerComp), "IncidentChanceFinal", new[] { typeof(IncidentDef), typeof(IIncidentTarget) })]
     public static class Patch_StorytellerComp_IncidentChanceFinal
     {
-        public static void Postfix(IncidentDef def, ref float __result)
+        public static void Postfix(IncidentDef __0, ref float __result)
         {
             if (__result <= 0f)
             {
                 return;
             }
-            float factor = StorytellerIncidentWeights.FactorFor(Find.Storyteller?.def, def);
+            float factor = StorytellerIncidentWeights.FactorFor(Find.Storyteller?.def, __0);
             if (factor != 1f)
             {
                 __result *= factor;

@@ -11,12 +11,12 @@
 - [x] Standalone **Azrael** storyteller inject when Homesteader absent (canonical teller lives in Homesteader)
 - [x] Series hub (Mod Options → Azrael): loaded mods + versions, live bridges, named conflicts, copy-report
 - [x] Hub health: DLC, build stamps, Dubs Bad Hygiene bridges, failed Harmony patch classes
-- [x] Safe removal wizard: buildings, items, caravan cargo, blockers (Nemesis hunt or truce, colonists on a Strata pocket floor), queued deconstruction
+- [x] Safe removal wizard: buildings, items, caravan cargo, blockers (Nemesis hunt or truce, colonists on a Strata pocket floor), deconstruction designated on click
 - [x] Load-order conflict warning (series mod loaded after Azrael)
 - [x] World-state removal scan: Deep Colony family letters, parked Nemesis world pawn, Deep Colony hediffs on map, caravan, and world pawns
 - [x] RU/CN DefInjected for the scenario, forced-storyteller part, and storyteller
 - [x] Optional mountain start for The Deep Homestead (default and random starting site favor large hills or mountains)
-- [x] Multiplayer notice in Conflicts; safe-removal deconstruct queued and applied on game tick
+- [x] Soft Multiplayer support: safe-removal deconstruct is a synced method, applied on click
 
 ## Later
 

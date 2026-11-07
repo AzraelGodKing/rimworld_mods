@@ -47,8 +47,11 @@ namespace Azrael
                 return;
             }
 
-            Storyteller old = Current.Game.storyteller;
-            Current.Game.storyteller = new Storyteller(storyteller, old.difficultyDef, old.difficulty);
+            // Swap the def in place (same as the in-game storyteller change) so difficulty,
+            // incident history and anything else the storyteller holds survive.
+            Storyteller current = Current.Game.storyteller;
+            current.def = storyteller;
+            current.Notify_DefChanged();
         }
     }
 }

@@ -35,6 +35,16 @@ namespace Azrael
             return false;
         }
 
+        internal static bool IsHilly(PlanetTile tile)
+        {
+            if (!tile.Valid)
+            {
+                return false;
+            }
+            Tile? t = Find.WorldGrid?[tile];
+            return t != null && (t.hilliness == Hilliness.LargeHills || t.hilliness == Hilliness.Mountainous);
+        }
+
         internal static bool TryFindMountainTile(out PlanetTile tile)
         {
             tile = PlanetTile.Invalid;
@@ -75,12 +85,15 @@ namespace Azrael
         }
     }
 
-    [HarmonyPatch(typeof(TileFinder), nameof(TileFinder.RandomStartingTile))]
+    // Runs last so another start-site mod's pick is seen; a hilly pick is kept as is.
+    [HarmonyPatch(typeof(TileFinder), nameof(TileFinder.RandomStartingTile), new System.Type[0])]
+    [HarmonyPriority(Priority.Last)]
     internal static class Patch_TileFinder_RandomStartingTile
     {
         private static void Postfix(ref PlanetTile __result)
         {
-            if (!ScenPart_PreferMountainStart.ActiveInScenario())
+            if (!ScenPart_PreferMountainStart.ActiveInScenario()
+                || ScenPart_PreferMountainStart.IsHilly(__result))
             {
                 return;
             }

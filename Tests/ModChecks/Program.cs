@@ -23,6 +23,7 @@ namespace Azrael.ModChecks
             CheckDefOfsFromSource(repo, xmlDefNames, errors);
             CheckDefNameLiterals(repo, xmlDefNames, errors);
             CheckSeriesRosterFromSource(repo, errors);
+            CheckAzraelSaveSurface(repo, errors);
             CheckScribeParity(repo, errors);
             CheckKeyedLiterals(repo, errors);
             CheckOwnTexPaths(repo, errors);
@@ -218,6 +219,30 @@ namespace Azrael.ModChecks
                 if (text.IndexOf("\"" + display + "\"", StringComparison.Ordinal) < 0
                     && text.IndexOf("\"" + folder + "\"", StringComparison.Ordinal) < 0)
                     errors.Add("SeriesHub missing " + folder);
+            }
+        }
+
+        // Azrael classes and scribe labels that 1.6 saves reference (AZR-605). Renaming any of
+        // these breaks loading a Deep Homestead save; keep them frozen.
+        static readonly (string File, string Needle)[] AzraelSaveSurface =
+        {
+            ("ScenPart_ForcedStoryteller.cs", "namespace Azrael"),
+            ("ScenPart_ForcedStoryteller.cs", "public class ScenPart_ForcedStoryteller : ScenPart"),
+            ("ScenPart_ForcedStoryteller.cs", "Scribe_Defs.Look(ref storyteller, \"storyteller\")"),
+            ("ScenPart_PreferMountainStart.cs", "namespace Azrael"),
+            ("ScenPart_PreferMountainStart.cs", "public class ScenPart_PreferMountainStart : ScenPart"),
+            ("UpdateNews.cs", "namespace Azrael"),
+            ("UpdateNews.cs", "public class GameComponent_UpdateNews : GameComponent"),
+            ("UpdateNews.cs", "Scribe_Values.Look(ref lastNewsVersion, \"lastNewsVersion\")"),
+        };
+
+        static void CheckAzraelSaveSurface(string repo, List<string> errors)
+        {
+            foreach ((string file, string needle) in AzraelSaveSurface)
+            {
+                string path = Path.Combine(repo, "Azrael", "Source", file);
+                if (!File.Exists(path) || File.ReadAllText(path).IndexOf(needle, StringComparison.Ordinal) < 0)
+                    errors.Add("Azrael save surface changed (breaks 1.6 saves): " + file + " must keep `" + needle + "`");
             }
         }
 
