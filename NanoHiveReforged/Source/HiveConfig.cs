@@ -8,6 +8,8 @@ namespace NanoHiveReforged
         Items = 1,
         Gear = 2,
         Inventory = 3,
+        OnlyStoredItems = 4,
+        BuildingsFirst = 5,
     }
 
     /// <summary>
@@ -22,12 +24,20 @@ namespace NanoHiveReforged
         public const int MinRate = 1;
         public const int MaxRate = 10;
 
+        public static readonly HiveToggle[] AllToggles =
+        {
+            HiveToggle.Buildings, HiveToggle.Items, HiveToggle.Gear, HiveToggle.Inventory,
+            HiveToggle.OnlyStoredItems, HiveToggle.BuildingsFirst,
+        };
+
         public float range = 12f;
         public int repairPerTarget = 1;
         public bool repairBuildings = true;
         public bool repairItems = true;
         public bool repairGear = true;
         public bool repairInventory = true;
+        public bool onlyStoredItems;
+        public bool buildingsFirst;
 
         public HiveConfig Copy()
         {
@@ -44,6 +54,8 @@ namespace NanoHiveReforged
             repairItems = other.repairItems;
             repairGear = other.repairGear;
             repairInventory = other.repairInventory;
+            onlyStoredItems = other.onlyStoredItems;
+            buildingsFirst = other.buildingsFirst;
             Clamp();
         }
 
@@ -54,7 +66,9 @@ namespace NanoHiveReforged
                 case HiveToggle.Buildings: return repairBuildings;
                 case HiveToggle.Items: return repairItems;
                 case HiveToggle.Gear: return repairGear;
-                default: return repairInventory;
+                case HiveToggle.Inventory: return repairInventory;
+                case HiveToggle.OnlyStoredItems: return onlyStoredItems;
+                default: return buildingsFirst;
             }
         }
 
@@ -65,7 +79,9 @@ namespace NanoHiveReforged
                 case HiveToggle.Buildings: repairBuildings = value; break;
                 case HiveToggle.Items: repairItems = value; break;
                 case HiveToggle.Gear: repairGear = value; break;
-                default: repairInventory = value; break;
+                case HiveToggle.Inventory: repairInventory = value; break;
+                case HiveToggle.OnlyStoredItems: onlyStoredItems = value; break;
+                default: buildingsFirst = value; break;
             }
         }
 
@@ -85,6 +101,8 @@ namespace NanoHiveReforged
             Scribe_Values.Look(ref repairItems, "repairItems", true);
             Scribe_Values.Look(ref repairGear, "repairGear", true);
             Scribe_Values.Look(ref repairInventory, "repairInventory", true);
+            Scribe_Values.Look(ref onlyStoredItems, "onlyStoredItems", false);
+            Scribe_Values.Look(ref buildingsFirst, "buildingsFirst", false);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 Clamp();

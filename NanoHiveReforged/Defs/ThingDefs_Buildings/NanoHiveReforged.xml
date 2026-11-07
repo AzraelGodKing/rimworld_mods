@@ -18,17 +18,16 @@
       <Flammability>1.0</Flammability>
     </statBases>
     <tickerType>Rare</tickerType>
-    <description>A nanobot port that fits into a wall and automatically repairs nearby friendly buildings and items. Effective range is 12 by default.</description>
+    <description>A nanobot port that fits into a wall and automatically repairs nearby friendly buildings, items and colonist gear. Effective range is 12 by default. Each repair cycle it spends a limited number of hit points, most damaged first. It draws full power only while something in range needs repair.</description>
     <size>(1,1)</size>
     <costList>
       <Plasteel>200</Plasteel>
       <ComponentIndustrial>20</ComponentIndustrial>
       <Gold>5</Gold>
     </costList>
+    <!-- Metallic only since 2.0.0. Hives built from wood or stone in a 1.x save keep their stuff. -->
     <stuffCategories>
       <li>Metallic</li>
-      <li>Woody</li>
-      <li>Stony</li>
     </stuffCategories>
     <costStuffCount>200</costStuffCount>
     <comps>
@@ -58,5 +57,11 @@
       <canPlaceOverWall>true</canPlaceOverWall>
     </building>
     <specialDisplayRadius>12</specialDisplayRadius>
+    <modExtensions>
+      <li Class="NanoHiveReforged.NanoHiveProps">
+        <idlePowerConsumption>200</idlePowerConsumption>
+        <budgetTargets>40</budgetTargets>
+      </li>
+    </modExtensions>
   </ThingDef>
 </Defs>

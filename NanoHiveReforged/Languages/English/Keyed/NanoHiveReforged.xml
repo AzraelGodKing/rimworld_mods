@@ -21,11 +21,15 @@
   <NanoHive_Toggle_GearDesc>Repair the apparel and equipment of your colonists in range.</NanoHive_Toggle_GearDesc>
   <NanoHive_Toggle_Inventory>Repair inventory</NanoHive_Toggle_Inventory>
   <NanoHive_Toggle_InventoryDesc>Repair items your colonists in range are carrying.</NanoHive_Toggle_InventoryDesc>
+  <NanoHive_Toggle_OnlyStoredItems>Only stored items</NanoHive_Toggle_OnlyStoredItems>
+  <NanoHive_Toggle_OnlyStoredItemsDesc>Repair only items that are in a stockpile or storage and not forbidden. Leaves loot and junk on the floor alone.</NanoHive_Toggle_OnlyStoredItemsDesc>
+  <NanoHive_Toggle_BuildingsFirst>Buildings first</NanoHive_Toggle_BuildingsFirst>
+  <NanoHive_Toggle_BuildingsFirstDesc>Spend the repair budget on buildings before items and gear. Otherwise the most damaged things go first.</NanoHive_Toggle_BuildingsFirstDesc>
   <NanoHive_Range>Radius: {0}</NanoHive_Range>
   <NanoHive_RangeDesc>Set how far this hive reaches. Applies to every selected hive.</NanoHive_RangeDesc>
   <NanoHive_RangeSlider>Repair radius: {0}</NanoHive_RangeSlider>
   <NanoHive_Rate>Rate: {0} HP</NanoHive_Rate>
-  <NanoHive_RateDesc>Set how many hit points each target gets per repair cycle (about every 4 seconds). Applies to every selected hive.</NanoHive_RateDesc>
+  <NanoHive_RateDesc>Set how many hit points each target gets per repair cycle (about every 4 seconds). The hive spends at most 40 times this per cycle in total, most damaged first. Applies to every selected hive.</NanoHive_RateDesc>
   <NanoHive_RateSlider>Repair per target: {0} HP</NanoHive_RateSlider>
   <NanoHive_MakeDefault>Use as colony default</NanoHive_MakeDefault>
   <NanoHive_MakeDefaultDesc>New hives in this colony start with this hive's settings.</NanoHive_MakeDefaultDesc>
