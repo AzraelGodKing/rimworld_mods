@@ -132,4 +132,5 @@
   <LivingWorld_Settings_PrepareRemovalDesc>Убирает из текущей игры места сражений, стоянки, караваны Living World и состояние «закалён дорогой», затем выключает симуляцию. После этого сохранитесь и удалите мод.</LivingWorld_Settings_PrepareRemovalDesc>
   <LivingWorld_Settings_PrepareRemovalConfirm>Убрать объекты Living World из этой игры и выключить симуляцию? Хроника сохранится.</LivingWorld_Settings_PrepareRemovalConfirm>
   <LivingWorld_Settings_PrepareRemovalDone>Living World: убрано объектов и состояний: {0}. Сохраните игру, затем удалите мод.</LivingWorld_Settings_PrepareRemovalDone>
+  <LivingWorld_Settings_HostOnly>Living World: в мультиплеере к игре применяются только настройки хоста. Ваши настройки сохранены для ваших собственных игр.</LivingWorld_Settings_HostOnly>
 </LanguageData>

@@ -5,8 +5,9 @@ using Verse;
 namespace LivingWorld
 {
     /// <summary>
-    /// Enqueue debug mutations; drain on GameComponentTick (same MP-safer
-    /// pattern as DeepColonyPlayerCommand; no Multiplayer.API dependency).
+    /// Debug mutations are queued and applied on the next GameComponentTick.
+    /// <see cref="Enqueue"/> is a Multiplayer sync method, so with Multiplayer the
+    /// command is queued (and later applied) on every client, not only the clicker.
     /// </summary>
     public static class LivingWorldDebugCommand
     {
@@ -33,54 +34,37 @@ namespace LivingWorld
 
         private static readonly List<Entry> queue = new List<Entry>();
 
-        public static void EnqueueRandomMorph()
-        {
-            queue.Add(new Entry { kind = Kind.RandomMorph });
-        }
+        public static void EnqueueRandomMorph() => Enqueue((int)Kind.RandomMorph, 0, -1, -1);
 
-        public static void EnqueueMorphKind(LivingWorldMorph.MorphKind morphKind)
-        {
-            queue.Add(new Entry { kind = Kind.MorphKind, morphKind = (int)morphKind });
-        }
+        public static void EnqueueMorphKind(LivingWorldMorph.MorphKind morphKind) =>
+            Enqueue((int)Kind.MorphKind, (int)morphKind, -1, -1);
 
-        public static void EnqueueDiplomacyResolve()
-        {
-            queue.Add(new Entry { kind = Kind.DiplomacyResolve });
-        }
+        public static void EnqueueDiplomacyResolve() => Enqueue((int)Kind.DiplomacyResolve, 0, -1, -1);
 
-        public static void EnqueueForceTone(FactionRelationTone tone)
-        {
-            queue.Add(new Entry { kind = Kind.ForceTone, tone = (int)tone });
-        }
+        public static void EnqueueForceTone(FactionRelationTone tone) =>
+            Enqueue((int)Kind.ForceTone, (int)tone, -1, -1);
 
-        public static void EnqueueForceWarBattle()
-        {
-            queue.Add(new Entry { kind = Kind.ForceWarBattle });
-        }
+        public static void EnqueueForceWarBattle() => Enqueue((int)Kind.ForceWarBattle, 0, -1, -1);
 
-        public static void EnqueueForceRefugees(Faction loser, Faction winner)
+        public static void EnqueueForceRefugees(Faction loser, Faction winner) =>
+            Enqueue((int)Kind.ForceRefugees, 0, loser?.loadID ?? -1, winner?.loadID ?? -1);
+
+        public static void EnqueueFakeSkirmish(Faction a, Faction b) =>
+            Enqueue((int)Kind.FakeSkirmish, 0, a?.loadID ?? -1, b?.loadID ?? -1);
+
+        public static void EnqueueSpawnTraffic() => Enqueue((int)Kind.SpawnTraffic, 0, -1, -1);
+
+        /// <summary>Multiplayer sync method: primitive arguments only.</summary>
+        public static void Enqueue(int kind, int arg, int factionA, int factionB)
         {
             queue.Add(new Entry
             {
-                kind = Kind.ForceRefugees,
-                loserId = loser?.loadID ?? -1,
-                winnerId = winner?.loadID ?? -1,
+                kind = (Kind)kind,
+                morphKind = arg,
+                tone = arg,
+                loserId = factionA,
+                winnerId = factionB,
             });
-        }
-
-        public static void EnqueueFakeSkirmish(Faction a, Faction b)
-        {
-            queue.Add(new Entry
-            {
-                kind = Kind.FakeSkirmish,
-                loserId = a?.loadID ?? -1,
-                winnerId = b?.loadID ?? -1,
-            });
-        }
-
-        public static void EnqueueSpawnTraffic()
-        {
-            queue.Add(new Entry { kind = Kind.SpawnTraffic });
         }
 
         /// <summary>Drops commands queued in a previous game (called on load and new game).</summary>

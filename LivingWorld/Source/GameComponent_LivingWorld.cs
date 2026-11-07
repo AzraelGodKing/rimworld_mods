@@ -10,7 +10,7 @@ namespace LivingWorld
     {
         /// <summary>
         /// 1 = saves before the field existed. 2 = layer-aware tiles, pruned moods
-        /// and fallout. Bump and add a step in <see cref="Migrate"/> for format changes.
+        /// and fallout, sim settings saved with the game. Bump and add a step in <see cref="Migrate"/> for format changes.
         /// </summary>
         internal const int CurrentSaveVersion = 2;
         private const int FalloutExpiryTicks = 60000 * 60;
@@ -43,6 +43,11 @@ namespace LivingWorld
         private string lastNewsVersion;
         private List<int> collapsedFactionIds = new List<int>();
         private int saveVersion = CurrentSaveVersion;
+        // The game's own copy of the sim settings (host-authoritative in Multiplayer).
+        private LivingWorldSettings simSettings;
+
+        /// <summary>Null until the game finished loading; then the settings the sim runs on.</summary>
+        public LivingWorldSettings SimSettings => simSettings;
 
         // Cache Get across Label/inspect hot paths for the current Game.
         private static Game cachedGame;
@@ -56,6 +61,8 @@ namespace LivingWorld
         {
             // Debug commands queued in another game must not run in this one.
             LivingWorldDebugCommand.Clear();
+            // Saves from before the copy existed, and new games, start from Mod Options.
+            simSettings ??= (LivingWorldMod.Global ?? new LivingWorldSettings()).Clone();
             PruneStale();
             UpdateNewsLetter.TrySend(ref lastNewsVersion);
         }
@@ -106,6 +113,7 @@ namespace LivingWorld
             Scribe_Values.Look(ref lastNewsVersion, "lastNewsVersion");
             // Missing in saves from before versioning: those load as 1.
             Scribe_Values.Look(ref saveVersion, "saveVersion", 1);
+            Scribe_Deep.Look(ref simSettings, "simSettings");
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 chronicle ??= new List<WorldEvent>();

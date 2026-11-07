@@ -132,4 +132,5 @@
   <LivingWorld_Settings_PrepareRemovalDesc>Removes Living World war sites, way-camps, caravans and the road-worn condition from the current game, and turns the simulation off. Save afterwards, then remove the mod.</LivingWorld_Settings_PrepareRemovalDesc>
   <LivingWorld_Settings_PrepareRemovalConfirm>Remove Living World objects from this game and turn the simulation off? The chronicle is kept.</LivingWorld_Settings_PrepareRemovalConfirm>
   <LivingWorld_Settings_PrepareRemovalDone>Living World: removed {0} objects and conditions. Save the game, then remove the mod.</LivingWorld_Settings_PrepareRemovalDone>
+  <LivingWorld_Settings_HostOnly>Living World: in Multiplayer only the host's settings apply to the game. Your Mod Options are saved for your own games.</LivingWorld_Settings_HostOnly>
 </LanguageData>

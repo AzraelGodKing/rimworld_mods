@@ -18,6 +18,7 @@ First release.
 [*] [b]The road[/b] - long caravan trips bring route hazards, way-camps on familiar stretches, and a road-worn condition.
 [*] [b]Listening Post[/b] scenario - an off-map start that shows the world sim.
 [*] [b]Prepare for removal[/b] - a Mod Options button that cleans Living World out of a save before you remove the mod.
+[*] [b]Multiplayer[/b] - soft support: the sim's settings are saved with the game and only the host changes them.
 [*] [b]RimWorld 1.6 and 1.7[/b] - each game version loads its own build from the same source.
 [*] [b]Chinese and Russian[/b] translations.
 [*] [b]Update letter[/b] - loading a colony sends a letter with these notes and a link to the full changelog.
