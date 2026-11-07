@@ -18,7 +18,6 @@ namespace DateNight
         // couple key -> year we already applied dated-or-missed outcome
         private static Dictionary<long, int> lastOutcomeYear = new Dictionary<long, int>();
         private static int lastScanDay = -1;
-        private const int MilestoneEveryYears = 5;
 
         /// <summary>Call from the GameComponent ctor; a new game never runs ExposeData.</summary>
         public static void Reset()
@@ -289,7 +288,7 @@ namespace DateNight
 
         public static bool IsMilestoneYear(int years)
         {
-            return years >= MilestoneEveryYears && years % MilestoneEveryYears == 0;
+            return DateNightPure.IsMilestoneYear(years);
         }
 
         private static void Celebrate(Pawn pawn, Pawn partner, int years)

@@ -7,21 +7,6 @@ using Verse.AI;
 
 namespace DateNight
 {
-    public enum DateActivity
-    {
-        Unresolved = 0,
-        Hangout = 1,
-        Dinner = 2,
-        Picnic = 3,
-        Walk = 4,
-        Stargaze = 5,
-        Dance = 6,
-        Gift = 7,
-        Recreation = 8,
-        // Append only: saves store the number (AZR-559).
-        Fishing = 9,
-    }
-
     /// <summary>
     /// Picks what a couple actually does on a date. Deterministic per couple per
     /// day-slot so both partners independently resolve the same activity.
@@ -134,11 +119,12 @@ namespace DateNight
         /// </summary>
         private static DateActivity WeightedPick(List<DateActivity> candidates, Pawn a, Pawn b)
         {
+            CoupleTaste taste = CoupleTaste.Of(a, b);
             float total = 0f;
             WeightScratch.Clear();
             for (int i = 0; i < candidates.Count; i++)
             {
-                float w = ActivityWeight(candidates[i], a, b);
+                float w = DateNightPure.ActivityWeight(candidates[i], taste);
                 WeightScratch.Add(w);
                 total += w;
             }
@@ -156,51 +142,13 @@ namespace DateNight
 
         private static readonly List<float> WeightScratch = new List<float>();
 
-        public static float ActivityWeight(DateActivity activity, Pawn a, Pawn b)
-        {
-            return ActivityWeight(activity, CoupleTaste.Of(a, b));
-        }
-
-        /// <summary>Pure weight from the couple's tastes; 1 for anything they have no taste for.</summary>
-        public static float ActivityWeight(DateActivity activity, CoupleTaste taste)
-        {
-            float w = 1f;
-            switch (activity)
-            {
-                case DateActivity.Dinner:
-                    if (taste.gourmand) w += 1.5f;
-                    if (taste.ascetic) w -= 0.5f;
-                    break;
-                case DateActivity.Picnic:
-                    if (taste.artistic) w += 1f;
-                    if (taste.gourmand) w += 0.5f;
-                    break;
-                case DateActivity.Walk:
-                    if (taste.ascetic) w += 1f;
-                    break;
-                case DateActivity.Stargaze:
-                    if (taste.ascetic) w += 1f;
-                    if (taste.nightOwl) w += 1.5f;
-                    break;
-                case DateActivity.Fishing:
-                    if (taste.animals) w += 1f;
-                    break;
-            }
-            return w < 0.25f ? 0.25f : w;
-        }
-
         /// <summary>
         /// Who carries the gift today. Alternates by day so both partners give
         /// (was always the lower thing id, AZR-559).
         /// </summary>
         public static bool IsGiftGiver(Pawn pawn, Pawn? partner)
         {
-            return partner == null || IsGiftGiver(pawn.thingIDNumber, partner.thingIDNumber, GenDate.DaysPassed);
-        }
-
-        public static bool IsGiftGiver(int pawnId, int partnerId, int day)
-        {
-            return (pawnId < partnerId) == (day % 2 == 0);
+            return partner == null || DateNightPure.IsGiftGiver(pawn.thingIDNumber, partner.thingIDNumber, GenDate.DaysPassed);
         }
 
         /// <summary>Walk leader and stand order. Stable per couple.</summary>
@@ -223,13 +171,7 @@ namespace DateNight
 
         public static long CoupleKey(int x, int y)
         {
-            if (x > y)
-            {
-                int tmp = x;
-                x = y;
-                y = tmp;
-            }
-            return ((long)x << 32) | (uint)y;
+            return DateNightPure.CoupleKey(x, y);
         }
 
         public static bool IsNight(Map map)
@@ -323,7 +265,7 @@ namespace DateNight
                 return resolvedGiftDefs;
             }
 
-            HashSet<string> names = new HashSet<string>();
+            List<string> names = new List<string>();
             List<string> configured = DateNightMod.Settings.giftDefNames;
             if (configured != null && configured.Count > 0)
             {
@@ -331,7 +273,7 @@ namespace DateNight
                 {
                     if (!configured[i].NullOrEmpty())
                     {
-                        names.Add(configured[i].Trim());
+                        names.Add(configured[i]);
                     }
                 }
             }
@@ -363,8 +305,9 @@ namespace DateNight
                 }
             }
 
-            List<ThingDef> defs = new List<ThingDef>(names.Count);
-            foreach (string defName in names)
+            List<string> ordered = DateNightPure.OrderedGiftNames(names);
+            List<ThingDef> defs = new List<ThingDef>(ordered.Count);
+            foreach (string defName in ordered)
             {
                 ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(defName);
                 if (def != null)
@@ -372,7 +315,6 @@ namespace DateNight
                     defs.Add(def);
                 }
             }
-            defs.Sort((a, b) => string.CompareOrdinal(a.defName, b.defName));
             resolvedGiftDefs = defs.ToArray();
             return resolvedGiftDefs;
         }
