@@ -143,8 +143,7 @@ namespace Homesteader
                     continue;
                 }
 
-                Widgets.Label(new Rect(0f, rowY, inner.width, 22f),
-                    row.def.LabelCap + "  ×" + row.count);
+                Widgets.Label(new Rect(0f, rowY, inner.width, 22f), row.label);
                 rowY += 22f;
             }
 
@@ -197,7 +196,7 @@ namespace Homesteader
                 PantryMakeRow row = rows[i];
                 float h = bill ? 28f : 22f;
                 Rect line = new Rect(8f, y, inner.width - 8f, h);
-                string text = LineText(row);
+                string text = row.text;
                 if (bill)
                 {
                     Rect label = new Rect(line.x, line.y, line.width - 88f, h);
@@ -283,23 +282,6 @@ namespace Homesteader
                     return "Homesteader_PantrySortRot".Translate();
                 default:
                     return "Homesteader_PantrySortCount".Translate();
-            }
-        }
-
-        private static string LineText(PantryMakeRow row)
-        {
-            string name = row.recipe?.LabelCap ?? "recipe";
-            switch (row.status)
-            {
-                case PantryMakeStatus.CanMake:
-                    return name + "  ×" + row.batches;
-                case PantryMakeStatus.OneShort:
-                    string missing = row.missingDef != null
-                        ? row.missingDef.LabelCap
-                        : "Homesteader_PantryMakeUnknownIng".Translate().ToString();
-                    return name + "  —  " + "Homesteader_PantryMakeNeedIng".Translate(row.missingCount, missing);
-                default:
-                    return name + "  —  " + row.lockReason;
             }
         }
     }

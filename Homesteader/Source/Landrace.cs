@@ -223,18 +223,34 @@ namespace Homesteader
         }
     }
 
+    /// <summary>
+    /// Landrace yield bonus and maple sap season in one postfix (AZR-561). Plants
+    /// with neither comp leave on the def flag check.
+    /// </summary>
     [HarmonyPatch(typeof(Plant), nameof(Plant.YieldNow))]
-    public static class Patch_LandraceYield
+    public static class Patch_PlantYield
     {
         public static void Postfix(Plant __instance, ref int __result)
         {
-            CompLandrace? c = __instance?.TryGetComp<CompLandrace>();
-            if (c == null || c.yieldBonus <= 0f || __result <= 0)
+            if (__result <= 0 || __instance == null)
             {
                 return;
             }
 
-            __result = Mathf.Max(1, Mathf.RoundToInt(__result * (1f + c.yieldBonus)));
+            ThingDef def = __instance.def;
+            if (HomesteaderHarmony.HasLandrace(def))
+            {
+                CompLandrace? c = __instance.TryGetComp<CompLandrace>();
+                if (c != null && c.yieldBonus > 0f)
+                {
+                    __result = Mathf.Max(1, Mathf.RoundToInt(__result * (1f + c.yieldBonus)));
+                }
+            }
+
+            if (HomesteaderHarmony.HasMapleSap(def) && __instance.Map != null)
+            {
+                __result = Mathf.Max(1, Mathf.RoundToInt(__result * MapleSeason.YieldFactor(__instance.Map)));
+            }
         }
     }
 
@@ -243,8 +259,13 @@ namespace Homesteader
     {
         public static void Postfix(Plant __instance, ref float __result)
         {
-            CompLandrace? c = __instance?.TryGetComp<CompLandrace>();
-            if (c == null || c.frostBonus <= 0f || __result >= 0.99f)
+            if (__result >= 0.99f || !HomesteaderHarmony.HasLandrace(__instance?.def))
+            {
+                return;
+            }
+
+            CompLandrace? c = __instance!.TryGetComp<CompLandrace>();
+            if (c == null || c.frostBonus <= 0f)
             {
                 return;
             }
@@ -258,8 +279,13 @@ namespace Homesteader
     {
         public static void Postfix(Plant __instance, ref float __result)
         {
-            CompLandrace? c = __instance?.TryGetComp<CompLandrace>();
-            if (c == null || c.droughtBonus <= 0f || __result >= 0.99f)
+            if (__result >= 0.99f || !HomesteaderHarmony.HasLandrace(__instance?.def))
+            {
+                return;
+            }
+
+            CompLandrace? c = __instance!.TryGetComp<CompLandrace>();
+            if (c == null || c.droughtBonus <= 0f)
             {
                 return;
             }

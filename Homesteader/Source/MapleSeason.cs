@@ -1,5 +1,4 @@
 #nullable enable
-using HarmonyLib;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -64,20 +63,6 @@ namespace Homesteader
             }
 
             return "Homesteader_MapleSeason_Slow".Translate();
-        }
-    }
-
-    [HarmonyPatch(typeof(Plant), nameof(Plant.YieldNow))]
-    public static class Patch_MapleHarvestYield
-    {
-        public static void Postfix(Plant __instance, ref int __result)
-        {
-            if (__result <= 0 || __instance?.Map == null || __instance.TryGetComp<CompMapleSap>() == null)
-            {
-                return;
-            }
-
-            __result = Mathf.Max(1, Mathf.RoundToInt(__result * MapleSeason.YieldFactor(__instance.Map)));
         }
     }
 }

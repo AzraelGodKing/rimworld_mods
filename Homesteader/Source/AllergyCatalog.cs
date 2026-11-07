@@ -328,10 +328,85 @@ namespace Homesteader
                 return null;
             }
 
+            int defMask = FoodMask(foodDef);
+            return defMask == 0 ? null : FirstIdInMask(allergyIds, defMask);
+        }
+
+        public static string? MatchingFoodAllergyId(IEnumerable<string>? allergyIds, Thing? food)
+        {
+            if (allergyIds == null || food == null)
+            {
+                return null;
+            }
+
+            int foodMask = FoodMask(food.def);
+            CompIngredients? ingredients = food.TryGetComp<CompIngredients>();
+            if (ingredients?.ingredients != null)
+            {
+                for (int i = 0; i < ingredients.ingredients.Count; i++)
+                {
+                    foodMask |= FoodMask(ingredients.ingredients[i]);
+                }
+            }
+
+            if (foodMask == 0)
+            {
+                return null;
+            }
+
+            // The food itself wins over its ingredients, as before (AZR-561).
+            return FirstIdInMask(allergyIds, FoodMask(food.def)) ?? FirstIdInMask(allergyIds, foodMask);
+        }
+
+        // Per-ThingDef food-allergen bits by def.index, computed on first use
+        // (AZR-561). Bit i is All[i]; ComputedBit marks a filled slot.
+        private const int ComputedBit = 1 << 15;
+        private static ushort[] defMasks = new ushort[0];
+
+        internal static int FoodMask(ThingDef? def)
+        {
+            if (def == null)
+            {
+                return 0;
+            }
+
+            int index = def.index;
+            if (index >= defMasks.Length)
+            {
+                ushort[] grown = new ushort[Math.Max(index + 1, DefDatabase<ThingDef>.DefCount)];
+                Array.Copy(defMasks, grown, defMasks.Length);
+                defMasks = grown;
+            }
+
+            int cached = defMasks[index];
+            if ((cached & ComputedBit) != 0)
+            {
+                return cached & ~ComputedBit;
+            }
+
+            int mask = 0;
+            for (int i = 0; i < All.Length; i++)
+            {
+                if (FoodMatches(All[i], def))
+                {
+                    mask |= 1 << i;
+                }
+            }
+
+            defMasks[index] = (ushort)(mask | ComputedBit);
+            return mask;
+        }
+
+        private static string? FirstIdInMask(IEnumerable<string> allergyIds, int mask)
+        {
+            if (mask == 0)
+            {
+                return null;
+            }
+
             foreach (string id in allergyIds)
             {
-                AllergyKind? kind = Get(id);
-                if (FoodMatches(kind, foodDef))
+                if (bitById.TryGetValue(id, out int bit) && (mask & (1 << bit)) != 0)
                 {
                     return id;
                 }
@@ -340,35 +415,17 @@ namespace Homesteader
             return null;
         }
 
-        public static string? MatchingFoodAllergyId(IEnumerable<string>? allergyIds, Thing? food)
+        private static readonly Dictionary<string, int> bitById = BuildBits();
+
+        private static Dictionary<string, int> BuildBits()
         {
-            if (food == null)
+            var bits = new Dictionary<string, int>(All.Length);
+            for (int i = 0; i < All.Length; i++)
             {
-                return null;
+                bits[All[i].Id] = i;
             }
 
-            string? direct = MatchingFoodAllergyId(allergyIds, food.def);
-            if (direct != null)
-            {
-                return direct;
-            }
-
-            CompIngredients? ingredients = food.TryGetComp<CompIngredients>();
-            if (ingredients?.ingredients == null)
-            {
-                return null;
-            }
-
-            for (int i = 0; i < ingredients.ingredients.Count; i++)
-            {
-                string? match = MatchingFoodAllergyId(allergyIds, ingredients.ingredients[i]);
-                if (match != null)
-                {
-                    return match;
-                }
-            }
-
-            return null;
+            return bits;
         }
 
         public static bool IsEnvironmentallyExposed(Pawn? pawn, AllergyKind? kind)
@@ -433,8 +490,10 @@ namespace Homesteader
                         return true;
                     }
 
-                    foreach (IntVec3 cell in GenRadial.RadialCellsAround(pos, 5f, true))
+                    int radial = GenRadial.NumCellsInRadius(5f);
+                    for (int r = 0; r < radial; r++)
                     {
+                        IntVec3 cell = pos + GenRadial.RadialPattern[r];
                         if (!cell.InBounds(map))
                         {
                             continue;

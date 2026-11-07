@@ -21,6 +21,9 @@ namespace Homesteader
             public ThingDef? def;
             public int count;
             public float rotProgress;
+
+            /// <summary>Row text, built once per scan instead of every frame (AZR-561).</summary>
+            public string label;
         }
     }
 
@@ -125,7 +128,13 @@ namespace Homesteader
             foreach (KeyValuePair<ThingDef, int> kv in kindCounts)
             {
                 kindRot.TryGetValue(kv.Key, out float rot);
-                report.kinds.Add(new PantryReport.KindRow { def = kv.Key, count = kv.Value, rotProgress = rot });
+                report.kinds.Add(new PantryReport.KindRow
+                {
+                    def = kv.Key,
+                    count = kv.Value,
+                    rotProgress = rot,
+                    label = kv.Key.LabelCap + "  ×" + kv.Value
+                });
             }
 
             SortKinds(report, PantrySortMode.Count);
