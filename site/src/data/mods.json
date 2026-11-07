@@ -2,7 +2,7 @@
   "site": {
     "title": "AzraelGodKing — RimWorld Mods",
     "tagline": "RimWorld mods for colonies that farm, harden, dig, remember, make time for each other, and keep the small comforts.",
-    "heroIntro": "Eight mods. One workshop. Open a mod page for details — or jump straight to Steam or zip downloads if you cannot use the Workshop. Every mod ships as a GitHub release zip; extract into your RimWorld Mods folder. All mods except NanoHive Reforged need Harmony.",
+    "heroIntro": "Nine mods. One workshop. Open a mod page for details — or jump straight to Steam or zip downloads if you cannot use the Workshop. Every mod ships as a GitHub release zip; extract into your RimWorld Mods folder. All mods except NanoHive Reforged and Wave Survival Reforged need Harmony.",
     "author": "AzraelGodKing",
     "github": "https://github.com/AzraelGodKing/rimworld_mods"
   },
@@ -849,6 +849,109 @@
         ]
       },
       "changelogPath": "changelogs/nanohive-reforged.md"
+    },
+    {
+      "id": "wave-survival-reforged",
+      "name": "Wave Survival Reforged",
+      "tagline": "A combat-run storyteller: raids on a timer that grow every wave, special and boss waves, and a supply pod at your trade beacon every day.",
+      "accent": "#b4423a",
+      "badges": [
+        "RimWorld 1.6 / 1.7",
+        "No Harmony",
+        "Storyteller"
+      ],
+      "preview": "img/WaveSurvivalReforgedPreview.png",
+      "publishedFileId": "3821001515",
+      "workshopUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=3821001515",
+      "overview": [
+        "A rebuild of Wave Survival [Game Mode] by Justin C, with Philbro's storyteller art. Random events are off. Raids arrive on a timer, each wave stronger than the last, and a supply pod lands at your orbital trade beacon every day.",
+        "Every fourth wave is special and every tenth is a boss. The next wave is decided ahead of time, so the alert and a small HUD tell you what is coming and from whom."
+      ],
+      "featureTabs": [
+        {
+          "id": "waves",
+          "label": "Waves",
+          "features": [
+            {
+              "title": "On a timer",
+              "body": "First wave after 5 days, then one every 2 days. Points follow a curve scaled by your difficulty."
+            },
+            {
+              "title": "Special waves",
+              "body": "Sieges, sappers, breachers, mechanoids, manhunter packs and mass animal insanity. Royalty adds mech clusters; Anomaly adds shamblers, fleshbeasts and sightstealers."
+            },
+            {
+              "title": "Boss waves",
+              "body": "Every 10th wave: a great siege, a warband or a mechanoid hive at one and a half times the strength."
+            },
+            {
+              "title": "Know what's coming",
+              "body": "The next wave is rolled when it is scheduled. The alert and HUD name its type, faction and strength, and a report follows each wave."
+            }
+          ]
+        },
+        {
+          "id": "supplies",
+          "label": "Supplies",
+          "features": [
+            {
+              "title": "Daily drops",
+              "body": "Steel, wood, stone blocks, silver, components and medicine by chance, survival meals when food runs low, and sometimes a weapon."
+            },
+            {
+              "title": "Stockpile caps",
+              "body": "Each item stops dropping once you hold enough, counting what still lies near the beacon."
+            },
+            {
+              "title": "No beacon yet",
+              "body": "After 3 days without a beacon, a smaller drop lands near the colony."
+            }
+          ]
+        },
+        {
+          "id": "settings",
+          "label": "Settings",
+          "features": [
+            {
+              "title": "Presets",
+              "body": "Casual, Standard, Brutal or Custom. A run keeps the preset it started with."
+            },
+            {
+              "title": "Best runs",
+              "body": "When your colony falls, the run goes on a local best-runs list with its waves, kills and days."
+            },
+            {
+              "title": "Screen effect",
+              "tag": "RimWorld 1.7",
+              "body": "The screen edges glow as a wave gets close. Can be turned off."
+            }
+          ]
+        }
+      ],
+      "gallery": [],
+      "goodToKnow": [
+        "Pick the Wave Survival scenario, or the Wave Survival storyteller with any scenario.",
+        "Every number is in Defs/WaveSurvivalConfig.xml, and wave types in Defs/WaveTypes.xml.",
+        "Chinese Simplified and Russian are included.",
+        "Does not need Harmony."
+      ],
+      "compatibility": {
+        "compatibleWith": [
+          {
+            "name": "Royalty",
+            "note": "Optional — adds mech cluster waves"
+          },
+          {
+            "name": "Anomaly",
+            "note": "Optional — adds shambler, fleshbeast and sightstealer waves"
+          }
+        ],
+        "incompatibleWith": [],
+        "notes": [
+          "Multiplayer is not supported."
+        ]
+      },
+      "changelogPath": "changelogs/wave-survival-reforged.md"
     }
   ]
 }

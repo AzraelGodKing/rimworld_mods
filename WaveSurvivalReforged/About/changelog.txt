@@ -2,10 +2,37 @@
 [h1]Wave Survival Reforged — 2.0.0[/h1]
 Wave Survival Reforged 2 ships for both RimWorld 1.6 and 1.7 from the same source. Your 1.6 run keeps getting every update, and the same save carries over to 1.7.
 
+[b]Added[/b]
+[list]
+[*] [b]More kinds of wave[/b] — drop pod raids, drop pods in the base, breachers and mechanoids join sieges, sappers and animals. With Royalty, mech clusters; with Anomaly, shamblers, fleshbeasts and sightstealers. Waves come from Defs/WaveTypes.xml, so you can add your own.
+[*] [b]Boss waves[/b] — every 10th wave is a great siege, a warband, a mechanoid hive, or (with DLC) a mech fortress or chimera assault, at one and a half times the strength.
+[*] [b]Know what's coming[/b] — the next wave is decided when it is scheduled. The alert and a new HUD at the top of the screen name it, with the faction and about how strong it is, and that is the wave you get.
+[*] [b]Wave report[/b] — when a wave is beaten, a letter says how many were killed, downed and fled.
+[*] [b]Presets[/b] — Casual, Standard, Brutal or Custom in the mod settings: wave strength, days before the first wave and between waves, how often special waves come, supply chances, the "still alive" mood, and wanderer chances. A run keeps the preset it started with.
+[*] [b]Run stats and best runs[/b] — waves reached and cleared, kills, colonists lost, supply drops and days survived. When your colony falls, a letter sums up the run and it goes on a best-runs list in the mod settings.
+[*] [b]Wave screen effect (RimWorld 1.7)[/b] — the screen edges glow in the wave's colour as it gets close and flash when it lands: red, violet for special waves, amber for bosses. You can turn it off in the settings.
+[*] [b]No beacon, smaller drop[/b] — after 3 days without an orbital trade beacon, a half-size drop with no weapon lands near the colony.
+[/list]
 [b]Changed[/b]
 [list]
+[*] [b]Difficulty[/b] — the threat scale now applies to the whole wave, not just its growth, so wave 1 differs between Peaceful and Losing is Fun. Waves grow a little faster after wave 20. There is a short breather after special and boss waves.
+[*] [b]Wave Survival scenario[/b] — always runs the Wave Survival storyteller, at the difficulty you pick.
+[*] [b]Supply drops[/b] — items still lying near the beacon count toward the stockpile cap, so unhauled drops stop more of the same. Weapon drops lean less hard toward the most expensive gun you can afford.
 [*] [b]RimWorld 1.7[/b] — the 1.7 folder now has its own .NET 10 build made against the 1.7 game files. 1.6 keeps its own build from the same source.
-[*] [b]Mod description[/b] — shorter Workshop text. Same storyteller, waves, and drops.
+[*] [b]Performance[/b] — the trade beacon is remembered instead of searched for every few seconds, and the alerts build their text once a few seconds instead of every frame.
+[*] [b]Mod description[/b] — shorter Workshop text.
+[/list]
+[b]Fixed[/b]
+[list]
+[*] [b]Phantom waves[/b] — "Wave N has arrived" only shows once the wave has really spawned. A wave nobody can carry out falls back to a raid, then a manhunter pack, and otherwise waits a few hours and keeps its number, with a message.
+[*] [b]Split raids[/b] — a wave only splits in two when each half is big enough for the faction to send.
+[*] [b]Trade ships[/b] — no more trade ship letters when you have no comms console.
+[*] [b]Language changes[/b] — the beacon alert follows a language change.
+[/list]
+[b]Saves[/b]
+[list]
+[*] A 1.0 save loads with the Standard preset, the same wave number and the same countdown.
+[*] Multiplayer is not supported.
 [/list]
 
 1.0.0

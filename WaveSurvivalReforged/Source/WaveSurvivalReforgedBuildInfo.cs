@@ -6,7 +6,7 @@ namespace WaveSurvivalReforged
     // Read by the Azrael hub through the series-wide <Namespace>.<Namespace>BuildInfo.BuildStamp convention.
     public static class WaveSurvivalReforgedBuildInfo
     {
-        public const string BuildStamp = "wsr2-package";
+        public const string BuildStamp = "wsr2-waves";
 
         internal static void LogLoaded()
         {
