@@ -692,6 +692,11 @@ namespace DeepColony
             pawn.health.AddHediff(h);
         }
 
+        internal int IdKeyedEntryCount =>
+            (touchComfortByPawn?.Count ?? 0)
+            + (reconcileCountsByPawn?.Count ?? 0)
+            + (counselCountsByPawn?.Count ?? 0);
+
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
         {
             var pawn = Pawn;

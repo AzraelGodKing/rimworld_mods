@@ -8,7 +8,11 @@ Detailed notes for Deep Colony only.
 
 Player-facing version **2.0.0** (`About.xml` `modVersion`). Stamp `deepcolony2-net10`. Ships for RimWorld **1.6** and **1.7** from the same source; 1.6 is not frozen. The Linear tickets call this release "Deep Colony 3 / 3.0.0"; it ships as 2.0.0, the next major after 1.10.0.
 
-AZR-617 AZR-618 AZR-620 AZR-623 AZR-626 AZR-627 AZR-664 AZR-708 AZR-709
+AZR-617 AZR-618 AZR-620 AZR-623 AZR-624 AZR-626 AZR-627 AZR-629 AZR-664 AZR-708 AZR-709
+
+### Added
+- **Soft Multiplayer** (AZR-629) — every player action (perk switch/forget/relearn, heir, divorce, envoy, mentor, retrain, tribute, Codex notebook) goes through `DeepColonyPlayerCommand.Submit(byte, int, int, string, string)`, registered with `Multiplayer.API.MP.RegisterSyncMethod` by reflection (no DLL). Counselling is a vanilla job, which Multiplayer already syncs. Mod settings are not synced: every player needs the host's settings. The "MP-safer" queue of 1.8.1/1.9.0 was client-local and did not sync. Two-client test still to do.
+- **Save upgrade** (AZR-624) — `GameComp_DeepColony` saves `dcSchema` (2). A save without it (1.10.x and older) is upgraded once on load: every Deep Colony comp, world pawns included, drops comfort/reconcile/counsel entries for pawns that no longer exist, and the funeral set drops gone pawns; the counts go to the log. One-way: the pruned entries are not restored if the save goes back to 1.10.x. Class names, namespaces and scribe labels are unchanged.
 
 ### Fixed
 - **Odyssey crash trauma** (AZR-626) — patch `IncidentWorker.TryExecute`; allowlist Odyssey gravship-crash incidents (no bare `"Crash"` substring).
@@ -22,6 +26,7 @@ AZR-617 AZR-618 AZR-620 AZR-623 AZR-626 AZR-627 AZR-664 AZR-708 AZR-709
 - **Birth safety net clone** (AZR-623) — the newborn `PawnKindDef` copy uses `object.MemberwiseClone`, which copies base-class private fields too. Force-detaching stuck labor calls `hediffSet.DirtyCache()`.
 
 ### Changed
+- **Multiplayer-safe state** (AZR-629) — the founder surname comes from player home maps in `Find.Maps` order and the envoy trade bonus from the negotiator's map, not `Find.CurrentMap` (per-client view). A child's pending "left home" beat and the failed-birth recovery letter set are saved (`pendingLeaves`, `birthRecoveryLettered`) instead of being lost on save. The daily prune builds one id set instead of scanning every pawn per key.
 - **Direct calls instead of reflection** (AZR-623) — `RecruitUtility.Recruit` and `ResearchManager.AddProgress` are public in both 1.6 and 1.7 and are called directly. Debug actions use internal accessors instead of reflecting into Deep Colony's own fields. `[ThreadStatic]` dropped from two main-thread counters. The tracker `pawn` fields stay on `AccessTools.FieldRefAccess` (a compiled accessor that also works on net472).
 - **RimWorld 1.7 build** (AZR-617) — `DeepColony.1.7.csproj` targets net10.0 against `Krafs.Rimworld.Ref 1.7.4998-unstable` and Harmony 3.0.0-rc.4. 1.6 keeps its net472 build from the same source. `LoadFolders.xml` loads `/` plus the version folder.
 - **1.7 patch targets checked** (AZR-620) — every string-named Harmony target (`CanFireNowSub`, `BirthdayBiological`, `TryExecuteWorker` ×2, `MakeDowned`, `PlantCollected`, `SuccessChance`), the tracker `pawn` fields, `ResearchManager.AddProgress`, `RecruitUtility.Recruit` and `LordJob_Ritual` members exist in both the 1.6.4871 and 1.7.4998 reference assemblies. No transpilers.

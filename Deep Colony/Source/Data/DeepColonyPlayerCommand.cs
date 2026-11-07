@@ -4,7 +4,13 @@ using Verse;
 
 namespace DeepColony
 {
-    /// <summary>AZR-307 — enqueue player UI mutations; drain on GameComponentTick (MP-safer, no Multiplayer.API).</summary>
+    /// <summary>
+    /// Every player UI action that changes the game goes through <see cref="Submit"/>,
+    /// which queues it; <see cref="Drain"/> applies the queue on GameComponentTick.
+    /// With the Multiplayer mod, Submit is a registered sync method
+    /// (<see cref="DeepColonyMultiplayer"/>), so a click runs it on every client and
+    /// the command applies on the same tick everywhere.
+    /// </summary>
     public static class DeepColonyPlayerCommand
     {
         private enum Kind : byte
@@ -40,6 +46,14 @@ namespace DeepColony
         private static List<Entry> queue = new List<Entry>();
         private static List<Entry> draining = new List<Entry>();
 
+        // Public and primitive-only so Multiplayer can sync it. Don't call it from
+        // simulation code; it is for player clicks.
+        public static void Submit(byte kind, int aId, int bId, string s1, string s2)
+        {
+            if (kind > (byte)Kind.RelearnPerk) return;
+            queue.Add(new Entry { kind = (Kind)kind, aId = aId, bId = bId, s1 = s1, s2 = s2 });
+        }
+
         internal static void Reset()
         {
             queue.Clear();
@@ -49,89 +63,61 @@ namespace DeepColony
         public static void EnqueueResumeCodex(Thing notebook)
         {
             if (notebook == null) return;
-            queue.Add(new Entry { kind = Kind.ResumeCodex, aId = notebook.thingIDNumber });
+            Submit((byte)Kind.ResumeCodex, notebook.thingIDNumber, 0, null, null);
         }
 
         public static void EnqueueRecordCodex(Thing notebook)
         {
             if (notebook == null) return;
-            queue.Add(new Entry { kind = Kind.RecordCodex, aId = notebook.thingIDNumber });
+            Submit((byte)Kind.RecordCodex, notebook.thingIDNumber, 0, null, null);
         }
 
         public static void EnqueueDivorce(Pawn a, Pawn b)
         {
             if (a == null || b == null) return;
-            queue.Add(new Entry { kind = Kind.Divorce, aId = a.thingIDNumber, bId = b.thingIDNumber });
+            Submit((byte)Kind.Divorce, a.thingIDNumber, b.thingIDNumber, null, null);
         }
 
         public static void EnqueueSetEnvoy(Pawn pawn, Faction faction)
         {
             if (pawn == null || faction == null) return;
-            queue.Add(new Entry
-            {
-                kind = Kind.SetEnvoy,
-                aId = pawn.thingIDNumber,
-                bId = faction.loadID
-            });
+            Submit((byte)Kind.SetEnvoy, pawn.thingIDNumber, faction.loadID, null, null);
         }
 
         public static void EnqueueClearEnvoy(Pawn pawn)
         {
             if (pawn == null) return;
-            queue.Add(new Entry { kind = Kind.ClearEnvoy, aId = pawn.thingIDNumber });
+            Submit((byte)Kind.ClearEnvoy, pawn.thingIDNumber, 0, null, null);
         }
 
         public static void EnqueueSetMentor(Pawn mentor, Pawn apprentice, SkillDef skill)
         {
             if (mentor == null || apprentice == null) return;
-            queue.Add(new Entry
-            {
-                kind = Kind.SetMentor,
-                aId = mentor.thingIDNumber,
-                bId = apprentice.thingIDNumber,
-                s1 = skill?.defName
-            });
+            Submit((byte)Kind.SetMentor, mentor.thingIDNumber, apprentice.thingIDNumber, skill?.defName, null);
         }
 
         public static void EnqueueClearMentor(Pawn mentor, Pawn apprentice)
         {
             if (mentor == null || apprentice == null) return;
-            queue.Add(new Entry
-            {
-                kind = Kind.ClearMentor,
-                aId = mentor.thingIDNumber,
-                bId = apprentice.thingIDNumber
-            });
+            Submit((byte)Kind.ClearMentor, mentor.thingIDNumber, apprentice.thingIDNumber, null, null);
         }
 
         public static void EnqueueBeginRetrain(Pawn mentor, Pawn apprentice, PerkDef from, PerkDef to)
         {
             if (mentor == null || apprentice == null || from == null || to == null) return;
-            queue.Add(new Entry
-            {
-                kind = Kind.BeginRetrain,
-                aId = mentor.thingIDNumber,
-                bId = apprentice.thingIDNumber,
-                s1 = from.defName,
-                s2 = to.defName
-            });
+            Submit((byte)Kind.BeginRetrain, mentor.thingIDNumber, apprentice.thingIDNumber, from.defName, to.defName);
         }
 
         public static void EnqueueTributeFaction(Faction faction)
         {
             if (faction == null) return;
-            queue.Add(new Entry { kind = Kind.TributeFaction, bId = faction.loadID });
+            Submit((byte)Kind.TributeFaction, 0, faction.loadID, null, null);
         }
 
         public static void EnqueueTributeThing(Thing thing, Faction faction)
         {
             if (thing == null || faction == null) return;
-            queue.Add(new Entry
-            {
-                kind = Kind.TributeThing,
-                aId = thing.thingIDNumber,
-                bId = faction.loadID
-            });
+            Submit((byte)Kind.TributeThing, thing.thingIDNumber, faction.loadID, null, null);
         }
 
         public static void EnqueueSwitchPerk(Pawn pawn, PerkDef perk)
@@ -152,18 +138,13 @@ namespace DeepColony
         private static void EnqueuePerk(Kind kind, Pawn pawn, PerkDef perk)
         {
             if (pawn == null || perk == null) return;
-            queue.Add(new Entry { kind = kind, aId = pawn.thingIDNumber, s1 = perk.defName });
+            Submit((byte)kind, pawn.thingIDNumber, 0, perk.defName, null);
         }
 
         public static void EnqueueSetHeir(Pawn owner, Pawn heir)
         {
             if (owner == null) return;
-            queue.Add(new Entry
-            {
-                kind = Kind.SetHeir,
-                aId = owner.thingIDNumber,
-                bId = heir?.thingIDNumber ?? -1
-            });
+            Submit((byte)Kind.SetHeir, owner.thingIDNumber, heir?.thingIDNumber ?? -1, null, null);
         }
 
         public static void Drain()

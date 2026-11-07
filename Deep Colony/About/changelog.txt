@@ -2,6 +2,11 @@
 [h1]Deep Colony — 2.0.0[/h1]
 Deep Colony 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting every update, and the same save carries over to 1.7.
 
+[b]Added[/b]
+[list]
+[*] [b]Multiplayer[/b] — Deep Colony's buttons and menu choices are synced when the Multiplayer mod is on. All players need the host's Deep Colony settings. Not tested yet.
+[*] [b]Save upgrade[/b] — the first time an older save loads, Deep Colony cleans out entries for pawns that no longer exist. This can't be undone, so keep a backup if you might go back to 1.10.
+[/list]
 [b]Changed[/b]
 [list]
 [*] [b]RimWorld 1.7[/b] — the 1.7 folder now has its own .NET 10 build made against the 1.7 game files. 1.6 keeps its own build from the same source.

@@ -17,6 +17,7 @@ namespace DeepColony
             var harmony = new Harmony("azraelgodking.DeepColony");
             SafePatchAll.Apply(harmony, "[DeepColony]");
             BirthSafetyNet.EnsureApplied(harmony);
+            DeepColonyMultiplayer.RegisterAll();
             InjectComps();
             InjectFamilyTab();
             LongEventHandler.ExecuteWhenFinished(DeepColonyBuildInfo.LogStartup);

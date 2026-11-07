@@ -42,6 +42,15 @@ namespace DeepColony
         private const int MaxLedgerEntries = 240;
         private const int AggregateWindowTicks = 60000; // merge same reason within a day
 
+        // Save layout version (AZR-624). Saves from before 2.0.0 have no dcSchema and
+        // load as 1; FinalizeInit upgrades them once. A new game starts current.
+        internal const int CurrentSchema = 2;
+        private int dcSchema = CurrentSchema;
+
+        // Session state that used to be lost on save (AZR-629); see FinalizeInit.
+        private List<int> savedPendingLeaves;
+        private List<int> savedBirthLetters;
+
         public GameComp_DeepColony(Game game)
         {
             DeepColonyPlayerCommand.Reset();
@@ -57,14 +66,19 @@ namespace DeepColony
         public void EnsureFounderSurname()
         {
             if (!founderSurname.NullOrEmpty()) return;
-            Map map = Find.CurrentMap ?? (Find.Maps.Count > 0 ? Find.Maps[0] : null);
-            if (map == null) return;
-            foreach (Pawn p in map.mapPawns.FreeColonists)
+            // Player home maps in Find.Maps order, not Find.CurrentMap: the surname is
+            // saved, and the viewed map differs between Multiplayer clients.
+            List<Map> maps = Find.Maps;
+            for (int m = 0; m < maps.Count; m++)
             {
-                if (p.Name is NameTriple triple && !triple.Last.NullOrEmpty())
+                if (!maps[m].IsPlayerHome) continue;
+                foreach (Pawn p in maps[m].mapPawns.FreeColonists)
                 {
-                    founderSurname = triple.Last;
-                    return;
+                    if (p.Name is NameTriple triple && !triple.Last.NullOrEmpty())
+                    {
+                        founderSurname = triple.Last;
+                        return;
+                    }
                 }
             }
         }
@@ -470,6 +484,19 @@ namespace DeepColony
             Scribe_Values.Look(ref lastEnvoyVisitTick, "lastEnvoyVisitTick", -1);
             Scribe_Values.Look(ref firstHarvestLetterSent, "firstHarvestLetterSent", false);
             Scribe_Values.Look(ref lastNewsVersion, "lastNewsVersion");
+            Scribe_Values.Look(ref dcSchema, "dcSchema", 1);
+            if (Scribe.mode == LoadSaveMode.Saving)
+            {
+                savedPendingLeaves = FamilyEchoUtility.ExportPendingLeaves();
+                savedBirthLetters = LaborWedgeRecovery.ExportLettered();
+            }
+            Scribe_Collections.Look(ref savedPendingLeaves, "pendingLeaves", LookMode.Value);
+            Scribe_Collections.Look(ref savedBirthLetters, "birthRecoveryLettered", LookMode.Value);
+            if (Scribe.mode == LoadSaveMode.Saving)
+            {
+                savedPendingLeaves = null;
+                savedBirthLetters = null;
+            }
 
             if (inheritanceProcessed == null) inheritanceProcessed = new HashSet<int>();
             if (formerPlayerColonists == null) formerPlayerColonists = new HashSet<int>();
@@ -513,6 +540,10 @@ namespace DeepColony
             FamilyEchoUtility.ResetSession();
             BirthSafetyNet.ResetCache();
             LaborWedgeRecovery.ResetSession();
+            FamilyEchoUtility.ImportPendingLeaves(savedPendingLeaves);
+            LaborWedgeRecovery.ImportLettered(savedBirthLetters);
+            savedPendingLeaves = null;
+            savedBirthLetters = null;
             try
             {
                 LaborWedgeRecovery.RecoverStuckLabor();
@@ -521,41 +552,94 @@ namespace DeepColony
             {
                 Log.Warning("[DeepColony] Labor recovery on load failed: " + e.Message);
             }
-            PruneIdKeyedCollections();
+            if (dcSchema < CurrentSchema)
+            {
+                UpgradeSave();
+            }
+            else
+            {
+                PruneIdKeyedCollections();
+            }
             EnsureFounderSurname();
             UpdateNewsLetter.TrySend(ref lastNewsVersion);
         }
 
         /// <summary>
+        /// One-way upgrade of a pre-2.0.0 save (AZR-624): prune every Deep Colony comp,
+        /// world pawns included, and the funeral set once. Class names, namespaces and
+        /// scribe labels are unchanged, so nothing else needs converting. The retired
+        /// perk-points fields are already read into throwaway locals by Comp_DeepColony.
+        /// </summary>
+        private void UpgradeSave()
+        {
+            HashSet<int> live = TrackedPawnIds();
+            int before = 0;
+            int after = 0;
+            foreach (Comp_DeepColony comp in AllComps(includeWorld: true))
+            {
+                before += comp.IdKeyedEntryCount;
+                PruneComp(comp, live);
+                after += comp.IdKeyedEntryCount;
+            }
+            int funeralBefore = funeralProcessedCorpses.Count;
+            funeralProcessedCorpses.RemoveWhere(key => !live.Contains(key < 0 ? ~key : key));
+            Log.Message("[DeepColony] Upgraded a save from before 2.0.0: pruned "
+                + (before - after) + " stale pawn entries and "
+                + (funeralBefore - funeralProcessedCorpses.Count) + " funeral entries.");
+            dcSchema = CurrentSchema;
+        }
+
+        /// <summary>
         /// Drop destroyed/discarded pawn IDs from comfort and counsel dictionaries (AZR-618).
-        /// Shared with the save-upgrade path. Heirloom/funeral sets stay until AZR-624.
+        /// Daily, and on load, for spawned pawns.
         /// </summary>
         public void PruneIdKeyedCollections()
         {
             if (Find.Maps == null) return;
+            HashSet<int> live = null;
+            foreach (Comp_DeepColony comp in AllComps(includeWorld: false))
+            {
+                if (comp.IdKeyedEntryCount == 0) continue;
+                live ??= TrackedPawnIds();
+                PruneComp(comp, live);
+            }
+        }
+
+        private static void PruneComp(Comp_DeepColony comp, HashSet<int> live)
+        {
+            TouchAverseUtility.PruneComfortEntries(comp);
+            PruneDestroyedPawnKeys(comp.reconcileCountsByPawn, live);
+            PruneDestroyedPawnKeys(comp.counselCountsByPawn, live);
+        }
+
+        private static IEnumerable<Comp_DeepColony> AllComps(bool includeWorld)
+        {
             foreach (Map map in Find.Maps)
             {
                 if (map?.mapPawns?.AllPawnsSpawned == null) continue;
                 foreach (Pawn pawn in map.mapPawns.AllPawnsSpawned)
                 {
                     Comp_DeepColony comp = pawn?.TryGetComp<Comp_DeepColony>();
-                    if (comp == null) continue;
-                    TouchAverseUtility.PruneComfortEntries(comp);
-                    PruneDestroyedPawnKeys(comp.reconcileCountsByPawn);
-                    PruneDestroyedPawnKeys(comp.counselCountsByPawn);
+                    if (comp != null) yield return comp;
                 }
+            }
+            if (!includeWorld || Find.WorldPawns == null) yield break;
+            foreach (Pawn pawn in Find.WorldPawns.AllPawnsAliveOrDead)
+            {
+                Comp_DeepColony comp = pawn?.TryGetComp<Comp_DeepColony>();
+                if (comp != null) yield return comp;
             }
         }
 
-        private static void PruneDestroyedPawnKeys<T>(Dictionary<int, T> dict)
+        private static void PruneDestroyedPawnKeys<T>(Dictionary<int, T> dict, HashSet<int> live)
         {
             if (dict == null || dict.Count == 0) return;
             List<int> remove = null;
             foreach (int id in dict.Keys)
             {
-                if (!PawnIdStillTracked(id))
+                if (!live.Contains(id))
                 {
-                    if (remove == null) remove = new List<int>();
+                    remove ??= new List<int>();
                     remove.Add(id);
                 }
             }
@@ -564,8 +648,10 @@ namespace DeepColony
                 dict.Remove(remove[i]);
         }
 
-        private static bool PawnIdStillTracked(int id)
+        // Spawned pawns plus every world pawn, alive or dead: what can still be looked up.
+        private static HashSet<int> TrackedPawnIds()
         {
+            var ids = new HashSet<int>();
             if (Find.Maps != null)
             {
                 foreach (Map map in Find.Maps)
@@ -573,7 +659,7 @@ namespace DeepColony
                     if (map?.mapPawns?.AllPawnsSpawned == null) continue;
                     foreach (Pawn p in map.mapPawns.AllPawnsSpawned)
                     {
-                        if (p != null && p.thingIDNumber == id) return true;
+                        if (p != null) ids.Add(p.thingIDNumber);
                     }
                 }
             }
@@ -581,10 +667,10 @@ namespace DeepColony
             {
                 foreach (Pawn p in Find.WorldPawns.AllPawnsAliveOrDead)
                 {
-                    if (p != null && p.thingIDNumber == id) return true;
+                    if (p != null) ids.Add(p.thingIDNumber);
                 }
             }
-            return false;
+            return ids;
         }
     }
 }
