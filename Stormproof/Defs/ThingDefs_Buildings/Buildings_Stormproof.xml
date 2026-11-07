@@ -127,7 +127,7 @@
     <fillPercent>0.45</fillPercent>
     <rotatable>false</rotatable>
     <size>(1,1)</size>
-    <tickerType>Normal</tickerType>
+    <tickerType>Never</tickerType>
     <statBases>
       <MaxHitPoints>120</MaxHitPoints>
       <WorkToBuild>1200</WorkToBuild>
@@ -179,7 +179,7 @@
     <fillPercent>0.4</fillPercent>
     <rotatable>false</rotatable>
     <size>(1,1)</size>
-    <tickerType>Normal</tickerType>
+    <tickerType>Never</tickerType>
     <placeWorkers>
       <li>Stormproof.PlaceWorker_RadiusOverlay</li>
     </placeWorkers>
@@ -328,7 +328,7 @@
     <fillPercent>0.4</fillPercent>
     <rotatable>false</rotatable>
     <size>(1,1)</size>
-    <tickerType>Normal</tickerType>
+    <tickerType>Rare</tickerType>
     <statBases>
       <MaxHitPoints>100</MaxHitPoints>
       <WorkToBuild>1500</WorkToBuild>
@@ -438,7 +438,7 @@
     <fillPercent>0.45</fillPercent>
     <rotatable>false</rotatable>
     <size>(1,1)</size>
-    <tickerType>Normal</tickerType>
+    <tickerType>Rare</tickerType>
     <placeWorkers>
       <li>Stormproof.PlaceWorker_EnclosedRoom</li>
     </placeWorkers>
@@ -494,7 +494,7 @@
     <fillPercent>0.5</fillPercent>
     <rotatable>false</rotatable>
     <size>(2,2)</size>
-    <tickerType>Normal</tickerType>
+    <tickerType>Never</tickerType>
     <statBases>
       <MaxHitPoints>350</MaxHitPoints>
       <WorkToBuild>8000</WorkToBuild>
@@ -595,7 +595,7 @@
     <fillPercent>0.4</fillPercent>
     <rotatable>false</rotatable>
     <size>(1,1)</size>
-    <tickerType>Normal</tickerType>
+    <tickerType>Rare</tickerType>
     <statBases>
       <MaxHitPoints>100</MaxHitPoints>
       <WorkToBuild>1200</WorkToBuild>

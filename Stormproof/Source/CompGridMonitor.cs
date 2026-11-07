@@ -5,6 +5,7 @@ namespace Stormproof
 {
     public class CompProperties_GridMonitor : CompProperties
     {
+        // How long the inspect numbers are cached. Warnings run on the rare tick (250).
         public int checkIntervalTicks = 250;
         public float lowFraction = 0.25f;
         public float criticalFraction = 0.10f;
@@ -50,10 +51,11 @@ namespace Stormproof
             flickComp = parent.GetComp<CompFlickable>();
         }
 
-        public override void CompTick()
+        // tickerType Rare: every 250 ticks.
+        public override void CompTickRare()
         {
-            base.CompTick();
-            if (!parent.IsHashIntervalTick(Props.checkIntervalTicks) || !Active)
+            base.CompTickRare();
+            if (!Active)
             {
                 return;
             }
@@ -160,7 +162,9 @@ namespace Stormproof
                 }
             }
             cachedProduction = production;
-            cachedConsumption = consumption;
+            // Brownout is applied to the grid's gain rate, not to each consumer's
+            // PowerOutput, so show the trimmed draw here to match the net gain.
+            cachedConsumption = consumption * (1f - BrownoutUtility.DrawCut * BrownoutUtility.For(net));
             cachedGainWd = net.CurrentEnergyGainRate();
             BatteryMath.Sum(net, out cachedStored, out cachedCapacity);
         }

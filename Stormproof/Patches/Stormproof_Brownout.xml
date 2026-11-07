@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- Brownout slows workbenches on a weak grid (Stormproof.StatPart_Brownout). -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/StatDef[defName="WorkTableWorkSpeedFactor"]/parts</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/StatDef[defName="WorkTableWorkSpeedFactor"]/parts</xpath>
+      <value>
+        <li Class="Stormproof.StatPart_Brownout" />
+      </value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>Defs/StatDef[defName="WorkTableWorkSpeedFactor"]</xpath>
+      <value>
+        <parts>
+          <li Class="Stormproof.StatPart_Brownout" />
+        </parts>
+      </value>
+    </nomatch>
+  </Operation>
+</Patch>

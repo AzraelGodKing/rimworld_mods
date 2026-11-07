@@ -179,5 +179,6 @@
   <Stormproof_Settings_Reset>恢复默认</Stormproof_Settings_Reset>
   <Stormproof_StormCaller_BrokeFront>{0} 驱散了干雷锋面。雨要来了。</Stormproof_StormCaller_BrokeFront>
   <Stormproof_DisabledInSettings>已在模组设置中禁用：仅待机耗电。</Stormproof_DisabledInSettings>
+  <Stormproof_Brownout_StatPart>电网降压（{0}）：x{1}</Stormproof_Brownout_StatPart>
 
 </LanguageData>

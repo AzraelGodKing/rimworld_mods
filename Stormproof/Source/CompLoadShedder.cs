@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -54,6 +55,12 @@ namespace Stormproof
         private int shedSideDrawTick = -1;
         private bool shedSideDrawStale;
         private const int ShedSideDrawInterval = 2500;
+        // Reused by the shed-side flood fill (every 2500 ticks); emptied after use.
+        private readonly HashSet<Thing> floodVisited = new HashSet<Thing>();
+        private readonly HashSet<PowerNet> floodNets = new HashSet<PowerNet>();
+        private readonly List<Thing> floodStart = new List<Thing>();
+        private readonly List<Thing> floodNext = new List<Thing>();
+        private readonly Queue<Thing> floodQueue = new Queue<Thing>();
 
         public enum ShedHoldMode
         {
@@ -247,7 +254,8 @@ namespace Stormproof
         {
             PowerNet supply = SupplyNet();
             float draw = 0f;
-            var seen = new System.Collections.Generic.HashSet<PowerNet>();
+            HashSet<PowerNet> seen = floodNets;
+            seen.Clear();
             foreach (IntVec3 cell in GenAdj.CellsAdjacentCardinal(parent))
             {
                 if (!cell.InBounds(parent.Map))
@@ -264,6 +272,7 @@ namespace Stormproof
                     draw += ConsumerDraw(net.powerComps[i], requirePowered: false);
                 }
             }
+            seen.Clear();
             return draw;
         }
 
@@ -273,7 +282,9 @@ namespace Stormproof
         private float ClosedShedSideDraw()
         {
             Map map = parent.Map;
-            var visited = new System.Collections.Generic.HashSet<Thing> { parent };
+            HashSet<Thing> visited = floodVisited;
+            visited.Clear();
+            visited.Add(parent);
             int sides = 0;
             float total = 0f;
             float supplyDraw = 0f;
@@ -284,7 +295,8 @@ namespace Stormproof
                 {
                     continue;
                 }
-                var start = new System.Collections.Generic.List<Thing>();
+                List<Thing> start = floodStart;
+                start.Clear();
                 AddTransmittersAt(map, cell, visited, start);
                 if (start.Count == 0)
                 {
@@ -299,16 +311,23 @@ namespace Stormproof
                     supplyDraw = draw;
                 }
             }
+            visited.Clear();
+            floodStart.Clear();
             return sides < 2 ? 0f : total - supplyDraw;
         }
 
-        private static void FloodSide(Map map, System.Collections.Generic.List<Thing> start,
-            System.Collections.Generic.HashSet<Thing> visited, out float capacity, out float draw)
+        private void FloodSide(Map map, List<Thing> start,
+            HashSet<Thing> visited, out float capacity, out float draw)
         {
             capacity = 0f;
             draw = 0f;
-            var queue = new System.Collections.Generic.Queue<Thing>(start);
-            var next = new System.Collections.Generic.List<Thing>();
+            Queue<Thing> queue = floodQueue;
+            queue.Clear();
+            for (int i = 0; i < start.Count; i++)
+            {
+                queue.Enqueue(start[i]);
+            }
+            List<Thing> next = floodNext;
             while (queue.Count > 0)
             {
                 Thing t = queue.Dequeue();
@@ -343,9 +362,9 @@ namespace Stormproof
         }
 
         private static void AddTransmittersAt(Map map, IntVec3 cell,
-            System.Collections.Generic.HashSet<Thing> visited, System.Collections.Generic.List<Thing> into)
+            HashSet<Thing> visited, List<Thing> into)
         {
-            System.Collections.Generic.List<Thing> things = map.thingGrid.ThingsListAtFast(cell);
+            List<Thing> things = map.thingGrid.ThingsListAtFast(cell);
             for (int i = 0; i < things.Count; i++)
             {
                 Thing t = things[i];
@@ -430,7 +449,7 @@ namespace Stormproof
             }
         }
 
-        public override System.Collections.Generic.IEnumerable<Gizmo> CompGetGizmosExtra()
+        public override IEnumerable<Gizmo> CompGetGizmosExtra()
         {
             foreach (Gizmo gizmo in base.CompGetGizmosExtra())
             {

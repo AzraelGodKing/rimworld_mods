@@ -6,6 +6,8 @@ Stormproof 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting 
 [list]
 [*] [b]RimWorld 1.7[/b] — the 1.7 folder now has its own .NET 10 build made against the 1.7 game files. 1.6 keeps its own build from the same source.
 [*] [b]Weather forecaster[/b] — on 1.7 the weather timer is read directly instead of through reflection. If a game update renames it, forecasts go quiet with one warning.
+[*] [b]Performance[/b] — brownout, hazard checks and building ticks cost much less, especially on big grids and during toxic fallout.
+[*] [b]Workbenches[/b] — the brownout slowdown now shows in the work speed tooltip.
 [/list]
 
 [b]Fixed[/b]
@@ -18,5 +20,5 @@ Stormproof 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting 
 [*] [b]Almanac[/b] — loading a save no longer resets the current weather's start time, and strikes with no spire count as missed.
 [/list]
 
-[i]Build stamp (Player.log): stormproof2-fixes[/i]
+[i]Build stamp (Player.log): stormproof2-hotpaths[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/stormproof.md[/i]

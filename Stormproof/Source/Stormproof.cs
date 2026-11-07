@@ -71,10 +71,12 @@ namespace Stormproof
     {
         static StormproofInit()
         {
-            SafePatchAll.Apply(new Harmony("azraelgodking.stormproof"), "[Stormproof]");
+            int patched = SafePatchAll.Apply(new Harmony("azraelgodking.stormproof"), "[Stormproof]");
             StormproofSettings.CaptureOriginalChances();
             StormproofMod.Settings.ApplyIncidentChances();
-            LongEventHandler.ExecuteWhenFinished(() => ModVersionLog.Write("[Stormproof]", extra: "stormproof2-fixes"));
+            // The count makes a 1.7 smoke test a one-line check against the previous build.
+            LongEventHandler.ExecuteWhenFinished(() => ModVersionLog.Write("[Stormproof]",
+                extra: "stormproof2-hotpaths, " + patched + " patch classes applied"));
         }
     }
 

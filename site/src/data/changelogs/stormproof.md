@@ -6,9 +6,9 @@ Detailed notes for **Stormproof** only.
 
 ## [2.0.0]
 
-Player-facing version **2.0.0** (`About.xml` `modVersion`). Stamp `stormproof2-fixes`. Ships for RimWorld **1.6** and **1.7** from the same source; 1.6 is not frozen.
+Player-facing version **2.0.0** (`About.xml` `modVersion`). Stamp `stormproof2-hotpaths`. Ships for RimWorld **1.6** and **1.7** from the same source; 1.6 is not frozen.
 
-AZR-492 AZR-493 AZR-494 AZR-495 AZR-498 AZR-500 AZR-667 AZR-668
+AZR-492 AZR-493 AZR-494 AZR-495 AZR-497 AZR-498 AZR-500 AZR-501 AZR-667 AZR-668 AZR-713
 
 ### Changed
 - **Two builds, one source** (AZR-493) — official 1.6 loads `1.6/Assemblies` (net472, 1.6 refs). 1.7 loads `1.7/Assemblies`, now a .NET 10 build against the 1.7 refs (`Krafs.Rimworld.Ref` 1.7.4998-unstable, Harmony 3.0.0-rc.4).
@@ -17,6 +17,11 @@ AZR-492 AZR-493 AZR-494 AZR-495 AZR-498 AZR-500 AZR-667 AZR-668
 - **Code cleanup** (AZR-500, AZR-668) — one battery-total helper replaces four copies; mod settings are never null, so the 20+ null checks are gone; incident chances use `[DefOf]` fields instead of def-name strings and are applied once defs exist; simulation code uses `System.Math`; the fire suppressor and the grid forecast no longer share static scratch lists between calls.
 - **ROADMAP** (AZR-667) — dropped the dead AZR-109 line and the deleted Strata V4 roadmap link.
 - Dropped unused `docs/img/ArmoredConduit.png`. Atlas script segment output is opt-in (`-OutSegment`); default writes atlas + menu icon only. No gameplay change.
+- **Brownout off the hot getter** (AZR-497, AZR-501, AZR-713) — brownout now trims a grid's energy gain in `PowerNet.CurrentEnergyGainRate`, once per grid, instead of postfixing `CompPowerTrader.PowerOutput` for every consumer. The .NET 10 JIT can inline that tiny getter, which would have switched brownout off on 1.7 without an error. With brownout disabled, nothing is looked up at all. The grid monitor shows the trimmed consumption so it matches the net gain.
+- **Workbench brownout as a stat part** (AZR-501) — `StatPart_Brownout` is added to `WorkTableWorkSpeedFactor` by `Patches/Stormproof_Brownout.xml` and shows in the stat tooltip. The global `StatExtension.GetStatValue` patch is gone.
+- **Hazard checks** (AZR-501) — the toxic, plant and temperature patches read one cached answer per map per tick instead of rescanning defenders for every cell or plant. Defender hazard lists are built once, not per call.
+- **Ticking** (AZR-501) — surge protector, EMP dampener and storm caller no longer tick; weather forecaster, fallout scrubber and grid monitor tick rarely (every 250 ticks, as they already acted). The scrubber checks for toxic buildup before the room lookup. Load shedders reuse their flood-fill collections, and grid forecasts on one map share one sun curve per 250 ticks.
+- **1.7 patch safety** (AZR-497) — Player.log's load line now says how many patch classes applied. A missing Odyssey or Biotech target logs a warning when that DLC is active.
 
 ### Fixed
 - **Storm caller vs dry lightning** (AZR-494) — calling a storm during a dry lightning front now ends the front first (logged in the almanac), so the rainy thunderstorm actually arrives. Before, the front's forced dry weather undid the call on the next weather tick.

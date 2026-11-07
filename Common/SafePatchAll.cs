@@ -22,9 +22,11 @@ namespace AzraelCommon
             public string Reason;
         }
 
-        internal static void Apply(Harmony harmony, string logPrefix)
+        /// <returns>How many patch classes applied without error.</returns>
+        internal static int Apply(Harmony harmony, string logPrefix)
         {
             int failed = 0;
+            int applied = 0;
             foreach (Type type in AccessTools.GetTypesFromAssembly(Assembly.GetExecutingAssembly()))
             {
                 if (!IsHarmonyPatchClass(type))
@@ -35,6 +37,7 @@ namespace AzraelCommon
                 try
                 {
                     harmony.CreateClassProcessor(type).Patch();
+                    applied++;
                 }
                 catch (Exception e)
                 {
@@ -50,6 +53,7 @@ namespace AzraelCommon
                 }
             }
             NotifyIfFailed(logPrefix, failed);
+            return applied;
         }
 
         private static string ShortReason(Exception e)
