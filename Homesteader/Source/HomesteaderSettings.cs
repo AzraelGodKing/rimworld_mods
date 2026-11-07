@@ -123,7 +123,7 @@ namespace Homesteader
             ContentPack = content;
             Settings = GetSettings<HomesteaderSettings>();
             Settings.gameplay.Clamp();
-            ModVersionLog.Write("[Homesteader]", content, "homesteader-2-v1");
+            ModVersionLog.Write("[Homesteader]", content, HomesteaderBuildInfo.BuildStamp);
         }
 
         public override string SettingsCategory() => "Homesteader_SettingsCategory".Translate();

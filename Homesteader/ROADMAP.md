@@ -47,7 +47,7 @@ Series-wide soft-compat, Azrael storyteller, and showcase scenario:
 
 ## Phase 5 — Soft-compat consumers (do not move into Living World)
 
-- [ ] **HS-S01** Optional flavor when Living World reports outlander famine / refugees (string hooks only)
+- [x] **HS-S01** Optional flavor when Living World reports outlander famine / refugees (string hooks only)
 - [x] **HS-S02** Drought inspect on rain barrels and cisterns (2.0.0; reads the Odyssey drought condition Stormproof defends against)
 - [ ] **HS-S03** Deep Colony Grand Chef + Homesteader meals (defName list; DC-C09)
 - [ ] **HS-S04** Nemesis pantry / smokehouse targeting remains a **Nemesis** soft-compat item (defName list), not a Homesteader world-sim

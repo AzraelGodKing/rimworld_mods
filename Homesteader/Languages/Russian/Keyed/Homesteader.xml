@@ -123,4 +123,9 @@
   <Homesteader_HarvestFestivalLetterKinds>На столе: {0}.</Homesteader_HarvestFestivalLetterKinds>
   <Homesteader_HarvestFestivalLetterFeast>Тыквенный пирог и сидр из кладовой превратили праздник в настоящий пир.</Homesteader_HarvestFestivalLetterFeast>
   <Homesteader_HarvestFestivalLetterTrader>Слух о празднике разносится. Через несколько дней должен прийти торговый караван.</Homesteader_HarvestFestivalLetterTrader>
+  <!-- Living World flavor (HS-S01) -->
+  <Homesteader_LwFamineStocked>Слухи о голоде из {0}. Поселенцы осматривают {1} видов заготовок и чувствуют, что им повезло.</Homesteader_LwFamineStocked>
+  <Homesteader_LwFamineEmpty>Слухи о голоде из {0}. Поселенцы смотрят на пустые полки и думают о запасах.</Homesteader_LwFamineEmpty>
+  <Homesteader_LwRefugees>Беженцы идут из {0}. Полная кладовая очень выручает с голодными гостями.</Homesteader_LwRefugees>
+  <Homesteader_LwFarAway>дальних земель</Homesteader_LwFarAway>
 </LanguageData>

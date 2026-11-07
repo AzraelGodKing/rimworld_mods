@@ -10,6 +10,8 @@ Homesteader 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting
 [*] [b]Harvest festival[/b] — each colony's festival counts its own pantry, pumpkin pie or cider makes it a feast, a trader caravan comes to visit, and the letter names the preserves on the table.
 [*] [b]Pantry tab[/b] — landrace bonuses show in the stock list, and your sort order is remembered.
 [*] [b]Multiplayer[/b] — Homesteader's buttons are synced when the Multiplayer mod is on, and gameplay settings travel with the save. Not tested yet.
+[*] [b]Living World[/b] — famine rumours and war refugees get a short note about your own pantry.
+[*] [b]Compatibility list[/b] — COMPATIBILITY.md lists every mod Homesteader works with and the names other mods rely on. Homesteader now marks the old standalone Wellspring as incompatible, since its buildings are part of Homesteader.
 [*] [b]Settings per save[/b] — spoilage triage, allergy flares, favourite-food mood, egg rate, the Kats Effect and the new larder, water and bee options are saved with each colony. The settings window scrolls. In a game, the settings window changes that colony; at the main menu it sets the defaults for new games. Old saves start with your current settings.
 [/list]
 
