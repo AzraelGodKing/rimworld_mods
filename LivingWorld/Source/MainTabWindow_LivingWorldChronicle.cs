@@ -13,9 +13,35 @@ namespace LivingWorld
         private string factionFilter = string.Empty;
         private int channelFilter; // 0 all, 1 rumour, 2 proximity, 3 radio
         private int severityFilter; // 0 all, 1 normal+, 2 major only
+        private bool heardOnly;
         private bool showWorldState;
+        private bool jumpToB = true;
 
-        public override Vector2 RequestedTabSize => new Vector2(720f, 560f);
+        // Filtered rows, rebuilt only when the chronicle or a filter changes.
+        private readonly List<WorldEvent> shown = new List<WorldEvent>();
+        private readonly List<float> rowTops = new List<float>();
+        private readonly List<string> rowHeads = new List<string>();
+        private readonly List<string> rowBodies = new List<string>();
+        private float shownHeight;
+        private int builtCount = -1;
+        private int builtLastTick = -1;
+        private int builtCorrections = -1;
+        private string builtFilter;
+        private int builtChannel = -1;
+        private int builtSeverity = -1;
+        private bool builtHeard;
+        private float builtWidth = -1f;
+        private int builtHour = -1;
+
+        private readonly List<FactionPairState> statePairs = new List<FactionPairState>();
+
+        public override Vector2 RequestedTabSize => new Vector2(760f, 600f);
+
+        public override void PreOpen()
+        {
+            base.PreOpen();
+            builtCount = -1;
+        }
 
         public override void DoWindowContents(Rect inRect)
         {
@@ -41,16 +67,22 @@ namespace LivingWorld
                 return;
             }
 
-            Widgets.Label(new Rect(inRect.x, y, 80f, 24f), "LivingWorld_Chronicle_Filter".Translate());
-            factionFilter = Widgets.TextField(new Rect(inRect.x + 84f, y, 220f, 24f), factionFilter ?? string.Empty);
-            if (Widgets.ButtonText(new Rect(inRect.x + 314f, y, 140f, 24f), ChannelLabel()))
+            Widgets.Label(new Rect(inRect.x, y, 70f, 24f), "LivingWorld_Chronicle_Filter".Translate());
+            factionFilter = Widgets.TextField(new Rect(inRect.x + 72f, y, 170f, 24f), factionFilter ?? string.Empty);
+            if (Widgets.ButtonText(new Rect(inRect.x + 246f, y, 30f, 24f), "▾"))
+            {
+                OpenFactionMenu();
+            }
+            if (Widgets.ButtonText(new Rect(inRect.x + 282f, y, 130f, 24f), ChannelLabel()))
             {
                 channelFilter = (channelFilter + 1) % 4;
             }
-            if (Widgets.ButtonText(new Rect(inRect.x + 462f, y, 160f, 24f), SeverityLabel()))
+            if (Widgets.ButtonText(new Rect(inRect.x + 416f, y, 150f, 24f), SeverityLabel()))
             {
                 severityFilter = (severityFilter + 1) % 3;
             }
+            Widgets.CheckboxLabeled(new Rect(inRect.x + 574f, y, inRect.width - 574f, 24f),
+                "LivingWorld_Chronicle_HeardOnly".Translate(), ref heardOnly);
             y += 32f;
 
             IReadOnlyList<WorldEvent> all = comp?.Chronicle;
@@ -61,29 +93,29 @@ namespace LivingWorld
                 return;
             }
 
-            List<WorldEvent> shown = new List<WorldEvent>();
-            for (int i = all.Count - 1; i >= 0; i--)
+            Rect outRect = new Rect(inRect.x, y, inRect.width, inRect.yMax - y);
+            float rowWidth = outRect.width - 20f;
+            RebuildIfNeeded(all, rowWidth);
+            if (shown.Count == 0)
             {
-                WorldEvent ev = all[i];
-                if (ev == null)
-                {
-                    continue;
-                }
-                if (!MatchesFaction(ev) || !MatchesChannel(ev) || !MatchesSeverity(ev))
-                {
-                    continue;
-                }
-                shown.Add(ev);
+                Widgets.Label(new Rect(inRect.x, y, inRect.width, 40f),
+                    "LivingWorld_Chronicle_NoMatch".Translate());
+                return;
             }
 
-            Rect outRect = new Rect(inRect.x, y, inRect.width, inRect.yMax - y);
-            float viewH = shown.Count * 72f + 8f;
-            Widgets.BeginScrollView(outRect, ref scrollPos, new Rect(0f, 0f, outRect.width - 16f, viewH));
-            float ly = 0f;
+            Widgets.BeginScrollView(outRect, ref scrollPos, new Rect(0f, 0f, outRect.width - 16f, shownHeight));
+            float top = scrollPos.y;
+            float bottom = scrollPos.y + outRect.height;
             for (int i = 0; i < shown.Count; i++)
             {
+                float ry = rowTops[i];
+                float rh = (i + 1 < rowTops.Count ? rowTops[i + 1] : shownHeight) - ry;
+                if (ry + rh < top || ry > bottom)
+                {
+                    continue; // off screen
+                }
                 WorldEvent ev = shown[i];
-                Rect row = new Rect(0f, ly, outRect.width - 20f, 70f);
+                Rect row = new Rect(0f, ry, rowWidth, rh - 4f);
                 PlanetTile where = ev.Where;
                 if (where.Valid)
                 {
@@ -93,36 +125,126 @@ namespace LivingWorld
                         CameraJumper.TryJump(new GlobalTargetInfo(where));
                     }
                 }
-                string when = (Find.TickManager.TicksGame - ev.tick).ToStringTicksToPeriod();
-                string head = LivingWorldLetters.LabelFor(ev.kind) + "  (" + when + ")";
+                Widgets.Label(new Rect(0f, ry, rowWidth, 22f), rowHeads[i]);
+                GUI.color = new Color(0.75f, 0.75f, 0.75f);
+                Widgets.Label(new Rect(0f, ry + 22f, rowWidth, rh - 26f), rowBodies[i]);
+                GUI.color = Color.white;
+            }
+            Widgets.EndScrollView();
+        }
+
+        private void RebuildIfNeeded(IReadOnlyList<WorldEvent> all, float rowWidth)
+        {
+            int lastTick = all[all.Count - 1]?.tick ?? 0;
+            int corrections = CountCorrected(all);
+            // "x days ago" text changes slowly; refresh it once per in-game hour.
+            int hour = Find.TickManager.TicksGame / 2500;
+            if (all.Count == builtCount && lastTick == builtLastTick && corrections == builtCorrections
+                && factionFilter == builtFilter && channelFilter == builtChannel && severityFilter == builtSeverity
+                && heardOnly == builtHeard && Mathf.Approximately(rowWidth, builtWidth) && hour == builtHour)
+            {
+                return;
+            }
+            builtCount = all.Count;
+            builtLastTick = lastTick;
+            builtCorrections = corrections;
+            builtFilter = factionFilter;
+            builtChannel = channelFilter;
+            builtSeverity = severityFilter;
+            builtHeard = heardOnly;
+            builtWidth = rowWidth;
+            builtHour = hour;
+
+            shown.Clear();
+            rowTops.Clear();
+            rowHeads.Clear();
+            rowBodies.Clear();
+            string needle = string.IsNullOrEmpty(factionFilter) ? null : factionFilter;
+            float y = 0f;
+            int now = Find.TickManager.TicksGame;
+            for (int i = all.Count - 1; i >= 0; i--)
+            {
+                WorldEvent ev = all[i];
+                if (ev == null || !MatchesFaction(ev, needle) || !MatchesChannel(ev) || !MatchesSeverity(ev)
+                    || (heardOnly && !ev.seenByPlayer))
+                {
+                    continue;
+                }
+                string head = LivingWorldLetters.LabelFor(ev.kind) + "  ("
+                    + (now - ev.tick).ToStringTicksToPeriod() + ")";
                 if (ev.corrected)
                 {
                     head += "  " + "LivingWorld_Chronicle_Corrected".Translate();
                 }
-                Widgets.Label(new Rect(0f, ly, outRect.width - 20f, 22f), head);
-                ly += 22f;
-                GUI.color = new Color(0.75f, 0.75f, 0.75f);
-                Widgets.Label(new Rect(0f, ly, outRect.width - 20f, 44f),
-                    LivingWorldLetters.PrefixFor(ev) + "  " + LivingWorldLetters.TextFor(ev));
-                GUI.color = Color.white;
-                ly += 48f;
+                string body = LivingWorldLetters.PrefixFor(ev) + "  " + LivingWorldLetters.TextFor(ev);
+                float bodyH = Mathf.Max(22f, Text.CalcHeight(body, rowWidth));
+                shown.Add(ev);
+                rowTops.Add(y);
+                rowHeads.Add(head);
+                rowBodies.Add(body);
+                y += 22f + bodyH + 8f;
             }
-            Widgets.EndScrollView();
+            shownHeight = y + 8f;
+        }
+
+        private static int CountCorrected(IReadOnlyList<WorldEvent> all)
+        {
+            int n = 0;
+            for (int i = 0; i < all.Count; i++)
+            {
+                if (all[i] != null && all[i].corrected)
+                {
+                    n++;
+                }
+            }
+            return n;
+        }
+
+        private void OpenFactionMenu()
+        {
+            var options = new List<FloatMenuOption>
+            {
+                new FloatMenuOption("LivingWorld_Chronicle_AllFactions".Translate(), () => factionFilter = string.Empty),
+            };
+            List<Faction> factions = Find.FactionManager.AllFactionsListForReading;
+            for (int i = 0; i < factions.Count; i++)
+            {
+                Faction f = factions[i];
+                if (f == null || f.IsPlayer || f.Hidden || f.def == null || !f.def.humanlikeFaction)
+                {
+                    continue;
+                }
+                string name = f.Name;
+                options.Add(new FloatMenuOption(name, () => factionFilter = name));
+            }
+            Find.WindowStack.Add(new FloatMenu(options));
         }
 
         // Read-only: EnsurePairs mutates sim state, so the UI only shows what the sim already tracks.
         private void DrawWorldState(Rect rect, GameComponent_LivingWorld comp)
         {
+            float y = rect.y;
+            if (comp != null)
+            {
+                GUI.color = new Color(0.75f, 0.75f, 0.75f);
+                Widgets.Label(new Rect(rect.x, y, rect.width, 24f), "LivingWorld_WorldState_Status".Translate(
+                    comp.PendingFalloutCount,
+                    RoadTileCount(),
+                    LivingWorldWorldObjectIndex.TrafficCount));
+                GUI.color = Color.white;
+                y += 26f;
+            }
+
             IReadOnlyList<FactionPairState> pairs = comp?.Pairs;
             if (pairs == null || pairs.Count == 0)
             {
-                Widgets.Label(new Rect(rect.x, rect.y, rect.width, 40f),
+                Widgets.Label(new Rect(rect.x, y, rect.width, 40f),
                     "LivingWorld_WorldState_Empty".Translate());
                 return;
             }
 
             int wars = 0, tensions = 0, alliances = 0, peace = 0;
-            List<FactionPairState> shown = new List<FactionPairState>();
+            statePairs.Clear();
             for (int i = 0; i < pairs.Count; i++)
             {
                 FactionPairState p = pairs[i];
@@ -145,15 +267,14 @@ namespace LivingWorld
                         peace++;
                         continue;
                 }
-                shown.Add(p);
+                statePairs.Add(p);
             }
-            shown.Sort((a, b) =>
+            statePairs.Sort((a, b) =>
             {
                 int byTone = ToneOrder(a.tone).CompareTo(ToneOrder(b.tone));
                 return byTone != 0 ? byTone : b.intensity.CompareTo(a.intensity);
             });
 
-            float y = rect.y;
             Widgets.Label(new Rect(rect.x, y, rect.width, 24f),
                 "LivingWorld_WorldState_Summary".Translate(wars, tensions, alliances, peace));
             y += 24f;
@@ -163,15 +284,17 @@ namespace LivingWorld
             y += 28f;
 
             Rect outRect = new Rect(rect.x, y, rect.width, rect.yMax - y);
-            float viewH = shown.Count * 26f + 8f;
+            float viewH = statePairs.Count * 26f + 8f;
             Widgets.BeginScrollView(outRect, ref stateScrollPos, new Rect(0f, 0f, outRect.width - 16f, viewH));
             float ly = 0f;
-            for (int i = 0; i < shown.Count; i++)
+            for (int i = 0; i < statePairs.Count; i++)
             {
-                FactionPairState p = shown[i];
-                string a = p.FactionA()?.Name ?? "LivingWorld_UnknownFaction".Translate().ToString();
-                string b = p.FactionB()?.Name ?? "LivingWorld_UnknownFaction".Translate().ToString();
-                string line = a + " — " + b + ": " + ToneLabel(p.tone);
+                FactionPairState p = statePairs[i];
+                Faction fa = p.FactionA();
+                Faction fb = p.FactionB();
+                string a = fa?.Name ?? "LivingWorld_UnknownFaction".Translate().ToString();
+                string b = fb?.Name ?? "LivingWorld_UnknownFaction".Translate().ToString();
+                string line = "LivingWorld_PairJoin".Translate(a, b) + ": " + ToneLabel(p.tone);
                 if (p.tone != FactionRelationTone.Alliance)
                 {
                     line += ", " + "LivingWorld_WorldState_Intensity".Translate(p.intensity);
@@ -180,12 +303,70 @@ namespace LivingWorld
                 {
                     line += ", " + "LivingWorld_WorldState_Blackout".Translate();
                 }
+                Rect row = new Rect(0f, ly, outRect.width - 20f, 24f);
+                Widgets.DrawHighlightIfMouseover(row);
+                TooltipHandler.TipRegion(row, "LivingWorld_WorldState_JumpTip".Translate());
+                if (Widgets.ButtonInvisible(row))
+                {
+                    // Each click jumps to the other side: A's settlement nearest B, then B's nearest A.
+                    jumpToB = !jumpToB;
+                    Settlement target = NearestSettlementOf(jumpToB ? fb : fa, jumpToB ? fa : fb);
+                    if (target != null)
+                    {
+                        CameraJumper.TryJumpAndSelect(target);
+                    }
+                }
                 GUI.color = ToneColor(p.tone);
-                Widgets.Label(new Rect(0f, ly, outRect.width - 20f, 24f), line);
+                Widgets.Label(row, line);
                 GUI.color = Color.white;
                 ly += 26f;
             }
             Widgets.EndScrollView();
+        }
+
+        private static int RoadTileCount()
+        {
+            return Current.Game?.GetComponent<GameComponent_LivingWorldRoad>()?.Tiles.Count ?? 0;
+        }
+
+        /// <summary>The settlement of <paramref name="f"/> closest to any settlement of <paramref name="other"/>.</summary>
+        private static Settlement NearestSettlementOf(Faction f, Faction other)
+        {
+            if (f == null)
+            {
+                return null;
+            }
+            List<Settlement> all = Find.WorldObjects.Settlements;
+            Settlement best = null;
+            float bestD = float.MaxValue;
+            for (int i = 0; i < all.Count; i++)
+            {
+                Settlement s = all[i];
+                if (s?.Faction != f)
+                {
+                    continue;
+                }
+                best ??= s;
+                if (other == null)
+                {
+                    break;
+                }
+                for (int j = 0; j < all.Count; j++)
+                {
+                    Settlement o = all[j];
+                    if (o?.Faction != other || o.Tile.Layer != s.Tile.Layer)
+                    {
+                        continue;
+                    }
+                    float d = Find.WorldGrid.ApproxDistanceInTiles(s.Tile, o.Tile);
+                    if (d < bestD)
+                    {
+                        bestD = d;
+                        best = s;
+                    }
+                }
+            }
+            return best;
         }
 
         private static int ToneOrder(FactionRelationTone tone)
@@ -223,17 +404,19 @@ namespace LivingWorld
             }
         }
 
-        private bool MatchesFaction(WorldEvent ev)
+        private static bool MatchesFaction(WorldEvent ev, string needle)
         {
-            if (string.IsNullOrEmpty(factionFilter))
+            if (needle == null)
             {
                 return true;
             }
-            string f = factionFilter.ToLowerInvariant();
-            return (ev.factionAName ?? string.Empty).ToLowerInvariant().Contains(f)
-                || (ev.factionBName ?? string.Empty).ToLowerInvariant().Contains(f)
-                || (ev.settlementLabel ?? string.Empty).ToLowerInvariant().Contains(f);
+            return Contains(ev.factionAName, needle)
+                || Contains(ev.factionBName, needle)
+                || Contains(ev.settlementLabel, needle);
         }
+
+        private static bool Contains(string hay, string needle) =>
+            hay != null && hay.IndexOf(needle, System.StringComparison.OrdinalIgnoreCase) >= 0;
 
         private bool MatchesChannel(WorldEvent ev)
         {

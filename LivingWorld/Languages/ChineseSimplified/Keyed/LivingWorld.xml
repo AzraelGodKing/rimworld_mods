@@ -133,4 +133,21 @@
   <LivingWorld_Settings_PrepareRemovalConfirm>从本局游戏中移除 Living World 的对象并关闭模拟？编年史会保留。</LivingWorld_Settings_PrepareRemovalConfirm>
   <LivingWorld_Settings_PrepareRemovalDone>Living World：已移除 {0} 个对象和状态。请存档，然后移除模组。</LivingWorld_Settings_PrepareRemovalDone>
   <LivingWorld_Settings_HostOnly>Living World：多人游戏中只有房主的设置会作用于游戏。你的模组设置已为你自己的游戏保存。</LivingWorld_Settings_HostOnly>
+  <LivingWorld_Settings_AppliesOnClose>在游戏中，关闭此窗口时这些设置会应用到当前游戏（随存档保存）。</LivingWorld_Settings_AppliesOnClose>
+  <LivingWorld_Settings_Presets>节奏预设（只改数值，开关不变）：</LivingWorld_Settings_Presets>
+  <LivingWorld_Preset_Quiet>平静</LivingWorld_Preset_Quiet>
+  <LivingWorld_Preset_Default>默认</LivingWorld_Preset_Default>
+  <LivingWorld_Preset_Turbulent>动荡</LivingWorld_Preset_Turbulent>
+  <LivingWorld_Settings_ChronicleCapacity>编年史保留：{0} 条</LivingWorld_Settings_ChronicleCapacity>
+  <LivingWorld_Settings_Excluded>参与模拟的派系：</LivingWorld_Settings_Excluded>
+  <LivingWorld_Settings_ExcludedDesc>取消勾选即让该派系不参与：没有战争、易主、前哨或商队。</LivingWorld_Settings_ExcludedDesc>
+  <LivingWorld_Chronicle_HeardOnly>仅已听闻</LivingWorld_Chronicle_HeardOnly>
+  <LivingWorld_Chronicle_NoMatch>没有符合筛选条件的记录。</LivingWorld_Chronicle_NoMatch>
+  <LivingWorld_Chronicle_AllFactions>所有派系</LivingWorld_Chronicle_AllFactions>
+  <LivingWorld_WorldState_Status>正在路上的余波：{0}。你的道路：{1} 格。行进中的商队：{2}。</LivingWorld_WorldState_Status>
+  <LivingWorld_WorldState_JumpTip>点击跳转到此战线上的定居点；再点击跳到另一方。</LivingWorld_WorldState_JumpTip>
+  <LivingWorld_PairJoin>{0} — {1}</LivingWorld_PairJoin>
+  <LivingWorld_InspectJoin>{0} · {1}</LivingWorld_InspectJoin>
+  <LivingWorld_Hazard_Hunger>饥饿</LivingWorld_Hazard_Hunger>
+  <LivingWorld_Hazard_Wounds>无药可医的伤口</LivingWorld_Hazard_Wounds>
 </LanguageData>

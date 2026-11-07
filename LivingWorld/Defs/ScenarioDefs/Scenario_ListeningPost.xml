@@ -25,24 +25,6 @@
       </surfaceLayer>
       <parts>
 
-        <li MayRequire="Ludeon.RimWorld.Odyssey" Class="ScenPart_PlanetLayer">
-          <def>PlanetLayer</def>
-          <tag>Orbit</tag>
-          <layer>Orbit</layer>
-          <settingsDef>Orbit</settingsDef>
-          <hide>true</hide>
-          <connections>
-            <Surface>
-              <zoomMode>ZoomIn</zoomMode>
-            </Surface>
-          </connections>
-        </li>
-
-        <li MayRequire="AzraelGodKing.Homesteader" Class="Homesteader.ScenPart_ForcedStoryteller">
-          <def>Homesteader_ForcedStoryteller</def>
-          <storyteller>Azrael</storyteller>
-        </li>
-
         <li Class="ScenPart_ConfigPage_ConfigureStartingPawns">
           <def>ConfigPage_ConfigureStartingPawns</def>
           <pawnCount>3</pawnCount>
@@ -108,6 +90,26 @@ Settlements rise and fall beyond your fog of war. Factions feud. Rumors travel f
           <def>StartingThing_Defined</def>
           <thingDef>Apparel_CowboyHat</thingDef>
           <count>3</count>
+        </li>
+
+        <!-- MayRequire parts stay last so the parts.N indexes the DefInjected
+             translations use (parts.2.text) do not shift with DLC or Homesteader. -->
+        <li MayRequire="Ludeon.RimWorld.Odyssey" Class="ScenPart_PlanetLayer">
+          <def>PlanetLayer</def>
+          <tag>Orbit</tag>
+          <layer>Orbit</layer>
+          <settingsDef>Orbit</settingsDef>
+          <hide>true</hide>
+          <connections>
+            <Surface>
+              <zoomMode>ZoomIn</zoomMode>
+            </Surface>
+          </connections>
+        </li>
+
+        <li MayRequire="AzraelGodKing.Homesteader" Class="Homesteader.ScenPart_ForcedStoryteller">
+          <def>Homesteader_ForcedStoryteller</def>
+          <storyteller>Azrael</storyteller>
         </li>
 
       </parts>

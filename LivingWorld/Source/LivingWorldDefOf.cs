@@ -12,6 +12,7 @@ namespace LivingWorld
         public static WorldObjectDef LivingWorld_WayCamp;
         public static WorldObjectDef LivingWorld_TrafficCaravan;
         public static HediffDef LW_Hediff_RoadVeteran;
+        public static LetterDef LivingWorld_WorldNews;
 
         static LivingWorldDefOf()
         {

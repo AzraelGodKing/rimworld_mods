@@ -133,4 +133,21 @@
   <LivingWorld_Settings_PrepareRemovalConfirm>Убрать объекты Living World из этой игры и выключить симуляцию? Хроника сохранится.</LivingWorld_Settings_PrepareRemovalConfirm>
   <LivingWorld_Settings_PrepareRemovalDone>Living World: убрано объектов и состояний: {0}. Сохраните игру, затем удалите мод.</LivingWorld_Settings_PrepareRemovalDone>
   <LivingWorld_Settings_HostOnly>Living World: в мультиплеере к игре применяются только настройки хоста. Ваши настройки сохранены для ваших собственных игр.</LivingWorld_Settings_HostOnly>
+  <LivingWorld_Settings_AppliesOnClose>В игре эти настройки применяются к ней при закрытии окна (сохраняются вместе с игрой).</LivingWorld_Settings_AppliesOnClose>
+  <LivingWorld_Settings_Presets>Пресеты темпа (только числа, переключатели не меняются):</LivingWorld_Settings_Presets>
+  <LivingWorld_Preset_Quiet>Тихий</LivingWorld_Preset_Quiet>
+  <LivingWorld_Preset_Default>Обычный</LivingWorld_Preset_Default>
+  <LivingWorld_Preset_Turbulent>Бурный</LivingWorld_Preset_Turbulent>
+  <LivingWorld_Settings_ChronicleCapacity>Хроника хранит записей: {0}</LivingWorld_Settings_ChronicleCapacity>
+  <LivingWorld_Settings_Excluded>Фракции в симуляции:</LivingWorld_Settings_Excluded>
+  <LivingWorld_Settings_ExcludedDesc>Снимите галочку, чтобы фракция не участвовала: без войн, захватов, аванпостов и караванов.</LivingWorld_Settings_ExcludedDesc>
+  <LivingWorld_Chronicle_HeardOnly>Только услышанное</LivingWorld_Chronicle_HeardOnly>
+  <LivingWorld_Chronicle_NoMatch>Нет записей под эти фильтры.</LivingWorld_Chronicle_NoMatch>
+  <LivingWorld_Chronicle_AllFactions>Все фракции</LivingWorld_Chronicle_AllFactions>
+  <LivingWorld_WorldState_Status>Последствия в пути: {0}. Ваша дорога: {1} кл. Караванов в пути: {2}.</LivingWorld_WorldState_Status>
+  <LivingWorld_WorldState_JumpTip>Нажмите, чтобы перейти к поселению на этом фронте; ещё раз — к другой стороне.</LivingWorld_WorldState_JumpTip>
+  <LivingWorld_PairJoin>{0} — {1}</LivingWorld_PairJoin>
+  <LivingWorld_InspectJoin>{0} · {1}</LivingWorld_InspectJoin>
+  <LivingWorld_Hazard_Hunger>голодовку</LivingWorld_Hazard_Hunger>
+  <LivingWorld_Hazard_Wounds>беду с ранами без лекарств</LivingWorld_Hazard_Wounds>
 </LanguageData>

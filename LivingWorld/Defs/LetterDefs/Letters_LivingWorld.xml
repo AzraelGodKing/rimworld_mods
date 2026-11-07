@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- Far-off news that is not a threat to the colony: blue-grey, quiet. -->
+  <LetterDef>
+    <defName>LivingWorld_WorldNews</defName>
+    <letterClass>StandardLetter</letterClass>
+    <color>(150, 170, 200)</color>
+    <flashColor>(150, 170, 200)</flashColor>
+    <flashInterval>90</flashInterval>
+    <arriveSound>LetterArrive</arriveSound>
+  </LetterDef>
+
+</Defs>

@@ -74,7 +74,14 @@ namespace LivingWorld
         /// <summary>Sync method: replaces the game's sim settings on every client.</summary>
         public static void ApplySettings(string payload)
         {
-            GameComponent_LivingWorld.Get?.SimSettings?.ReadFrom(payload);
+            GameComponent_LivingWorld comp = GameComponent_LivingWorld.Get;
+            if (comp?.SimSettings == null)
+            {
+                return;
+            }
+            comp.SimSettings.ReadFrom(payload);
+            // Excluded factions may have changed: rebuild pairs on the next pulse.
+            comp.PairsDirty = true;
         }
 
         private static MethodInfo ResolveRegister()

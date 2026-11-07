@@ -67,6 +67,16 @@ namespace LivingWorld
 
         private static string PickFlavor(Caravan caravan)
         {
+            // The caravan's own state first: hunger and untreated wounds colour the march.
+            if (LowOnFood(caravan))
+            {
+                return "LivingWorld_Hazard_Hunger";
+            }
+            if (WoundedWithoutMedicine(caravan))
+            {
+                return "LivingWorld_Hazard_Wounds";
+            }
+
             string biome = BiomeName(caravan.Tile);
             Season season = Season.Undefined;
             try
@@ -91,6 +101,47 @@ namespace LivingWorld
                 return "LivingWorld_Hazard_Mud";
             }
             return "LivingWorld_Hazard_Wind";
+        }
+
+        private static bool LowOnFood(Caravan caravan)
+        {
+            List<Pawn> pawns = caravan.PawnsListForReading;
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                Pawn p = pawns[i];
+                if (p != null && p.IsColonist && p.needs?.food != null && p.needs.food.CurLevelPercentage < 0.25f)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static bool WoundedWithoutMedicine(Caravan caravan)
+        {
+            bool wounded = false;
+            List<Pawn> pawns = caravan.PawnsListForReading;
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                Pawn p = pawns[i];
+                if (p != null && p.IsColonist && p.health?.HasHediffsNeedingTend() == true)
+                {
+                    wounded = true;
+                    break;
+                }
+            }
+            if (!wounded)
+            {
+                return false;
+            }
+            foreach (Thing t in CaravanInventoryUtility.AllInventoryItems(caravan))
+            {
+                if (t.def.IsMedicine)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         private static string BiomeName(PlanetTile tile)
