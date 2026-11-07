@@ -175,7 +175,7 @@ namespace DateNight
                 return null;
             }
 
-            Pawn? other = FindDatePartner(pawn);
+            Pawn? other = FindCommittedPartner(pawn);
             if (other == null)
             {
                 return null;
@@ -395,6 +395,15 @@ namespace DateNight
 
         private static Pawn? FindDatePartnerUncached(Pawn pawn)
         {
+            return FindCommittedPartner(pawn) ?? (Enabled ? FindNewFriendCandidate(pawn) : null);
+        }
+
+        /// <summary>
+        /// Love partner, or the strongest existing ladder bond. Never a speculative
+        /// new friend, so UI (alert, inspect line) does not nag about strangers.
+        /// </summary>
+        public static Pawn? FindCommittedPartner(Pawn pawn)
+        {
             Pawn love = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
             if (love != null && !love.Dead)
             {
@@ -436,17 +445,17 @@ namespace DateNight
                 }
             }
 
-            if (bestBond != null)
-            {
-                return bestBond;
-            }
-
-            return FindNewFriendCandidate(pawn);
+            return bestBond;
         }
 
         private static Pawn? FindNewFriendCandidate(Pawn pawn)
         {
             if (pawn.Map == null || pawn.relations == null)
+            {
+                return null;
+            }
+            // Only someone who painted Date or Lovin goes looking for a new friend.
+            if (!DateNightUtility.IsLovinOrDateSchedule(pawn))
             {
                 return null;
             }

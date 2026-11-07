@@ -125,7 +125,10 @@ namespace DateNight
             for (int i = 0; i < venues.Count; i++)
             {
                 FavoriteVenue fav = venues[i];
-                if (fav == null || fav.notifiedBreakup)
+                // Friends and sweethearts on the gradual-romance ladder were never
+                // lovers; without this every one of their dates read as a breakup
+                // and knocked boyfriend/girlfriend back to sweethearts.
+                if (fav == null || fav.notifiedBreakup || !fav.wereLovers)
                 {
                     continue;
                 }
@@ -142,6 +145,7 @@ namespace DateNight
                 }
 
                 fav.notifiedBreakup = true;
+                fav.wereLovers = false;
                 fav.score = 0f;
                 DateNightRomance.NotifyBreakup(a, b);
                 ThoughtDef? over = DateNightDefOf.DateNight_DatesOver;
@@ -269,6 +273,7 @@ namespace DateNight
             }
 
             FavoriteVenue fav = GetOrCreate(pawn, partner, pawn.Map, spot);
+            fav.wereLovers = LovePartnerRelationUtility.LovePartnerRelationExists(pawn, partner);
             bool wasFavorite = fav.score >= PreferScore && fav.Near(spot.IsValid ? spot.Cell : pawn.Position);
             fav.Capture(pawn.Map, spot);
             fav.score = Clamp(fav.score + delta);
@@ -287,6 +292,7 @@ namespace DateNight
             }
 
             FavoriteVenue fav = GetOrCreate(pawn, partner, pawn.Map, spot);
+            fav.wereLovers = LovePartnerRelationUtility.LovePartnerRelationExists(pawn, partner);
             bool wasHere = fav.Near(spot.IsValid ? spot.Cell : pawn.Position);
             fav.Capture(pawn.Map, spot);
             fav.score = Clamp(fav.score - 2.5f);
@@ -350,6 +356,9 @@ namespace DateNight
         public float score;
         public bool notifiedDestroyed;
         public bool notifiedBreakup;
+        // Were they love partners at their last date here? Only then can a
+        // missing love relation be a breakup.
+        public bool wereLovers = true;
 
         public long CoupleKey
         {
@@ -427,6 +436,9 @@ namespace DateNight
             Scribe_Values.Look(ref score, "score", 0f);
             Scribe_Values.Look(ref notifiedDestroyed, "notifiedDestroyed", false);
             Scribe_Values.Look(ref notifiedBreakup, "notifiedBreakup", false);
+            // Default true: 1.x entries were all lovers (pre-ladder), and the key is
+            // only written when false.
+            Scribe_Values.Look(ref wereLovers, "wereLovers", true);
         }
 
         private static Thing TableOrBuilding(Thing thing)

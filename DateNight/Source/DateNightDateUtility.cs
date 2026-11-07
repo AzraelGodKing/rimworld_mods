@@ -125,17 +125,26 @@ namespace DateNight
                 return false;
             }
 
+            pawn.jobs.StartJob(MakeDateJob(pawn, partner), JobCondition.InterruptForced, null,
+                resumeCurJobAfterwards: false);
+            return pawn.CurJobDef == DateNightDefOf.DateNight_GoOnDate;
+        }
+
+        /// <summary>
+        /// The one place a date job is built. The joy-giver path used to skip the
+        /// bond start and double-date binding that a scheduled start did.
+        /// </summary>
+        public static Job MakeDateJob(Pawn pawn, Pawn partner)
+        {
             DateNightRomance.EnsureBondStarted(pawn, partner);
             DateNightDoubleDates.BindIfPossible(pawn, partner);
 
-            LocalTargetInfo spot = FindDateSpot(pawn, partner);
             Job job = JobMaker.MakeJob(DateNightDefOf.DateNight_GoOnDate);
             job.SetTarget(TargetIndex.A, partner);
-            job.SetTarget(TargetIndex.B, spot);
+            job.SetTarget(TargetIndex.B, FindDateSpot(pawn, partner));
             job.locomotionUrgency = LocomotionUrgency.Jog;
             job.ignoreForbidden = true;
-            pawn.jobs.StartJob(job, JobCondition.InterruptForced, null, resumeCurJobAfterwards: false);
-            return pawn.CurJobDef == DateNightDefOf.DateNight_GoOnDate;
+            return job;
         }
 
         /// <summary>Ticks a good date keeps the lovin-chance spark alive (1 day).</summary>

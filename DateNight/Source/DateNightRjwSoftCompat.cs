@@ -319,6 +319,12 @@ namespace DateNight
     [HarmonyPatch(typeof(JobDriver), nameof(JobDriver.Cleanup))]
     public static class Patch_JobDriver_Cleanup_RjwPrivateTime
     {
+        // Every job end for every pawn runs through Cleanup; skip it without RJW (AZR-542).
+        public static bool Prepare()
+        {
+            return DateNightRjwSoftCompat.Active;
+        }
+
         public static void Postfix(JobDriver __instance, JobCondition condition)
         {
             DateNightRjwSoftCompat.NotifyMasturbateCleanup(__instance, condition);

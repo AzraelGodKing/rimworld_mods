@@ -7,8 +7,17 @@ namespace DateNight
 {
     public class GameComponent_DateNight : GameComponent
     {
-        private readonly Dictionary<int, bool> wasOnLovin = new Dictionary<int, bool>();
-        private readonly Dictionary<int, bool> wasOnDate = new Dictionary<int, bool>();
+        /// <summary>
+        /// Save layout version (AZR-539). 0 = a 1.x save (key missing), 2 = 2.0.0.
+        /// Bump only when a saved key changes meaning; new keys need no bump.
+        /// Saved type names, Scribe keys and the DateActivity enum are a contract:
+        /// rename nothing, append enum values only.
+        /// </summary>
+        public const int CurrentSaveVersion = 2;
+
+        private int saveVersion = CurrentSaveVersion;
+        private Dictionary<int, bool> wasOnLovin = new Dictionary<int, bool>();
+        private Dictionary<int, bool> wasOnDate = new Dictionary<int, bool>();
         private string? lastNewsVersion;
 
         public GameComponent_DateNight(Game game)
@@ -23,8 +32,8 @@ namespace DateNight
             // Reload: ExposeData already restored scribed collections. Only clear
             // ephemeral windows; Claims were rebuilt from the save.
             DateNightUtility.ClearEphemeral();
-            DateNightWindows.ClearWindowsOnly();
-            // Seed schedule flags without firing enter/leave transitions (AZR-523).
+            // Seed flags only for pawns the save did not know, so a schedule change
+            // across the save is still seen as a transition (AZR-523, AZR-539).
             SeedScheduleFlags();
             UpdateNewsLetter.TrySend(ref lastNewsVersion);
         }
@@ -43,8 +52,6 @@ namespace DateNight
 
         private void SeedScheduleFlags()
         {
-            wasOnLovin.Clear();
-            wasOnDate.Clear();
             List<Pawn> colonists = PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_FreeColonists;
             if (colonists == null)
             {
@@ -59,15 +66,29 @@ namespace DateNight
                     continue;
                 }
                 int id = pawn.thingIDNumber;
-                wasOnLovin[id] = DateNightUtility.IsLovinSchedule(pawn);
-                wasOnDate[id] = DateNightUtility.IsDateSchedule(pawn);
+                if (!wasOnLovin.ContainsKey(id))
+                {
+                    wasOnLovin[id] = DateNightUtility.IsLovinSchedule(pawn);
+                }
+                if (!wasOnDate.ContainsKey(id))
+                {
+                    wasOnDate[id] = DateNightUtility.IsDateSchedule(pawn);
+                }
             }
         }
 
         public override void ExposeData()
         {
             base.ExposeData();
+            if (Scribe.mode == LoadSaveMode.LoadingVars)
+            {
+                // Missing key = a save from before 2.0.0.
+                saveVersion = 0;
+            }
+            Scribe_Values.Look(ref saveVersion, "dateNightSaveVersion", 0);
             Scribe_Values.Look(ref lastNewsVersion, "lastNewsVersion");
+            Scribe_Collections.Look(ref wasOnLovin, "dateNightWasOnLovin", LookMode.Value, LookMode.Value);
+            Scribe_Collections.Look(ref wasOnDate, "dateNightWasOnDate", LookMode.Value, LookMode.Value);
             DateNightWindows.ExposeData();
             DateNightDateUtility.ExposeData();
             DateNightAnniversaries.ExposeData();
@@ -75,6 +96,19 @@ namespace DateNight
             DateNightDoubleDates.ExposeData();
             DateNightReunions.ExposeData();
             DateNightRomance.ExposeData();
+
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                wasOnLovin ??= new Dictionary<int, bool>();
+                wasOnDate ??= new Dictionary<int, bool>();
+                if (saveVersion < CurrentSaveVersion)
+                {
+                    Log.Message("[DateNight] Upgraded a save from Date Night "
+                        + (saveVersion == 0 ? "1.x" : saveVersion.ToString()) + " to save version "
+                        + CurrentSaveVersion + ".");
+                    saveVersion = CurrentSaveVersion;
+                }
+            }
         }
 
         public override void GameComponentTick()
@@ -110,6 +144,26 @@ namespace DateNight
                 DateNightAnniversaries.PruneDeadPawns();
                 DateNightRomance.PruneDeadPawns();
                 DateNightRomance.TickBonds();
+                PruneScheduleFlags(wasOnLovin);
+                PruneScheduleFlags(wasOnDate);
+            }
+        }
+
+        private static readonly List<int> pruneScratch = new List<int>();
+
+        private static void PruneScheduleFlags(Dictionary<int, bool> flags)
+        {
+            pruneScratch.Clear();
+            foreach (int id in flags.Keys)
+            {
+                if (!DateNightDateUtility.PawnStillAlive(id))
+                {
+                    pruneScratch.Add(id);
+                }
+            }
+            for (int i = 0; i < pruneScratch.Count; i++)
+            {
+                flags.Remove(pruneScratch[i]);
             }
         }
 

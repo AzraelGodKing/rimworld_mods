@@ -7,6 +7,14 @@ Date Night 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting 
 [*] [b]RimWorld 1.7[/b] — the 1.7 folder now has its own .NET 10 build made against the 1.7 game files. 1.6 keeps its own build from the same source.
 [*] [b]RimJobWorld[/b] — the RJW checks are bound once at startup instead of called through reflection every second, so scheduled Lovin costs less with RJW on.
 [/list]
+[b]Fixed[/b]
+[list]
+[*] [b]Boyfriend/girlfriend stuck[/b] — couples on the gradual-romance ladder were treated as broken up after every date, so boyfriend/girlfriend dropped back to sweethearts and rarely became lovers. Only real lovers can break up now.
+[*] [b]Dates started from free time[/b] now start the friendship and can become a double date, the same as dates started by the schedule.
+[*] [b]Schedule mismatch alert[/b] only names real couples (lovers or pairs already on the ladder), not colonists who might become friends.
+[*] [b]Dinner dates[/b] count toward the colonist's nutrition-eaten record.
+[*] [b]Saves[/b] now keep an open Date or Lovin window, so made-it and stood-up moods still land when you load in the middle of one.
+[/list]
 
 [i]Build stamp (Player.log): datenight2-net10[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/date-night.md[/i]

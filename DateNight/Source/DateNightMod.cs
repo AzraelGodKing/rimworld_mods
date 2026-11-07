@@ -157,6 +157,7 @@ namespace DateNight
             SafePatchAll.Apply(new Harmony(HarmonyId), "[DateNight]");
             _ = DateNightRjwSoftCompat.Active;
             _ = DateNightRotrSoftCompat.Active;
+            DateNightPatchCheck.Verify(HarmonyId);
         }
     }
 }
