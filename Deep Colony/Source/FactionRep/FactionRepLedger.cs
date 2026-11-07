@@ -2,29 +2,6 @@ using Verse;
 
 namespace DeepColony
 {
-    public enum FactionRepReason : byte
-    {
-        Other = 0,
-        Raid = 1,
-        SharedEnemyRaid = 2,
-        TradeCaravan = 3,
-        SuccessfulTrade = 4,
-        Gift = 5,
-        SharedKill = 6,
-        Grudge = 7,
-        LwVictory = 8,
-        LwBetrayal = 9,
-        LwRefugee = 10,
-        IdleAlly = 11,
-        IdleEnemy = 12,
-        Envoy = 13,
-        Debug = 14,
-        Tribute = 15,
-        EnvoyVisit = 16,
-        EnvoyPresent = 17,
-        FamilyDefect = 18
-    }
-
     public class FactionRepLedgerEntry : IExposable
     {
         public int factionId = -1;
@@ -46,14 +23,5 @@ namespace DeepColony
         {
             return ("DC_RepReason_" + reason).Translate();
         }
-    }
-
-    public enum FactionAttitude : byte
-    {
-        Neutral = 0,
-        Cordial = 1,
-        Indebted = 2,
-        Wary = 3,
-        Vengeful = 4
     }
 }

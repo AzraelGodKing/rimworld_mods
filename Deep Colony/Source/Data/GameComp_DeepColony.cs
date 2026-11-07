@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using DeepColony.Patches;
@@ -8,7 +9,7 @@ namespace DeepColony
 {
     public class GameComp_DeepColony : GameComponent
     {
-        public static GameComp_DeepColony Instance =>
+        public static GameComp_DeepColony? Instance =>
             Verse.Current.Game?.GetComponent<GameComp_DeepColony>();
 
         private HashSet<int> inheritanceProcessed = new HashSet<int>();
@@ -27,20 +28,19 @@ namespace DeepColony
 
         private List<int> recentColonistDeathTimestamps = new List<int>();
         private bool massacreTriggeredThisWindow;
-        public string founderSurname;
+        public string? founderSurname;
         public List<RemembranceEntry> remembranceEntries = new List<RemembranceEntry>();
         public int lastRemembranceDayOfYear = -1;
         public List<FamilyLetterEntry> familyLetters = new List<FamilyLetterEntry>();
         public int lastFamilyLetterTick = -1;
         public HashSet<int> funeralProcessedCorpses = new HashSet<int>();
         public bool firstHarvestLetterSent;
-        private string lastNewsVersion;
+        private string? lastNewsVersion;
         public int lastEnvoyVisitTick = -1;
 
         private const int DriftIntervalTicks = 2500;
         private const int MassacreWindowTicks = 60000;
         private const int MaxLedgerEntries = 240;
-        private const int AggregateWindowTicks = 60000; // merge same reason within a day
 
         // Save layout version (AZR-624). Saves from before 2.0.0 have no dcSchema and
         // load as 1; FinalizeInit upgrades them once. A new game starts current.
@@ -48,8 +48,8 @@ namespace DeepColony
         private int dcSchema = CurrentSchema;
 
         // Session state that used to be lost on save (AZR-629); see FinalizeInit.
-        private List<int> savedPendingLeaves;
-        private List<int> savedBirthLetters;
+        private List<int>? savedPendingLeaves;
+        private List<int>? savedBirthLetters;
 
         public GameComp_DeepColony(Game game)
         {
@@ -84,7 +84,7 @@ namespace DeepColony
             }
         }
 
-        public string GetFounderSurname()
+        public string? GetFounderSurname()
         {
             EnsureFounderSurname();
             return founderSurname;
@@ -157,9 +157,9 @@ namespace DeepColony
             for (int i = factionRepLedger.Count - 1; i >= 0; i--)
             {
                 FactionRepLedgerEntry e = factionRepLedger[i];
-                if (e.factionId != factionId || e.reason != reason) continue;
-                if (now - e.ticksGame > AggregateWindowTicks) continue;
-                if ((e.amount >= 0f) != (amount >= 0f)) continue;
+                if (!FactionRepMath.ShouldMerge(e.factionId, e.reason, e.amount, e.ticksGame,
+                        factionId, reason, amount, now))
+                    continue;
                 e.amount += amount;
                 e.count++;
                 e.ticksGame = now;
@@ -179,7 +179,7 @@ namespace DeepColony
                 factionRepLedger.RemoveAt(0);
         }
 
-        public void NotifyColonistDied(Pawn victim, DamageInfo? dinfo = null, Hediff culprit = null)
+        public void NotifyColonistDied(Pawn victim, DamageInfo? dinfo = null, Hediff? culprit = null)
         {
             if (!DeepColonySettings.Get.enableTrauma) return;
             if (victim == null || !victim.RaceProps.Humanlike) return;
@@ -232,31 +232,31 @@ namespace DeepColony
             // all land on the same tick (AZR-123).
             if (DeepColonySettings.Get.enableTrauma)
             {
-                if (TickPhase.Due(1837))
+                if (TickPhase.Due(TickPhaseOffsets.TraumaSystems))
                     TickTraumaSystems();
-                if (TickPhase.Due(2004))
+                if (TickPhase.Due(TickPhaseOffsets.ToxicBuildup))
                     TickToxicBuildupTrauma();
-                if (TickPhase.Due(2171))
+                if (TickPhase.Due(TickPhaseOffsets.DeathWindow))
                     PruneDeathWindow(Find.TickManager.TicksGame);
             }
 
             if (DeepColonySettings.Get.enableFactionRep)
             {
-                if (TickPhase.Due(2338))
+                if (TickPhase.Due(TickPhaseOffsets.FactionDrift))
                     ProcessFactionDrift();
                 FactionEnvoyUtility.GameTick();
                 EnvoyVisitUtility.GameTick();
             }
 
             RivalryUtility.GameTick();
-            if (TickPhase.Due(83))
+            if (TickPhase.Due(TickPhaseOffsets.Elders))
                 TickElders();
-            if (DeepColonySettings.Get.enableHeirlooms && TickPhase.Due(250))
+            if (DeepColonySettings.Get.enableHeirlooms && TickPhase.Due(TickPhaseOffsets.Heirlooms))
                 TickHeirlooms();
             FamilyJoinUtility.GameTick();
             ExLoverReconcileUtility.GameTick();
             TouchAverseUtility.GameTick();
-            if (TickPhase.Due(2689))
+            if (TickPhase.Due(TickPhaseOffsets.PruneIds))
                 PruneIdKeyedCollections();
             FamilyLifeUtility.GameTick();
             FamilyEchoUtility.GameTick();
@@ -279,17 +279,17 @@ namespace DeepColony
             if (!echoPerkDefName.NullOrEmpty())
                 heirloomEchoPerks[thingId] = echoPerkDefName;
             if (!ownerName.NullOrEmpty() && !heirloomLineage.ContainsKey(thingId))
-                heirloomLineage[thingId] = ownerName;
+                heirloomLineage[thingId] = ownerName!;
         }
 
         public bool IsHeirloom(int thingId) =>
             heirloomOwners != null && heirloomOwners.ContainsKey(thingId);
 
-        public string GetHeirloomLineage(int thingId)
+        public string? GetHeirloomLineage(int thingId)
         {
-            if (heirloomLineage != null && heirloomLineage.TryGetValue(thingId, out string line))
+            if (heirloomLineage != null && heirloomLineage.TryGetValue(thingId, out string? line))
                 return line;
-            if (heirloomOwners != null && heirloomOwners.TryGetValue(thingId, out string owner))
+            if (heirloomOwners != null && heirloomOwners.TryGetValue(thingId, out string? owner))
                 return owner;
             return null;
         }
@@ -303,12 +303,12 @@ namespace DeepColony
             if (heirloomLastCarrier.TryGetValue(thingId, out int lastId) && lastId == carrier.thingIDNumber)
                 return;
             heirloomLastCarrier[thingId] = carrier.thingIDNumber;
-            if (heirloomLineage.TryGetValue(thingId, out string line) && !line.NullOrEmpty())
+            if (heirloomLineage.TryGetValue(thingId, out string? line) && !line.NullOrEmpty())
             {
                 if (!line.EndsWith(name))
                     heirloomLineage[thingId] = line + " → " + name;
             }
-            else if (heirloomOwners != null && heirloomOwners.TryGetValue(thingId, out string owner)
+            else if (heirloomOwners != null && heirloomOwners.TryGetValue(thingId, out string? owner)
                 && !owner.NullOrEmpty() && owner != name)
             {
                 heirloomLineage[thingId] = owner + " → " + name;
@@ -319,7 +319,7 @@ namespace DeepColony
             }
         }
 
-        public string FormatHeirloomChronicle()
+        public string? FormatHeirloomChronicle()
         {
             if (heirloomLineage == null || heirloomLineage.Count == 0) return null;
             var sb = new System.Text.StringBuilder();
@@ -335,7 +335,7 @@ namespace DeepColony
             unclaimedBeds[bedId] = ownerName;
         }
 
-        public bool TryClaimUnclaimedBed(int bedId, out string formerOwner)
+        public bool TryClaimUnclaimedBed(int bedId, out string? formerOwner)
         {
             formerOwner = null;
             if (unclaimedBeds == null) return false;
@@ -362,7 +362,7 @@ namespace DeepColony
 
             for (int m = 0; m < Find.Maps.Count; m++)
             {
-                List<Pawn> colonists;
+                List<Pawn>? colonists;
                 try
                 {
                     colonists = Find.Maps[m]?.mapPawns?.FreeColonistsSpawned;
@@ -398,7 +398,7 @@ namespace DeepColony
         {
             foreach (Map map in Find.Maps)
             {
-                List<Pawn> colonists = map.mapPawns?.FreeColonistsSpawned;
+                List<Pawn>? colonists = map.mapPawns?.FreeColonistsSpawned;
                 if (colonists == null) continue;
                 for (int i = 0; i < colonists.Count; i++)
                     TraumaEventUtility.TryToxicBuildupTrauma(colonists[i]);
@@ -420,7 +420,7 @@ namespace DeepColony
             foreach (int id in keys)
             {
                 float amount = factionDriftBuffer[id];
-                Faction faction = Find.FactionManager.AllFactionsListForReading
+                Faction? faction = Find.FactionManager.AllFactionsListForReading
                     .Find(f => f.loadID == id);
                 if (faction == null)
                 {
@@ -563,7 +563,9 @@ namespace DeepColony
                 PruneIdKeyedCollections();
             }
             EnsureFounderSurname();
-            UpdateNewsLetter.TrySend(ref lastNewsVersion);
+            string newsVersion = lastNewsVersion ?? "";
+            UpdateNewsLetter.TrySend(ref newsVersion);
+            lastNewsVersion = newsVersion;
         }
 
         /// <summary>
@@ -598,7 +600,7 @@ namespace DeepColony
         public void PruneIdKeyedCollections()
         {
             if (Find.Maps == null) return;
-            HashSet<int> live = null;
+            HashSet<int>? live = null;
             foreach (Comp_DeepColony comp in AllComps(includeWorld: false))
             {
                 if (comp.IdKeyedEntryCount == 0) continue;
@@ -621,14 +623,14 @@ namespace DeepColony
                 if (map?.mapPawns?.AllPawnsSpawned == null) continue;
                 foreach (Pawn pawn in map.mapPawns.AllPawnsSpawned)
                 {
-                    Comp_DeepColony comp = pawn?.TryGetComp<Comp_DeepColony>();
+                    Comp_DeepColony? comp = pawn?.TryGetComp<Comp_DeepColony>();
                     if (comp != null) yield return comp;
                 }
             }
             if (!includeWorld || Find.WorldPawns == null) yield break;
             foreach (Pawn pawn in Find.WorldPawns.AllPawnsAliveOrDead)
             {
-                Comp_DeepColony comp = pawn?.TryGetComp<Comp_DeepColony>();
+                Comp_DeepColony? comp = pawn?.TryGetComp<Comp_DeepColony>();
                 if (comp != null) yield return comp;
             }
         }
@@ -636,7 +638,7 @@ namespace DeepColony
         private static void PruneDestroyedPawnKeys<T>(Dictionary<int, T> dict, HashSet<int> live)
         {
             if (dict == null || dict.Count == 0) return;
-            List<int> remove = null;
+            List<int>? remove = null;
             foreach (int id in dict.Keys)
             {
                 if (!live.Contains(id))

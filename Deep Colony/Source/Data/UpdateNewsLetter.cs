@@ -1,3 +1,4 @@
+#nullable enable
 namespace DeepColony
 {
     internal static class UpdateNewsLetter

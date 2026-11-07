@@ -5,15 +5,6 @@ using Verse;
 
 namespace DeepColony
 {
-    public enum TouchComfortTier : byte
-    {
-        Distant = 0,
-        Familiar = 1,
-        AtEase = 2,
-        FineWithTouch = 3,
-        Intimate = 4
-    }
-
     /// <summary>
     /// F01 / F02 — touch-need traits share a per-person comfort meter with named
     /// tiers. Touch-averse degrees gate romance on a required tier. Touch-starved
@@ -27,11 +18,10 @@ namespace DeepColony
         public const string CuddlyDefName = "DC_Cuddly";
         public const string TraitDefName = AverseDefName;
 
-        public const float ComfortMax = 1f;
+        public const float ComfortMax = TouchComfortMath.ComfortMax;
         public const int TouchChebyshev = 1;
         public const int StarvedLonelyTicks = 60000;
         private const int CheckInterval = 2500;
-        private const float OpinionGainFloor = 0f;
 
         public static TraitDef Trait => AverseTrait;
         public static TraitDef AverseTrait =>
@@ -99,29 +89,11 @@ namespace DeepColony
             return dx > dz ? dx : dz;
         }
 
-        public static float TierMin(TouchComfortTier tier)
-        {
-            float t = RomanceThreshold;
-            if (t < 0.20f) t = 0.20f;
-            if (t > 0.90f) t = 0.90f;
-            switch (tier)
-            {
-                case TouchComfortTier.Distant: return 0f;
-                case TouchComfortTier.Familiar: return t * 0.38f;
-                case TouchComfortTier.AtEase: return t * 0.69f;
-                case TouchComfortTier.FineWithTouch: return t;
-                default: return t + (1f - t) * 0.57f;
-            }
-        }
+        public static float TierMin(TouchComfortTier tier) =>
+            TouchComfortMath.TierMin(tier, RomanceThreshold);
 
-        public static TouchComfortTier TierOf(float comfort)
-        {
-            if (comfort >= TierMin(TouchComfortTier.Intimate)) return TouchComfortTier.Intimate;
-            if (comfort >= TierMin(TouchComfortTier.FineWithTouch)) return TouchComfortTier.FineWithTouch;
-            if (comfort >= TierMin(TouchComfortTier.AtEase)) return TouchComfortTier.AtEase;
-            if (comfort >= TierMin(TouchComfortTier.Familiar)) return TouchComfortTier.Familiar;
-            return TouchComfortTier.Distant;
-        }
+        public static TouchComfortTier TierOf(float comfort) =>
+            TouchComfortMath.TierOf(comfort, RomanceThreshold);
 
         public static TouchComfortTier RequiredRomanceTier(Pawn pawn)
         {
@@ -240,7 +212,7 @@ namespace DeepColony
         {
             if (!Enabled) return;
             if (Find.TickManager == null) return;
-            if (!TickPhase.Due(668)) return;
+            if (!TickPhase.Due(TickPhaseOffsets.TouchComfort)) return;
 
             foreach (Map map in Find.Maps)
             {
@@ -344,47 +316,9 @@ namespace DeepColony
             TryRemove(pawn, CuddlyTrait);
         }
 
-        internal static float SameRoomGainPerInterval()
-        {
-            float days = DeepColonySettings.Get.touchComfortDays;
-            if (days < 0.5f) days = 0.5f;
-            float intervals = days * (60000f / CheckInterval);
-            float threshold = RomanceThreshold;
-            if (threshold < 0.05f) threshold = 0.05f;
-            return threshold / intervals;
-        }
-
-        internal static float NextComfort(
-            float current,
-            bool adjacent,
-            bool sameRoom,
-            float opinion,
-            float speedMul)
-        {
-            if (speedMul < 0.1f) speedMul = 0.1f;
-            float next = current;
-            if (adjacent || sameRoom)
-            {
-                if (opinion >= OpinionGainFloor)
-                {
-                    float opinionMul = OpinionMultiplier(opinion);
-                    float baseGain = SameRoomGainPerInterval();
-                    if (adjacent) baseGain *= 2.5f;
-                    next += baseGain * opinionMul * speedMul;
-                }
-                else if (adjacent)
-                {
-                    next -= SameRoomGainPerInterval() * 0.35f * speedMul;
-                }
-            }
-            else
-            {
-                next -= SameRoomGainPerInterval() * 0.05f;
-            }
-            if (next < 0f) return 0f;
-            if (next > ComfortMax) return ComfortMax;
-            return next;
-        }
+        private static float SameRoomGainPerInterval() =>
+            TouchComfortMath.GainPerInterval(
+                DeepColonySettings.Get.touchComfortDays, RomanceThreshold, CheckInterval);
 
         internal static float TraitSpeed(Pawn pawn)
         {
@@ -422,7 +356,8 @@ namespace DeepColony
                     ? pawn.relations.OpinionOf(other)
                     : 0f;
                 float speed = BondSpeed(pawn, other) * TraitSpeed(pawn);
-                float next = NextComfort(before, adjacent, sameRoom, opinion, speed);
+                float next = TouchComfortMath.NextComfort(
+                    before, adjacent, sameRoom, opinion, speed, SameRoomGainPerInterval());
                 SetComfort(pawn, other, next);
                 MaybeAnnounceTier(pawn, other, before, next);
                 if (adjacent && IsTrustedForContact(pawn, other))
@@ -537,14 +472,6 @@ namespace DeepColony
                     && oc.mentor == self)))
                 mul *= 1.35f;
             return mul;
-        }
-
-        private static float OpinionMultiplier(float opinion)
-        {
-            float m = 0.7f + opinion * 0.009f;
-            if (m < 0.4f) return 0.4f;
-            if (m > 1.6f) return 1.6f;
-            return m;
         }
 
         private static bool IsHumanlikeAlive(Pawn pawn)

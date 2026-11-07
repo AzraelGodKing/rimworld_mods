@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,7 +18,7 @@ namespace DeepColony.Patches
     [HarmonyPatch(typeof(WorldPawns), nameof(WorldPawns.RemovePreservedPawnHediff))]
     public static class Patch_WorldPawns_RemovePreservedPawnHediff
     {
-        public static Exception Finalizer(Exception __exception)
+        public static Exception? Finalizer(Exception __exception)
         {
             return BirthSafetyNet.Enabled && __exception is KeyNotFoundException or ArgumentNullException or NullReferenceException
                 ? null
@@ -28,7 +29,7 @@ namespace DeepColony.Patches
     [HarmonyPatch(typeof(HediffWithParents), nameof(HediffWithParents.PreRemoved))]
     public static class Patch_HediffWithParents_PreRemoved
     {
-        public static Exception Finalizer(Exception __exception, HediffWithParents __instance)
+        public static Exception? Finalizer(Exception __exception, HediffWithParents __instance)
         {
             if (__exception == null || !BirthSafetyNet.Enabled)
             {
@@ -46,14 +47,14 @@ namespace DeepColony.Patches
     [HarmonyPatch(typeof(Hediff_Labor), nameof(Hediff_Labor.PreRemoved))]
     public static class Patch_Hediff_Labor_PreRemoved
     {
-        public static Exception Finalizer(Exception __exception, Hediff_Labor __instance)
+        public static Exception? Finalizer(Exception __exception, Hediff_Labor __instance)
         {
             if (__exception == null || !BirthSafetyNet.Enabled)
             {
                 return __exception;
             }
 
-            Pawn pawn = __instance?.pawn;
+            Pawn? pawn = __instance?.pawn;
             Log.Warning("[DeepColony] Hediff_Labor.PreRemoved failed on "
                 + (pawn?.LabelShort ?? "unknown")
                 + " (" + __exception.GetType().Name + "): " + __exception.Message);
@@ -65,14 +66,14 @@ namespace DeepColony.Patches
     [HarmonyPatch(typeof(Hediff_LaborPushing), nameof(Hediff_LaborPushing.PreRemoved))]
     public static class Patch_Hediff_LaborPushing_PreRemoved
     {
-        public static Exception Finalizer(Exception __exception, Hediff_LaborPushing __instance)
+        public static Exception? Finalizer(Exception __exception, Hediff_LaborPushing __instance)
         {
             if (__exception == null || !BirthSafetyNet.Enabled)
             {
                 return __exception;
             }
 
-            Pawn pawn = __instance?.pawn;
+            Pawn? pawn = __instance?.pawn;
             Log.Warning("[DeepColony] Hediff_LaborPushing.PreRemoved failed on "
                 + (pawn?.LabelShort ?? "unknown")
                 + " (" + __exception.GetType().Name + "): " + __exception.Message);
@@ -84,7 +85,7 @@ namespace DeepColony.Patches
     [HarmonyPatch(typeof(Pawn_HealthTracker), nameof(Pawn_HealthTracker.RemoveHediff))]
     public static class Patch_HealthTracker_RemoveHediff
     {
-        public static Exception Finalizer(
+        public static Exception? Finalizer(
             Exception __exception,
             Pawn_HealthTracker __instance,
             Hediff hediff)
@@ -119,7 +120,7 @@ namespace DeepColony.Patches
     [HarmonyPriority(Priority.Last)]
     public static class Patch_PawnGenerator_BirthFailOpen
     {
-        public static Exception Finalizer(Exception __exception, PawnGenerationRequest request, ref Pawn __result)
+        public static Exception? Finalizer(Exception __exception, PawnGenerationRequest request, ref Pawn? __result)
         {
             if (__exception == null || !BirthSafetyNet.Enabled)
             {
@@ -150,9 +151,9 @@ namespace DeepColony.Patches
 
         private struct PregnancySnapshot
         {
-            public Pawn geneticMother;
-            public Pawn father;
-            public GeneSet geneSet;
+            public Pawn? geneticMother;
+            public Pawn? father;
+            public GeneSet? geneSet;
         }
 
         internal static void ResetSession()
@@ -162,15 +163,15 @@ namespace DeepColony.Patches
         }
 
         // Saved by GameComp_DeepColony so a reload doesn't repeat the recovery letter.
-        internal static List<int> ExportLettered() => lettered.Count == 0 ? null : new List<int>(lettered);
+        internal static List<int>? ExportLettered() => lettered.Count == 0 ? null : new List<int>(lettered);
 
-        internal static void ImportLettered(List<int> ids)
+        internal static void ImportLettered(List<int>? ids)
         {
             if (ids == null) return;
             for (int i = 0; i < ids.Count; i++) lettered.Add(ids[i]);
         }
 
-        internal static void NoteFailedBirth(Pawn carrier, Hediff source = null, Pawn father = null)
+        internal static void NoteFailedBirth(Pawn? carrier, Hediff? source = null, Pawn? father = null)
         {
             if (carrier == null || carrier.Destroyed)
             {
@@ -203,7 +204,7 @@ namespace DeepColony.Patches
                 return true;
             }
 
-            string name = hediff.def?.defName;
+            string? name = hediff.def?.defName;
             return name == "PregnancyLabor" || name == "PregnancyLaborPushing";
         }
 
@@ -228,7 +229,7 @@ namespace DeepColony.Patches
                 DrainPending();
             }
 
-            if (!DeepColony.TickPhase.Due(947))
+            if (!TickPhase.Due(TickPhaseOffsets.LaborWedge))
             {
                 return;
             }
@@ -250,7 +251,7 @@ namespace DeepColony.Patches
 
         private static bool HasLaborHediff(Pawn pawn)
         {
-            List<Hediff> hediffs = pawn?.health?.hediffSet?.hediffs;
+            List<Hediff>? hediffs = pawn?.health?.hediffSet?.hediffs;
             if (hediffs == null) return false;
             for (int i = 0; i < hediffs.Count; i++)
             {
@@ -273,7 +274,7 @@ namespace DeepColony.Patches
             pending.Clear();
             for (int i = 0; i < ids.Length; i++)
             {
-                Pawn pawn = FindPawn(ids[i]);
+                Pawn? pawn = FindPawn(ids[i]);
                 if (TryRepairPawn(pawn, snaps[i], hasSnapshot: true) && pawn != null)
                 {
                     recoveredBuffer.Add(pawn);
@@ -283,7 +284,7 @@ namespace DeepColony.Patches
             SendLetter(recoveredBuffer);
         }
 
-        private static PregnancySnapshot SnapshotFrom(Pawn carrier, Hediff source, Pawn father)
+        private static PregnancySnapshot SnapshotFrom(Pawn carrier, Hediff? source, Pawn? father)
         {
             PregnancySnapshot snap = new PregnancySnapshot
             {
@@ -301,7 +302,7 @@ namespace DeepColony.Patches
             return snap;
         }
 
-        private static bool TryRepairPawn(Pawn pawn, PregnancySnapshot snapshot, bool hasSnapshot)
+        private static bool TryRepairPawn(Pawn? pawn, PregnancySnapshot snapshot, bool hasSnapshot)
         {
             if (pawn?.health?.hediffSet?.hediffs == null || pawn.Dead)
             {
@@ -309,7 +310,7 @@ namespace DeepColony.Patches
             }
 
             Hediff_Pregnant existing = pawn.health.hediffSet.GetFirstHediff<Hediff_Pregnant>();
-            HediffWithParents labor = FindLaborStage(pawn);
+            HediffWithParents? labor = FindLaborStage(pawn);
             bool laborBroken = LaborShouldRemoveBroke(labor);
 
             // Only restore when this session already failed a birth, or ShouldRemove
@@ -325,9 +326,9 @@ namespace DeepColony.Patches
             }
 
             Pawn geneticMother = snapshot.geneticMother ?? labor?.Mother ?? pawn;
-            Pawn father = snapshot.father ?? labor?.Father;
-            GeneSet genes = snapshot.geneSet ?? labor?.geneSet;
-            if (genes == null && (father != null || geneticMother != null))
+            Pawn? father = snapshot.father ?? labor?.Father;
+            GeneSet? genes = snapshot.geneSet ?? labor?.geneSet;
+            if (genes == null)
             {
                 try
                 {
@@ -356,8 +357,8 @@ namespace DeepColony.Patches
         private static bool ApplyHealthyPregnancy(
             Pawn pawn,
             Pawn geneticMother,
-            Pawn father,
-            GeneSet genes)
+            Pawn? father,
+            GeneSet? genes)
         {
             HediffDef def = HediffDefOf.Pregnant;
             if (def == null)
@@ -391,10 +392,10 @@ namespace DeepColony.Patches
             }
         }
 
-        private static HediffWithParents FindLaborStage(Pawn pawn)
+        private static HediffWithParents? FindLaborStage(Pawn pawn)
         {
             List<Hediff> hediffs = pawn.health.hediffSet.hediffs;
-            HediffWithParents labor = null;
+            HediffWithParents? labor = null;
             for (int i = 0; i < hediffs.Count; i++)
             {
                 Hediff hediff = hediffs[i];
@@ -484,7 +485,7 @@ namespace DeepColony.Patches
 
             try
             {
-                List<Hediff> list = tracker.hediffSet?.hediffs;
+                List<Hediff>? list = tracker.hediffSet?.hediffs;
                 if (list != null)
                 {
                     list.Remove(hediff);
@@ -500,7 +501,7 @@ namespace DeepColony.Patches
             }
         }
 
-        private static bool LaborShouldRemoveBroke(Hediff hediff)
+        private static bool LaborShouldRemoveBroke(Hediff? hediff)
         {
             if (hediff == null)
             {
@@ -529,7 +530,7 @@ namespace DeepColony.Patches
             }
 
             StringBuilder names = new StringBuilder();
-            Pawn look = null;
+            Pawn? look = null;
             int named = 0;
             for (int i = 0; i < recovered.Count; i++)
             {
@@ -568,7 +569,7 @@ namespace DeepColony.Patches
             }
         }
 
-        private static Pawn FindPawn(int thingId) => PawnIdIndex.Find(thingId);
+        private static Pawn? FindPawn(int thingId) => PawnIdIndex.Find(thingId);
 
         private static IEnumerable<Pawn> EnumeratePawns(bool includeWorld)
         {
@@ -576,7 +577,7 @@ namespace DeepColony.Patches
             {
                 for (int m = 0; m < Find.Maps.Count; m++)
                 {
-                    IReadOnlyList<Pawn> spawned = null;
+                    IReadOnlyList<Pawn>? spawned = null;
                     try
                     {
                         spawned = Find.Maps[m]?.mapPawns?.AllPawnsSpawned;
@@ -609,7 +610,7 @@ namespace DeepColony.Patches
                 yield break;
             }
 
-            IEnumerable<Pawn> world = null;
+            IEnumerable<Pawn>? world = null;
             try
             {
                 world = Find.WorldPawns?.AllPawnsAlive;

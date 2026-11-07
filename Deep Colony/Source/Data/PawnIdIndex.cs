@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -18,15 +19,15 @@ namespace DeepColony
         private static readonly Dictionary<int, Pawn> byId = new Dictionary<int, Pawn>();
         private static int builtTick = int.MinValue;
         private static int missRebuildTick = int.MinValue;
-        private static Game builtFor;
+        private static Game? builtFor;
 
-        internal static Pawn Find(int id)
+        internal static Pawn? Find(int id)
         {
             if (id <= 0 || Current.Game == null) return null;
             int now = Verse.Find.TickManager?.TicksGame ?? 0;
             if (builtTick != now || builtFor != Current.Game)
                 Build(now);
-            if (byId.TryGetValue(id, out Pawn pawn)) return pawn;
+            if (byId.TryGetValue(id, out Pawn? pawn)) return pawn;
             if (missRebuildTick == now) return null;
             missRebuildTick = now;
             Build(now);
@@ -49,7 +50,7 @@ namespace DeepColony
             {
                 for (int i = 0; i < maps.Count; i++)
                 {
-                    IReadOnlyList<Pawn> pawns = maps[i]?.mapPawns?.AllPawns;
+                    IReadOnlyList<Pawn>? pawns = maps[i]?.mapPawns?.AllPawns;
                     if (pawns == null) continue;
                     for (int j = 0; j < pawns.Count; j++)
                         Add(pawns[j]);

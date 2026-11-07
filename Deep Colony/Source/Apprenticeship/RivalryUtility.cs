@@ -12,7 +12,7 @@ namespace DeepColony
         // checks the pairs whose first colonist sits at an index ≡ k (mod 10). Every
         // pair is still checked once an hour (AZR-665).
         private const int SliceTicks = 250;
-        private const int Slices = TickPhase.Interval / SliceTicks;
+        private const int Slices = TickPhaseOffsets.Interval / SliceTicks;
         private static readonly List<Pawn> Scratch = new List<Pawn>();
 
         public static void GameTick()

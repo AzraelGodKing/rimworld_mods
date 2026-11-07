@@ -18,15 +18,7 @@ namespace DeepColony
                 + (gc?.SumLedger(faction, FactionRepReason.SuccessfulTrade) ?? 0f)
                 + (gc?.SumLedger(faction, FactionRepReason.TradeCaravan) ?? 0f);
 
-            if (goodwill <= -75 || raidSum <= -6f)
-                return FactionAttitude.Vengeful;
-            if (goodwill <= -40 || raidSum <= -2f)
-                return FactionAttitude.Wary;
-            if (giftTrade >= 8f && goodwill >= 20)
-                return FactionAttitude.Indebted;
-            if (goodwill >= 40)
-                return FactionAttitude.Cordial;
-            return FactionAttitude.Neutral;
+            return FactionRepMath.Classify(goodwill, raidSum, giftTrade);
         }
 
         public static string AttitudeLabel(FactionAttitude attitude)

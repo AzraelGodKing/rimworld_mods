@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <DeepColony_DeepRoots.label>Глубокие корни</DeepColony_DeepRoots.label>
+  <DeepColony_DeepRoots.description>Трое основателей закладывают колонию, которая должна их пережить: перки, травмы, наставничество, фамилии и репутация, которую помнят фракции.\n\nЕсли загружен Homesteader, рассказчик закреплён за Azrael.</DeepColony_DeepRoots.description>
+  <DeepColony_DeepRoots.scenario.summary>Трое основателей для колонии поколений. Azrael, если загружен Homesteader.</DeepColony_DeepRoots.scenario.summary>
+  <DeepColony_DeepRoots.scenario.parts.GameStartDialog.text>Эти трое не расходный материал.\n\nОни получат шрамы. Они будут учить. Они оставят фамилии и истории. Фракции запомнят, как вы обращаетесь с ними — и со всеми остальными.\n\nПустите корни глубже. Вырастите колонию со своей историей.</DeepColony_DeepRoots.scenario.parts.GameStartDialog.text>
+
+</LanguageData>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <DeepColony_DeepRoots.label>深根</DeepColony_DeepRoots.label>
+  <DeepColony_DeepRoots.description>三位创始人建立一个要比他们活得更久的殖民地——专长、创伤、师徒、姓氏，以及派系会记住的声望。\n\n同时加载 Homesteader 时锁定为 Azrael。</DeepColony_DeepRoots.description>
+  <DeepColony_DeepRoots.scenario.summary>三位创始人，一个世代传承的殖民地。加载 Homesteader 时使用 Azrael。</DeepColony_DeepRoots.scenario.summary>
+  <DeepColony_DeepRoots.scenario.parts.GameStartDialog.text>这三个人不是可以随手丢弃的数值。\n\n他们会留下伤疤。他们会传授技艺。他们会留下姓氏和故事。派系会记住你如何对待他们——以及你如何对待其他所有人。\n\n把根扎深。让殖民地拥有自己的历史。</DeepColony_DeepRoots.scenario.parts.GameStartDialog.text>
+
+</LanguageData>

@@ -501,7 +501,7 @@
       "badges": ["RimWorld 1.6 / 1.7", "Requires Harmony", "Five systems"],
       "overview": [
         "Your colonists are more than their stats. Five interlocking systems give each colonist a real identity — and make the colony feel like it has a living history. Not more furniture. Not another raid timer.",
-        "Four surfaces: Perks, Legacy, Reputation, and a Family inspect tab (Rows or Pedigree). Soft and Default keep power systems and attitude consequences off; Hard enables skill-20 capstones, branching perks, chronic trauma, and attitude-driven trade / caravan / raid pressure."
+        "One Deep Colony tab with Perks, Legacy, Reputation and Body & Codex pages, plus a Family inspect tab (Rows or Pedigree). Soft and Default keep power systems and attitude consequences off; Hard enables skill-20 capstones, branching perks, chronic trauma, and attitude-driven trade / caravan / raid pressure."
       ],
       "featureTabs": [
         {
@@ -528,7 +528,7 @@
           "id": "trauma",
           "label": "Trauma & therapy",
           "features": [
-            { "title": "Trauma types", "body": "Combat shock, violent loss, captivity, massacre survivor, bereavement, fire, toxins, insects, and betrayal. Anomaly horror and Odyssey isolation when those DLCs are loaded. Trauma fades over weeks." },
+            { "title": "Trauma types", "body": "Combat shock, violent loss, captivity, massacre survivor, bereavement, fire, toxins, insects, and betrayal. Anomaly horror and Odyssey isolation when those DLCs are loaded, and a hunted trauma naming the Nemesis when that mod is loaded. Trauma fades over weeks." },
             { "title": "Known triggers", "body": "After the first flashback, inspect names what sets the colonist off — hidden until that first reaction, same discovery habit as Homesteader allergies." },
             { "title": "Counsel", "body": "Doctors run one-on-one or group counseling (or right-click Counsel). Quality scales with Social, opinion, and the room. Casual therapy chats still help. Quiet indoor rooms bonus; Quiet Hours noise from benches and generators makes sleep and counsel worse." },
             { "title": "Scars & resilience", "body": "Recovery leaves a lingering scar — or resilience. Three counsel sessions forge a confidant bond. On Hard, untreated trauma can settle into chronic stress." },
@@ -581,9 +581,10 @@
           { "name": "Biotech", "note": "A blackboard in the room boosts mentoring XP" },
           { "name": "Homesteader", "note": "Grand Chef extra mood on pantry foods; polyarmory cannot force a bed share a touch-averse pawn still refuses" },
           { "name": "Date Night", "note": "Date Night owns romance jobs; lovers reach confidant in two counsel sessions" },
-          { "name": "Strata", "note": "Empty-nest and homecoming ignore stair hops; cave-in / gas downs use existing trauma" },
+          { "name": "Strata", "note": "Empty-nest and homecoming ignore stair hops; cave-ins, deep gas poisoning and gas firestorms use existing trauma" },
           { "name": "Stormproof", "note": "Ion-storm downs apply existing trauma with a keyed reason" },
-          { "name": "Nemesis", "note": "Hunt epitaph can copy onto Legacy letters" },
+          { "name": "Nemesis", "note": "Hunt epitaph can copy onto Legacy letters; when the nemesis kills a colonist, those close to them carry a hunted trauma that names it" },
+          { "name": "Multiplayer", "note": "Soft support: Deep Colony actions are synced; every player needs the host's Deep Colony settings" },
           { "name": "Living World", "note": "Fail-open goodwill consumer for decisive victories / betrayals / refugee flights" },
           { "name": "Royalty", "note": "Titles sort envoy candidates first; titled envoys add a little extra goodwill" },
           { "name": "Ideology", "note": "Counseling sacred vs stoic precepts; funerals ease violent-loss trauma" },

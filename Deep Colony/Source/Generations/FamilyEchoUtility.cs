@@ -62,7 +62,7 @@ namespace DeepColony
         {
             ConfirmPendingLeaves();
             if (!Enabled) return;
-            if (!TickPhase.Due(835)) return;
+            if (!TickPhase.Due(TickPhaseOffsets.FamilyEcho)) return;
             foreach (Map map in Find.Maps)
             {
                 if (map?.IsPlayerHome != true) continue;
