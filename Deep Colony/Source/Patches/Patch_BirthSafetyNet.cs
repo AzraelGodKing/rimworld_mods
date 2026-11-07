@@ -21,6 +21,9 @@ namespace DeepColony.Patches
             new Dictionary<PawnKindDef, PawnKindDef>();
         private static readonly HashSet<string> warned = new HashSet<string>();
 
+        // Also gates the failed-birth finalizers in Patch_LaborWedge and ApplyBirthOutcome.
+        internal static bool Enabled => DeepColonySettings.Get.enableBirthSafetyNet;
+
         internal static void ResetCache()
         {
             clones.Clear();
@@ -98,7 +101,7 @@ namespace DeepColony.Patches
         {
             try
             {
-                if (!DeepColonySettings.Get.enableBirthSafetyNet)
+                if (!Enabled)
                 {
                     return;
                 }

@@ -122,7 +122,17 @@ namespace DeepColony
         public static void Export()
         {
             string text = BuildText();
-            GUIUtility.systemCopyBuffer = text;
+            // The 1.7 clipboard goes through UnityStubs; the file below is the fallback.
+            bool copied = true;
+            try
+            {
+                GUIUtility.systemCopyBuffer = text;
+            }
+            catch (System.Exception e)
+            {
+                copied = false;
+                Log.Warning("[DeepColony] Chronicle clipboard copy failed: " + e.Message);
+            }
 
             string colony = Find.World?.info?.name ?? "colony";
             string safe = colony;
@@ -143,6 +153,11 @@ namespace DeepColony
 
             if (path.NullOrEmpty())
             {
+                if (!copied)
+                {
+                    Messages.Message("DC_ChronicleFailed".Translate(), MessageTypeDefOf.RejectInput, false);
+                    return;
+                }
                 Messages.Message("DC_ChronicleCopied".Translate(),
                     MessageTypeDefOf.PositiveEvent, false);
             }

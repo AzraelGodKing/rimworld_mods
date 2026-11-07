@@ -299,9 +299,9 @@ namespace DeepColony.Patches
         // restore a healthy pregnancy instead of ending labor with no baby.
         public static Exception Finalizer(Exception __exception, Pawn geneticMother, Pawn father)
         {
-            if (__exception == null)
+            if (__exception == null || !BirthSafetyNet.Enabled)
             {
-                return null;
+                return __exception;
             }
 
             string who = geneticMother?.LabelShort ?? "unknown";

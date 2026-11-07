@@ -1,3 +1,23 @@
+2.0.0
+[h1]Deep Colony — 2.0.0[/h1]
+Deep Colony 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting every update, and the same save carries over to 1.7.
+
+[b]Changed[/b]
+[list]
+[*] [b]RimWorld 1.7[/b] — the 1.7 folder now has its own .NET 10 build made against the 1.7 game files. 1.6 keeps its own build from the same source.
+[*] [b]Stormproof[/b] — ion-storm trauma asks Stormproof 2 directly instead of guessing from weather names.
+[/list]
+[b]Fixed[/b]
+[list]
+[*] [b]Odyssey crash trauma[/b] now fires on gravship crashes, and no longer on unrelated "crash" incidents.
+[*] [b]Save size[/b] — touch comfort is only tracked for your own colonists, prisoners and guests, and old entries are cleaned up daily.
+[*] [b]Chronicle export[/b] — if the clipboard copy fails, the text file is still saved, and you are told if both fail.
+[*] [b]Birth safety net[/b] — turning it off now turns off all of it, including the failed-birth recovery.
+[/list]
+
+[i]Build stamp (Player.log): deepcolony2-net10[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/deep-colony.md[/i]
+
 1.10.0
 [h1]Deep Colony — 1.10.0[/h1]
 

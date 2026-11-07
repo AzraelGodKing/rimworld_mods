@@ -19,7 +19,7 @@ namespace DeepColony.Patches
     {
         public static Exception Finalizer(Exception __exception)
         {
-            return __exception is KeyNotFoundException or ArgumentNullException
+            return BirthSafetyNet.Enabled && __exception is KeyNotFoundException or ArgumentNullException or NullReferenceException
                 ? null
                 : __exception;
         }
@@ -30,9 +30,9 @@ namespace DeepColony.Patches
     {
         public static Exception Finalizer(Exception __exception, HediffWithParents __instance)
         {
-            if (__exception == null)
+            if (__exception == null || !BirthSafetyNet.Enabled)
             {
-                return null;
+                return __exception;
             }
 
             Log.Warning("[DeepColony] HediffWithParents.PreRemoved failed on "
@@ -48,9 +48,9 @@ namespace DeepColony.Patches
     {
         public static Exception Finalizer(Exception __exception, Hediff_Labor __instance)
         {
-            if (__exception == null)
+            if (__exception == null || !BirthSafetyNet.Enabled)
             {
-                return null;
+                return __exception;
             }
 
             Pawn pawn = __instance?.pawn;
@@ -67,9 +67,9 @@ namespace DeepColony.Patches
     {
         public static Exception Finalizer(Exception __exception, Hediff_LaborPushing __instance)
         {
-            if (__exception == null)
+            if (__exception == null || !BirthSafetyNet.Enabled)
             {
-                return null;
+                return __exception;
             }
 
             Pawn pawn = __instance?.pawn;
@@ -89,9 +89,9 @@ namespace DeepColony.Patches
             Pawn_HealthTracker __instance,
             Hediff hediff)
         {
-            if (__exception == null)
+            if (__exception == null || !BirthSafetyNet.Enabled)
             {
-                return null;
+                return __exception;
             }
 
             if (LaborWedgeRecovery.IsPregnancyHediff(hediff))
@@ -121,9 +121,9 @@ namespace DeepColony.Patches
     {
         public static Exception Finalizer(Exception __exception, PawnGenerationRequest request, ref Pawn __result)
         {
-            if (__exception == null)
+            if (__exception == null || !BirthSafetyNet.Enabled)
             {
-                return null;
+                return __exception;
             }
 
             if (!BirthSafetyNet.IsNewbornOrBabyRequest(request))

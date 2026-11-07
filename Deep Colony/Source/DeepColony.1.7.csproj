@@ -5,7 +5,7 @@
     <Compile Include="..\..\Common\Sibling\StormproofClient.cs" Link="Common\StormproofClient.cs" />
   </ItemGroup>
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <RootNamespace>DeepColony</RootNamespace>
     <AssemblyName>DeepColony</AssemblyName>
@@ -19,8 +19,7 @@
     <DefineConstants>$(DefineConstants);RIMWORLD_1_7</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4871" />
-    <PackageReference Include="Lib.Harmony" Version="2.3.*" ExcludeAssets="runtime" />
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.7.4998-unstable" />
+    <PackageReference Include="Lib.Harmony" Version="3.0.0-rc.4" ExcludeAssets="runtime" />
   </ItemGroup>
 </Project>
