@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -15,9 +16,10 @@ namespace Nemesis
         public const string StormproofId = "AzraelGodKing.Stormproof";
         public const string StrataId = "AzraelGodKing.Strata";
         public const string HomesteaderId = "AzraelGodKing.Homesteader";
+        public const string DeepColonyId = "azraelgodking.DeepColony";
 
         /// <summary>Homesteader pantry / smokehouse / cellar storage buildings for food raids.</summary>
-        private static readonly string[] HomesteaderFoodStorageDefNames =
+        private static readonly HashSet<string> HomesteaderFoodStorageDefNames = new HashSet<string>
         {
             "Homesteader_Smokehouse",
             "Homesteader_RootCellar",
@@ -36,10 +38,35 @@ namespace Nemesis
         private static bool _strataActive;
         private static bool _homeChecked;
         private static bool _homeActive;
+        private static bool _deepChecked;
+        private static bool _cellarChecked;
+        private static ThingDef? _rootCellarDef;
 
-        private static MethodInfo _strataIsUnderground;
-        private static MethodInfo _strataIsUpper;
-        private static MethodInfo _homeGetFavorites;
+        // Surface home map, rechecked at most every SurfaceMapRecheckTicks.
+        private const int SurfaceMapRecheckTicks = 250;
+        private static Map? _surfaceMap;
+        private static int _surfaceMapTick = int.MinValue / 2;
+
+        // Bound once as typed delegates: no object[] or boxing per call (AZR-535).
+        private static Func<Map, bool>? _strataIsUnderground;
+        private static Func<Map, bool>? _strataIsUpper;
+        private static Func<Pawn, List<ThingDef>>? _homeGetFavorites;
+        private static Action<string, string, Pawn?, LetterDef?>? _deepRecordNote;
+
+        private static TDelegate? Bind<TDelegate>(string typeName, string method) where TDelegate : Delegate
+        {
+            try
+            {
+                Type? type = GenTypes.GetTypeInAnyAssembly(typeName);
+                MethodInfo? mi = type?.GetMethod(method, BindingFlags.Public | BindingFlags.Static);
+                return mi == null ? null : Delegate.CreateDelegate(typeof(TDelegate), mi, throwOnBindFailure: false) as TDelegate;
+            }
+            catch (Exception e)
+            {
+                Log.Warning("[Nemesis] Could not bind " + typeName + "." + method + ": " + e.Message);
+                return null;
+            }
+        }
 
         public static bool StormproofActive
         {
@@ -64,12 +91,9 @@ namespace Nemesis
                     _strataActive = ModLister.GetActiveModWithIdentifier(StrataId) != null;
                     if (_strataActive)
                     {
-                        Type util = GenTypes.GetTypeInAnyAssembly("Strata.StrataMapUtility", "Strata");
-                        if (util != null)
-                        {
-                            _strataIsUnderground = util.GetMethod("IsUnderground", BindingFlags.Public | BindingFlags.Static);
-                            _strataIsUpper = util.GetMethod("IsUpperLevel", BindingFlags.Public | BindingFlags.Static);
-                        }
+                        // Strata's public modder API, not its internal map utility.
+                        _strataIsUnderground = Bind<Func<Map, bool>>("Strata.StrataModderApi", "IsUnderground");
+                        _strataIsUpper = Bind<Func<Map, bool>>("Strata.StrataModderApi", "IsUpperLevel");
                     }
                 }
                 return _strataActive;
@@ -85,10 +109,7 @@ namespace Nemesis
                     _homeChecked = true;
                     _homeActive = ModLister.GetActiveModWithIdentifier(HomesteaderId) != null;
                     if (_homeActive)
-                    {
-                        Type util = GenTypes.GetTypeInAnyAssembly("Homesteader.FavoriteFoodUtility", "Homesteader");
-                        _homeGetFavorites = util?.GetMethod("GetFavorites", BindingFlags.Public | BindingFlags.Static);
-                    }
+                        _homeGetFavorites = Bind<Func<Pawn, List<ThingDef>>>("Homesteader.FavoriteFoodUtility", "GetFavorites");
                 }
                 return _homeActive;
             }
@@ -98,7 +119,7 @@ namespace Nemesis
         /// True if another antagonist mod already owns this pawn (hediff/comp name
         /// markers). Fail-open: unknown markers → false.
         /// </summary>
-        public static bool IsForeignAntagonistPawn(Pawn pawn)
+        public static bool IsForeignAntagonistPawn(Pawn? pawn)
         {
             if (pawn?.health?.hediffSet?.hediffs == null)
             {
@@ -110,8 +131,8 @@ namespace Nemesis
                 List<Hediff> hediffs = pawn.health.hediffSet.hediffs;
                 for (int i = 0; i < hediffs.Count; i++)
                 {
-                    string name = hediffs[i]?.def?.defName;
-                    if (string.IsNullOrEmpty(name))
+                    string? name = hediffs[i]?.def?.defName;
+                    if (name == null || name.Length == 0)
                     {
                         continue;
                     }
@@ -135,38 +156,34 @@ namespace Nemesis
 
         public static void ResetCaches()
         {
-            _stormChecked = _strataChecked = _homeChecked = false;
+            _stormChecked = _strataChecked = _homeChecked = _deepChecked = false;
             _stormActive = _strataActive = _homeActive = false;
             _strataIsUnderground = _strataIsUpper = null;
             _homeGetFavorites = null;
+            _deepRecordNote = null;
+            _cellarChecked = false;
+            _rootCellarDef = null;
+            _surfaceMap = null;
+            _surfaceMapTick = int.MinValue / 2;
         }
 
-        /// <summary>Fail-open copy of a hunt epitaph onto Deep Colony's Legacy letters.</summary>
+        /// <summary>
+        /// Fail-open copy of a hunt epitaph onto Deep Colony's Legacy letters, through its public
+        /// FamilyLetterUtility.RecordNote (no letter), so its own trim and save rules apply (AZR-556).
+        /// Azrael's series hub looks this method up by name: keep the name.
+        /// </summary>
         public static void OfferEpitaphToDeepColony(string title, string body)
         {
-            if (ModLister.GetActiveModWithIdentifier("azraelgodking.DeepColony", ignorePostfix: true) == null
-                && ModLister.GetActiveModWithIdentifier("AzraelGodKing.DeepColony", ignorePostfix: true) == null)
-                return;
+            if (!_deepChecked)
+            {
+                _deepChecked = true;
+                if (ModLister.GetActiveModWithIdentifier(DeepColonyId, ignorePostfix: true) != null)
+                    _deepRecordNote = Bind<Action<string, string, Pawn?, LetterDef?>>("DeepColony.FamilyLetterUtility", "RecordNote");
+            }
+            if (_deepRecordNote == null) return;
             try
             {
-                Type gcType = GenTypes.GetTypeInAnyAssembly("DeepColony.GameComp_DeepColony", "DeepColony");
-                Type entryType = GenTypes.GetTypeInAnyAssembly("DeepColony.FamilyLetterEntry", "DeepColony");
-                if (gcType == null || entryType == null)
-                    return;
-                object instance = gcType.GetProperty("Instance", BindingFlags.Public | BindingFlags.Static)
-                    ?.GetValue(null);
-                if (instance == null)
-                    return;
-                FieldInfo lettersField = gcType.GetField("familyLetters", BindingFlags.Public | BindingFlags.Instance);
-                if (lettersField?.GetValue(instance) is not System.Collections.IList letters)
-                    return;
-                object entry = Activator.CreateInstance(entryType);
-                entryType.GetField("title")?.SetValue(entry, title);
-                entryType.GetField("body")?.SetValue(entry, body);
-                entryType.GetField("ticksGame")?.SetValue(entry, Find.TickManager.TicksGame);
-                letters.Add(entry);
-                while (letters.Count > 8)
-                    letters.RemoveAt(0);
+                _deepRecordNote(title, body, null, null);
             }
             catch (Exception e)
             {
@@ -178,7 +195,7 @@ namespace Nemesis
         /// Remember a faction-appropriate animal kind for later escort spawn.
         /// The animal fights beside the captain; no Giddy-Up gate.
         /// </summary>
-        public static void TryAssignMountKind(Pawn rider, NemesisData data, int level)
+        public static void TryAssignMountKind(Pawn? rider, NemesisData? data, int level)
         {
             if (data == null || level < 2) return;
             if (!(NemesisMod.Settings?.enableSoftMounts ?? true)) return;
@@ -193,20 +210,20 @@ namespace Nemesis
             else
                 kindName = Rand.Bool ? "Horse" : "Thrumbo";
 
-            PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail(kindName)
+            PawnKindDef? kind = DefDatabase<PawnKindDef>.GetNamedSilentFail(kindName)
                                ?? DefDatabase<PawnKindDef>.GetNamedSilentFail("Muffalo")
                                ?? DefDatabase<PawnKindDef>.GetNamedSilentFail("Horse");
             if (kind == null || !kind.RaceProps.Animal) return;
             data.mountKindDefName = kind.defName;
         }
 
-        public static void TrySpawnMountBeside(Map map, Faction faction, NemesisData data, Pawn near)
+        public static void TrySpawnMountBeside(Map? map, Faction? faction, NemesisData? data, Pawn? near)
         {
             if (data == null || map == null || faction == null) return;
             if (!(NemesisMod.Settings?.enableSoftMounts ?? true)) return;
             if (string.IsNullOrEmpty(data.mountKindDefName)) return;
 
-            PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail(data.mountKindDefName);
+            PawnKindDef? kind = DefDatabase<PawnKindDef>.GetNamedSilentFail(data.mountKindDefName);
             if (kind == null) return;
 
             try
@@ -223,7 +240,7 @@ namespace Nemesis
                 if (!cell.IsValid) return;
                 GenSpawn.Spawn(animal, cell, map);
 
-                Lord lord = near?.GetLord();
+                Lord? lord = near?.GetLord();
                 if (lord != null)
                     lord.AddPawn(animal);
                 else
@@ -241,39 +258,47 @@ namespace Nemesis
             }
         }
 
-        public static bool IsStrataUnderground(Map map)
+        public static bool IsStrataUnderground(Map? map)
         {
             if (!StrataActive || map == null || _strataIsUnderground == null) return false;
-            try { return (bool)_strataIsUnderground.Invoke(null, new object[] { map }); }
+            try { return _strataIsUnderground(map); }
             catch { return false; }
         }
 
-        public static bool IsStrataUpper(Map map)
+        public static bool IsStrataUpper(Map? map)
         {
             if (!StrataActive || map == null || _strataIsUpper == null) return false;
-            try { return (bool)_strataIsUpper.Invoke(null, new object[] { map }); }
+            try { return _strataIsUpper(map); }
             catch { return false; }
         }
 
         /// <summary>Prefer surface player-home maps when Strata multi-level stacks exist.</summary>
-        public static Map PreferHarassmentMap(Map fallback)
+        public static Map? PreferHarassmentMap(Map? fallback)
         {
             if (!StrataActive) return fallback;
-            Map best = null;
+            int now = Find.TickManager?.TicksGame ?? 0;
+            Map? cached = _surfaceMap;
+            if (now - _surfaceMapTick < SurfaceMapRecheckTicks
+                && cached != null && cached.IsPlayerHome && Find.Maps.Contains(cached))
+                return cached;
+            Map? found = FindSurfaceHomeMap();
+            _surfaceMap = found;
+            _surfaceMapTick = now;
+            return found ?? fallback;
+        }
+
+        private static Map? FindSurfaceHomeMap()
+        {
+            Map? anyHome = null;
             List<Map> maps = Find.Maps;
             for (int i = 0; i < maps.Count; i++)
             {
                 Map m = maps[i];
                 if (m == null || !m.IsPlayerHome) continue;
-                if (IsStrataUnderground(m) || IsStrataUpper(m)) continue;
-                return m;
+                if (!IsStrataUnderground(m) && !IsStrataUpper(m)) return m;
+                anyHome ??= m;
             }
-            for (int i = 0; i < maps.Count; i++)
-            {
-                Map m = maps[i];
-                if (m != null && m.IsPlayerHome) { best = m; break; }
-            }
-            return best ?? fallback;
+            return anyHome;
         }
 
         // Live dampener cover (radius and power) through Stormproof's compat API.
@@ -283,58 +308,55 @@ namespace Nemesis
         public static bool MapHasReadySurgeProtector(Map map) =>
             StormproofActive && AzraelCommon.StormproofClient.MapHasReadySurgeProtector(map);
 
-        public static string TryFavoriteFoodLabel(Pawn pawn)
+        public static string? TryFavoriteFoodLabel(Pawn? pawn)
         {
             if (pawn == null || !HomesteaderActive || _homeGetFavorites == null) return null;
             try
             {
-                if (_homeGetFavorites.Invoke(null, new object[] { pawn }) is List<ThingDef> list
-                    && list.Count > 0 && list[0] != null)
+                List<ThingDef>? list = _homeGetFavorites(pawn);
+                if (list != null && list.Count > 0 && list[0] != null)
                     return list[0].label;
             }
             catch { /* fail open */ }
             return null;
         }
 
-        public static bool MapHasRootCellar(Map map)
+        public static bool MapHasRootCellar(Map? map)
         {
             if (map == null || !HomesteaderActive) return false;
-            ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail("Homesteader_RootCellar");
+            if (!_cellarChecked)
+            {
+                _cellarChecked = true;
+                _rootCellarDef = DefDatabase<ThingDef>.GetNamedSilentFail("Homesteader_RootCellar");
+            }
+            ThingDef? def = _rootCellarDef;
             if (def == null) return false;
             List<Thing> things = map.listerThings.ThingsOfDef(def);
             return things != null && things.Count > 0;
         }
 
-        public static bool IsHomesteaderFoodStorageDef(string defName)
-        {
-            if (string.IsNullOrEmpty(defName)) return false;
-            for (int i = 0; i < HomesteaderFoodStorageDefNames.Length; i++)
-            {
-                if (HomesteaderFoodStorageDefNames[i] == defName)
-                    return true;
-            }
-            return false;
-        }
+        public static bool IsHomesteaderFoodStorageDef(string? defName) =>
+            defName != null && HomesteaderFoodStorageDefNames.Contains(defName);
 
         /// <summary>True when the stack sits in / on a Homesteader pantry, cellar, or smokehouse.</summary>
-        public static bool IsOnHomesteaderFoodStorage(Thing thing)
+        public static bool IsOnHomesteaderFoodStorage(Thing? thing)
         {
             if (thing?.Map == null || !HomesteaderActive) return false;
             try
             {
                 // Haulable stacks in Building_Storage slot groups.
-                SlotGroup group = thing.GetSlotGroup();
+                SlotGroup? group = thing.GetSlotGroup();
                 if (group?.parent is Building storage
                     && IsHomesteaderFoodStorageDef(storage.def?.defName))
                     return true;
 
                 // Smokehouse / workbench: food sitting on the building's cells.
-                Building edifice = thing.Position.GetEdifice(thing.Map);
+                Building? edifice = thing.Position.GetEdifice(thing.Map);
                 if (edifice != null && IsHomesteaderFoodStorageDef(edifice.def?.defName))
                     return true;
 
                 // Fallback: same cell as a Homesteader food-storage building.
-                List<Thing> at = thing.Map.thingGrid.ThingsListAtFast(thing.Position);
+                List<Thing>? at = thing.Map.thingGrid.ThingsListAtFast(thing.Position);
                 if (at == null) return false;
                 for (int i = 0; i < at.Count; i++)
                 {

@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using RimWorld.Planet;
@@ -13,11 +14,54 @@ namespace Nemesis
 
         private Vector2 scrollPos;
 
+        // Translated hunt lines, rebuilt when the hunt changes or every RefreshFrames frames,
+        // instead of about twenty Translate calls per frame (AZR-535).
+        private const int RefreshFrames = 30;
+        private int cachedHuntId = -1;
+        private int cachedFrame = int.MinValue / 2;
+        private string identityLine = "";
+        private string targetLine = "";
+        private string tellsLine = "";
+        private string tileLine = "";
+        private string gearLine = "";
+        private string bountyLine = "";
+        private string buyLeadLabel = "";
+        private string postBountyLabel = "";
+        private int leadCost;
+
+        private void RefreshLines(NemesisData data)
+        {
+            int frame = Time.frameCount;
+            if (data.huntId == cachedHuntId && frame - cachedFrame < RefreshFrames) return;
+            cachedHuntId = data.huntId;
+            cachedFrame = frame;
+            identityLine = "Nemesis_Dossier_Identity".Translate(
+                data.ColoredName,
+                data.factionName ?? "—",
+                data.FocusLabelKey.Translate());
+            targetLine = "Nemesis_Dossier_Target".Translate(
+                data.targetPawnName ?? "Nemesis_Phrase_YourColony".Translate(),
+                data.EffectiveAggression.ToString("F1"),
+                data.escapeCount,
+                data.progressionLevel);
+            tellsLine = "Nemesis_Dossier_Tells".Translate(
+                NemesisTells.VoiceKey(data.voice).Translate(),
+                NemesisTells.WeaponLabel(data),
+                NemesisTells.MarkKey(data.mark).Translate(),
+                NemesisTells.HabitKey(data.habit).Translate());
+            tileLine = "Nemesis_Dossier_Tile".Translate(data.lastKnownTileLabel ?? "—");
+            gearLine = "Nemesis_Dossier_Gear".Translate(data.lastGearSeen ?? "—");
+            bountyLine = "Nemesis_Dossier_Bounty".Translate(data.bountySilver);
+            leadCost = NemesisInformants.LeadCost(data);
+            buyLeadLabel = "Nemesis_Dossier_BuyLead".Translate(leadCost);
+            postBountyLabel = "Nemesis_Dossier_PostBounty".Translate(leadCost);
+        }
+
         public override Vector2 RequestedTabSize => new Vector2(620f, 580f);
 
         public override void DoWindowContents(Rect inRect)
         {
-            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
+            GameComponent_Nemesis? comp = GameComponent_Nemesis.Instance;
 
             Text.Font = GameFont.Medium;
             Widgets.Label(new Rect(inRect.x, inRect.y, inRect.width, 32f),
@@ -25,7 +69,7 @@ namespace Nemesis
             Text.Font = GameFont.Small;
 
             float y = inRect.y + 36f;
-            NemesisData data = PickHunt(comp);
+            NemesisData? data = PickHunt(comp);
             if (data == null)
             {
                 Widgets.Label(new Rect(inRect.x, y, inRect.width, 44f),
@@ -35,7 +79,7 @@ namespace Nemesis
                 return;
             }
 
-            DrawHuntTabs(comp, inRect, ref y);
+            DrawHuntTabs(comp!, inRect, ref y);
 
             if (data.pendingResolution)
             {
@@ -45,7 +89,7 @@ namespace Nemesis
                 y += 52f;
                 if (Widgets.ButtonText(new Rect(inRect.x, y, 240f, 28f),
                         "Nemesis_Dossier_OpenResolution".Translate())
-                    && !comp.TryOpenResolutionDialog(data))
+                    && !comp!.TryOpenResolutionDialog(data))
                     Messages.Message("Nemesis_Dossier_ResolutionUnavailable".Translate(),
                         MessageTypeDefOf.RejectInput, historical: false);
                 y += 36f;
@@ -65,45 +109,33 @@ namespace Nemesis
                 return;
             }
 
-            Widgets.Label(new Rect(inRect.x, y, inRect.width, 22f),
-                "Nemesis_Dossier_Identity".Translate(
-                    data.ColoredName,
-                    data.factionName ?? "—",
-                    data.FocusLabelKey.Translate()));
+            RefreshLines(data);
+            Widgets.Label(new Rect(inRect.x, y, inRect.width, 22f), identityLine);
             y += 22f;
-            Widgets.Label(new Rect(inRect.x, y, inRect.width, 22f),
-                "Nemesis_Dossier_Target".Translate(
-                    data.targetPawnName ?? "Nemesis_Phrase_YourColony".Translate(),
-                    data.EffectiveAggression.ToString("F1"),
-                    data.escapeCount,
-                    data.progressionLevel));
+            Widgets.Label(new Rect(inRect.x, y, inRect.width, 22f), targetLine);
             y += 22f;
-            Widgets.Label(new Rect(inRect.x, y, inRect.width, 40f),
-                "Nemesis_Dossier_Tells".Translate(
-                    NemesisTells.VoiceKey(data.voice).Translate(),
-                    NemesisTells.WeaponLabel(data),
-                    NemesisTells.MarkKey(data.mark).Translate(),
-                    NemesisTells.HabitKey(data.habit).Translate()));
+            Widgets.Label(new Rect(inRect.x, y, inRect.width, 40f), tellsLine);
             y += 42f;
-            DrawLastKnownTile(data, new Rect(inRect.x, y, inRect.width, 22f));
+            DrawLastKnownTile(data, tileLine, new Rect(inRect.x, y, inRect.width, 22f));
             y += 22f;
-            Widgets.Label(new Rect(inRect.x, y, inRect.width, 22f),
-                "Nemesis_Dossier_Gear".Translate(data.lastGearSeen ?? "—"));
+            Widgets.Label(new Rect(inRect.x, y, inRect.width, 22f), gearLine);
             y += 22f;
-            Widgets.Label(new Rect(inRect.x, y, inRect.width, 22f),
-                "Nemesis_Dossier_Bounty".Translate(data.bountySilver));
+            Widgets.Label(new Rect(inRect.x, y, inRect.width, 22f), bountyLine);
             y += 28f;
 
             if (NemesisMod.Settings?.enableInformants ?? true)
             {
-                int cost = NemesisInformants.LeadCost(data);
                 Map map = Find.CurrentMap;
-                if (Widgets.ButtonText(new Rect(inRect.x, y, 200f, 28f),
-                        "Nemesis_Dossier_BuyLead".Translate(cost)))
+                if (Widgets.ButtonText(new Rect(inRect.x, y, 200f, 28f), buyLeadLabel))
+                {
                     NemesisPlayerCommand.BuyLead(data.huntId, map);
-                if (Widgets.ButtonText(new Rect(inRect.x + 210f, y, 200f, 28f),
-                        "Nemesis_Dossier_PostBounty".Translate(cost)))
-                    NemesisPlayerCommand.PostBounty(data.huntId, map, cost);
+                    cachedFrame = int.MinValue / 2;
+                }
+                if (Widgets.ButtonText(new Rect(inRect.x + 210f, y, 200f, 28f), postBountyLabel))
+                {
+                    NemesisPlayerCommand.PostBounty(data.huntId, map, leadCost);
+                    cachedFrame = int.MinValue / 2;
+                }
                 y += 36f;
             }
 
@@ -136,10 +168,10 @@ namespace Nemesis
         }
 
         /// <summary>The selected engaged hunt, else the first; null when none.</summary>
-        private static NemesisData PickHunt(GameComponent_Nemesis comp)
+        private static NemesisData? PickHunt(GameComponent_Nemesis? comp)
         {
             if (comp == null) return null;
-            NemesisData picked = comp.HuntById(SelectedHuntId);
+            NemesisData? picked = comp.HuntById(SelectedHuntId);
             if (picked != null && picked.Engaged) return picked;
             IReadOnlyList<NemesisData> hunts = comp.Hunts;
             for (int i = 0; i < hunts.Count; i++)
@@ -181,9 +213,8 @@ namespace Nemesis
             y += 32f;
         }
 
-        static void DrawLastKnownTile(NemesisData data, Rect rect)
+        static void DrawLastKnownTile(NemesisData data, string text, Rect rect)
         {
-            string text = "Nemesis_Dossier_Tile".Translate(data.lastKnownTileLabel ?? "—");
             PlanetTile tile = data.lastKnownTile;
             if (!tile.Valid || Find.WorldGrid == null)
             {
@@ -201,9 +232,9 @@ namespace Nemesis
                 CameraJumper.TryJump(new GlobalTargetInfo(tile));
         }
 
-        static void DrawEpitaphs(GameComponent_Nemesis comp, Rect inRect, ref float y)
+        static void DrawEpitaphs(GameComponent_Nemesis? comp, Rect inRect, ref float y)
         {
-            List<NemesisEpitaph> list = comp?.epitaphs;
+            List<NemesisEpitaph>? list = comp?.epitaphs;
             Widgets.Label(new Rect(inRect.x, y, inRect.width, 22f),
                 "Nemesis_Dossier_Epitaphs".Translate());
             if (list != null && list.Count > 3)

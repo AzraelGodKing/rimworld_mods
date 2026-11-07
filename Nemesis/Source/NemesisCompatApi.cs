@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using Verse;
 
@@ -24,7 +25,7 @@ namespace Nemesis
         {
             get
             {
-                GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
+                GameComponent_Nemesis? comp = GameComponent_Nemesis.Instance;
                 if (comp == null) return 0;
                 int n = 0;
                 IReadOnlyList<NemesisData> hunts = comp.Hunts;
@@ -37,19 +38,19 @@ namespace Nemesis
         }
 
         /// <summary>Nemesis of the first engaged hunt, or null.</summary>
-        public static Pawn ActiveNemesisPawn => GameComponent_Nemesis.Instance?.FindNemesisPawn();
+        public static Pawn? ActiveNemesisPawn => GameComponent_Nemesis.Instance?.FindNemesisPawn();
 
         /// <summary>Every engaged hunt's nemesis that can still be found (alive or dead).</summary>
         public static List<Pawn> EngagedNemesisPawns()
         {
             var list = new List<Pawn>();
-            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
+            GameComponent_Nemesis? comp = GameComponent_Nemesis.Instance;
             if (comp == null) return list;
             IReadOnlyList<NemesisData> hunts = comp.Hunts;
             for (int i = 0; i < hunts.Count; i++)
             {
                 if (!hunts[i].Engaged) continue;
-                Pawn p = comp.FindNemesisPawnFor(hunts[i]);
+                Pawn? p = comp.FindNemesisPawnFor(hunts[i]);
                 if (p != null) list.Add(p);
             }
             return list;

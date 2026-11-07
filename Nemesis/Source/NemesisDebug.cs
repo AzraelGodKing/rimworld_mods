@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using System.Text;
 using LudeonTK;
@@ -19,24 +20,25 @@ namespace Nemesis
 
         static NemesisDebug() { }
 
-        private static GameComponent_Nemesis Comp => GameComponent_Nemesis.Instance;
+        private static GameComponent_Nemesis? Comp => GameComponent_Nemesis.Instance;
 
-        private static Map PreferMap() =>
+        private static Map? PreferMap() =>
             SoftCompat.PreferHarassmentMap(Find.CurrentMap ?? Find.AnyPlayerHomeMap);
 
         private static bool RequireComp(out GameComponent_Nemesis comp)
         {
-            comp = Comp;
-            if (comp != null) return true;
+            GameComponent_Nemesis? found = Comp;
+            comp = found!;
+            if (found != null) return true;
             Messages.Message("[Nemesis] No game component (load a save).",
                 MessageTypeDefOf.RejectInput, historical: false);
             return false;
         }
 
         /// <summary>The hunt picked in the dossier, else the first engaged one.</summary>
-        private static NemesisData DebugHunt(GameComponent_Nemesis comp)
+        private static NemesisData? DebugHunt(GameComponent_Nemesis comp)
         {
-            NemesisData picked = comp.HuntById(MainTabWindow_NemesisDossier.SelectedHuntId);
+            NemesisData? picked = comp.HuntById(MainTabWindow_NemesisDossier.SelectedHuntId);
             if (picked != null && picked.Engaged) return picked;
             IReadOnlyList<NemesisData> hunts = comp.Hunts;
             for (int i = 0; i < hunts.Count; i++)
@@ -48,16 +50,17 @@ namespace Nemesis
 
         private static bool RequireActiveHunt(out GameComponent_Nemesis comp, out NemesisData data)
         {
-            data = null;
+            data = null!;
             if (!RequireComp(out comp)) return false;
-            data = DebugHunt(comp);
-            if (data != null && data.active) return true;
+            NemesisData? hunt = DebugHunt(comp);
+            data = hunt!;
+            if (hunt != null && hunt.active) return true;
             Messages.Message("[Nemesis] No active hunt.",
                 MessageTypeDefOf.RejectInput, historical: false);
             return false;
         }
 
-        private static void Started(NemesisData h, string what)
+        private static void Started(NemesisData? h, string what)
         {
             if (h != null)
                 Messages.Message("[Nemesis] Hunt started — " + what + ".", MessageTypeDefOf.NeutralEvent, historical: false);
@@ -67,7 +70,7 @@ namespace Nemesis
         }
 
         /// <summary>A hostile humanlike faction with no hunt yet.</summary>
-        private static Faction PickHostileFaction(GameComponent_Nemesis comp)
+        private static Faction? PickHostileFaction(GameComponent_Nemesis comp)
         {
             List<Faction> hostiles = new List<Faction>();
             foreach (Faction f in Find.FactionManager.AllFactions)
@@ -91,7 +94,7 @@ namespace Nemesis
             return false;
         }
 
-        private static Pawn SelectedHumanlike()
+        private static Pawn? SelectedHumanlike()
         {
             if (Find.Selector?.SingleSelectedThing is Pawn p
                 && p.RaceProps.Humanlike
@@ -124,8 +127,8 @@ namespace Nemesis
 
         private static void AppendHunt(StringBuilder sb, GameComponent_Nemesis comp, NemesisData d, int now)
         {
-            Pawn nemesis = comp.FindNemesisPawnFor(d);
-            Pawn target = comp.FindTargetPawn(d);
+            Pawn? nemesis = comp.FindNemesisPawnFor(d);
+            Pawn? target = comp.FindTargetPawn(d);
             sb.AppendLine($"--- hunt #{d.huntId}");
 
             sb.AppendLine($"active={d.active} truceUntil={d.truceUntilTick} rogue={d.rogue}");
@@ -144,7 +147,7 @@ namespace Nemesis
         private static void ForceLevelUp()
         {
             if (!RequireActiveHunt(out GameComponent_Nemesis comp, out NemesisData data)) return;
-            Pawn nemesis = comp.FindNemesisPawnFor(data);
+            Pawn? nemesis = comp.FindNemesisPawnFor(data);
             if (nemesis == null)
             {
                 Messages.Message("[Nemesis] Nemesis pawn missing.", MessageTypeDefOf.RejectInput, historical: false);
@@ -160,16 +163,17 @@ namespace Nemesis
         private static void CycleFocus()
         {
             if (!RequireActiveHunt(out GameComponent_Nemesis comp, out NemesisData data)) return;
-            Pawn nemesis = comp.FindNemesisPawnFor(data);
+            Pawn? nemesis = comp.FindNemesisPawnFor(data);
             if (nemesis == null)
             {
                 Messages.Message("[Nemesis] Nemesis pawn missing.", MessageTypeDefOf.RejectInput, historical: false);
                 return;
             }
-            int next = ((int)data.combatFocus + 1) % 6;
-            if ((NemesisCombatFocus)next == NemesisCombatFocus.Mechanitor && !ModsConfig.BiotechActive)
-                next = 0;
-            data.combatFocus = (NemesisCombatFocus)next;
+            NemesisCombatFocus[] foci = (NemesisCombatFocus[])System.Enum.GetValues(typeof(NemesisCombatFocus));
+            int next = (System.Array.IndexOf(foci, data.combatFocus) + 1) % foci.Length;
+            if (foci[next] == NemesisCombatFocus.Mechanitor && !ModsConfig.BiotechActive)
+                next = (next + 1) % foci.Length;
+            data.combatFocus = foci[next];
             data.appliedProgressionLevel = -1;
             NemesisProgression.Apply(nemesis, data);
             Messages.Message($"[Nemesis] Focus → {data.combatFocus}.", MessageTypeDefOf.NeutralEvent, historical: false);
@@ -209,7 +213,7 @@ namespace Nemesis
         {
             if (!RequireComp(out GameComponent_Nemesis comp)) return;
 
-            Pawn selected = SelectedHumanlike();
+            Pawn? selected = SelectedHumanlike();
             if (selected != null && selected.Faction != null && !selected.Faction.IsPlayer
                 && selected.Faction.HostileTo(Faction.OfPlayer))
             {
@@ -218,7 +222,7 @@ namespace Nemesis
                 return;
             }
 
-            Faction faction = PickHostileFaction(comp);
+            Faction? faction = PickHostileFaction(comp);
             if (faction == null)
             {
                 Messages.Message("[Nemesis] No hostile humanlike faction.",
@@ -251,7 +255,7 @@ namespace Nemesis
             }
             if (!RequireComp(out GameComponent_Nemesis comp)) return;
 
-            Faction faction = PickHostileFaction(comp);
+            Faction? faction = PickHostileFaction(comp);
             if (faction == null)
             {
                 Messages.Message("[Nemesis] No hostile humanlike faction.",
@@ -319,7 +323,7 @@ namespace Nemesis
         private static void ForceEscape()
         {
             if (!RequireActiveHunt(out GameComponent_Nemesis comp, out NemesisData hunt)) return;
-            Pawn nemesis = comp.FindNemesisPawnFor(hunt);
+            Pawn? nemesis = comp.FindNemesisPawnFor(hunt);
             if (nemesis == null || !nemesis.Spawned || nemesis.Dead)
             {
                 Messages.Message("[Nemesis] Need a spawned living nemesis on the map.",
@@ -335,8 +339,8 @@ namespace Nemesis
         private static void OpenResolution()
         {
             if (!RequireComp(out GameComponent_Nemesis comp)) return;
-            NemesisData data = DebugHunt(comp);
-            Pawn nemesis = comp.FindNemesisPawnFor(data);
+            NemesisData? data = DebugHunt(comp);
+            Pawn? nemesis = comp.FindNemesisPawnFor(data);
             if (data == null || nemesis == null || !nemesis.IsPrisonerOfColony)
             {
                 Messages.Message("[Nemesis] Nemesis must be a colony prisoner.",
@@ -358,7 +362,7 @@ namespace Nemesis
                     MessageTypeDefOf.RejectInput, historical: false);
                 return;
             }
-            Map map = PreferMap();
+            Map? map = PreferMap();
             if (map == null)
             {
                 Messages.Message("[Nemesis] No map.", MessageTypeDefOf.RejectInput, historical: false);
@@ -370,7 +374,7 @@ namespace Nemesis
         private static void FireAction(NemesisAction action)
         {
             if (!RequireActiveHunt(out _, out NemesisData data)) return;
-            Map map = PreferMap();
+            Map? map = PreferMap();
             if (map == null)
             {
                 Messages.Message("[Nemesis] No map.", MessageTypeDefOf.RejectInput, historical: false);
@@ -395,7 +399,7 @@ namespace Nemesis
         {
             if (!RequireActiveHunt(out GameComponent_Nemesis comp, out NemesisData data)) return;
             data.escapeCount = Mathf.Max(data.escapeCount, 1);
-            Pawn nemesis = comp.FindNemesisPawnFor(data);
+            Pawn? nemesis = comp.FindNemesisPawnFor(data);
             if (nemesis != null && nemesis.Spawned && !nemesis.Dead)
                 NemesisPawnUtil.ParkAsWorldNemesis(nemesis);
             FireAction(NemesisAction.DirectRaid);

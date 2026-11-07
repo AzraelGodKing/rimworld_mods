@@ -1,3 +1,4 @@
+#nullable enable
 using RimWorld;
 using Verse;
 
@@ -18,23 +19,23 @@ namespace Nemesis
     /// </summary>
     public static class NemesisPlayerCommand
     {
-        public static void BuyLead(int huntId, Map map)
+        public static void BuyLead(int huntId, Map? map)
         {
-            NemesisData h = GameComponent_Nemesis.Instance?.HuntById(huntId);
+            NemesisData? h = GameComponent_Nemesis.Instance?.HuntById(huntId);
             if (h != null)
                 NemesisInformants.TryBuyLead(h, map);
         }
 
-        public static void PostBounty(int huntId, Map map, int silver)
+        public static void PostBounty(int huntId, Map? map, int silver)
         {
-            NemesisData h = GameComponent_Nemesis.Instance?.HuntById(huntId);
+            NemesisData? h = GameComponent_Nemesis.Instance?.HuntById(huntId);
             if (h != null)
                 NemesisInformants.TryPostBounty(h, map, silver);
         }
 
         public static void Reply(int huntId, NemesisReply reply)
         {
-            NemesisData h = GameComponent_Nemesis.Instance?.HuntById(huntId);
+            NemesisData? h = GameComponent_Nemesis.Instance?.HuntById(huntId);
             if (h == null || !h.active) return;
             switch (reply)
             {
@@ -53,7 +54,7 @@ namespace Nemesis
         /// <summary>Capture resolution choice (execute / release / keep / truce).</summary>
         public static void Resolve(int huntId, NemesisOutcome outcome)
         {
-            NemesisData h = GameComponent_Nemesis.Instance?.HuntById(huntId);
+            NemesisData? h = GameComponent_Nemesis.Instance?.HuntById(huntId);
             if (h != null)
                 Dialog_NemesisResolution.ApplyOutcome(h, outcome);
         }

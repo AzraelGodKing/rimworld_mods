@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Reflection;
 using HarmonyLib;
@@ -19,7 +20,7 @@ namespace Nemesis
 
         internal static void RegisterAll()
         {
-            MethodInfo register = ResolveRegister();
+            MethodInfo? register = ResolveRegister();
             if (register == null)
                 return;
             Register(register, nameof(NemesisPlayerCommand.BuyLead));
@@ -28,18 +29,18 @@ namespace Nemesis
             Register(register, nameof(NemesisPlayerCommand.Resolve));
         }
 
-        private static MethodInfo ResolveRegister()
+        private static MethodInfo? ResolveRegister()
         {
             if (ModLister.GetActiveModWithIdentifier(MultiplayerId, ignorePostfix: true) == null)
                 return null;
-            Type mp = AccessTools.TypeByName("Multiplayer.API.MP");
+            Type? mp = AccessTools.TypeByName("Multiplayer.API.MP");
             if (mp == null)
             {
                 Log.Warning("[Nemesis] Multiplayer is active but Multiplayer.API.MP was not found; "
                     + "Nemesis's buttons are not synced.");
                 return null;
             }
-            FieldInfo enabled = AccessTools.Field(mp, "enabled");
+            FieldInfo? enabled = AccessTools.Field(mp, "enabled");
             if (enabled != null && enabled.GetValue(null) is bool on && !on)
                 return null;
             foreach (MethodInfo m in mp.GetMethods(BindingFlags.Public | BindingFlags.Static))
@@ -55,7 +56,7 @@ namespace Nemesis
 
         private static void Register(MethodInfo register, string methodName)
         {
-            MethodInfo target = AccessTools.Method(typeof(NemesisPlayerCommand), methodName);
+            MethodInfo? target = AccessTools.Method(typeof(NemesisPlayerCommand), methodName);
             if (target == null)
             {
                 Log.Warning("[Nemesis] Multiplayer sync target NemesisPlayerCommand." + methodName + " not found.");
@@ -63,7 +64,7 @@ namespace Nemesis
             }
             try
             {
-                register.Invoke(null, new object[] { target, null });
+                register.Invoke(null, new object?[] { target, null });
             }
             catch (Exception e)
             {

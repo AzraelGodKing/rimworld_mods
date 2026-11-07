@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -16,7 +17,7 @@ namespace Nemesis
         public static void Clear()
         {
             ResolutionDirty = false;
-            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
+            GameComponent_Nemesis? comp = GameComponent_Nemesis.Instance;
             if (comp == null) return;
             IReadOnlyList<NemesisData> hunts = comp.Hunts;
             for (int i = 0; i < hunts.Count; i++)
