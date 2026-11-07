@@ -2,11 +2,14 @@
   "slug": "living-world",
   "name": "Living World",
   "game": "rimworld",
-  "description": "Off-map faction life: other settlements drift, flip ownership, feud, and make news \u2014 without a second storyteller dumping threat at you.",
+  "description": "Off-map faction life: other settlements feud, ally, trade, conquer after real wars, and make news, without a second storyteller dumping threat at you.",
   "version": "1.0.0",
-  "screenshots": [],
+  "screenshots": [
+    "About/Preview.png"
+  ],
   "download": {
-    "file": "LivingWorld-1.0.0.zip"
+    "file": "LivingWorld.zip",
+    "url": "https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/LivingWorld.zip"
   },
   "links": {
     "steam": null,

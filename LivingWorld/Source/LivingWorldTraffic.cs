@@ -122,7 +122,7 @@ namespace LivingWorld
             {
                 return;
             }
-            if (!Rand.Chance(SpawnChancePerPulse))
+            if (!Rand.Chance(SpawnChancePerPulse * LivingWorldAzraelHub.TrafficFactor(LivingWorldAzraelHub.SpawnChanceKey)))
             {
                 return;
             }
@@ -222,7 +222,7 @@ namespace LivingWorld
                 return;
             }
             caravan.divertRolled = true;
-            if (!Rand.Chance(DivertChance))
+            if (!Rand.Chance(DivertChance * LivingWorldAzraelHub.TrafficFactor(LivingWorldAzraelHub.DivertChanceKey)))
             {
                 return;
             }

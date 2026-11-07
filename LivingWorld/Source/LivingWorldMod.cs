@@ -20,7 +20,7 @@ namespace LivingWorld
         public LivingWorldMod(ModContentPack content) : base(content)
         {
             Global = GetSettings<LivingWorldSettings>();
-            ModVersionLog.Write("[LivingWorld]", content, extra: "waylith-v1");
+            ModVersionLog.Write("[LivingWorld]", content, extra: LivingWorldBuildInfo.BuildStamp);
             SafePatchAll.Apply(new Harmony("azraelgodking.livingworld"), "[LivingWorld]");
             LivingWorldMultiplayer.RegisterAll();
         }
