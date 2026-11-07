@@ -1,7 +1,5 @@
 #nullable enable
 using System.Collections.Generic;
-using System.Text;
-using HarmonyLib;
 using RimWorld;
 using RimWorld.Planet;
 using UnityEngine;
@@ -45,26 +43,24 @@ namespace Azrael
                 return report;
             }
 
-            string needle = packageId ?? string.Empty;
-            List<Map> maps = Find.Maps;
-            for (int m = 0; m < maps.Count; m++)
+            var scan = new Scanner(packageId ?? string.Empty, report);
+            foreach (Map map in Find.Maps)
             {
-                Map map = maps[m];
-                if (map == null)
+                if (map != null)
                 {
-                    continue;
+                    scan.Map(map);
                 }
-                ScanMap(map, needle, report);
             }
-
-            List<Caravan> caravans = Find.WorldObjects.Caravans;
-            for (int c = 0; c < caravans.Count; c++)
+            foreach (Caravan caravan in Find.WorldObjects.Caravans)
             {
-                ScanCaravan(caravans[c], needle, report);
+                scan.Caravan(caravan);
             }
+            scan.WorldPawns();
+            scan.World();
+            scan.Components();
+            scan.Flush();
 
-            AddPawnState(needle, report);
-            AddWorldState(needle, report);
+            AddSisterState(packageId ?? string.Empty, report);
             return report;
         }
 
@@ -105,7 +101,8 @@ namespace Azrael
             return n;
         }
 
-        private static bool Owns(Def def, string packageId)
+        /// <summary>The one ownership test used for every kind of content (AZR-587).</summary>
+        internal static bool Owns(Def? def, string packageId)
         {
             if (def?.modContentPack == null || string.IsNullOrEmpty(packageId))
             {
@@ -117,146 +114,343 @@ namespace Azrael
                 || (!string.IsNullOrEmpty(player) && string.Equals(player, packageId, System.StringComparison.OrdinalIgnoreCase));
         }
 
-        private static void ScanMap(Map map, string packageId, RemovalReport report)
+        /// <summary>
+        /// One pass over everything a save can hold for a mod: spawned and held things
+        /// (minified, blueprints and frames, worn, carried, inside graves, shuttles and
+        /// transporters), plants, creatures, floors, conditions, hediffs, memories,
+        /// world objects, factions and saved components. Lines are grouped per def and kind.
+        /// </summary>
+        private sealed class Scanner
         {
-            List<Thing> buildings = map.listerThings.ThingsInGroup(ThingRequestGroup.BuildingArtificial);
-            Dictionary<string, RemovalLine> buildingCounts = new Dictionary<string, RemovalLine>();
-            for (int i = 0; i < buildings.Count; i++)
+            private readonly string packageId;
+            private readonly RemovalReport report;
+            private readonly Dictionary<string, RemovalLine> lines = new Dictionary<string, RemovalLine>();
+            private readonly HashSet<Thing> seen = new HashSet<Thing>();
+            private readonly HashSet<Pawn> seenPawns = new HashSet<Pawn>();
+            private readonly List<Thing> held = new List<Thing>();
+            private int hediffs;
+            private int memories;
+
+            internal Scanner(string packageId, RemovalReport report)
             {
-                Thing t = buildings[i];
-                if (t?.def == null || !Owns(t.def, packageId))
+                this.packageId = packageId;
+                this.report = report;
+            }
+
+            internal void Map(Map map)
+            {
+                foreach (Thing t in map.listerThings.AllThings)
                 {
-                    continue;
+                    Spawned(t);
                 }
-                string key = t.def.defName;
-                if (!buildingCounts.TryGetValue(key, out RemovalLine line))
+
+                TerrainGrid? terrain = map.terrainGrid;
+                if (terrain != null)
                 {
-                    line = new RemovalLine
+                    var floors = new Dictionary<TerrainDef, int>();
+                    foreach (IntVec3 c in map.AllCells)
                     {
-                        Label = t.def.LabelCap,
-                        Verdict = RemovalVerdict.Deconstruct,
-                        Jump = t,
-                    };
-                }
-                line.Count++;
-                buildingCounts[key] = line;
-                report.Deconstructables.Add(t);
-            }
-            foreach (RemovalLine line in buildingCounts.Values)
-            {
-                report.Lines.Add(line);
-            }
-
-            List<Thing> items = map.listerThings.ThingsInGroup(ThingRequestGroup.HaulableEver);
-            Dictionary<string, RemovalLine> itemCounts = new Dictionary<string, RemovalLine>();
-            for (int i = 0; i < items.Count; i++)
-            {
-                Thing t = items[i];
-                if (t?.def == null || t.def.category != ThingCategory.Item || !Owns(t.def, packageId))
-                {
-                    continue;
-                }
-                string key = t.def.defName;
-                if (!itemCounts.TryGetValue(key, out RemovalLine line))
-                {
-                    line = new RemovalLine
+                        TerrainDef? top = terrain.TerrainAt(c);
+                        if (top != null && Owns(top, packageId))
+                        {
+                            floors[top] = floors.TryGetValue(top, out int n) ? n + 1 : 1;
+                        }
+                    }
+                    foreach (KeyValuePair<TerrainDef, int> floor in floors)
                     {
-                        Label = t.def.LabelCap,
-                        Verdict = RemovalVerdict.ConsumeOrSell,
-                        Jump = t,
-                    };
-                }
-                line.Count += t.stackCount;
-                itemCounts[key] = line;
-            }
-            foreach (RemovalLine line in itemCounts.Values)
-            {
-                report.Lines.Add(line);
-            }
-        }
-
-        private static void ScanCaravan(Caravan caravan, string packageId, RemovalReport report)
-        {
-            if (caravan?.AllThings == null)
-            {
-                return;
-            }
-            foreach (Thing t in caravan.AllThings)
-            {
-                if (t?.def == null || !Owns(t.def, packageId))
-                {
-                    continue;
-                }
-                report.Lines.Add(new RemovalLine
-                {
-                    Label = "Azrael_Removal_Caravan".Translate(caravan.LabelCap, t.LabelCap),
-                    Count = t.stackCount,
-                    Verdict = RemovalVerdict.ConsumeOrSell,
-                    Jump = caravan,
-                });
-            }
-        }
-
-        private static void AddPawnState(string packageId, RemovalReport report)
-        {
-            if (packageId.IndexOf("Nemesis", System.StringComparison.OrdinalIgnoreCase) >= 0
-                && SisterContracts.NemesisEngaged())
-            {
-                report.Blockers.Add("Azrael_Removal_NemesisHunt".Translate());
-                report.Lines.Add(new RemovalLine
-                {
-                    Label = "Azrael_Removal_NemesisHunt".Translate(),
-                    Count = 1,
-                    Verdict = RemovalVerdict.ResolveFirst,
-                });
-            }
-
-            if (packageId.IndexOf("Strata", System.StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                int onSub = 0;
-                List<Map> maps = Find.Maps;
-                for (int i = 0; i < maps.Count; i++)
-                {
-                    Map map = maps[i];
-                    if (map?.Parent is PocketMapParent)
-                    {
-                        onSub += map.mapPawns.FreeColonistsSpawned.Count;
+                        Add("floor:" + floor.Key.defName, "Azrael_Removal_Floor".Translate(floor.Key.LabelCap),
+                            floor.Value, RemovalVerdict.ResolveFirst, new GlobalTargetInfo(map.Center, map));
                     }
                 }
-                if (onSub > 0)
+
+                Conditions(map.gameConditionManager);
+            }
+
+            internal void Caravan(Caravan caravan)
+            {
+                if (caravan?.AllThings == null)
                 {
-                    report.Blockers.Add("Azrael_Removal_StrataPawns".Translate(onSub));
+                    return;
+                }
+                foreach (Thing t in caravan.AllThings)
+                {
+                    if (t is Pawn pawn)
+                    {
+                        PawnState(pawn);
+                    }
+                    if (t?.def != null && Owns(t.def, packageId) && seen.Add(t))
+                    {
+                        Add("caravan:" + caravan.ID + ":" + t.def.defName,
+                            "Azrael_Removal_Caravan".Translate(caravan.LabelCap, t.def.LabelCap),
+                            t.stackCount, RemovalVerdict.ConsumeOrSell, caravan);
+                    }
+                }
+            }
+
+            // Kidnapped colonists, quest lodgers, and other off-map pawns live here.
+            internal void WorldPawns()
+            {
+                if (Find.WorldPawns == null)
+                {
+                    return;
+                }
+                foreach (Pawn pawn in Find.WorldPawns.AllPawnsAlive)
+                {
+                    PawnState(pawn);
+                }
+            }
+
+            internal void World()
+            {
+                foreach (WorldObject o in Find.WorldObjects.AllWorldObjects)
+                {
+                    if (o?.def != null && Owns(o.def, packageId))
+                    {
+                        Add("world:" + o.def.defName, "Azrael_Removal_WorldObject".Translate(o.def.LabelCap),
+                            1, RemovalVerdict.AutoSafe, o);
+                    }
+                }
+                foreach (Faction f in Find.FactionManager.AllFactionsListForReading)
+                {
+                    if (f?.def != null && Owns(f.def, packageId))
+                    {
+                        Add("faction:" + f.loadID, "Azrael_Removal_Faction".Translate(f.Name ?? f.def.LabelCap.ToString()),
+                            1, RemovalVerdict.ResolveFirst, GlobalTargetInfo.Invalid);
+                    }
+                }
+                Conditions(Find.World?.gameConditionManager);
+            }
+
+            // Game, world and map components from the mod's assembly are dropped on load with a warning.
+            internal void Components()
+            {
+                var names = new List<string>();
+                foreach (GameComponent c in Current.Game.components)
+                {
+                    AddComponent(c, names);
+                }
+                if (Find.World != null)
+                {
+                    foreach (WorldComponent c in Find.World.components)
+                    {
+                        AddComponent(c, names);
+                    }
+                }
+                foreach (Map map in Find.Maps)
+                {
+                    foreach (MapComponent c in map.components)
+                    {
+                        AddComponent(c, names);
+                    }
+                }
+                if (names.Count > 0)
+                {
+                    Add("components", "Azrael_Removal_Components".Translate(string.Join(", ", names)),
+                        names.Count, RemovalVerdict.AutoSafe, GlobalTargetInfo.Invalid);
+                }
+            }
+
+            internal void Flush()
+            {
+                if (hediffs > 0)
+                {
+                    Add("hediffs", "Azrael_Removal_Hediffs".Translate(), hediffs, RemovalVerdict.AutoSafe, GlobalTargetInfo.Invalid);
+                }
+                if (memories > 0)
+                {
+                    Add("memories", "Azrael_Removal_Memories".Translate(), memories, RemovalVerdict.AutoSafe, GlobalTargetInfo.Invalid);
+                }
+                report.Lines.AddRange(lines.Values);
+            }
+
+            private void Spawned(Thing t)
+            {
+                if (t?.def == null)
+                {
+                    return;
+                }
+                if (t is Pawn pawn)
+                {
+                    PawnState(pawn);
+                }
+                Classify(t, t);
+                if (t is IThingHolder holder)
+                {
+                    held.Clear();
+                    ThingOwnerUtility.GetAllThingsRecursively(holder, held, allowUnreal: true);
+                    foreach (Thing inner in held)
+                    {
+                        if (inner != null && inner != t)
+                        {
+                            if (inner is Pawn innerPawn)
+                            {
+                                PawnState(innerPawn);
+                            }
+                            Classify(inner, t);
+                        }
+                    }
+                }
+            }
+
+            /// <param name="anchor">Spawned thing to jump to (the holder when <paramref name="t"/> is held).</param>
+            private void Classify(Thing t, Thing anchor)
+            {
+                if (!seen.Add(t))
+                {
+                    return;
+                }
+                bool isHeld = t != anchor;
+                ThingDef def = t.def;
+
+                if (t is MinifiedThing minified)
+                {
+                    Thing? inner = minified.InnerThing;
+                    if (inner?.def != null && Owns(inner.def, packageId))
+                    {
+                        Add("minified:" + inner.def.defName, "Azrael_Removal_Minified".Translate(inner.def.LabelCap),
+                            t.stackCount, RemovalVerdict.ConsumeOrSell, anchor);
+                    }
+                    return;
+                }
+                if (t is Blueprint || t is Frame)
+                {
+                    BuildableDef? built = def.entityDefToBuild;
+                    if (built != null && Owns(built, packageId))
+                    {
+                        Add("plan:" + built.defName, "Azrael_Removal_Blueprint".Translate(built.LabelCap),
+                            1, RemovalVerdict.ResolveFirst, anchor);
+                    }
+                    return;
+                }
+                if (!Owns(def, packageId))
+                {
+                    return;
+                }
+                switch (def.category)
+                {
+                    case ThingCategory.Building when !isHeld:
+                        Add("building:" + def.defName, def.LabelCap, 1, RemovalVerdict.Deconstruct, anchor);
+                        report.Deconstructables.Add(t);
+                        break;
+                    case ThingCategory.Plant:
+                        Add("plant:" + def.defName, "Azrael_Removal_Plant".Translate(def.LabelCap),
+                            1, RemovalVerdict.ConsumeOrSell, anchor);
+                        break;
+                    case ThingCategory.Pawn:
+                        Add("pawn:" + def.defName, "Azrael_Removal_Creature".Translate(def.LabelCap),
+                            1, RemovalVerdict.ResolveFirst, anchor);
+                        break;
+                    case ThingCategory.Item:
+                    case ThingCategory.Building:
+                        Add((isHeld ? "held:" : "item:") + def.defName,
+                            isHeld ? "Azrael_Removal_Held".Translate(def.LabelCap) : def.LabelCap,
+                            t.stackCount, RemovalVerdict.ConsumeOrSell, anchor);
+                        break;
+                    default:
+                        Add("other:" + def.defName, def.LabelCap, t.stackCount, RemovalVerdict.AutoSafe, anchor);
+                        break;
+                }
+            }
+
+            private void PawnState(Pawn pawn)
+            {
+                if (pawn == null || !seenPawns.Add(pawn))
+                {
+                    return;
+                }
+                List<Hediff>? list = pawn.health?.hediffSet?.hediffs;
+                if (list != null)
+                {
+                    foreach (Hediff h in list)
+                    {
+                        if (h?.def != null && Owns(h.def, packageId))
+                        {
+                            hediffs++;
+                        }
+                    }
+                }
+                List<Thought_Memory>? mems = pawn.needs?.mood?.thoughts?.memories?.Memories;
+                if (mems != null)
+                {
+                    foreach (Thought_Memory m in mems)
+                    {
+                        if (m?.def != null && Owns(m.def, packageId))
+                        {
+                            memories++;
+                        }
+                    }
+                }
+            }
+
+            private void Conditions(GameConditionManager? manager)
+            {
+                if (manager?.ActiveConditions == null)
+                {
+                    return;
+                }
+                foreach (GameCondition c in manager.ActiveConditions)
+                {
+                    if (c?.def != null && Owns(c.def, packageId))
+                    {
+                        Add("condition:" + c.def.defName, "Azrael_Removal_Condition".Translate(c.def.LabelCap),
+                            1, RemovalVerdict.AutoSafe, GlobalTargetInfo.Invalid);
+                    }
+                }
+            }
+
+            private void AddComponent(object? component, List<string> names)
+            {
+                if (component == null)
+                {
+                    return;
+                }
+                System.Type type = component.GetType();
+                if (OwnsAssembly(type.Assembly) && !names.Contains(type.Name))
+                {
+                    names.Add(type.Name);
+                }
+            }
+
+            private bool OwnsAssembly(System.Reflection.Assembly assembly)
+            {
+                foreach (ModContentPack pack in LoadedModManager.RunningModsListForReading)
+                {
+                    if (pack != null
+                        && (string.Equals(pack.PackageId, packageId, System.StringComparison.OrdinalIgnoreCase)
+                            || string.Equals(pack.PackageIdPlayerFacing, packageId, System.StringComparison.OrdinalIgnoreCase)))
+                    {
+                        return pack.assemblies?.loadedAssemblies?.Contains(assembly) == true;
+                    }
+                }
+                return false;
+            }
+
+            private void Add(string key, string label, int count, RemovalVerdict verdict, GlobalTargetInfo jump)
+            {
+                if (!lines.TryGetValue(key, out RemovalLine line))
+                {
+                    line = new RemovalLine { Label = label, Verdict = verdict, Jump = jump };
+                }
+                line.Count += count;
+                lines[key] = line;
+            }
+        }
+
+        private static void AddSisterState(string packageId, RemovalReport report)
+        {
+            if (packageId.IndexOf("Nemesis", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                if (SisterContracts.NemesisEngaged())
+                {
+                    report.Blockers.Add("Azrael_Removal_NemesisHunt".Translate());
                     report.Lines.Add(new RemovalLine
                     {
-                        Label = "Azrael_Removal_StrataPawns".Translate(onSub),
-                        Count = onSub,
+                        Label = "Azrael_Removal_NemesisHunt".Translate(),
+                        Count = 1,
                         Verdict = RemovalVerdict.ResolveFirst,
                     });
                 }
-            }
-
-            if (packageId.IndexOf("DeepColony", System.StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                int hediffs = CountOwnedHediffs(packageId);
-                if (hediffs > 0)
-                {
-                    report.Lines.Add(new RemovalLine
-                    {
-                        Label = "Azrael_Removal_DeepHediffs".Translate(),
-                        Count = hediffs,
-                        Verdict = RemovalVerdict.AutoSafe,
-                    });
-                }
-            }
-        }
-
-        private static void AddWorldState(string packageId, RemovalReport report)
-        {
-            if (packageId.IndexOf("Nemesis", System.StringComparison.OrdinalIgnoreCase) >= 0
-                && SisterContracts.NemesisPawnParked())
-            {
-                // HuntActive already blocks when engaged; parked pawn without engagement is rare.
-                if (!SisterContracts.NemesisEngaged())
+                else if (SisterContracts.NemesisPawnParked())
                 {
                     report.Lines.Add(new RemovalLine
                     {
@@ -265,6 +459,28 @@ namespace Azrael
                         Verdict = RemovalVerdict.AutoSafe,
                     });
                 }
+            }
+
+            // Colonists on a map this mod generated (Strata floors), not on any pocket map:
+            // Anomaly and Odyssey pocket maps belong to vanilla (AZR-587).
+            int onModMap = 0;
+            foreach (Map map in Find.Maps)
+            {
+                if (map != null
+                    && (Owns(map.generatorDef, packageId) || Owns(map.Parent?.def, packageId)))
+                {
+                    onModMap += map.mapPawns.FreeColonistsSpawned.Count;
+                }
+            }
+            if (onModMap > 0)
+            {
+                report.Blockers.Add("Azrael_Removal_ModMapPawns".Translate(onModMap));
+                report.Lines.Add(new RemovalLine
+                {
+                    Label = "Azrael_Removal_ModMapPawns".Translate(onModMap),
+                    Count = onModMap,
+                    Verdict = RemovalVerdict.ResolveFirst,
+                });
             }
 
             if (packageId.IndexOf("DeepColony", System.StringComparison.OrdinalIgnoreCase) >= 0)
@@ -280,73 +496,6 @@ namespace Azrael
                     });
                 }
             }
-        }
-
-        private static int CountOwnedHediffs(string packageId)
-        {
-            int n = 0;
-            var seen = new HashSet<Pawn>();
-            List<Map> maps = Find.Maps;
-            for (int m = 0; m < maps.Count; m++)
-            {
-                Map map = maps[m];
-                if (map?.mapPawns?.AllPawns == null)
-                {
-                    continue;
-                }
-                n += CountPawnsHediffs(map.mapPawns.AllPawns, packageId, seen);
-            }
-
-            List<Caravan> caravans = Find.WorldObjects.Caravans;
-            for (int c = 0; c < caravans.Count; c++)
-            {
-                Caravan caravan = caravans[c];
-                if (caravan?.PawnsListForReading == null)
-                {
-                    continue;
-                }
-                n += CountPawnsHediffs(caravan.PawnsListForReading, packageId, seen);
-            }
-
-            // Kidnapped colonists, quest lodgers, and other off-map pawns live here.
-            if (Find.WorldPawns != null)
-            {
-                n += CountPawnsHediffs(Find.WorldPawns.AllPawnsAlive, packageId, seen);
-            }
-
-            return n;
-        }
-
-        private static int CountPawnsHediffs(IEnumerable<Pawn> pawns, string packageId, HashSet<Pawn> seen)
-        {
-            int n = 0;
-            foreach (Pawn pawn in pawns)
-            {
-                if (pawn != null && seen.Add(pawn))
-                {
-                    n += CountPawnHediffs(pawn, packageId);
-                }
-            }
-            return n;
-        }
-
-        private static int CountPawnHediffs(Pawn pawn, string packageId)
-        {
-            if (pawn?.health?.hediffSet?.hediffs == null)
-            {
-                return 0;
-            }
-            int n = 0;
-            List<Hediff> hediffs = pawn.health.hediffSet.hediffs;
-            for (int i = 0; i < hediffs.Count; i++)
-            {
-                Hediff h = hediffs[i];
-                if (h?.def != null && Owns(h.def, packageId))
-                {
-                    n++;
-                }
-            }
-            return n;
         }
     }
 

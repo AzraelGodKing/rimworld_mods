@@ -53,22 +53,33 @@
   <Azrael_Removal_SectionHint>Does not edit the save. Lists what would orphan if you uninstall a series mod, then can designate its buildings for deconstruction.</Azrael_Removal_SectionHint>
   <Azrael_Removal_Prep>Prepare to remove {0}</Azrael_Removal_Prep>
   <Azrael_Removal_Title>Remove {0}</Azrael_Removal_Title>
-  <Azrael_Removal_Intro>Per map and caravan. This does not strip save data.</Azrael_Removal_Intro>
+  <Azrael_Removal_Intro>Maps, caravans, world pawns, the world map and saved data. This does not strip save data.</Azrael_Removal_Intro>
   <Azrael_Removal_Jump>Jump</Azrael_Removal_Jump>
   <Azrael_Removal_Deconstruct>Designate buildings for deconstruction</Azrael_Removal_Deconstruct>
   <Azrael_Removal_Designated>Designated {0} {1} building(s) for deconstruction.</Azrael_Removal_Designated>
   <Azrael_Removal_Summary>{0} to deconstruct · {1} to consume or sell · {2} need attention · {3} safe</Azrael_Removal_Summary>
   <Azrael_Removal_NeedSave>Load a colony first.</Azrael_Removal_NeedSave>
-  <Azrael_Removal_Empty>Nothing from this mod is on the maps or caravans.</Azrael_Removal_Empty>
+  <Azrael_Removal_Empty>Nothing from this mod is in this save.</Azrael_Removal_Empty>
   <Azrael_Removal_Blocked>Resolve the named blockers first.</Azrael_Removal_Blocked>
   <Azrael_Removal_NothingToDeconstruct>No buildings from this mod to deconstruct.</Azrael_Removal_NothingToDeconstruct>
   <Azrael_Removal_Confirm>Designate {0} building(s) from {1} for deconstruction on every map? You can only undo this by cancelling the designations by hand.</Azrael_Removal_Confirm>
   <Azrael_Removal_NemesisHunt>Active Nemesis hunt (or truce) — resolve it in play before removing Nemesis.</Azrael_Removal_NemesisHunt>
   <Azrael_Removal_NemesisWorldPawn>A Nemesis world pawn is still parked (cleaned by uninstall).</Azrael_Removal_NemesisWorldPawn>
-  <Azrael_Removal_StrataPawns>{0} colonist(s) still on a pocket floor — bring them up first.</Azrael_Removal_StrataPawns>
-  <Azrael_Removal_DeepHediffs>Pawn perks / trauma hediffs from Deep Colony (cleaned by uninstall; expect lost history).</Azrael_Removal_DeepHediffs>
   <Azrael_Removal_DeepLetters>Deep Colony family / legacy letters in world state (cleaned by uninstall).</Azrael_Removal_DeepLetters>
   <Azrael_Removal_Caravan>{0}: {1}</Azrael_Removal_Caravan>
+  <Azrael_Removal_ModMapPawns>{0} colonist(s) still on a map this mod made (for example a Strata floor) — bring them out first.</Azrael_Removal_ModMapPawns>
+  <Azrael_Removal_Memories>Memories and thoughts on pawns (cleaned by uninstall)</Azrael_Removal_Memories>
+  <Azrael_Removal_Hediffs>Health conditions on pawns (cleaned by uninstall)</Azrael_Removal_Hediffs>
+  <Azrael_Removal_Components>Saved mod data: {0} (dropped on load with a warning)</Azrael_Removal_Components>
+  <Azrael_Removal_Faction>Faction: {0}</Azrael_Removal_Faction>
+  <Azrael_Removal_WorldObject>{0} (on the world map)</Azrael_Removal_WorldObject>
+  <Azrael_Removal_Condition>{0} (active condition, ends on removal)</Azrael_Removal_Condition>
+  <Azrael_Removal_Floor>{0} (floor tiles — remove the floor)</Azrael_Removal_Floor>
+  <Azrael_Removal_Creature>{0} (creatures)</Azrael_Removal_Creature>
+  <Azrael_Removal_Plant>{0} (plants — cut or harvest)</Azrael_Removal_Plant>
+  <Azrael_Removal_Held>{0} (worn, carried or stored)</Azrael_Removal_Held>
+  <Azrael_Removal_Blueprint>{0} (blueprint or frame — cancel it)</Azrael_Removal_Blueprint>
+  <Azrael_Removal_Minified>{0} (packed)</Azrael_Removal_Minified>
   <Azrael_Removal_V_Deconstruct>deconstruct these</Azrael_Removal_V_Deconstruct>
   <Azrael_Removal_V_Sell>consume or sell these</Azrael_Removal_V_Sell>
   <Azrael_Removal_V_Resolve>resolve this first</Azrael_Removal_V_Resolve>

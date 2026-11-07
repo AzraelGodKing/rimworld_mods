@@ -53,22 +53,33 @@
   <Azrael_Removal_SectionHint>不会改存档。列出卸载系列模组后会孤立的内容，并可批量指定拆除。</Azrael_Removal_SectionHint>
   <Azrael_Removal_Prep>准备移除 {0}</Azrael_Removal_Prep>
   <Azrael_Removal_Title>移除 {0}</Azrael_Removal_Title>
-  <Azrael_Removal_Intro>按地图与商队列出。不会剥离存档数据。</Azrael_Removal_Intro>
+  <Azrael_Removal_Intro>地图、商队、世界角色、世界地图与存档数据。不会清除存档数据。</Azrael_Removal_Intro>
   <Azrael_Removal_Jump>跳转</Azrael_Removal_Jump>
   <Azrael_Removal_Deconstruct>将建筑指定为拆除</Azrael_Removal_Deconstruct>
   <Azrael_Removal_Designated>已为 {1} 的 {0} 座建筑指定拆除。</Azrael_Removal_Designated>
   <Azrael_Removal_Summary>待拆除 {0} · 待消耗或出售 {1} · 需处理 {2} · 安全 {3}</Azrael_Removal_Summary>
   <Azrael_Removal_NeedSave>请先载入一个殖民地。</Azrael_Removal_NeedSave>
-  <Azrael_Removal_Empty>地图与商队上没有该模组的东西。</Azrael_Removal_Empty>
+  <Azrael_Removal_Empty>此存档中没有该模组的内容。</Azrael_Removal_Empty>
   <Azrael_Removal_Blocked>请先处理标出的阻碍项。</Azrael_Removal_Blocked>
   <Azrael_Removal_NothingToDeconstruct>此模组没有需要拆除的建筑。</Azrael_Removal_NothingToDeconstruct>
   <Azrael_Removal_Confirm>在所有地图上为 {1} 的 {0} 座建筑指定拆除？只能手动取消指定来撤销。</Azrael_Removal_Confirm>
   <Azrael_Removal_NemesisHunt>Nemesis 狩猎仍在进行（或休战中）— 请先在游戏里结束，再移除 Nemesis。</Azrael_Removal_NemesisHunt>
   <Azrael_Removal_NemesisWorldPawn>仍有停泊在世界地图上的 Nemesis 小人（卸载会清掉）。</Azrael_Removal_NemesisWorldPawn>
-  <Azrael_Removal_StrataPawns>仍有 {0} 名殖民者在口袋层 — 请先把他们带上来。</Azrael_Removal_StrataPawns>
-  <Azrael_Removal_DeepHediffs>殖民者身上的 Deep Colony 天赋/创伤（卸载会清掉；历史会丢）。</Azrael_Removal_DeepHediffs>
   <Azrael_Removal_DeepLetters>Deep Colony 家族/遗产信件（世界状态；卸载会清掉）。</Azrael_Removal_DeepLetters>
   <Azrael_Removal_Caravan>{0}：{1}</Azrael_Removal_Caravan>
+  <Azrael_Removal_ModMapPawns>还有 {0} 名殖民者在此模组生成的地图上（例如 Strata 楼层）——请先带他们出来。</Azrael_Removal_ModMapPawns>
+  <Azrael_Removal_Memories>角色的记忆与想法（卸载时清理）</Azrael_Removal_Memories>
+  <Azrael_Removal_Hediffs>角色身上的健康状态（卸载时清理）</Azrael_Removal_Hediffs>
+  <Azrael_Removal_Components>模组存档数据：{0}（读档时丢弃并警告）</Azrael_Removal_Components>
+  <Azrael_Removal_Faction>派系：{0}</Azrael_Removal_Faction>
+  <Azrael_Removal_WorldObject>{0}（世界地图上）</Azrael_Removal_WorldObject>
+  <Azrael_Removal_Condition>{0}（进行中的状况，移除后结束）</Azrael_Removal_Condition>
+  <Azrael_Removal_Floor>{0}（地板——请移除）</Azrael_Removal_Floor>
+  <Azrael_Removal_Creature>{0}（生物）</Azrael_Removal_Creature>
+  <Azrael_Removal_Plant>{0}（植物——砍伐或收获）</Azrael_Removal_Plant>
+  <Azrael_Removal_Held>{0}（穿戴、携带或存放中）</Azrael_Removal_Held>
+  <Azrael_Removal_Blueprint>{0}（蓝图或框架——请取消）</Azrael_Removal_Blueprint>
+  <Azrael_Removal_Minified>{0}（已打包）</Azrael_Removal_Minified>
   <Azrael_Removal_V_Deconstruct>拆除这些</Azrael_Removal_V_Deconstruct>
   <Azrael_Removal_V_Sell>消耗或卖掉这些</Azrael_Removal_V_Sell>
   <Azrael_Removal_V_Resolve>请先自行处理</Azrael_Removal_V_Resolve>

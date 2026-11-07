@@ -53,22 +53,33 @@
   <Azrael_Removal_SectionHint>Сейв не правит. Показывает, что осиротеет при удалении мода серии, и может поставить здания на разбор.</Azrael_Removal_SectionHint>
   <Azrael_Removal_Prep>Подготовить удаление {0}</Azrael_Removal_Prep>
   <Azrael_Removal_Title>Удалить {0}</Azrael_Removal_Title>
-  <Azrael_Removal_Intro>По картам и караванам. Данные сейва не вырезаются.</Azrael_Removal_Intro>
+  <Azrael_Removal_Intro>Карты, караваны, пешки мира, карта мира и сохранённые данные. Данные сейва не удаляются.</Azrael_Removal_Intro>
   <Azrael_Removal_Jump>К месту</Azrael_Removal_Jump>
   <Azrael_Removal_Deconstruct>Назначить здания на разбор</Azrael_Removal_Deconstruct>
   <Azrael_Removal_Designated>Назначен разбор: {0} зданий ({1}).</Azrael_Removal_Designated>
   <Azrael_Removal_Summary>Разобрать: {0} · съесть или продать: {1} · требует внимания: {2} · безопасно: {3}</Azrael_Removal_Summary>
   <Azrael_Removal_NeedSave>Сначала загрузите колонию.</Azrael_Removal_NeedSave>
-  <Azrael_Removal_Empty>На картах и в караванах нет вещей этого мода.</Azrael_Removal_Empty>
+  <Azrael_Removal_Empty>В этом сейве нет ничего из этого мода.</Azrael_Removal_Empty>
   <Azrael_Removal_Blocked>Сначала разберите указанные препятствия.</Azrael_Removal_Blocked>
   <Azrael_Removal_NothingToDeconstruct>У этого мода нет зданий для разбора.</Azrael_Removal_NothingToDeconstruct>
   <Azrael_Removal_Confirm>Назначить разбор {0} зданий из {1} на всех картах? Отменить можно только снятием назначений вручную.</Azrael_Removal_Confirm>
   <Azrael_Removal_NemesisHunt>Охота Nemesis ещё идёт (или перемирие) — завершите её в игре, прежде чем снимать Nemesis.</Azrael_Removal_NemesisHunt>
   <Azrael_Removal_NemesisWorldPawn>Пешка Nemesis всё ещё на мировой карте (снимется при удалении).</Azrael_Removal_NemesisWorldPawn>
-  <Azrael_Removal_StrataPawns>{0} колонист(ов) всё ещё на карманном этаже — сначала поднимите их.</Azrael_Removal_StrataPawns>
-  <Azrael_Removal_DeepHediffs>Перки и травмы Deep Colony на пешках (снимутся при удалении; история пропадёт).</Azrael_Removal_DeepHediffs>
   <Azrael_Removal_DeepLetters>Семейные / наследие-письма Deep Colony в мире (снимутся при удалении).</Azrael_Removal_DeepLetters>
   <Azrael_Removal_Caravan>{0}: {1}</Azrael_Removal_Caravan>
+  <Azrael_Removal_ModMapPawns>Колонистов на карте этого мода (например, этаж Strata): {0} — сначала выведите их.</Azrael_Removal_ModMapPawns>
+  <Azrael_Removal_Memories>Воспоминания и мысли пешек (очистятся при удалении)</Azrael_Removal_Memories>
+  <Azrael_Removal_Hediffs>Состояния здоровья у пешек (очистятся при удалении)</Azrael_Removal_Hediffs>
+  <Azrael_Removal_Components>Сохранённые данные мода: {0} (отбросятся при загрузке с предупреждением)</Azrael_Removal_Components>
+  <Azrael_Removal_Faction>Фракция: {0}</Azrael_Removal_Faction>
+  <Azrael_Removal_WorldObject>{0} (на карте мира)</Azrael_Removal_WorldObject>
+  <Azrael_Removal_Condition>{0} (активное условие, закончится при удалении)</Azrael_Removal_Condition>
+  <Azrael_Removal_Floor>{0} (пол — уберите покрытие)</Azrael_Removal_Floor>
+  <Azrael_Removal_Creature>{0} (существа)</Azrael_Removal_Creature>
+  <Azrael_Removal_Plant>{0} (растения — срубите или соберите)</Azrael_Removal_Plant>
+  <Azrael_Removal_Held>{0} (надето, в инвентаре или в хранилище)</Azrael_Removal_Held>
+  <Azrael_Removal_Blueprint>{0} (чертёж или каркас — отмените)</Azrael_Removal_Blueprint>
+  <Azrael_Removal_Minified>{0} (упаковано)</Azrael_Removal_Minified>
   <Azrael_Removal_V_Deconstruct>разберите эти</Azrael_Removal_V_Deconstruct>
   <Azrael_Removal_V_Sell>съешьте или продайте</Azrael_Removal_V_Sell>
   <Azrael_Removal_V_Resolve>сначала разберите сами</Azrael_Removal_V_Resolve>
