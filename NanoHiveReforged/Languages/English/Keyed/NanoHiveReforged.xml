@@ -12,6 +12,12 @@
   <NanoHive_Settings_Range>Repair radius: {0}</NanoHive_Settings_Range>
   <NanoHive_Settings_RangeDefault>Repair radius: {0} (the building's default)</NanoHive_Settings_RangeDefault>
 
+  <!-- Inspect pane -->
+  <NanoHive_Inspect_Settings>Radius {0}, {1} HP per target, up to {2} HP per cycle</NanoHive_Inspect_Settings>
+  <NanoHive_Inspect_Repairing>Repairing: {1} of {0} things in range damaged, {2} HP repaired last cycle</NanoHive_Inspect_Repairing>
+  <NanoHive_Inspect_Idle>Idle at {1} W: {0} things in range, none damaged</NanoHive_Inspect_Idle>
+  <NanoHive_Inspect_NoPower>Not repairing: no power</NanoHive_Inspect_NoPower>
+
   <!-- Hive buttons -->
   <NanoHive_Toggle_Buildings>Repair buildings</NanoHive_Toggle_Buildings>
   <NanoHive_Toggle_BuildingsDesc>Repair your colony's buildings in range. The hive always repairs itself.</NanoHive_Toggle_BuildingsDesc>

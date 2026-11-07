@@ -30,7 +30,9 @@ namespace NanoHiveReforged
             return config;
         }
 
-        public static float DefaultRange => NanoHiveDefOf.NanoHiveReforged?.specialDisplayRadius ?? 12f;
+        public static float DefaultRange => NanoHiveDefOf.NanoHiveReforged != null
+            ? NanoHiveProps.For(NanoHiveDefOf.NanoHiveReforged).defaultRange
+            : 12f;
 
         public override void ExposeData()
         {

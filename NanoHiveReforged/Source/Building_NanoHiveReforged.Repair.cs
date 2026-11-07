@@ -18,10 +18,13 @@ namespace NanoHiveReforged
 
         // Results of the last cycle, for the inspect pane and the shimmer.
         // Not saved: the next cycle rebuilds them.
+        private int lastTargetsInRange;
         private int lastTargetsDamaged;
         private int lastHpRepaired;
 
         public bool Working { get; private set; }
+
+        public int LastTargetsInRange => lastTargetsInRange;
 
         public int LastTargetsDamaged => lastTargetsDamaged;
 
@@ -48,6 +51,7 @@ namespace NanoHiveReforged
             if (Map == null || Faction == null || (compPowerTrader != null && !compPowerTrader.PowerOn))
             {
                 Working = false;
+                lastTargetsInRange = 0;
                 lastTargetsDamaged = 0;
                 lastHpRepaired = 0;
                 return;
@@ -56,6 +60,7 @@ namespace NanoHiveReforged
             List<Thing> targets = scratchTargets;
             targets.Clear();
             scratchSeen.Clear();
+            lastTargetsInRange = 0;
             try
             {
                 CollectTargets(targets);
@@ -142,7 +147,7 @@ namespace NanoHiveReforged
             return !cfg.onlyStoredItems || (!thing.IsForbidden(Faction) && thing.IsInAnyStorage());
         }
 
-        private static void AddPawnThings(Pawn pawn, HiveConfig cfg, List<Thing> targets)
+        private void AddPawnThings(Pawn pawn, HiveConfig cfg, List<Thing> targets)
         {
             if (cfg.repairGear && pawn.equipment != null)
             {
@@ -174,14 +179,16 @@ namespace NanoHiveReforged
             }
         }
 
-        private static void AddIfDamaged(Thing thing, List<Thing> targets)
+        // Counts every eligible thing (for the inspect pane), keeps the damaged ones.
+        private void AddIfDamaged(Thing thing, List<Thing> targets)
         {
             if (thing == null || thing.Destroyed || thing.def == null || !thing.def.useHitPoints
-                || thing.HitPoints >= thing.MaxHitPoints)
+                || !scratchSeen.Add(thing))
             {
                 return;
             }
-            if (scratchSeen.Add(thing))
+            lastTargetsInRange++;
+            if (thing.HitPoints < thing.MaxHitPoints)
             {
                 targets.Add(thing);
             }

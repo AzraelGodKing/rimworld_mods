@@ -10,6 +10,10 @@
   <NanoHive_Settings_RangeOverride>Свой радиус ремонта</NanoHive_Settings_RangeOverride>
   <NanoHive_Settings_Range>Радиус ремонта: {0}</NanoHive_Settings_Range>
   <NanoHive_Settings_RangeDefault>Радиус ремонта: {0} (значение постройки)</NanoHive_Settings_RangeDefault>
+  <NanoHive_Inspect_Settings>Радиус {0}, {1} ед. на цель, до {2} ед. за цикл</NanoHive_Inspect_Settings>
+  <NanoHive_Inspect_Repairing>Ремонт: повреждено {1} из {0} вещей в радиусе, за прошлый цикл восстановлено {2} ед.</NanoHive_Inspect_Repairing>
+  <NanoHive_Inspect_Idle>Ожидание ({1} Вт): {0} вещей в радиусе, повреждённых нет</NanoHive_Inspect_Idle>
+  <NanoHive_Inspect_NoPower>Ремонт остановлен: нет питания</NanoHive_Inspect_NoPower>
   <NanoHive_Toggle_Buildings>Чинить постройки</NanoHive_Toggle_Buildings>
   <NanoHive_Toggle_BuildingsDesc>Чинить постройки вашей колонии в радиусе. Улей всегда чинит сам себя.</NanoHive_Toggle_BuildingsDesc>
   <NanoHive_Toggle_Items>Чинить предметы</NanoHive_Toggle_Items>

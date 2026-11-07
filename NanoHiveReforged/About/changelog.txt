@@ -7,11 +7,13 @@ One package for RimWorld 1.6 and 1.7. Saves from 1.x keep working.
 [*] [b]Repair budget[/b] — each repair cycle a hive spends at most 40 targets' worth of repair (rate x 40 HP), most damaged first. With the default rate, a hive with 40 or fewer damaged things in range repairs exactly as before. "Buildings first" spends the budget on buildings before items and gear.
 [*] [b]Idle power[/b] — a hive draws 200 W while nothing in range needs repair, and its full 1600 W only while repairing.
 [*] [b]Only stored items[/b] — optional: repair only items in a stockpile or storage that are not forbidden.
+[*] [b]Inspect pane[/b] — shows the hive's radius, rate and budget, how many things in range are damaged, and how much it repaired last cycle (or that it is idle or unpowered).
 [*] [b]Multiplayer[/b] — soft support. Hive settings live in the save and every hive button is synced, so players with different mod settings stay in step. No Multiplayer DLL is needed.
 [/list]
 [b]Changed[/b]
 [list]
 [*] [b]Mod settings are now starting values[/b] — they set up a new colony, or a 1.x save the first time it loads (so its hives keep working exactly as before). After that the save keeps its own values.
+[*] [b]Radius ring[/b] — the selection ring and the placement ghost now show the hive's real repair radius. Before, they always showed 12 even when the radius was changed.
 [*] Repaired buildings now leave your colonists' repair list as soon as they are full, so nobody walks over to fix a wall the hive already fixed.
 [*] [b]Stuff[/b] — the hive is now built from metal only (wood and stone made a fireproof nanite port flammable). Hives already built from wood or stone keep working.
 [*] Faster repair cycle: the cells in range are worked out once per hive instead of every cycle, and the cycle no longer allocates memory. It shows up as "NanoHiveReforged.TickRare" in the profiler.

@@ -79,6 +79,42 @@ namespace NanoHiveReforged
             }
         }
 
+        // ---- Selection ring and inspect pane ----
+
+        public override void DrawExtraSelectionOverlays()
+        {
+            base.DrawExtraSelectionOverlays();
+            GenDraw.DrawRadiusRing(Position, EffectiveRange);
+        }
+
+        public override string GetInspectString()
+        {
+            var sb = new System.Text.StringBuilder(base.GetInspectString());
+            void Line(string text)
+            {
+                if (sb.Length > 0)
+                {
+                    sb.AppendLine();
+                }
+                sb.Append(text);
+            }
+
+            Line("NanoHive_Inspect_Settings".Translate(EffectiveRange.ToString("F0"), Config.repairPerTarget, Budget));
+            if (compPowerTrader != null && !compPowerTrader.PowerOn)
+            {
+                Line("NanoHive_Inspect_NoPower".Translate());
+            }
+            else if (Working)
+            {
+                Line("NanoHive_Inspect_Repairing".Translate(LastTargetsInRange, LastTargetsDamaged, LastHpRepaired));
+            }
+            else
+            {
+                Line("NanoHive_Inspect_Idle".Translate(LastTargetsInRange, NanoHiveProps.For(def).idlePowerConsumption.ToString("F0")));
+            }
+            return sb.ToString();
+        }
+
         // ---- Gizmos ----
 
         public override IEnumerable<Gizmo> GetGizmos()
