@@ -161,6 +161,15 @@ namespace DeepColony.Patches
             lettered.Clear();
         }
 
+        // Saved by GameComp_DeepColony so a reload doesn't repeat the recovery letter.
+        internal static List<int> ExportLettered() => lettered.Count == 0 ? null : new List<int>(lettered);
+
+        internal static void ImportLettered(List<int> ids)
+        {
+            if (ids == null) return;
+            for (int i = 0; i < ids.Count; i++) lettered.Add(ids[i]);
+        }
+
         internal static void NoteFailedBirth(Pawn carrier, Hediff source = null, Pawn father = null)
         {
             if (carrier == null || carrier.Destroyed)

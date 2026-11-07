@@ -36,7 +36,8 @@ namespace DeepColony
 
             Pawn envoy = FactionEnvoyUtility.FindEnvoy(trader);
             if (envoy == null || envoy.Dead || !envoy.Spawned) return;
-            Map tradeMap = TradeSession.playerNegotiator?.Map ?? Find.CurrentMap;
+            // Negotiator's map only: Find.CurrentMap is per-client view state.
+            Map tradeMap = TradeSession.playerNegotiator?.MapHeld;
             if (tradeMap != null && envoy.Map == tradeMap)
             {
                 GameComp_DeepColony.Instance?.AddFactionDrift(trader, 1f, FactionRepReason.EnvoyPresent);

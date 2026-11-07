@@ -34,6 +34,30 @@ namespace DeepColony
             pendingLeaves.Clear();
         }
 
+        // Saved by GameComp_DeepColony as flat (pawnId, homeMapId, tick) triples, so a
+        // save taken between a child leaving and the next tick keeps the beat (AZR-629).
+        internal static List<int> ExportPendingLeaves()
+        {
+            if (pendingLeaves.Count == 0) return null;
+            var flat = new List<int>(pendingLeaves.Count * 3);
+            for (int i = 0; i < pendingLeaves.Count; i++)
+            {
+                flat.Add(pendingLeaves[i].pawnId);
+                flat.Add(pendingLeaves[i].homeMapId);
+                flat.Add(pendingLeaves[i].tick);
+            }
+            return flat;
+        }
+
+        internal static void ImportPendingLeaves(List<int> flat)
+        {
+            if (flat == null) return;
+            for (int i = 0; i + 2 < flat.Count; i += 3)
+            {
+                pendingLeaves.Add(new PendingLeave { pawnId = flat[i], homeMapId = flat[i + 1], tick = flat[i + 2] });
+            }
+        }
+
         public static void GameTick()
         {
             ConfirmPendingLeaves();
