@@ -1,11 +1,17 @@
-1.5.0
-[h1]Nemesis — 1.5.0[/h1]
+2.0.0
+[h1]Nemesis — 2.0.0[/h1]
+Nemesis 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting every update, and the same save carries over to 1.7.
 
 [b]Changed[/b]
 [list]
-[*] [b]Workshop preview[/b] — new preview image of the hunter and the cabin.
-[*] Declared RimWorld 1.7 in supportedVersions alongside 1.6. Existing 1.6 DLL; no gameplay change.
+[*] [b]RimWorld 1.7[/b] — the 1.7 folder now has its own .NET 10 build made against the 1.7 game files. 1.6 keeps its own build from the same source.
+[*] [b]Stormproof[/b] — EMP sabotage asks Stormproof whether a building is covered by a dampener, using its real radius and power. A surge protector that is still recharging no longer blocks the extra short circuit.
+[*] [b]Quieter hunt schedule[/b] — comms taunts need a console that can call right now. Some picks are a deliberate quiet spell.
+[/list]
+[b]Fixed[/b]
+[list]
+[*] [b]Hunt lifecycle[/b] — a nemesis off the home map can still slip away or be killed for real, a missing captain ends the hunt, ending a hunt frees the world pawn, and a rogue captain only joins a hostile human faction.
 [/list]
 
-[i]Build stamp (Player.log): custody-sync-v1[/i]
+[i]Build stamp (Player.log): nemesis2-net10[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/nemesis.md[/i]
