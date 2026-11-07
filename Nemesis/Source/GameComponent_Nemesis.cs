@@ -177,6 +177,9 @@ namespace Nemesis
             }
             if (!h.active) return;
 
+            if (t % 250 == 0)
+                NemesisHuntSites.Tick(h);
+
             if (t % 2500 == 0)
             {
                 CheckNemesisStillExists(h);
@@ -411,7 +414,7 @@ namespace Nemesis
             h.aggressionLevel = Mathf.Min(h.aggressionLevel + 0.5f, 10f);
             h.lastEscapeTick = Find.TickManager.TicksGame;
             h.nextActionTick = Find.TickManager.TicksGame + 120000;
-            NemesisTells.RecordSighting(h, map);
+            NemesisHuntSites.RecordHeading(h, map);
             NemesisTells.RecordGear(h, nemesis);
             NemesisProgression.LevelUpOnEscape(h, nemesis);
             ApplyEscapeMoodFallout(h);
@@ -628,7 +631,7 @@ namespace Nemesis
                     NemesisPawnUtil.ParkAsWorldNemesis(nemesis);
                     NemesisPawnUtil.EnsureHuntFaction(nemesis, h.faction);
                 }
-                NemesisTells.RecordNote(h, "Nemesis_Note_CustodyEscaped".Translate());
+                NemesisTells.RecordNote(h, "Nemesis_Note_CustodyEscaped");
                 Find.LetterStack.ReceiveLetter(
                     "Nemesis_Letter_CustodyEscapedTitle".Translate(h.ColoredName),
                     "Nemesis_Letter_CustodyEscapedBody".Translate(name),

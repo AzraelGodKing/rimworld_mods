@@ -14,7 +14,7 @@ namespace Nemesis
             if (data == null || !data.active) return;
 
             data.aggressionLevel = Mathf.Min(data.aggressionLevel + 0.25f, 10f);
-            NemesisTells.RecordNote(data, "Nemesis_Note_TauntBack".Translate());
+            NemesisTells.RecordNote(data, "Nemesis_Note_TauntBack");
             Find.LetterStack.ReceiveLetter(
                 "Nemesis_Letter_TauntBackTitle".Translate(data.ColoredName),
                 "Nemesis_Letter_TauntBackBody".Translate(data.nemesisName),
@@ -52,7 +52,7 @@ namespace Nemesis
             data.active = false;
             data.pendingFakeAmbush = false;
             data.truceUntilTick = Find.TickManager.TicksGame + days * 60000;
-            NemesisTells.RecordNote(data, "Nemesis_Note_TruceOffer".Translate(days));
+            NemesisTells.RecordNote(data, "Nemesis_Note_TruceOffer", days.ToString());
             Find.LetterStack.ReceiveLetter(
                 "Nemesis_Letter_TruceTitle".Translate(data.ColoredName),
                 "Nemesis_Letter_TruceBody".Translate(data.nemesisName, days),
@@ -74,7 +74,7 @@ namespace Nemesis
                 // Force them to come in for a capture attempt soon.
                 data.nextActionTick = Find.TickManager.TicksGame + 15000;
                 data.aggressionLevel = Mathf.Max(1f, data.aggressionLevel - 0.4f);
-                NemesisTells.RecordNote(data, "Nemesis_Note_SurrenderDemand".Translate());
+                NemesisTells.RecordNote(data, "Nemesis_Note_SurrenderDemand");
                 Find.LetterStack.ReceiveLetter(
                     "Nemesis_Letter_SurrenderOkTitle".Translate(data.ColoredName),
                     "Nemesis_Letter_SurrenderOkBody".Translate(data.nemesisName),

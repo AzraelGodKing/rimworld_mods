@@ -1,4 +1,5 @@
 #nullable enable
+using System;
 using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
@@ -31,15 +32,54 @@ namespace Nemesis
         SameBuilding,
     }
 
+    /// <summary>
+    /// A dossier note, stored as a translation key plus arguments and translated when drawn,
+    /// so notes follow the language setting (AZR-555). An argument that starts with
+    /// <see cref="KeyArg"/> is itself a key; one that starts with <see cref="ThingArg"/> is a
+    /// ThingDef name shown by its label. Notes from 1.x saves keep their stored text.
+    /// </summary>
     public class NemesisNote : IExposable
     {
+        public const string KeyArg = "@k:";
+        public const string ThingArg = "@t:";
+
         public int tick;
         public string? text;
+        public string? key;
+        public List<string>? args;
+
+        public static string Key(string key) => KeyArg + key;
+        public static string Thing(string defName) => ThingArg + defName;
+
+        public string Text => key == null ? text ?? "" : Render(key, args);
+
+        public static string Render(string key, IList<string>? args)
+        {
+            if (args == null || args.Count == 0) return key.Translate();
+            NamedArgument[] named = new NamedArgument[args.Count];
+            for (int i = 0; i < args.Count; i++)
+                named[i] = RenderArg(args[i]);
+            return key.Translate(named);
+        }
+
+        private static string RenderArg(string arg)
+        {
+            if (arg.StartsWith(KeyArg, StringComparison.Ordinal))
+                return arg.Substring(KeyArg.Length).Translate();
+            if (arg.StartsWith(ThingArg, StringComparison.Ordinal))
+            {
+                ThingDef? def = DefDatabase<ThingDef>.GetNamedSilentFail(arg.Substring(ThingArg.Length));
+                return def != null ? (string)def.LabelCap : "Nemesis_Weapon_Unknown".Translate();
+            }
+            return arg;
+        }
 
         public void ExposeData()
         {
             Scribe_Values.Look(ref tick, "tick", 0);
             Scribe_Values.Look(ref text, "text");
+            Scribe_Values.Look(ref key, "key");
+            Scribe_Collections.Look(ref args, "args", LookMode.Value);
         }
     }
 
@@ -107,11 +147,11 @@ namespace Nemesis
             if (data.huntStartTick <= 0)
                 data.huntStartTick = Find.TickManager.TicksGame;
             data.tellsRolled = true;
-            RecordNote(data, "Nemesis_Note_TellsRolled".Translate(
-                VoiceKey(data.voice).Translate(),
-                WeaponLabel(data),
-                MarkKey(data.mark).Translate(),
-                HabitKey(data.habit).Translate()));
+            RecordNote(data, "Nemesis_Note_TellsRolled",
+                NemesisNote.Key(VoiceKey(data.voice)),
+                data.weaponDefName is string w && w.Length > 0 ? NemesisNote.Thing(w) : NemesisNote.Key("Nemesis_Weapon_Unknown"),
+                NemesisNote.Key(MarkKey(data.mark)),
+                NemesisNote.Key(HabitKey(data.habit)));
         }
 
         public static string VoiceKey(NemesisVoice v) => v switch
@@ -150,30 +190,21 @@ namespace Nemesis
             return "Nemesis_Weapon_Unknown".Translate();
         }
 
-        public static void RecordNote(NemesisData data, string text)
+        /// <summary>Add a dossier note: a translation key and its arguments (see <see cref="NemesisNote"/>).</summary>
+        public static void RecordNote(NemesisData data, string key, params string[] args)
         {
-            if (data == null || string.IsNullOrEmpty(text))
+            if (data == null || string.IsNullOrEmpty(key))
                 return;
             if (data.notes == null)
                 data.notes = new List<NemesisNote>();
             data.notes.Add(new NemesisNote
             {
                 tick = Find.TickManager.TicksGame,
-                text = text,
+                key = key,
+                args = args.Length > 0 ? new List<string>(args) : null,
             });
             while (data.notes.Count > 24)
                 data.notes.RemoveAt(0);
-        }
-
-        public static void RecordSighting(NemesisData data, Map? map)
-        {
-            if (data == null || map == null)
-                return;
-            data.lastKnownTile = map.Tile;
-            data.lastKnownTileLabel = Find.WorldGrid?.LongLatOf(map.Tile).ToString()
-                ?? map.Parent?.LabelCap
-                ?? map.ToString();
-            RecordNote(data, "Nemesis_Note_Sighting".Translate(data.lastKnownTileLabel));
         }
 
         public static void RecordGear(NemesisData data, Pawn? pawn)
@@ -181,16 +212,15 @@ namespace Nemesis
             if (data == null || pawn?.equipment?.Primary == null)
                 return;
             data.lastGearSeen = pawn.equipment.Primary.LabelCap;
-            if (!string.IsNullOrEmpty(data.lastGearSeen))
-                RecordNote(data, "Nemesis_Note_Gear".Translate(data.lastGearSeen));
+            RecordNote(data, "Nemesis_Note_Gear", NemesisNote.Thing(pawn.equipment.Primary.def.defName));
         }
 
-        public static void MaybeLeaveMark(NemesisData data, Map map, IntVec3? near)
+        public static void MaybeLeaveMark(NemesisData data, Map map, IntVec3? near, bool always = false)
         {
-            if (data == null || map == null || Rand.Value > 0.45f)
+            if (data == null || map == null || !always && Rand.Value > 0.45f)
                 return;
 
-            RecordNote(data, "Nemesis_Note_Mark".Translate(MarkKey(data.mark).Translate()));
+            RecordNote(data, "Nemesis_Note_Mark", NemesisNote.Key(MarkKey(data.mark)));
 
             if (data.mark != NemesisMark.CallingCard && data.mark != NemesisMark.SabotageToken)
                 return;

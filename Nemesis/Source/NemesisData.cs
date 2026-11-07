@@ -117,6 +117,11 @@ namespace Nemesis
         public int huntStartTick;
         public PlanetTile lastKnownTile = PlanetTile.Invalid;
         public string? lastKnownTileLabel;
+
+        // Hunt camp from a bought lead (AZR-555). Real camps hold the nemesis; false ones don't.
+        public Site? campSite;
+        public bool campIsReal;
+        public bool campVisited;
         /// <summary>Silver the player posted against this hunt (AZR-657).</summary>
         public int bountySilver;
         public string? lastGearSeen;
@@ -207,6 +212,9 @@ namespace Nemesis
                     lastKnownTile = new PlanetTile(legacyTile);
             }
             Scribe_Values.Look(ref lastKnownTileLabel, "lastKnownTileLabel", null);
+            Scribe_References.Look(ref campSite, "campSite");
+            Scribe_Values.Look(ref campIsReal, "campIsReal");
+            Scribe_Values.Look(ref campVisited, "campVisited");
             Scribe_Values.Look(ref lastGearSeen, "lastGearSeen", null);
             Scribe_Values.Look(ref bountySilver, "bountySilver", 0);
             Scribe_Collections.Look(ref notes, "notes", LookMode.Deep);

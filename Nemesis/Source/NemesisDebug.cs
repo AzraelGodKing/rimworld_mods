@@ -470,5 +470,25 @@ namespace Nemesis
             if (!RequireActiveHunt(out _, out NemesisData data)) return;
             FireAssault(NemesisTactics.Choose(data), true);
         }
+
+        // --- Hunt camps (AZR-555) ---
+
+        private static void MakeCamp(bool real)
+        {
+            if (!RequireActiveHunt(out _, out NemesisData data)) return;
+            bool ok = NemesisHuntSites.TryCreateCamp(data, real, PreferMap());
+            Messages.Message(ok
+                    ? $"[Nemesis] {(real ? "Real" : "False")} camp at {data.lastKnownTileLabel}."
+                    : "[Nemesis] No camp could be placed (faction, def or tile).",
+                ok ? MessageTypeDefOf.NeutralEvent : MessageTypeDefOf.RejectInput, historical: false);
+            if (ok && data.campSite != null)
+                CameraJumper.TryJump(data.campSite);
+        }
+
+        [DebugAction(Cat, "Create hunt camp (real lead)", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void CampReal() => MakeCamp(true);
+
+        [DebugAction(Cat, "Create hunt camp (false lead)", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void CampFalse() => MakeCamp(false);
     }
 }

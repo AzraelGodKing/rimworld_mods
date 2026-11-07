@@ -14,64 +14,65 @@ namespace Nemesis
             return "Nemesis_Phrase_YourColony".Translate();
         }
 
+        /// <summary>Pick a comms taunt, note it in the dossier (as key + args), and return it translated.</summary>
         public static string PickCommsLine(NemesisData data)
         {
             string target = TargetPhrase(data);
             string name = data.nemesisName ?? "Nemesis_Phrase_Someone".Translate();
-            int escapes = data.escapeCount;
-            float agg = data.EffectiveAggression;
 
-            string line = PickVoiceLine(data, name, target, escapes, agg);
-            NemesisTells.RecordNote(data, line);
-            return line;
+            string[] line = PickVoiceLine(data, name, target);
+            string key = line[0];
+            string[] args = new string[line.Length - 1];
+            System.Array.Copy(line, 1, args, 0, args.Length);
+            NemesisTells.RecordNote(data, key, args);
+            return NemesisNote.Render(key, args);
         }
 
-        static string PickVoiceLine(NemesisData data, string name, string target, int escapes, float agg)
+        /// <summary>Key first, then its arguments.</summary>
+        static string[] PickVoiceLine(NemesisData data, string name, string target)
         {
-            bool high = agg >= 3f;
+            bool high = data.EffectiveAggression >= 3f;
             return data.voice switch
             {
                 NemesisVoice.Mocking => high
-                    ? (Rand.Bool ? "Nemesis_Taunt_High0".Translate(name, target)
-                        : "Nemesis_Taunt_Low5".Translate(name, target))
-                    : (Rand.Bool ? "Nemesis_Taunt_Low1".Translate(name, target)
+                    ? (Rand.Bool ? new[] { "Nemesis_Taunt_High0", name, target }
+                        : new[] { "Nemesis_Taunt_Low5", name, target })
+                    : (Rand.Bool ? new[] { "Nemesis_Taunt_Low1", name, target }
                         : SoftHomesteaderTaunt(data, name, target)
-                            ?? "Nemesis_Taunt_Low5".Translate(name, target)),
+                            ?? new[] { "Nemesis_Taunt_Low5", name, target }),
                 NemesisVoice.Zealot => high
                     ? (Rand.Bool
-                        ? "Nemesis_Taunt_High1".Translate(name, target)
-                        : "Nemesis_Taunt_High5".Translate(name, target))
-                    : "Nemesis_Taunt_Low4".Translate(name, target),
+                        ? new[] { "Nemesis_Taunt_High1", name, target }
+                        : new[] { "Nemesis_Taunt_High5", name, target })
+                    : new[] { "Nemesis_Taunt_Low4", name, target },
                 NemesisVoice.Casual => high
                     ? (Rand.Bool
-                        ? "Nemesis_Taunt_High4".Translate(name, target)
-                        : SoftStormFlavor(data, name, target)
-                            ?? "Nemesis_Taunt_High3".Translate(name, target, escapes))
-                    : "Nemesis_Taunt_Low3".Translate(name, target),
+                        ? new[] { "Nemesis_Taunt_High4", name, target }
+                        : SoftStormFlavor(name, target)
+                            ?? new[] { "Nemesis_Taunt_High3", name, target, data.escapeCount.ToString() })
+                    : new[] { "Nemesis_Taunt_Low3", name, target },
                 _ => high
                     ? (Rand.Bool
-                        ? "Nemesis_Taunt_High2".Translate(name, target)
-                        : "Nemesis_Taunt_Low2".Translate(name, target))
-                    : "Nemesis_Taunt_Low0".Translate(name, target),
+                        ? new[] { "Nemesis_Taunt_High2", name, target }
+                        : new[] { "Nemesis_Taunt_Low2", name, target })
+                    : new[] { "Nemesis_Taunt_Low0", name, target },
             };
         }
 
-        private static string? SoftHomesteaderTaunt(NemesisData data, string name, string target)
+        private static string[]? SoftHomesteaderTaunt(NemesisData data, string name, string target)
         {
             if (!SoftCompat.HomesteaderActive) return null;
             Pawn? victim = GameComponent_Nemesis.Instance?.FindTargetPawn(data);
             string? fav = SoftCompat.TryFavoriteFoodLabel(victim);
             if (fav != null)
-                return "Nemesis_Taunt_FavoriteFood".Translate(name, target, fav);
-            if (data != null)
-                return "Nemesis_Taunt_Cellar".Translate(name);
-            return null;
+                return new[] { "Nemesis_Taunt_FavoriteFood", name, target, fav };
+            return new[] { "Nemesis_Taunt_Cellar", name };
         }
 
-        private static string? SoftStormFlavor(NemesisData data, string name, string target)
+        private static string[]? SoftStormFlavor(string name, string target)
         {
             if (!SoftCompat.StormproofActive) return null;
-            return "Nemesis_Taunt_Ion".Translate(name, target);
+            return new[] { "Nemesis_Taunt_Ion", name, target };
         }
 
         public static string EscapeLetterBody(NemesisData data)

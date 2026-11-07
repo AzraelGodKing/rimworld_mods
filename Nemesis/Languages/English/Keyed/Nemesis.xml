@@ -211,7 +211,6 @@
   <Nemesis_Weapon_Unknown>unknown weapon</Nemesis_Weapon_Unknown>
 
   <Nemesis_Note_TellsRolled>Tells: {0} voice, {1}, {2}, {3}.</Nemesis_Note_TellsRolled>
-  <Nemesis_Note_Sighting>Seen near {0}.</Nemesis_Note_Sighting>
   <Nemesis_Note_Gear>Seen carrying {0}.</Nemesis_Note_Gear>
   <Nemesis_Note_Mark>Left {0}.</Nemesis_Note_Mark>
   <Nemesis_Note_RaidWarning>Someone sold a warning: they are gathering for another raid.</Nemesis_Note_RaidWarning>
@@ -240,10 +239,10 @@
   <Nemesis_Intel_Disabled>Informants are turned off in Mod Options.</Nemesis_Intel_Disabled>
   <Nemesis_Intel_NoSilver>Need {0} silver in a stockpile on this map.</Nemesis_Intel_NoSilver>
   <Nemesis_Intel_Tile>They were last seen near {0}. Cost {1} silver.</Nemesis_Intel_Tile>
+  <Nemesis_Intel_Camp>An informant says they are camped at {0}. The camp is marked on the world map. Cost {1} silver.</Nemesis_Intel_Camp>
   <Nemesis_Intel_Gear>They still carry {0}. Cost {1} silver.</Nemesis_Intel_Gear>
   <Nemesis_Intel_Warning>A warning: another raid is coming. Cost {0} silver.</Nemesis_Intel_Warning>
   <Nemesis_Intel_False>The lead was a lie. Cost {0} silver.</Nemesis_Intel_False>
-  <Nemesis_Intel_FalseTile>somewhere that was never them</Nemesis_Intel_FalseTile>
   <Nemesis_Bounty_Posted>Bounty is now {0} silver.</Nemesis_Bounty_Posted>
   <Nemesis_Bounty_PaidOut>The {0} silver bounty on {1} is paid out to the informants who helped.</Nemesis_Bounty_PaidOut>
   <Nemesis_Bounty_Refunded>Nobody claimed the {0} silver bounty on {1}. It has been sent back.</Nemesis_Bounty_Refunded>
@@ -299,4 +298,16 @@
   <Nemesis_Tactic_Desc_Breach>{0}'s raiders will break through your walls, and {0} will follow them in.</Nemesis_Tactic_Desc_Breach>
   <Nemesis_Tactic_Desc_Siege>{0}'s raiders are digging in for a siege while {0} hunts from the flank.</Nemesis_Tactic_Desc_Siege>
   <Nemesis_Tactic_Desc_Commander>{0} is holding back and sending the raid in first. They will step in once your defenders are worn down.</Nemesis_Tactic_Desc_Commander>
+  <Nemesis_Note_Camp>An informant placed their camp at {0}.</Nemesis_Note_Camp>
+  <Nemesis_Note_Heading>Last seen heading toward {0}.</Nemesis_Note_Heading>
+  <Nemesis_Note_HeadingUnknown>Slipped away. Nobody saw which way.</Nemesis_Note_HeadingUnknown>
+  <Nemesis_Note_CampGone>The camp was struck before anyone got there.</Nemesis_Note_CampGone>
+  <Nemesis_Note_CampFound>Found at their camp.</Nemesis_Note_CampFound>
+  <Nemesis_Note_CampMissed>The camp was real, but they were out hunting.</Nemesis_Note_CampMissed>
+  <Nemesis_Note_CampFalse>The camp was a decoy. They were never there.</Nemesis_Note_CampFalse>
+  <Nemesis_Letter_CampFoundTitle>{0} is here</Nemesis_Letter_CampFoundTitle>
+  <Nemesis_Letter_CampFoundBody>The lead was good. {0} is in the camp with their people. Kill them, or take them alive.</Nemesis_Letter_CampFoundBody>
+  <Nemesis_Letter_CampEmptyTitle>{0} is not here</Nemesis_Letter_CampEmptyTitle>
+  <Nemesis_Letter_CampMissedBody>This is {0}'s camp, but they are out. Their people are still here.</Nemesis_Letter_CampMissedBody>
+  <Nemesis_Letter_CampFalseBody>{0} was never here. The informant sold you a decoy, and someone left a mark for you to find.</Nemesis_Letter_CampFalseBody>
 </LanguageData>
