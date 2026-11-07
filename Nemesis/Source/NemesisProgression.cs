@@ -100,8 +100,12 @@ namespace Nemesis
             float sev = Mathf.Clamp(level, 1, 8);
             if (existing == null)
                 pawn.health.AddHediff(def).Severity = sev;
-            else
+            else if (existing.Severity != sev)
+            {
                 existing.Severity = sev;
+                // The aura scales with level; redraw the cached pawn (AZR-536).
+                pawn.Drawer?.renderer?.SetAllGraphicsDirty();
+            }
         }
 
         private static void RaiseSkills(Pawn pawn, NemesisCombatFocus focus, int level)
@@ -151,9 +155,9 @@ namespace Nemesis
         {
             QualityCategory quality = QualityForLevel(level, pawn.Faction?.def?.techLevel ?? TechLevel.Industrial);
             EnsureFocusWeapon(pawn, data, quality);
-            UpgradeApparelQuality(pawn, quality);
             if (level >= 3)
                 TryGiveArmor(pawn, data, quality);
+            UpgradeApparelQuality(pawn, quality, data, level);
         }
 
         private static QualityCategory QualityForLevel(int level, TechLevel tech)
@@ -259,13 +263,33 @@ namespace Nemesis
             }
         }
 
-        private static void UpgradeApparelQuality(Pawn pawn, QualityCategory quality)
+        private const int GearTintLevel = 3;
+
+        private static void UpgradeApparelQuality(Pawn pawn, QualityCategory quality, NemesisData data, int level)
         {
             if (pawn.apparel == null) return;
             List<Apparel> worn = pawn.apparel.WornApparel;
+            bool tint = level >= GearTintLevel && (NemesisMod.Settings?.enableNemesisVisuals ?? true);
+            Color color = FocusColor(data.combatFocus);
             for (int i = 0; i < worn.Count; i++)
+            {
                 SetQuality(worn[i], quality);
+                // Upgraded gear takes the combat focus colour, so a veteran captain is readable
+                // at a glance (AZR-536). Only dyeable apparel.
+                if (tint && worn[i].TryGetComp<CompColorable>() != null)
+                    worn[i].SetColor(color, reportFailure: false);
+            }
         }
+
+        public static Color FocusColor(NemesisCombatFocus focus) => focus switch
+        {
+            NemesisCombatFocus.Destroyer => new Color(0.55f, 0.12f, 0.12f),
+            NemesisCombatFocus.Berserker => new Color(0.7f, 0.33f, 0.1f),
+            NemesisCombatFocus.Sniper => new Color(0.3f, 0.38f, 0.28f),
+            NemesisCombatFocus.Psycho => new Color(0.4f, 0.18f, 0.48f),
+            NemesisCombatFocus.Survivor => new Color(0.42f, 0.33f, 0.24f),
+            _ => new Color(0.16f, 0.4f, 0.46f),
+        };
 
         private static void TryGiveArmor(Pawn pawn, NemesisData data, QualityCategory quality)
         {

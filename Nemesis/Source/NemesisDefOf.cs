@@ -13,6 +13,7 @@ namespace Nemesis
         public static ThoughtDef Nemesis_EscapedAgain = null!;
         public static ThingDef Nemesis_CallingCard = null!;
         public static DutyDef Nemesis_HuntTarget = null!;
+        public static ThingDef Nemesis_Scrawl = null!;
 
         static NemesisDefOf()
         {

@@ -39,6 +39,8 @@
   <Nemesis_Settings_SoftMechsTip>载入 Biotech 时，机械师专精的队长在大军回归袭击中可带 1–3 台机械体。载入 Vanilla Factions Expanded - Pirates 时，5 级起的毁灭者和幸存者队长会带一名战甲兵。</Nemesis_Settings_SoftMechsTip>
   <Nemesis_Settings_ShuttleDrops>穿梭机空降（Odyssey）</Nemesis_Settings_ShuttleDrops>
   <Nemesis_Settings_ShuttleDropsTip>启用 Odyssey 时，工业或更高科技派系的队长有时会乘穿梭机降落。穿梭机会在原地等待，袭击崩溃时队长乘它撤离。</Nemesis_Settings_ShuttleDropsTip>
+  <Nemesis_Settings_Visuals>宿敌视觉效果（光环、装备颜色）</Nemesis_Settings_Visuals>
+  <Nemesis_Settings_VisualsTip>宿敌身后的红色光环会随等级增大；3 级起，其升级装备会染成战斗风格的颜色。关闭后隐藏光环并停止新的染色。</Nemesis_Settings_VisualsTip>
   <Nemesis_Settings_ActionMix>行动组合</Nemesis_Settings_ActionMix>
   <Nemesis_Settings_WeightTaunt>通讯嘲讽：{0}</Nemesis_Settings_WeightTaunt>
   <Nemesis_Settings_WeightIdle>按兵不动：{0}</Nemesis_Settings_WeightIdle>

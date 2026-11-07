@@ -11,6 +11,7 @@ Nemesis 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting eve
 [*] [b]Hunt camps[/b] — a good informant lead marks the nemesis's camp on the world map. Send a caravan to catch them there, but some leads are decoys.
 [*] [b]Sister mods[/b] — with Living World, a nemesis reacts when their faction is wiped out or wins or loses a war. With Stormproof, they strike during ion storms. With Strata, a deep raid in your cellars counts as "already under attack".
 [*] [b]Presets[/b] — Relentless, Default and Slow-burn buttons at the top of the settings.
+[*] [b]You can spot them[/b] — a red aura that grows with the nemesis's level, gear dyed in their combat style's colour, a real calling card, and a scrawled mark where they strike.
 [*] [b]The bounty matters[/b] — while posted it buys better informants (fewer false leads). It is paid out when you kill or capture the nemesis, and returned by drop pod if the hunt ends any other way.
 [*] [b]Settings[/b] — how much calmer a nemesis returns after a truce, the health at which a cornered nemesis gives up, and how many escapes before colonists get upset.
 [*] [b]Multiplayer[/b] — Nemesis's buttons are synced when the Multiplayer mod is on. All players need the host's Nemesis settings. Not tested yet.

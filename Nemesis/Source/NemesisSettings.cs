@@ -46,6 +46,7 @@ namespace Nemesis
         public bool enableSoftMounts = true;
         public bool enableSoftMechs = true;
         public bool enableShuttleDrops = true;
+        public bool enableNemesisVisuals = true;
 
         // Sister mods (AZR-556)
         public bool livingWorldCollapseEscalates = true;
@@ -89,6 +90,7 @@ namespace Nemesis
             Scribe_Values.Look(ref enableSoftMounts, "enableSoftMounts", true);
             Scribe_Values.Look(ref enableSoftMechs, "enableSoftMechs", true);
             Scribe_Values.Look(ref enableShuttleDrops, "enableShuttleDrops", true);
+            Scribe_Values.Look(ref enableNemesisVisuals, "enableNemesisVisuals", true);
             Scribe_Values.Look(ref livingWorldCollapseEscalates, "livingWorldCollapseEscalates", true);
             Scribe_Values.Look(ref enableIonStormBaiting, "enableIonStormBaiting", true);
             Scribe_Values.Look(ref enableInformants, "enableInformants", true);
@@ -171,6 +173,7 @@ namespace Nemesis
             enableSoftMounts = true;
             enableSoftMechs = true;
             enableShuttleDrops = true;
+            enableNemesisVisuals = true;
             livingWorldCollapseEscalates = true;
             enableIonStormBaiting = true;
             enableInformants = true;

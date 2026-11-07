@@ -13,6 +13,20 @@
     <tendable>false</tendable>
     <initialSeverity>1</initialSeverity>
     <maxSeverity>8</maxSeverity>
+    <!-- Nemesis aura (AZR-536): a red glow behind the body, larger and brighter with each
+         level. The worker scales it by severity and hides it when the setting is off. -->
+    <renderNodeProperties>
+      <li>
+        <nodeClass>PawnRenderNode</nodeClass>
+        <workerClass>Nemesis.PawnRenderNodeWorker_NemesisAura</workerClass>
+        <texPath>Things/Nemesis/Aura</texPath>
+        <shaderTypeDef>MoteGlow</shaderTypeDef>
+        <parentTagDef>Body</parentTagDef>
+        <drawSize>(1.9, 1.9)</drawSize>
+        <baseLayer>-10</baseLayer>
+        <rotDrawMode>Fresh</rotDrawMode>
+      </li>
+    </renderNodeProperties>
     <stages>
       <li>
         <minSeverity>1</minSeverity>
