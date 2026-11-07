@@ -54,6 +54,10 @@
   <Homesteader_SettingsEnableKatsTip>Rare Misc event when a finished 27 statue or monument is on the home map. Off disables it entirely.</Homesteader_SettingsEnableKatsTip>
   <Homesteader_SettingsShowCoolingInspect>Show passive-cooling inspect line</Homesteader_SettingsShowCoolingInspect>
   <Homesteader_SettingsShowCoolingInspectTip>Root cellar, icehouse, and springhouse show the passive cool-storage ceiling in the inspect pane.</Homesteader_SettingsShowCoolingInspectTip>
+  <Homesteader_SettingsShowCoolingOverlay>Outline cooled cells</Homesteader_SettingsShowCoolingOverlay>
+  <Homesteader_SettingsShowCoolingOverlayTip>When a root cellar, icehouse or springhouse is selected, outline every cell kept cool on the map.</Homesteader_SettingsShowCoolingOverlayTip>
+  <Homesteader_SettingsShowEffects>Show effects</Homesteader_SettingsShowEffects>
+  <Homesteader_SettingsShowEffectsTip>Heat shimmer during the Kats heat dome and moving water in stone fountains. Looks only.</Homesteader_SettingsShowEffectsTip>
   <Homesteader_PantryTitle>Pantry</Homesteader_PantryTitle>
   <Homesteader_PantryKinds>Distinct preserved kinds: {0}</Homesteader_PantryKinds>
   <Homesteader_PantryDays>Days of food at current tables: {0} ({1} colonists)</Homesteader_PantryDays>

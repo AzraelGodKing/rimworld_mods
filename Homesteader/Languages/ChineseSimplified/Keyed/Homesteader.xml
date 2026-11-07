@@ -54,6 +54,10 @@
   <Homesteader_SettingsEnableKatsTip>家用地图上有完工的 27 雕像或纪念碑时偶发的杂项事件。关闭则完全禁用。</Homesteader_SettingsEnableKatsTip>
   <Homesteader_SettingsShowCoolingInspect>显示被动冷却检视行</Homesteader_SettingsShowCoolingInspect>
   <Homesteader_SettingsShowCoolingInspectTip>根窖、冰屋与泉屋在检视面板显示被动冷藏上限温度。</Homesteader_SettingsShowCoolingInspectTip>
+  <Homesteader_SettingsShowCoolingOverlay>描出冷却格子</Homesteader_SettingsShowCoolingOverlay>
+  <Homesteader_SettingsShowCoolingOverlayTip>选中根窖、冰屋或泉屋时，描出地图上所有被冷却的格子。</Homesteader_SettingsShowCoolingOverlayTip>
+  <Homesteader_SettingsShowEffects>显示特效</Homesteader_SettingsShowEffects>
+  <Homesteader_SettingsShowEffectsTip>Kats 热穹期间的热浪扭曲，以及石喷泉中流动的水。仅影响外观。</Homesteader_SettingsShowEffectsTip>
   <Homesteader_PantryTitle>储藏室</Homesteader_PantryTitle>
   <Homesteader_PantryKinds>不同腌制种类：{0}</Homesteader_PantryKinds>
   <Homesteader_PantryDays>按当前用餐计算的食物天数：{0}（{1} 名殖民者）</Homesteader_PantryDays>

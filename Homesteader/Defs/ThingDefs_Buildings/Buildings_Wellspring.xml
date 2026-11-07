@@ -375,6 +375,8 @@
     <rotatable>false</rotatable>
     <size>(2,2)</size>
     <tickerType>Normal</tickerType>
+    <!-- Real-time draw for the moving water (CompFountainWater). -->
+    <drawerType>MapMeshAndRealTime</drawerType>
     <stuffCategories>
       <li>Stony</li>
     </stuffCategories>
@@ -402,6 +404,9 @@
       <li Class="Homesteader.CompProperties_BeautyWhenFueled">
         <fueledBeauty>32</fueledBeauty>
         <dryBeauty>0</dryBeauty>
+      </li>
+      <li Class="Homesteader.CompProperties_FountainWater">
+        <rippleSize>1.6</rippleSize>
       </li>
     </comps>
     <designationCategory>Furniture</designationCategory>

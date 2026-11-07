@@ -54,6 +54,10 @@
   <Homesteader_SettingsEnableKatsTip>Редкое событие Misc при готовой статуе или монументе 27 на домашней карте. Выключение полностью отключает его.</Homesteader_SettingsEnableKatsTip>
   <Homesteader_SettingsShowCoolingInspect>Строка пассивного охлаждения в осмотре</Homesteader_SettingsShowCoolingInspect>
   <Homesteader_SettingsShowCoolingInspectTip>Погреб, ледник и родниковый погреб показывают потолок пассивного холода в панели осмотра.</Homesteader_SettingsShowCoolingInspectTip>
+  <Homesteader_SettingsShowCoolingOverlay>Обводить охлаждённые клетки</Homesteader_SettingsShowCoolingOverlay>
+  <Homesteader_SettingsShowCoolingOverlayTip>При выборе погреба, ледника или родникового погреба обводятся все охлаждённые клетки карты.</Homesteader_SettingsShowCoolingOverlayTip>
+  <Homesteader_SettingsShowEffects>Показывать эффекты</Homesteader_SettingsShowEffects>
+  <Homesteader_SettingsShowEffectsTip>Марево во время теплового купола Кэтс и движущаяся вода в каменных фонтанах. Только внешний вид.</Homesteader_SettingsShowEffectsTip>
   <Homesteader_PantryTitle>Кладовая</Homesteader_PantryTitle>
   <Homesteader_PantryKinds>Разных заготовок: {0}</Homesteader_PantryKinds>
   <Homesteader_PantryDays>Дней еды при текущем столе: {0} (колонистов: {1})</Homesteader_PantryDays>
