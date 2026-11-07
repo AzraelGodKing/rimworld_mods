@@ -75,6 +75,10 @@ namespace DeepColony.Patches
                 DisasterFlavorUtility.NotifyDowned(victim, flavorInfo);
                 AnomalyOdysseyTraumaUtility.NotifyDowned(victim, flavorInfo);
             }
+            else if (dinfo == null && victim != null)
+            {
+                DisasterFlavorUtility.NotifyDownedWithoutDamage(victim);
+            }
 
             if (DeepColonySettings.Get.enableTrauma
                 && victim != null
@@ -132,6 +136,7 @@ namespace DeepColony.Patches
                     HeirloomUtility.TryCreateFromDeath(__instance);
                     EstateUtility.NotifyDeath(__instance);
                     GameComp_DeepColony.Instance?.NotifyColonistDied(__instance, dinfo, exactCulprit);
+                    NemesisSoftCompat.NotifyColonistKilled(__instance, dinfo);
                 }
 
                 // Shared-enemy goodwill crumbs when the player kills hostiles.

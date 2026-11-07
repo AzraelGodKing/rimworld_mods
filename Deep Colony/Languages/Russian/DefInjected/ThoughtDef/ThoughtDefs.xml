@@ -290,4 +290,12 @@
   <DC_Thought_Isolation.stages_2.label>угасающая изоляция</DC_Thought_Isolation.stages_2.label>
   <DC_Thought_Isolation.stages_2.description>Земля и компания медленно убеждают, что они вернулись.</DC_Thought_Isolation.stages_2.description>
 
+  <DC_Thought_Hunted.label>затравлен(а)</DC_Thought_Hunted.label>
+  <DC_Thought_Hunted.stages_0.label>{0} забрал(а) одного из нас</DC_Thought_Hunted.stages_0.label>
+  <DC_Thought_Hunted.stages_0.description>Теперь они знают имя и лицо. Это не отпустит, пока не будет покончено.</DC_Thought_Hunted.stages_0.description>
+  <DC_Thought_Hunted.stages_1.label>обида на {0}</DC_Thought_Hunted.stages_1.label>
+  <DC_Thought_Hunted.stages_1.description>Гнев остыл и стал терпеливым.</DC_Thought_Hunted.stages_1.description>
+  <DC_Thought_Hunted.stages_2.label>помнит, что сделал(а) {0}</DC_Thought_Hunted.stages_2.label>
+  <DC_Thought_Hunted.stages_2.description>Это возвращается тихими ночами.</DC_Thought_Hunted.stages_2.description>
+
 </LanguageData>

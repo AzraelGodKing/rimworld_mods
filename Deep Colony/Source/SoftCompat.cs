@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using RimWorld;
 using Verse;
 
@@ -15,6 +16,7 @@ namespace DeepColony
         public const string StormproofPackage = "AzraelGodKing.Stormproof";
         public const string Despicable2Package = "DCSzar.Despicable2.Core";
         public const string RimPactsPackage = "wowgag.RimPacts";
+        public const string NemesisPackage = "AzraelGodKing.Nemesis";
 
         public static bool HomesteaderLoaded => ModsConfig.IsActive(HomesteaderPackage);
         public static bool DateNightLoaded => ModsConfig.IsActive(DateNightPackage);
@@ -22,6 +24,7 @@ namespace DeepColony
         public static bool StormproofLoaded => ModsConfig.IsActive(StormproofPackage);
         public static bool Despicable2Loaded => ModsConfig.IsActive(Despicable2Package);
         public static bool RimPactsLoaded => ModsConfig.IsActive(RimPactsPackage);
+        public static bool NemesisLoaded => ModsConfig.IsActive(NemesisPackage);
 
         public static bool IsHomesteaderFood(Thing food)
         {
@@ -67,17 +70,34 @@ namespace DeepColony
                 && instigator.def.modContentPack.PackageId.IndexOf("Anomaly", StringComparison.OrdinalIgnoreCase) >= 0)
                 return true;
             Pawn p = instigator as Pawn;
-            if (p == null) return false;
-            string kind = p.kindDef?.defName ?? "";
-            if (kind.IndexOf("Revenant", System.StringComparison.OrdinalIgnoreCase) >= 0) return true;
-            if (kind.IndexOf("Sightstealer", System.StringComparison.OrdinalIgnoreCase) >= 0) return true;
-            if (kind.IndexOf("Nociosphere", System.StringComparison.OrdinalIgnoreCase) >= 0) return true;
-            if (kind.IndexOf("Metalhorror", System.StringComparison.OrdinalIgnoreCase) >= 0) return true;
-            if (kind.IndexOf("Shambler", System.StringComparison.OrdinalIgnoreCase) >= 0) return true;
-            if (kind.IndexOf("Ghoul", System.StringComparison.OrdinalIgnoreCase) >= 0) return true;
-            if (kind.IndexOf("Noctol", System.StringComparison.OrdinalIgnoreCase) >= 0) return true;
-            if (kind.IndexOf("Gorehulk", System.StringComparison.OrdinalIgnoreCase) >= 0) return true;
-            return false;
+            return p?.kindDef != null && AnomalyKinds.Contains(p.kindDef);
+        }
+
+        private static readonly string[] AnomalyKindHints =
+            { "Revenant", "Sightstealer", "Nociosphere", "Metalhorror", "Shambler", "Ghoul", "Noctol", "Gorehulk" };
+
+        private static HashSet<PawnKindDef> anomalyKinds;
+
+        // Built once on first use; defs are final after load.
+        private static HashSet<PawnKindDef> AnomalyKinds
+        {
+            get
+            {
+                if (anomalyKinds != null) return anomalyKinds;
+                var set = new HashSet<PawnKindDef>();
+                foreach (PawnKindDef k in DefDatabase<PawnKindDef>.AllDefsListForReading)
+                {
+                    string name = k.defName ?? "";
+                    for (int i = 0; i < AnomalyKindHints.Length; i++)
+                    {
+                        if (name.IndexOf(AnomalyKindHints[i], StringComparison.OrdinalIgnoreCase) < 0) continue;
+                        set.Add(k);
+                        break;
+                    }
+                }
+                anomalyKinds = set;
+                return set;
+            }
         }
 
         public static bool IsOdysseyNonSurface(Map map)

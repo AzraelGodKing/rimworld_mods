@@ -15,6 +15,7 @@ namespace DeepColony
     public static class RimPactsTrustSoftCompat
     {
         private static MethodInfo offsetTrust;
+        private static ParameterInfo[] offsetParams;
         private static object offsetTarget;
         private static bool scanned;
         private static bool logged;
@@ -33,7 +34,7 @@ namespace DeepColony
             if (!EnsureResolved()) return;
             try
             {
-                ParameterInfo[] p = offsetTrust.GetParameters();
+                ParameterInfo[] p = offsetParams;
                 object instance = offsetTrust.IsStatic ? null : offsetTarget;
                 var args = new object[p.Length];
                 int filled = 0;
@@ -131,6 +132,7 @@ namespace DeepColony
             if (p.Length < 2) return false;
             if (!typeof(Faction).IsAssignableFrom(p[0].ParameterType)) return false;
             offsetTrust = m;
+            offsetParams = p;
             Log.Message("[DeepColony] RimPacts trust hook ready (" + t.FullName + ").");
             return true;
         }

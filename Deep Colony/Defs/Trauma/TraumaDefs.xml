@@ -109,4 +109,14 @@
     <triggerMessage>is stuck in a toxic relationship</triggerMessage>
   </DeepColony.TraumaDef>
 
+  <!-- AZR-630: the Nemesis killed someone they cared about. -->
+  <DeepColony.TraumaDef MayRequire="AzraelGodKing.Nemesis">
+    <defName>DC_Trauma_Hunted</defName>
+    <label>hunted</label>
+    <description>A named enemy came for the colony and took someone close. The grudge has a face now.</description>
+    <thoughtDef>DC_Thought_Hunted</thoughtDef>
+    <therapyHealingPerSession>70000</therapyHealingPerSession>
+    <triggerMessage>lost someone close to the nemesis</triggerMessage>
+  </DeepColony.TraumaDef>
+
 </Defs>
