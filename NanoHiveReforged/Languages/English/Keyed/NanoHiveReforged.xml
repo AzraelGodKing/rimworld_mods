@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Settings -->
+  <NanoHive_SettingsCategory>NanoHive Reforged</NanoHive_SettingsCategory>
+  <NanoHive_Settings_Intro>These are the starting values for a new colony, and for a save from NanoHive 1.x the first time it loads. After that each save keeps its own values, and every hive has its own buttons.</NanoHive_Settings_Intro>
+  <NanoHive_Settings_InGame>This colony already has its own defaults, so changes here apply to your next new colony. To change this colony's default, set up a hive and click "Use as colony default".</NanoHive_Settings_InGame>
+  <NanoHive_Settings_Rate>Repair per target, each repair cycle: {0} HP</NanoHive_Settings_Rate>
+  <NanoHive_Settings_Gear>Repair colonists' apparel and equipment</NanoHive_Settings_Gear>
+  <NanoHive_Settings_Inventory>Repair items in colonists' inventories</NanoHive_Settings_Inventory>
+  <NanoHive_Settings_RangeOverride>Use my own repair radius</NanoHive_Settings_RangeOverride>
+  <NanoHive_Settings_Range>Repair radius: {0}</NanoHive_Settings_Range>
+  <NanoHive_Settings_RangeDefault>Repair radius: {0} (the building's default)</NanoHive_Settings_RangeDefault>
+
+  <!-- Hive buttons -->
+  <NanoHive_Toggle_Buildings>Repair buildings</NanoHive_Toggle_Buildings>
+  <NanoHive_Toggle_BuildingsDesc>Repair your colony's buildings in range. The hive always repairs itself.</NanoHive_Toggle_BuildingsDesc>
+  <NanoHive_Toggle_Items>Repair items</NanoHive_Toggle_Items>
+  <NanoHive_Toggle_ItemsDesc>Repair items lying under a roof in range.</NanoHive_Toggle_ItemsDesc>
+  <NanoHive_Toggle_Gear>Repair gear</NanoHive_Toggle_Gear>
+  <NanoHive_Toggle_GearDesc>Repair the apparel and equipment of your colonists in range.</NanoHive_Toggle_GearDesc>
+  <NanoHive_Toggle_Inventory>Repair inventory</NanoHive_Toggle_Inventory>
+  <NanoHive_Toggle_InventoryDesc>Repair items your colonists in range are carrying.</NanoHive_Toggle_InventoryDesc>
+  <NanoHive_Range>Radius: {0}</NanoHive_Range>
+  <NanoHive_RangeDesc>Set how far this hive reaches. Applies to every selected hive.</NanoHive_RangeDesc>
+  <NanoHive_RangeSlider>Repair radius: {0}</NanoHive_RangeSlider>
+  <NanoHive_Rate>Rate: {0} HP</NanoHive_Rate>
+  <NanoHive_RateDesc>Set how many hit points each target gets per repair cycle (about every 4 seconds). Applies to every selected hive.</NanoHive_RateDesc>
+  <NanoHive_RateSlider>Repair per target: {0} HP</NanoHive_RateSlider>
+  <NanoHive_MakeDefault>Use as colony default</NanoHive_MakeDefault>
+  <NanoHive_MakeDefaultDesc>New hives in this colony start with this hive's settings.</NanoHive_MakeDefaultDesc>
+  <NanoHive_CopyAll>Copy to all hives</NanoHive_CopyAll>
+  <NanoHive_CopyAllDesc>Give every hive on this map this hive's settings.</NanoHive_CopyAllDesc>
+
+</LanguageData>

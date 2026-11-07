@@ -1,8 +1,15 @@
 2.0.0
 [h1]NanoHive Reforged — 2.0.0[/h1]
 One package for RimWorld 1.6 and 1.7. Saves from 1.x keep working.
+[b]Added[/b]
+[list]
+[*] [b]Buttons on every hive[/b] — repair buildings, items, gear and inventory on or off, radius (1 to 30) and repair rate (1 to 10 HP per target). Each hive saves its own settings. "Use as colony default" sets what new hives start with, and "Copy to all hives" copies one hive to the rest of the map.
+[*] [b]Multiplayer[/b] — soft support. Hive settings live in the save and every hive button is synced, so players with different mod settings stay in step. No Multiplayer DLL is needed.
+[/list]
 [b]Changed[/b]
 [list]
+[*] [b]Mod settings are now starting values[/b] — they set up a new colony, or a 1.x save the first time it loads (so its hives keep working exactly as before). After that the save keeps its own values.
+[*] The settings window no longer writes the settings file every frame while it is open.
 [*] [b]Built for 1.7[/b] — the 1.7 DLL is built against the 1.7 game on .NET 10. The 1.6 DLL is still built for 1.6.
 [*] Player.log prints the NanoHive version and build on startup, and the Azrael series hub shows it.
 [/list]

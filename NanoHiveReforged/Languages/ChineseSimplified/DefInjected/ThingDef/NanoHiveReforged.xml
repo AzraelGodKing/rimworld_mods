@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <NanoHiveReforged.label>再生纳米蜂巢</NanoHiveReforged.label>
+  <NanoHiveReforged.description>一个可以嵌入墙中的纳米机器人端口，会自动修理附近友方的建筑、物品和殖民者的装备。默认作用半径为 12。每个修理周期它只消耗有限的耐久修复量，损坏最严重的优先。只有在范围内有东西需要修理时才会全功率耗电。</NanoHiveReforged.description>
+
+</LanguageData>
