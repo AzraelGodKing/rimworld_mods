@@ -7,14 +7,18 @@ using Verse;
 
 namespace DeepColony
 {
-    public class MainTabWindow_DeepColonyReputation : MainTabWindow
+    public class HubPanel_Reputation : DeepColonyHubPanel
     {
         private Vector2 factionScroll;
         private Vector2 ledgerScroll;
         private Faction selected;
         private int repFilter; // 0 all, 1 ally, 2 hostile
+        private List<Faction> factions = new List<Faction>();
+        private UiRefresh factionsRefresh;
 
-        public override Vector2 RequestedTabSize => new Vector2(900f, 560f);
+        public override string LabelKey => "DC_HubTab_Reputation";
+        public override bool Visible => DeepColonySettings.Get.enableFactionRep;
+        public override Vector2 Size => new Vector2(900f, 560f);
 
         public override void DoWindowContents(Rect inRect)
         {
@@ -54,11 +58,14 @@ namespace DeepColony
             Rect listOut = new Rect(inRect.x, y, listW, inRect.yMax - y);
             Rect detailOut = new Rect(inRect.x + listW + 12f, y, inRect.width - listW - 12f, inRect.yMax - y);
 
-            var factions = Find.FactionManager.AllFactionsListForReading
-                .Where(f => !f.IsPlayer && !f.defeated && !f.Hidden)
-                .Where(MatchesRepFilter)
-                .OrderByDescending(f => f.GoodwillWith(Faction.OfPlayer))
-                .ToList();
+            if (factionsRefresh.Due(repFilter))
+            {
+                factions = Find.FactionManager.AllFactionsListForReading
+                    .Where(f => !f.IsPlayer && !f.defeated && !f.Hidden)
+                    .Where(MatchesRepFilter)
+                    .OrderByDescending(f => f.GoodwillWith(Faction.OfPlayer))
+                    .ToList();
+            }
 
             // Left: faction names (+ goodwill) only — details live on the right.
             float rowH = 28f;

@@ -7,11 +7,19 @@ using Verse;
 
 namespace DeepColony
 {
-    public class MainTabWindow_DeepColonyLegacy : MainTabWindow
+    public class HubPanel_Legacy : DeepColonyHubPanel
     {
         private Vector2 scrollPos;
 
-        public override Vector2 RequestedTabSize => new Vector2(680f, 560f);
+        public override string LabelKey => "DC_HubTab_Legacy";
+        private readonly List<Pawn> living = new List<Pawn>();
+        private int withPerks;
+        private int apprentices;
+        private int elders;
+        private int traumatized;
+        private UiRefresh refresh;
+
+        public override Vector2 Size => new Vector2(680f, 560f);
 
         public override void DoWindowContents(Rect inRect)
         {
@@ -31,20 +39,21 @@ namespace DeepColony
                 "DC_LegacySurname".Translate(surname));
             y += 26f;
 
-            var living = new List<Pawn>();
-            foreach (Map map in Find.Maps)
+            if (refresh.Due())
             {
-                foreach (Pawn p in map.mapPawns.FreeColonists)
-                    living.Add(p);
+                living.Clear();
+                foreach (Map map in Find.Maps)
+                    living.AddRange(map.mapPawns.FreeColonists);
+                living.SortBy(p => p.LabelShort);
+                withPerks = living.Count(p =>
+                {
+                    var c = p.TryGetComp<Comp_DeepColony>();
+                    return c != null && c.unlockedPerkDefNames.Count > 0;
+                });
+                apprentices = living.Count(p => p.TryGetComp<Comp_DeepColony>()?.mentor != null);
+                elders = living.Count(ElderUtility.IsElder);
+                traumatized = living.Count(p => TraumaUtility.HasAnyTrauma(p));
             }
-
-            int withPerks = living.Count(p =>
-            {
-                var c = p.TryGetComp<Comp_DeepColony>();
-                return c != null && c.unlockedPerkDefNames.Count > 0;
-            });
-            int apprentices = living.Count(p => p.TryGetComp<Comp_DeepColony>()?.mentor != null);
-            int elders = living.Count(ElderUtility.IsElder);
 
             Widgets.Label(new Rect(inRect.x, y, inRect.width, 22f),
                 "DC_LegacyStats".Translate(living.Count, withPerks, apprentices, elders));
@@ -71,7 +80,6 @@ namespace DeepColony
                 y += 6f;
             }
 
-            int traumatized = living.Count(p => TraumaUtility.HasAnyTrauma(p));
             Widgets.Label(new Rect(inRect.x, y, inRect.width, 22f),
                 "DC_LegacyTraumatized".Translate(traumatized));
             y += 22f;
@@ -100,7 +108,7 @@ namespace DeepColony
             }
 
             Rect outRect = new Rect(inRect.x, y, inRect.width, inRect.yMax - y);
-            var rows = living.OrderBy(p => p.LabelShort).ToList();
+            List<Pawn> rows = living;
             float rowH = EstateUtility.Enabled ? 28f : 24f;
             Rect view = new Rect(0, 0, outRect.width - 16f, Mathf.Max(rows.Count * rowH, outRect.height));
             Widgets.BeginScrollView(outRect, ref scrollPos, view);

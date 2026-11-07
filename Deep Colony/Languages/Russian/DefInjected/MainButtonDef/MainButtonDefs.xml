@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
-  <DC_Perks.label>перки</DC_Perks.label>
-  <DC_Perks.description>Обзор перков колонии — прогресс дерева у каждого колониста.</DC_Perks.description>
-  <DC_Legacy.label>наследие</DC_Legacy.label>
-  <DC_Legacy.description>Фамилия основателя, живые колонисты, старейшины, традиции и счётчики перков.</DC_Legacy.description>
-  <DC_Reputation.label>репутация</DC_Reputation.label>
-  <DC_Reputation.description>Журнал расположения фракций — почему дрейфовала репутация, посланники и отношение.</DC_Reputation.description>
-  <DC_BodyCodex.label>тело и кодекс</DC_BodyCodex.label>
-  <DC_BodyCodex.description>Кто болен или выздоравливает, архивы на картах, исследователи под угрозой и что записано в каждой тетради Кодекса. Скрыта, когда обе системы выключены.</DC_BodyCodex.description>
+  <DC_Hub.label>Deep Colony</DC_Hub.label>
+  <DC_Hub.description>Перки, наследие, репутация фракций, тело и кодекс для всей колонии. Страница скрыта, пока её система выключена.</DC_Hub.description>
 
 </LanguageData>

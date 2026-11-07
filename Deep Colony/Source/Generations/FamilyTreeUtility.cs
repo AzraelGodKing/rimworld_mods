@@ -47,9 +47,19 @@ namespace DeepColony
                 }
             }
 
-            var mentor = focus.TryGetComp<Comp_DeepColony>()?.mentor;
-            if (mentor != null) snap.mentor = mentor;
+            var comp = focus.TryGetComp<Comp_DeepColony>();
+            if (comp?.mentor != null) snap.mentor = comp.mentor;
             snap.apprentices.AddRange(Apprentices(focus));
+            if (comp?.pastMentorIds != null)
+            {
+                // Newest first; the current mentor already has its own node (AZR-712).
+                for (int i = comp.pastMentorIds.Count - 1; i >= 0; i--)
+                {
+                    Pawn past = PawnIdIndex.Find(comp.pastMentorIds[i]);
+                    if (past != null && past != snap.mentor && !snap.pastMentors.Contains(past))
+                        snap.pastMentors.Add(past);
+                }
+            }
             return snap;
         }
 
@@ -63,7 +73,8 @@ namespace DeepColony
                 || snap.children.Count > 0
                 || snap.grandchildren.Count > 0
                 || snap.mentor != null
-                || snap.apprentices.Count > 0;
+                || snap.apprentices.Count > 0
+                || snap.pastMentors.Count > 0;
         }
 
         public static void JumpTo(Pawn pawn)
@@ -100,8 +111,21 @@ namespace DeepColony
             if (focus == null || other == null) return "";
             if (focus == other) return "DC_FamilyTree_Self".Translate();
             PawnRelationDef def = focus.GetMostImportantRelation(other);
-            if (def == null) return "";
+            if (def == null)
+            {
+                return IsPastMentorOnly(focus, other)
+                    ? "DC_FamilyTree_PastMentor".Translate().ToString()
+                    : "";
+            }
             return def.GetGenderSpecificLabelCap(other);
+        }
+
+        /// <summary>A past mentor with no family or social relation to the focus pawn.</summary>
+        public static bool IsPastMentorOnly(Pawn focus, Pawn other)
+        {
+            if (focus == null || other == null || focus.GetMostImportantRelation(other) != null) return false;
+            List<int> past = focus.TryGetComp<Comp_DeepColony>()?.pastMentorIds;
+            return past != null && past.Contains(other.thingIDNumber);
         }
 
         public static List<Pawn> DirectParents(Pawn pawn)
@@ -198,5 +222,6 @@ namespace DeepColony
         public List<Pawn> grandchildren = new List<Pawn>();
         public Pawn mentor;
         public List<Pawn> apprentices = new List<Pawn>();
+        public List<Pawn> pastMentors = new List<Pawn>();
     }
 }

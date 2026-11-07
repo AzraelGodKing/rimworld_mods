@@ -176,6 +176,7 @@ namespace DeepColony
 
             var teach = new List<Pawn>();
             if (snap.mentor != null) teach.Add(snap.mentor);
+            CopyCapped(teach, snap.pastMentors, 2);
             CopyCapped(teach, snap.apprentices, MaxInRow);
 
             bool hasGp = momGps.Count > 0 || dadGps.Count > 0;

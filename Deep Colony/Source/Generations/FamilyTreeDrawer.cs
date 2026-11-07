@@ -69,7 +69,8 @@ namespace DeepColony
             h += NodeH + GapY + HeaderH; // self row
             if (snap.children.Count > 0) h += NodeH + GapY + HeaderH;
             if (snap.grandchildren.Count > 0) h += NodeH + GapY + HeaderH;
-            if (snap.mentor != null || snap.apprentices.Count > 0) h += NodeH + HeaderH + 16f;
+            if (snap.mentor != null || snap.apprentices.Count > 0 || snap.pastMentors.Count > 0)
+                h += NodeH + HeaderH + 16f;
             return h + 16f;
         }
 
@@ -134,11 +135,12 @@ namespace DeepColony
 
         private static float DrawTeaching(Rect rect, float y, FamilyTreeSnapshot snap, Action<Pawn> onClick)
         {
-            if (snap.mentor == null && snap.apprentices.Count == 0) return y;
+            if (snap.mentor == null && snap.apprentices.Count == 0 && snap.pastMentors.Count == 0) return y;
             DrawHeader(rect, y, "DC_FamilyTree_Teaching".Translate());
             y += HeaderH;
             var row = new List<Pawn>();
             if (snap.mentor != null) row.Add(snap.mentor);
+            row.AddRange(snap.pastMentors);
             for (int i = 0; i < snap.apprentices.Count; i++)
                 row.Add(snap.apprentices[i]);
             return DrawCenteredNodes(rect, y, row, snap.focus, onClick);
@@ -175,6 +177,9 @@ namespace DeepColony
             return y + NodeH;
         }
 
+        // Past mentors who aren't kin get a blue-grey node (AZR-712).
+        private static readonly Color PastMentorFill = new Color(0.14f, 0.18f, 0.26f, 0.6f);
+
         internal static void DrawNode(Rect rect, Pawn pawn, Pawn focus, Action<Pawn> onClick)
         {
             if (pawn == null) return;
@@ -183,6 +188,8 @@ namespace DeepColony
                 Widgets.DrawHighlightSelected(rect);
             else if (Mouse.IsOver(rect))
                 Widgets.DrawHighlight(rect);
+            else if (FamilyTreeUtility.IsPastMentorOnly(focus, pawn))
+                Widgets.DrawBoxSolid(rect, PastMentorFill);
             else
                 Widgets.DrawBoxSolid(rect, new Color(0.12f, 0.12f, 0.12f, 0.45f));
             Widgets.DrawBox(rect);

@@ -88,6 +88,13 @@ namespace DeepColony
         /// <summary>Past mentor display names for teaching-lineage flavor (newest last).</summary>
         public List<string> teacherLineage = new List<string>();
 
+        /// <summary>Past mentors' thing ids, newest last, for the family tree (AZR-712).</summary>
+        public List<int> pastMentorIds = new List<int>();
+
+        /// <summary>The skill two rivals shared when the rivalry formed, and with whom (AZR-666).</summary>
+        public string lastRivalSkillDefName;
+        public int lastRivalId = -1;
+
         /// <summary>Peak skill levels for muscle-memory double XP when rusting back up.</summary>
         public Dictionary<string, int> peakSkillLevels = new Dictionary<string, int>();
 
@@ -533,6 +540,11 @@ namespace DeepColony
             teacherLineage.Add(name);
             if (teacherLineage.Count > 8)
                 teacherLineage.RemoveAt(0);
+            if (pastMentorIds == null) pastMentorIds = new List<int>();
+            pastMentorIds.Remove(teacher.thingIDNumber);
+            pastMentorIds.Add(teacher.thingIDNumber);
+            if (pastMentorIds.Count > 8)
+                pastMentorIds.RemoveAt(0);
         }
 
         public string TeachingLineageInspect()
@@ -755,6 +767,11 @@ namespace DeepColony
             {
                 parts.Add("DC_InspectApprentices".Translate(apprentices));
             }
+            if (DeepColonySettings.Get.enablePerks)
+            {
+                string muscle = MuscleMemoryInspect();
+                if (!muscle.NullOrEmpty()) parts.Add(muscle);
+            }
             if (DeepColonySettings.Get.enableMentoring)
             {
                 string lineage = TeachingLineageInspect();
@@ -836,7 +853,44 @@ namespace DeepColony
             }
             int need = ConfidantUtility.SessionsToBondFor(Pawn, TryGetLastCounselor());
             string counselor = lastCounselorName.NullOrEmpty() ? "—" : lastCounselorName;
-            return "DC_InspectCounsel".Translate(counselor, totalCounselSessions, best, need);
+            string line = "DC_InspectCounsel".Translate(counselor, totalCounselSessions, best, need);
+            string top = TopCounselorsInspect();
+            return top == null ? line : line + "\n" + top;
+        }
+
+        // Up to three counselors with the most sessions, "Name ×n" (AZR-711).
+        private string TopCounselorsInspect()
+        {
+            if (counselCountsByPawn == null || counselCountsByPawn.Count < 2) return null;
+            var named = new List<(string name, int count)>();
+            foreach (var kv in counselCountsByPawn)
+            {
+                Pawn p = PawnIdIndex.Find(kv.Key);
+                if (p != null) named.Add((p.LabelShort, kv.Value));
+            }
+            if (named.Count < 2) return null;
+            named.Sort((a, b) => b.count != a.count ? b.count.CompareTo(a.count) : string.CompareOrdinal(a.name, b.name));
+            var parts = new List<string>();
+            for (int i = 0; i < named.Count && i < 3; i++)
+                parts.Add(named[i].name + " ×" + named[i].count);
+            return "DC_InspectCounselors".Translate(string.Join(", ", parts));
+        }
+
+        // Skills climbing back toward their recorded peak learn at double speed (AZR-710).
+        private string MuscleMemoryInspect()
+        {
+            var pawn = Pawn;
+            if (pawn?.skills == null || peakSkillLevels == null || peakSkillLevels.Count == 0) return null;
+            var parts = new List<string>();
+            foreach (SkillRecord sr in pawn.skills.skills)
+            {
+                if (sr.TotallyDisabled) continue;
+                int peak = GetPeakSkill(sr.def);
+                if (peak <= sr.Level) continue;
+                parts.Add(sr.def.LabelCap + " " + sr.Level + "→" + peak);
+                if (parts.Count >= 3) break;
+            }
+            return parts.Count == 0 ? null : "DC_InspectMuscleMemory".Translate(string.Join(", ", parts));
         }
 
         public string TraumaTypesInspect()
@@ -887,7 +941,12 @@ namespace DeepColony
         {
             Pawn rival = RivalryUtility.FirstLivingRival(Pawn);
             if (rival == null) return null;
-            return "DC_InspectRival".Translate(rival.LabelShort);
+            SkillDef skill = rival.thingIDNumber == lastRivalId && !lastRivalSkillDefName.NullOrEmpty()
+                ? DefDatabase<SkillDef>.GetNamedSilentFail(lastRivalSkillDefName)
+                : null;
+            return skill != null
+                ? "DC_InspectRivalSkill".Translate(rival.LabelShort, skill.LabelCap)
+                : "DC_InspectRival".Translate(rival.LabelShort);
         }
 
         public void NoteCounselingSession()
@@ -983,6 +1042,9 @@ namespace DeepColony
             Scribe_Values.Look(ref unusedElderPerkGranted, "elderPerkGranted", false);
             Scribe_Values.Look(ref familyTraditionSkillDefName, "familyTraditionSkillDefName");
             Scribe_Collections.Look(ref teacherLineage, "teacherLineage", LookMode.Value);
+            Scribe_Collections.Look(ref pastMentorIds, "pastMentorIds", LookMode.Value);
+            Scribe_Values.Look(ref lastRivalSkillDefName, "lastRivalSkill");
+            Scribe_Values.Look(ref lastRivalId, "lastRivalId", -1);
             Scribe_Collections.Look(ref peakSkillLevels, "peakSkillLevels", LookMode.Value, LookMode.Value);
             Dictionary<int, int> counselSave = counselCountsByPawn;
             if (Scribe.mode == LoadSaveMode.Saving
@@ -1005,6 +1067,7 @@ namespace DeepColony
             if (unlockedPerkDefNames == null) unlockedPerkDefNames = new List<string>();
             if (forgottenPerkDefNames == null) forgottenPerkDefNames = new List<string>();
             if (teacherLineage == null) teacherLineage = new List<string>();
+            if (pastMentorIds == null) pastMentorIds = new List<int>();
             if (peakSkillLevels == null) peakSkillLevels = new Dictionary<string, int>();
             if (counselCountsByPawn == null) counselCountsByPawn = new Dictionary<int, int>();
             if (reconcileCountsByPawn == null) reconcileCountsByPawn = new Dictionary<int, int>();

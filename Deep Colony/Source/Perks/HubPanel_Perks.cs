@@ -6,13 +6,17 @@ using Verse;
 
 namespace DeepColony
 {
-    public class MainTabWindow_DeepColonyPerks : MainTabWindow
+    public class HubPanel_Perks : DeepColonyHubPanel
     {
         private Vector2 scrollPos;
         private int filterMode; // 0 all, 1 hard-only
         private SkillDef filterSkill;
+        private readonly List<Pawn> rows = new List<Pawn>();
+        private UiRefresh rowsRefresh;
 
-        public override Vector2 RequestedTabSize => new Vector2(760f, 580f);
+        public override string LabelKey => "DC_HubTab_Perks";
+        public override bool Visible => DeepColonySettings.Get.enablePerks;
+        public override Vector2 Size => new Vector2(760f, 580f);
 
         public override void DoWindowContents(Rect inRect)
         {
@@ -49,20 +53,18 @@ namespace DeepColony
             }
 
             Rect outRect = new Rect(inRect.x, fy + 32f, inRect.width, inRect.yMax - (fy + 32f));
-            var rows = new List<Pawn>();
-            if (Find.CurrentMap != null)
+            if (rowsRefresh.Due(filterMode * 1000 + (filterSkill?.index ?? -1)))
             {
-                foreach (Pawn p in Find.CurrentMap.mapPawns.FreeColonists)
-                    rows.Add(p);
+                rows.Clear();
+                foreach (Map map in Find.Maps)
+                {
+                    foreach (Pawn p in map.mapPawns.FreeColonists)
+                    {
+                        if (MatchesFilter(p)) rows.Add(p);
+                    }
+                }
+                rows.SortBy(p => p.LabelShort);
             }
-            foreach (Map map in Find.Maps)
-            {
-                if (map == Find.CurrentMap) continue;
-                foreach (Pawn p in map.mapPawns.FreeColonists)
-                    rows.Add(p);
-            }
-
-            rows = rows.Where(MatchesFilter).OrderBy(p => p.LabelShort).ToList();
 
             float rowH = 28f;
             Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, Mathf.Max(rows.Count * rowH + 40f, outRect.height));

@@ -2,39 +2,11 @@
 <Defs>
 
   <MainButtonDef>
-    <defName>DC_Perks</defName>
-    <label>perks</label>
-    <description>Colony perk overview — tree progress for every colonist.</description>
-    <tabWindowClass>DeepColony.MainTabWindow_DeepColonyPerks</tabWindowClass>
+    <defName>DC_Hub</defName>
+    <label>deep colony</label>
+    <description>Perks, legacy, faction reputation, and body &amp; Codex for the whole colony. A page hides while its system is off.</description>
+    <tabWindowClass>DeepColony.MainTabWindow_DeepColony</tabWindowClass>
     <order>58</order>
-    <closesWorldView>true</closesWorldView>
-  </MainButtonDef>
-
-  <MainButtonDef>
-    <defName>DC_Legacy</defName>
-    <label>legacy</label>
-    <description>Founder surname, living colonists, elders, traditions, and perk counts.</description>
-    <tabWindowClass>DeepColony.MainTabWindow_DeepColonyLegacy</tabWindowClass>
-    <order>59</order>
-    <closesWorldView>true</closesWorldView>
-  </MainButtonDef>
-
-  <MainButtonDef>
-    <defName>DC_Reputation</defName>
-    <label>reputation</label>
-    <description>Faction goodwill ledger — why reputation drifted, envoys, and attitude.</description>
-    <tabWindowClass>DeepColony.MainTabWindow_DeepColonyReputation</tabWindowClass>
-    <order>60</order>
-    <closesWorldView>true</closesWorldView>
-  </MainButtonDef>
-
-  <MainButtonDef>
-    <defName>DC_BodyCodex</defName>
-    <label>body &amp; codex</label>
-    <description>Who is ill or convalescing, archives per map, researchers at risk, and what each Codex notebook holds. Hidden while both systems are off.</description>
-    <workerClass>DeepColony.MainButtonWorker_DeepColonyBodyCodex</workerClass>
-    <tabWindowClass>DeepColony.MainTabWindow_DeepColonyBodyCodex</tabWindowClass>
-    <order>61</order>
     <closesWorldView>true</closesWorldView>
   </MainButtonDef>
 

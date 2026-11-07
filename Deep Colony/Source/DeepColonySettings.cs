@@ -84,8 +84,11 @@ namespace DeepColony
         public bool enableBody = false;
         public bool enableCodex = false;
 
-        public static DeepColonySettings Get =>
-            DeepColonyMod.Settings ?? new DeepColonySettings();
+        // Before the Mod constructor runs, reads see one defaults instance instead of a
+        // new throwaway object per call (AZR-622).
+        private static readonly DeepColonySettings Defaults = new DeepColonySettings();
+
+        public static DeepColonySettings Get => DeepColonyMod.Settings ?? Defaults;
 
         public override void ExposeData()
         {
@@ -175,7 +178,6 @@ namespace DeepColony
             quietHoursIntensity = 1f;
             enablePerkRetrain = false;
             enableEstate = true;
-            enableBirthSafetyNet = true;
             enableBody = false;
             enableCodex = false;
 
@@ -233,62 +235,33 @@ namespace DeepColony
                     enablePerkRetrain = true;
                     break;
                 default:
-                    ResetToDefaults();
+                    combatShockChance = 0.40f;
+                    minSkillLead = 3;
+                    passiveMentorMultiplier = 1.25f;
+                    activeMentorMultiplier = 1.40f;
+                    allyDriftMtbDays = 5f;
+                    enemyDriftMtbDays = 4f;
+                    massacreDeathThreshold = 3;
+                    traitInheritChance = 0.35f;
+                    therapyHealScale = 1f;
                     break;
             }
         }
 
+        /// <summary>
+        /// Every setting back to its default: the Default preset for gameplay, plus the
+        /// Display and Safety switches the presets leave alone (B7: the Default preset
+        /// used to reset those too).
+        /// </summary>
         public void ResetToDefaults()
         {
-            enablePerks = true;
+            ApplyPreset(Preset.Default);
             showPerkHediffs = false;
             announceVisitorPerkUnlocks = false;
             npcPerks = true;
-            enableTrauma = true;
-            enableMentoring = true;
-            enableInheritance = true;
-            enableFactionRep = true;
-            combatShockChance = 0.40f;
-            minSkillLead = 3;
-            passiveMentorMultiplier = 1.25f;
-            activeMentorMultiplier = 1.40f;
-            allyDriftMtbDays = 5f;
-            enemyDriftMtbDays = 4f;
-            massacreDeathThreshold = 3;
-            traitInheritChance = 0.35f;
-            therapyHealScale = 1f;
-            enableTraumaPenalties = false;
-            enableAttitudeConsequences = false;
-            enableSkill20Capstones = true;
-            enableBranchingPerks = false;
-            enablePerkRespec = true;
-            respecCooldownDays = 15f;
-            enableCrossSkillArchetypes = false;
-            enableHeirlooms = false;
-            enableChronicTrauma = false;
-            childRaidWitnessChance = 0.55f;
-            enablePrisonerCounsel = false;
-            enableEnvoyVisits = false;
-            enableApologyTribute = true;
-            enableFamilyJoin = true;
-            familyRaidDefectChance = 0.28f;
-            familyVisitJoinChance = 0.18f;
-            enableExLoverReconcile = true;
-            exLoverReconcileMtbDays = 8f;
-            familyUnwaveringMinOpinion = 20;
-            familyUnwaveringBreakChance = 0.55f;
             familyTreePedigreeStyle = false;
             enableDiplomacyCompat = true;
-            enableTouchAverse = true;
-            touchComfortDays = 4f;
-            touchComfortThreshold = 0.65f;
-            enableQuietHours = true;
-            quietHoursIntensity = 1f;
-            enablePerkRetrain = false;
-            enableEstate = true;
             enableBirthSafetyNet = true;
-            enableBody = false;
-            enableCodex = false;
         }
     }
 }

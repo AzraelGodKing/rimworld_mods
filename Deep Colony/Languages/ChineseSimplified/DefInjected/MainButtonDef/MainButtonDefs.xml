@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
-  <DC_Perks.label>专长</DC_Perks.label>
-  <DC_Perks.description>殖民地专长总览 — 每位殖民者的专长树进度。</DC_Perks.description>
-  <DC_Legacy.label>传承</DC_Legacy.label>
-  <DC_Legacy.description>创始姓氏、在世殖民者、长者、传统与专长统计。</DC_Legacy.description>
-  <DC_Reputation.label>声望</DC_Reputation.label>
-  <DC_Reputation.description>派系好感账本 — 声望为何漂移、使者与态度。</DC_Reputation.description>
-  <DC_BodyCodex.label>身体与典籍</DC_BodyCodex.label>
-  <DC_BodyCodex.description>谁在生病或康复、各地图的档案架、面临风险的研究者，以及每本典籍笔记本记下的内容。两个系统都关闭时隐藏。</DC_BodyCodex.description>
+  <DC_Hub.label>Deep Colony</DC_Hub.label>
+  <DC_Hub.description>全殖民地的专长、传承、派系声望以及身体与典籍。系统关闭时对应页面隐藏。</DC_Hub.description>
 
 </LanguageData>

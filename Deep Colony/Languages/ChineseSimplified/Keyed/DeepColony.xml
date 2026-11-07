@@ -55,11 +55,18 @@
 
   <!-- ── Settings ───────────────────────────────────────────────────────────── -->
   <DC_Settings_Presets>预设</DC_Settings_Presets>
-  <DC_Settings_PresetsTip>柔和 / 默认 / 困难会重调下方滑块。系统开关保持开启。</DC_Settings_PresetsTip>
+  <DC_Settings_PresetsTip>柔和 / 默认 / 困难会设置下方所有玩法选项。显示与安全选项保持不变。</DC_Settings_PresetsTip>
+  <DC_Settings_Section_Perks>专长</DC_Settings_Section_Perks>
+  <DC_Settings_Section_Trauma>创伤与治疗</DC_Settings_Section_Trauma>
+  <DC_Settings_Section_Mentoring>师徒</DC_Settings_Section_Mentoring>
+  <DC_Settings_Section_Family>家族</DC_Settings_Section_Family>
+  <DC_Settings_Section_Reputation>派系声望</DC_Settings_Section_Reputation>
+  <DC_Settings_Section_BodyCodex>身体与典籍</DC_Settings_Section_BodyCodex>
+  <DC_Settings_Section_Safety>安全</DC_Settings_Section_Safety>
+  <DC_Settings_Section_Display>显示</DC_Settings_Section_Display>
   <DC_Settings_PresetSoft>柔和</DC_Settings_PresetSoft>
   <DC_Settings_PresetDefault>默认</DC_Settings_PresetDefault>
   <DC_Settings_PresetHard>困难</DC_Settings_PresetHard>
-  <DC_Settings_Systems>系统</DC_Settings_Systems>
   <DC_Settings_EnablePerks>启用专长树</DC_Settings_EnablePerks>
   <DC_Settings_EnablePerksTip>专长在技能 5 / 10 / 15 / 20 时自动解锁；技能跌破该等级则失效。</DC_Settings_EnablePerksTip>
   <DC_Settings_ShowPerkHediffs>在健康标签显示专长状态</DC_Settings_ShowPerkHediffs>
@@ -109,7 +116,6 @@
   <DC_Settings_TraumaPenaltiesTip>默认关闭。战斗创伤会降低征召时精度；囚禁创伤在狱卒工作时有心情惩罚。困难预设启用。</DC_Settings_TraumaPenaltiesTip>
   <DC_Settings_AttitudeConsequences>态度后果</DC_Settings_AttitudeConsequences>
   <DC_Settings_AttitudeConsequencesTip>默认关闭。友好/亏欠/戒备/复仇态度会影响贸易价格、商队与袭击强度。困难预设启用。</DC_Settings_AttitudeConsequencesTip>
-  <DC_Settings_Phase5>力量系统</DC_Settings_Phase5>
   <DC_Settings_Capstones>技能 20 巅峰专长</DC_Settings_Capstones>
   <DC_Settings_CapstonesTip>在技能 20 增加专长节点。默认开启，到达该等级仍自动授予。</DC_Settings_CapstonesTip>
   <DC_Settings_Branching>分支 L15 专长选择</DC_Settings_Branching>
@@ -123,7 +129,6 @@
   <DC_Settings_HeirloomsTip>默认关闭。殖民者死亡可将装备标记为传家宝（携带时心情 + 微小加成）。困难预设启用。</DC_Settings_HeirloomsTip>
   <DC_Settings_ChronicTrauma>慢性创伤状态</DC_Settings_ChronicTrauma>
   <DC_Settings_ChronicTraumaTip>默认关闭。未经治疗而到期的创伤可变为慢性压力。辅导可缓解。困难预设启用。</DC_Settings_ChronicTraumaTip>
-  <DC_Settings_Tuning>调参</DC_Settings_Tuning>
   <DC_Settings_CombatShock>战斗冲击几率：{0}%</DC_Settings_CombatShock>
   <DC_Settings_MinSkillLead>导师最低技能领先：{0}</DC_Settings_MinSkillLead>
   <DC_Settings_PassiveMentor>被动指导经验倍率：{0}</DC_Settings_PassiveMentor>
@@ -230,6 +235,8 @@
   <DC_Alert_UntreatedTrauma>未治疗的创伤</DC_Alert_UntreatedTrauma>
   <DC_Alert_UntreatedTraumaDesc>这些殖民者已携带心理创伤超过一天且未经疏导。医生可通过医生工作类型或右键进行疏导。</DC_Alert_UntreatedTraumaDesc>
   <DC_InspectCounsel>疏导：最近 {0}，共 {1} 次（羁绊 {2}/{3}）</DC_InspectCounsel>
+  <DC_InspectCounselors>最常倾诉的对象：{0}</DC_InspectCounselors>
+  <DC_InspectMuscleMemory>肌肉记忆（双倍学习）：{0}</DC_InspectMuscleMemory>
   <DC_InspectGeneVsBlood>外源基因与家族{0}传统相悖</DC_InspectGeneVsBlood>
   <DC_PerkFilter_All>全部</DC_PerkFilter_All>
   <DC_PerkFilter_Hard>仅困难</DC_PerkFilter_Hard>
@@ -249,7 +256,6 @@
   <DC_FuneralBurn>为 {PAWN} 举行的火化减轻了暴死之痛。</DC_FuneralBurn>
   <DC_FuneralEaseMote>入土为安…</DC_FuneralEaseMote>
   <DC_ChildRaidWitness>{PAWN} 看见了战斗，一时难以忘记。</DC_ChildRaidWitness>
-  <DC_Settings_LaterSystems>后续系统</DC_Settings_LaterSystems>
   <DC_Settings_ChildRaid>儿童目击袭击几率：{0}%</DC_Settings_ChildRaid>
   <DC_Settings_PrisonerCounsel>囚犯疏导（招募途径）</DC_Settings_PrisonerCounsel>
   <DC_Settings_PrisonerCounselTip>默认关闭。医生可疏导囚犯，作为缓慢的社交招募。不会取代狱卒交谈。</DC_Settings_PrisonerCounselTip>
@@ -292,6 +298,7 @@
   <DC_InspectTeachProgress>学习 {0}（{1}/{2} 次课）</DC_InspectTeachProgress>
   <DC_InspectEnvoy>派驻 {0} 的使者</DC_InspectEnvoy>
   <DC_InspectRival>对手：{0}</DC_InspectRival>
+  <DC_InspectRivalSkill>对手：{0}（{1}）</DC_InspectRivalSkill>
   <DC_ParentReunion>{CHILD} 又与 {PARENT} 同在一处。</DC_ParentReunion>
   <DC_SurfaceReturnEase>实地让 {PAWN} 的孤立感缓和下来。</DC_SurfaceReturnEase>
   <DC_TraumaReason_StrataGas>在殖民地毒气中倒下</DC_TraumaReason_StrataGas>
@@ -311,6 +318,7 @@
   <DC_FamilyTree_Children>子女</DC_FamilyTree_Children>
   <DC_FamilyTree_Grandchildren>孙子女</DC_FamilyTree_Grandchildren>
   <DC_FamilyTree_Teaching>师徒线</DC_FamilyTree_Teaching>
+  <DC_FamilyTree_PastMentor>前导师</DC_FamilyTree_PastMentor>
   <DC_FamilyTree_Self>本人</DC_FamilyTree_Self>
   <DC_FamilyTree_Dead>（已故）</DC_FamilyTree_Dead>
   <DC_FamilyTree_Away>不在地图上</DC_FamilyTree_Away>
@@ -330,7 +338,6 @@
   <DC_FamilyTree_StyleRows>分行</DC_FamilyTree_StyleRows>
   <DC_Settings_FamilyTreePedigree>家族树：谱系图布局</DC_Settings_FamilyTreePedigree>
   <DC_Settings_FamilyTreePedigreeTip>祖先在上、后裔在下，并用连线标出血缘。关闭则保持按代分行的布局。</DC_Settings_FamilyTreePedigreeTip>
-  <DC_Settings_FamilyJoin>亲族加入与复合</DC_Settings_FamilyJoin>
   <DC_Settings_EnableFamilyJoin>地图上的亲族加入 / 投诚</DC_Settings_EnableFamilyJoin>
   <DC_Settings_EnableFamilyJoinTip>殖民者的亲族可能在来访时加入，或在袭击中投诚。配偶几率最高。前恋人不会借此加入（0%）。非敌对亲族招募不扣好感；敌对亲族会留下派系积怨。不屈的囚犯只有彼此都喜欢的家人才能打动。另外：姻亲欢迎、亲族归乡、亲族死去或被处决、分手的伤、孙子女出生、亲族被掳、家人照料、血脉仅存、继亲、探监、释放亲族、家传技艺、亲族在战斗中倒下、以及空巢。</DC_Settings_EnableFamilyJoinTip>
   <DC_Settings_RaidDefect>袭击亲族投诚几率（配偶）：{0}%</DC_Settings_RaidDefect>
@@ -379,7 +386,6 @@
   <DC_FamilyLetter_TraditionBody>{MENTOR} 把家里的 {SKILL} 传给了 {APPRENTICE}。传承页会记下这一笔。</DC_FamilyLetter_TraditionBody>
   <DC_FamilyLetter_EmptyNestLabel>空巢：{PAWN}</DC_FamilyLetter_EmptyNestLabel>
   <DC_FamilyLetter_EmptyNestBody>{CHILD} 长大后离开了家园地图。{PAWN} 的孩子都不在那里了。屋子更安静了。传承页会记下这一笔。</DC_FamilyLetter_EmptyNestBody>
-  <DC_Settings_TouchAverse>触碰特质</DC_Settings_TouchAverse>
   <DC_Settings_EnableTouchAverse>触碰需求特质（安心层级）</DC_Settings_EnableTouchAverse>
   <DC_Settings_EnableTouchAverseTip>厌触（拘谨／厌触／不能碰）和渴触的殖民者，要先与对方达到对应的安心层级才会成为恋人／未婚／配偶。亲近距离相处会累积安心。触觉型、爱依偎只用同一计量影响心情。约会之夜仍负责恋爱时间表。关闭后特质只剩描述。</DC_Settings_EnableTouchAverseTip>
   <DC_Settings_TouchComfortDays>同室相处多少天达到「能接受触碰」：{0}</DC_Settings_TouchComfortDays>
@@ -475,4 +481,8 @@
   <DC_RemembranceKilledBy>被 {0} 杀害</DC_RemembranceKilledBy>
   <DC_RemembranceDiedOf>死于{0}</DC_RemembranceDiedOf>
 
+  <DC_HubTab_Perks>专长</DC_HubTab_Perks>
+  <DC_HubTab_Legacy>传承</DC_HubTab_Legacy>
+  <DC_HubTab_Reputation>声望</DC_HubTab_Reputation>
+  <DC_HubTab_BodyCodex>身体与典籍</DC_HubTab_BodyCodex>
 </LanguageData>

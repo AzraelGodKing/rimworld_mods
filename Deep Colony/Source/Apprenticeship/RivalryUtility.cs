@@ -66,6 +66,8 @@ namespace DeepColony
             a.relations.AddDirectRelation(DC_DefOf.DC_Rival, b);
             if (!b.relations.DirectRelationExists(DC_DefOf.DC_Rival, a))
                 b.relations.AddDirectRelation(DC_DefOf.DC_Rival, a);
+            NoteRivalSkill(a, b, shared);
+            NoteRivalSkill(b, a, shared);
 
             Messages.Message(
                 "DC_RivalFormed".Translate(
@@ -75,6 +77,15 @@ namespace DeepColony
                 new LookTargets(a, b),
                 MessageTypeDefOf.NeutralEvent,
                 false);
+        }
+
+        // Kept for the inspect line after the one-time message is gone (AZR-666).
+        private static void NoteRivalSkill(Pawn pawn, Pawn rival, SkillDef skill)
+        {
+            Comp_DeepColony comp = pawn.TryGetComp<Comp_DeepColony>();
+            if (comp == null) return;
+            comp.lastRivalSkillDefName = skill.defName;
+            comp.lastRivalId = rival.thingIDNumber;
         }
 
         private static SkillDef FindSharedStrongSkill(Pawn a, Pawn b)

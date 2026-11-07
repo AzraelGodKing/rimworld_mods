@@ -55,11 +55,18 @@
 
   <!-- ── Settings ───────────────────────────────────────────────────────────── -->
   <DC_Settings_Presets>Пресеты</DC_Settings_Presets>
-  <DC_Settings_PresetsTip>Мягкий / По умолчанию / Сложный перенастраивают ползунки ниже. Переключатели систем остаются включёнными.</DC_Settings_PresetsTip>
+  <DC_Settings_PresetsTip>Мягкий / Обычный / Жёсткий задают все игровые настройки ниже. Отображение и безопасность не меняются.</DC_Settings_PresetsTip>
+  <DC_Settings_Section_Perks>Перки</DC_Settings_Section_Perks>
+  <DC_Settings_Section_Trauma>Травмы и терапия</DC_Settings_Section_Trauma>
+  <DC_Settings_Section_Mentoring>Наставничество</DC_Settings_Section_Mentoring>
+  <DC_Settings_Section_Family>Семья</DC_Settings_Section_Family>
+  <DC_Settings_Section_Reputation>Репутация фракций</DC_Settings_Section_Reputation>
+  <DC_Settings_Section_BodyCodex>Тело и кодекс</DC_Settings_Section_BodyCodex>
+  <DC_Settings_Section_Safety>Безопасность</DC_Settings_Section_Safety>
+  <DC_Settings_Section_Display>Отображение</DC_Settings_Section_Display>
   <DC_Settings_PresetSoft>Мягкий</DC_Settings_PresetSoft>
   <DC_Settings_PresetDefault>По умолчанию</DC_Settings_PresetDefault>
   <DC_Settings_PresetHard>Сложный</DC_Settings_PresetHard>
-  <DC_Settings_Systems>Системы</DC_Settings_Systems>
   <DC_Settings_EnablePerks>Включить деревья перков</DC_Settings_EnablePerks>
   <DC_Settings_EnablePerksTip>Перки открываются сами на навыке 5 / 10 / 15 / 20 и пропадают, если навык падает ниже.</DC_Settings_EnablePerksTip>
   <DC_Settings_ShowPerkHediffs>Показывать перки на вкладке здоровья</DC_Settings_ShowPerkHediffs>
@@ -109,7 +116,6 @@
   <DC_Settings_TraumaPenaltiesTip>По умолчанию выкл. Боевая травма снижает точность в призыве; травма плена даёт штраф настроения на работе надзирателя. Сложный пресет включает.</DC_Settings_TraumaPenaltiesTip>
   <DC_Settings_AttitudeConsequences>Последствия отношения</DC_Settings_AttitudeConsequences>
   <DC_Settings_AttitudeConsequencesTip>По умолчанию выкл. Приветливое/обязанное/настороженное/мстительное отношение влияет на цены, караваны торговцев и силу набегов. Сложный пресет включает.</DC_Settings_AttitudeConsequencesTip>
-  <DC_Settings_Phase5>Системы силы</DC_Settings_Phase5>
   <DC_Settings_Capstones>Капстоун-перки навыка 20</DC_Settings_Capstones>
   <DC_Settings_CapstonesTip>Добавляет узел перка на навыке 20. По умолчанию вкл. Перк всё равно выдаётся автоматически.</DC_Settings_CapstonesTip>
   <DC_Settings_Branching>Ветвление выбора L15</DC_Settings_Branching>
@@ -123,7 +129,6 @@
   <DC_Settings_HeirloomsTip>По умолчанию выкл. Смерть колониста может отметить снаряжение как наследную вещь (настроение + крошечный бонус при ношении). Сложный пресет включает.</DC_Settings_HeirloomsTip>
   <DC_Settings_ChronicTrauma>Хедiff хронической травмы</DC_Settings_ChronicTrauma>
   <DC_Settings_ChronicTraumaTip>По умолчанию выкл. Травма, истёкшая без терапии, может стать хроническим стрессом. Консультирование ослабляет. Сложный пресет включает.</DC_Settings_ChronicTraumaTip>
-  <DC_Settings_Tuning>Настройка</DC_Settings_Tuning>
   <DC_Settings_CombatShock>Шанс боевого шока: {0}%</DC_Settings_CombatShock>
   <DC_Settings_MinSkillLead>Мин. отрыв навыка наставника: {0}</DC_Settings_MinSkillLead>
   <DC_Settings_PassiveMentor>Множитель пассивного наставничества: {0}</DC_Settings_PassiveMentor>
@@ -230,6 +235,8 @@
   <DC_Alert_UntreatedTrauma>Невылеченная травма</DC_Alert_UntreatedTrauma>
   <DC_Alert_UntreatedTraumaDesc>Эти колонисты несут психологическую травму больше суток без консультации. Врачи могут провести беседу через работу врача или ПКМ.</DC_Alert_UntreatedTraumaDesc>
   <DC_InspectCounsel>Консультации: последняя {0}, сессий {1} (связь {2}/{3})</DC_InspectCounsel>
+  <DC_InspectCounselors>Чаще всего сеансы с: {0}</DC_InspectCounselors>
+  <DC_InspectMuscleMemory>Мышечная память (двойное обучение): {0}</DC_InspectMuscleMemory>
   <DC_InspectGeneVsBlood>Ксеногены спорят с семейной традицией ({0})</DC_InspectGeneVsBlood>
   <DC_PerkFilter_All>Все</DC_PerkFilter_All>
   <DC_PerkFilter_Hard>Только сложные</DC_PerkFilter_Hard>
@@ -249,7 +256,6 @@
   <DC_FuneralBurn>Костёр для {PAWN} смягчает травму насильственной потери.</DC_FuneralBurn>
   <DC_FuneralEaseMote>Предали земле…</DC_FuneralEaseMote>
   <DC_ChildRaidWitness>{PAWN} видел(а) бой и так скоро не забудет.</DC_ChildRaidWitness>
-  <DC_Settings_LaterSystems>Поздние системы</DC_Settings_LaterSystems>
   <DC_Settings_ChildRaid>Шанс детского свидетеля рейда: {0}%</DC_Settings_ChildRaid>
   <DC_Settings_PrisonerCounsel>Консультации пленников (путь вербовки)</DC_Settings_PrisonerCounsel>
   <DC_Settings_PrisonerCounselTip>По умолчанию выкл. Врачи могут консультировать пленников как медленную вербовку через общение. Не заменяет разговор надзирателя.</DC_Settings_PrisonerCounselTip>
@@ -292,6 +298,7 @@
   <DC_InspectTeachProgress>Учит {0} ({1}/{2} сессий)</DC_InspectTeachProgress>
   <DC_InspectEnvoy>Посланник к {0}</DC_InspectEnvoy>
   <DC_InspectRival>Соперник: {0}</DC_InspectRival>
+  <DC_InspectRivalSkill>Соперник: {0} ({1})</DC_InspectRivalSkill>
   <DC_ParentReunion>{CHILD} снова с {PARENT}.</DC_ParentReunion>
   <DC_SurfaceReturnEase>Твёрдая земля смягчает изоляцию {PAWN}.</DC_SurfaceReturnEase>
   <DC_TraumaReason_StrataGas>был(а) сражён(а) колониальным газом</DC_TraumaReason_StrataGas>
@@ -311,6 +318,7 @@
   <DC_FamilyTree_Children>Дети</DC_FamilyTree_Children>
   <DC_FamilyTree_Grandchildren>Внуки</DC_FamilyTree_Grandchildren>
   <DC_FamilyTree_Teaching>Линия учительства</DC_FamilyTree_Teaching>
+  <DC_FamilyTree_PastMentor>Бывший наставник</DC_FamilyTree_PastMentor>
   <DC_FamilyTree_Self>этот колонист</DC_FamilyTree_Self>
   <DC_FamilyTree_Dead>(мёртв)</DC_FamilyTree_Dead>
   <DC_FamilyTree_Away>не на карте</DC_FamilyTree_Away>
@@ -330,7 +338,6 @@
   <DC_FamilyTree_StyleRows>Ряды</DC_FamilyTree_StyleRows>
   <DC_Settings_FamilyTreePedigree>Родословная: схема с линиями</DC_Settings_FamilyTreePedigree>
   <DC_Settings_FamilyTreePedigreeTip>Предки сверху, потомки снизу, со связующими линиями. Выкл. оставляет ряды по поколениям.</DC_Settings_FamilyTreePedigreeTip>
-  <DC_Settings_FamilyJoin>Семья: переход и примирение</DC_Settings_FamilyJoin>
   <DC_Settings_EnableFamilyJoin>Родня на карте может присоединиться / перебежать</DC_Settings_EnableFamilyJoin>
   <DC_Settings_EnableFamilyJoinTip>Родня колонистов может присоединиться с визита или перебежать из рейда. Супруг(а) — высший шанс. Бывшие любовники этим путём не приходят (0%). Вербовка невраждебной родни не штрафует расположение; враждебная родня оставляет обиду фракции. Несгибаемых пленников может пробить только семья, которая нравится им взаимно. Также: свойственники, возвращение родни, смерть или казнь, рана расставания, рождение внука, похищение родни, уход семьи, последний в роду, сводная семья, визит в тюрьму, освобождение родни, семейное ремесло, падение родни в бою, пустое гнездо.</DC_Settings_EnableFamilyJoinTip>
   <DC_Settings_RaidDefect>Шанс перебежки родни в рейде (супруг): {0}%</DC_Settings_RaidDefect>
@@ -379,7 +386,6 @@
   <DC_FamilyLetter_TraditionBody>{MENTOR} передал(а) домашний {SKILL} {APPRENTICE}. Вкладка Наследие сохраняет запись.</DC_FamilyLetter_TraditionBody>
   <DC_FamilyLetter_EmptyNestLabel>Пустое гнездо: {PAWN}</DC_FamilyLetter_EmptyNestLabel>
   <DC_FamilyLetter_EmptyNestBody>{CHILD} вырос(ла) и ушёл(ла) с домашней карты. У {PAWN} там больше не осталось детей. В комнатах тише. Вкладка Наследие сохраняет запись.</DC_FamilyLetter_EmptyNestBody>
-  <DC_Settings_TouchAverse>Черты прикосновения</DC_Settings_TouchAverse>
   <DC_Settings_EnableTouchAverse>Черты потребности в прикосновении (ступени)</DC_Settings_EnableTouchAverse>
   <DC_Settings_EnableTouchAverseTip>Нелюбовь к прикосновениям (сдержанность / нелюбовь / непереносимость) и жажда прикосновений не дадут начать роман, пока с этим человеком не достигнута нужная ступень близости. Доверие копится рядом. «Тактильность» и «ласковость» используют тот же счётчик только для настроения. Date Night по-прежнему владеет расписанием.</DC_Settings_EnableTouchAverseTip>
   <DC_Settings_TouchComfortDays>Дней в одной комнате до ступени «можно трогать»: {0}</DC_Settings_TouchComfortDays>
@@ -475,4 +481,8 @@
   <DC_RemembranceKilledBy>убит(а): {0}</DC_RemembranceKilledBy>
   <DC_RemembranceDiedOf>причина смерти: {0}</DC_RemembranceDiedOf>
 
+  <DC_HubTab_Perks>Перки</DC_HubTab_Perks>
+  <DC_HubTab_Legacy>Наследие</DC_HubTab_Legacy>
+  <DC_HubTab_Reputation>Репутация</DC_HubTab_Reputation>
+  <DC_HubTab_BodyCodex>Тело и кодекс</DC_HubTab_BodyCodex>
 </LanguageData>
