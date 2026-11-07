@@ -51,7 +51,7 @@
   <Niceties_ShareRoomInspect>Room is shared.</Niceties_ShareRoomInspect>
   <Niceties_ShareRoomInspectWith>Room is shared: {0}.</Niceties_ShareRoomInspectWith>
   <Niceties_Settings_LeaveAWayOut>Leave a way out</Niceties_Settings_LeaveAWayOut>
-  <Niceties_Settings_LeaveAWayOutTip>Pawns skip finishing a wall that would trap someone or block leftover frames. They step aside before closing themselves in. Replace Stuff frames count; in-place wood-to-stone wall swaps stay solid so a freezer can still be replaced from inside. Right-click force construct still builds it. Inspired by Smarter Construction — original 1.6 code, not a port.</Niceties_Settings_LeaveAWayOutTip>
+  <Niceties_Settings_LeaveAWayOutTip>Pawns skip finishing a wall that would trap someone or block leftover frames. They step aside before closing themselves in. Replace Stuff frames count; in-place wood-to-stone wall swaps stay solid so a freezer can still be replaced from inside. Right-click force construct still builds it. Inspired by Smarter Construction — original code, not a port.</Niceties_Settings_LeaveAWayOutTip>
   <Niceties_OpenBuilds_WouldEnclose>Finishing this would wall someone in.</Niceties_OpenBuilds_WouldEnclose>
   <Niceties_OpenBuilds_WouldTrapSelf>Finishing this would trap the builder with no way out.</Niceties_OpenBuilds_WouldTrapSelf>
   <Niceties_Settings_Reset>Reset to defaults</Niceties_Settings_Reset>

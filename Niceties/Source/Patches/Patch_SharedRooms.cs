@@ -1,3 +1,4 @@
+#nullable enable
 using HarmonyLib;
 using RimWorld;
 using Verse;

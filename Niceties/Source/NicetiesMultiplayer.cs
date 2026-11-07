@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Reflection;
 using HarmonyLib;
@@ -15,8 +16,8 @@ namespace Niceties
 
         private static bool resolved;
         private static bool loaded;
-        private static PropertyInfo isInMultiplayer;
-        private static MethodInfo registerSyncMethod;
+        private static PropertyInfo? isInMultiplayer;
+        private static MethodInfo? registerSyncMethod;
 
         /// <summary>
         /// True inside a Multiplayer session. If the mod is loaded but the session flag
@@ -39,7 +40,7 @@ namespace Niceties
 
                 try
                 {
-                    return (bool)isInMultiplayer.GetValue(null, null);
+                    return isInMultiplayer.GetValue(null, null) is bool b && b;
                 }
                 catch
                 {
@@ -56,7 +57,7 @@ namespace Niceties
                 return;
             }
 
-            MethodInfo target = AccessTools.Method(type, methodName);
+            MethodInfo? target = AccessTools.Method(type, methodName);
             if (target == null)
             {
                 Log.Warning("[Niceties] Multiplayer sync target " + type.Name + "." + methodName + " not found.");
@@ -65,7 +66,7 @@ namespace Niceties
 
             try
             {
-                registerSyncMethod.Invoke(null, new object[] { target, null });
+                registerSyncMethod.Invoke(null, new object?[] { target, null });
             }
             catch (Exception e)
             {
@@ -88,7 +89,7 @@ namespace Niceties
                 return;
             }
 
-            Type mp = AccessTools.TypeByName("Multiplayer.API.MP");
+            Type? mp = AccessTools.TypeByName("Multiplayer.API.MP");
             if (mp == null)
             {
                 Log.Warning("[Niceties] Multiplayer is active but Multiplayer.API.MP was not found; "
@@ -96,7 +97,7 @@ namespace Niceties
                 return;
             }
 
-            FieldInfo enabled = AccessTools.Field(mp, "enabled");
+            FieldInfo? enabled = AccessTools.Field(mp, "enabled");
             if (enabled != null && enabled.GetValue(null) is bool on && !on)
             {
                 loaded = false;

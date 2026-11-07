@@ -1,4 +1,20 @@
-1.6.1
+2.0.0
+[h1]Niceties — 2.0.0[/h1]
+Niceties 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting every update, and the same save carries over to 1.7.
+
+[b]Changed[/b]
+[list]
+[*] [b]RimWorld 1.7[/b] — the 1.7 folder now has its own .NET 10 build made against the 1.7 game files. 1.6 keeps its own build from the same source.
+[*] [b]Removing Niceties[/b] — the description no longer says it is safe to remove mid-save. Removing it logs a few harmless errors once on the next load.
+[/list]
+[b]Fixed[/b]
+[list]
+[*] [b]Throne and altar[/b] — skipped entirely unless both Royalty and Ideology are active, instead of patching rooms that can never matter.
+[/list]
+
+[i]Build stamp (Player.log): niceties2[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/niceties.md[/i]
+
 [h1]Niceties — 1.6.1[/h1]
 [b]Changed[/b]
 [list]

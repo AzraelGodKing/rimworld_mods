@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
@@ -31,7 +32,7 @@ namespace Niceties
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
         {
-            Building_Bed bed = parent as Building_Bed;
+            Building_Bed? bed = parent as Building_Bed;
             if (!SharedRooms.ShowsGizmo(bed))
             {
                 yield break;
@@ -43,20 +44,20 @@ namespace Niceties
                 defaultDesc = "Niceties_ShareRoomTip".Translate(),
                 icon = ContentFinder<Texture2D>.Get("UI/Commands/AssignOwner", reportFailure: false),
                 isActive = () => SharedRooms.IsMarked(bed),
-                toggleAction = () => SharedRooms.Toggle(bed)
+                toggleAction = () => SharedRooms.Toggle(bed!)
             };
         }
 
-        public override string CompInspectStringExtra()
+        public override string? CompInspectStringExtra()
         {
-            Building_Bed bed = parent as Building_Bed;
+            Building_Bed? bed = parent as Building_Bed;
             if (!SharedRooms.ShowsGizmo(bed) || !SharedRooms.IsMarked(bed))
             {
                 return null;
             }
 
-            string names = SharedRooms.RoommateNames(bed.GetRoom());
-            return names.NullOrEmpty()
+            string? names = SharedRooms.RoommateNames(bed.GetRoom());
+            return string.IsNullOrEmpty(names)
                 ? "Niceties_ShareRoomInspect".Translate().Resolve()
                 : "Niceties_ShareRoomInspectWith".Translate(names).Resolve();
         }
@@ -109,10 +110,10 @@ namespace Niceties
         internal static bool Enabled()
         {
             NicetiesSettings settings = NicetiesSim.Settings;
-            return settings != null && settings.enableSharedRooms;
+            return settings.enableSharedRooms;
         }
 
-        internal static bool ShowsGizmo(Building_Bed bed)
+        internal static bool ShowsGizmo(Building_Bed? bed)
         {
             if (!Enabled() || bed == null || !bed.Spawned)
             {
@@ -128,12 +129,12 @@ namespace Niceties
                 && bed.def.building.bed_countsForBedroomOrBarracks;
         }
 
-        internal static bool IsMarked(Building_Bed bed)
+        internal static bool IsMarked(Building_Bed? bed)
         {
             return bed != null && IsMarked(bed.GetRoom());
         }
 
-        internal static bool IsMarked(Room room)
+        internal static bool IsMarked(Room? room)
         {
             if (!Enabled() || room == null || room.PsychologicallyOutdoors)
             {
@@ -182,7 +183,7 @@ namespace Niceties
             SetMarked(bed.GetRoom(), marked);
         }
 
-        internal static string RoommateNames(Room room)
+        internal static string? RoommateNames(Room? room)
         {
             if (room == null)
             {
@@ -293,7 +294,7 @@ namespace Niceties
         internal static bool ShouldSkipDisturbedSleep(Pawn sleeper, Pawn source)
         {
             NicetiesSettings settings = NicetiesSim.Settings;
-            if (!Enabled() || settings == null || !settings.skipDisturbedSleepWhenSharing)
+            if (!Enabled() || !settings.skipDisturbedSleepWhenSharing)
             {
                 return false;
             }

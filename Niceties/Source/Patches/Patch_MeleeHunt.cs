@@ -1,3 +1,4 @@
+#nullable enable
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -14,20 +15,20 @@ namespace Niceties
         };
 
         private static float cachedCap = -1f;
-        private static string cachedLabel;
+        private static string? cachedLabel;
 
         /// <summary>Largest vanilla reference animal at or under the cap, or null if none fit.</summary>
-        internal static string ReferenceAnimalLabel(float cap)
+        internal static string? ReferenceAnimalLabel(float cap)
         {
             if (cap == cachedCap)
             {
                 return cachedLabel;
             }
 
-            ThingDef best = null;
+            ThingDef? best = null;
             for (int i = 0; i < ReferenceAnimals.Length; i++)
             {
-                ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(ReferenceAnimals[i]);
+                ThingDef? def = DefDatabase<ThingDef>.GetNamedSilentFail(ReferenceAnimals[i]);
                 if (def?.race == null || def.race.baseBodySize > cap + 0.001f)
                 {
                     continue;
@@ -44,19 +45,19 @@ namespace Niceties
             return cachedLabel;
         }
 
-        internal static bool AllowsMelee(Pawn hunter)
+        internal static bool AllowsMelee(Pawn? hunter)
         {
             NicetiesSettings settings = NicetiesSim.Settings;
-            return settings != null && settings.meleeHunting && hunter != null;
+            return settings.meleeHunting && hunter != null;
         }
 
         internal static bool AllowsUnarmed()
         {
             NicetiesSettings settings = NicetiesSim.Settings;
-            return settings != null && settings.meleeHunting && settings.unarmedHunting;
+            return settings.meleeHunting && settings.unarmedHunting;
         }
 
-        internal static bool PreyFitsMelee(Pawn prey)
+        internal static bool PreyFitsMelee(Pawn? prey)
         {
             if (prey?.RaceProps == null)
             {
@@ -64,7 +65,7 @@ namespace Niceties
             }
 
             NicetiesSettings settings = NicetiesSim.Settings;
-            float cap = settings != null ? settings.meleeHuntMaxBodySize : 1.5f;
+            float cap = settings.meleeHuntMaxBodySize;
             return prey.RaceProps.baseBodySize <= cap;
         }
 
@@ -75,7 +76,7 @@ namespace Niceties
                 return false;
             }
 
-            ThingWithComps primary = hunter.equipment?.Primary;
+            ThingWithComps? primary = hunter.equipment?.Primary;
             if (primary == null)
             {
                 return AllowsUnarmed();
@@ -95,13 +96,13 @@ namespace Niceties
                 return;
             }
 
-            ThingWithComps primary = p.equipment?.Primary;
+            ThingWithComps? primary = p.equipment?.Primary;
             if (primary != null)
             {
                 if (MeleeHunt.AllowsMelee(p) && primary.def.IsMeleeWeapon)
                 {
-                    CompEquippable eq = primary.TryGetComp<CompEquippable>();
-                    Verb verb = eq?.PrimaryVerb;
+                    CompEquippable? eq = primary.TryGetComp<CompEquippable>();
+                    Verb? verb = eq?.PrimaryVerb;
                     if (verb != null && verb.HarmsHealth())
                     {
                         __result = true;
@@ -133,7 +134,7 @@ namespace Niceties
                 return;
             }
 
-            Pawn prey = t as Pawn;
+            Pawn? prey = t as Pawn;
             if (prey != null && !MeleeHunt.PreyFitsMelee(prey))
             {
                 __result = false;

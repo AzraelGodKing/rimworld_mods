@@ -1,3 +1,4 @@
+#nullable enable
 using Verse;
 
 namespace Niceties
