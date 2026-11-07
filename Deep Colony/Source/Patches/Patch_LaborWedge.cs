@@ -468,6 +468,8 @@ namespace DeepColony.Patches
                 }
 
                 hediff.pawn = null;
+                // The list was edited behind HediffSet's back; drop its cached lookups.
+                tracker.hediffSet?.DirtyCache();
             }
             catch (Exception e)
             {

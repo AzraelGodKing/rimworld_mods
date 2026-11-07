@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using HarmonyLib;
 using RimWorld;
 using Verse;
 using Verse.AI.Group;
@@ -13,7 +12,6 @@ namespace DeepColony
     /// </summary>
     public static class FamilyJoinUtility
     {
-        [System.ThreadStatic]
         private static int suppressDepth;
 
         public static bool SuppressGoodwillPenalty => suppressDepth > 0;
@@ -228,21 +226,7 @@ namespace DeepColony
         private static void RecruitToPlayer(Pawn pawn)
         {
             Pawn recruiter = FindRecruiter(pawn);
-            System.Reflection.MethodInfo recruit = AccessTools.Method(
-                typeof(RecruitUtility), "Recruit",
-                new[] { typeof(Pawn), typeof(Faction), typeof(Pawn) })
-                ?? AccessTools.Method(
-                    typeof(RecruitUtility), "Recruit",
-                    new[] { typeof(Pawn), typeof(Faction) });
-            if (recruit != null)
-            {
-                if (recruit.GetParameters().Length >= 3)
-                    recruit.Invoke(null, new object[] { pawn, Faction.OfPlayer, recruiter });
-                else
-                    recruit.Invoke(null, new object[] { pawn, Faction.OfPlayer });
-                return;
-            }
-            pawn.SetFaction(Faction.OfPlayer, recruiter);
+            RecruitUtility.Recruit(pawn, Faction.OfPlayer, recruiter);
         }
 
         private static Pawn FindRecruiter(Pawn pawn)

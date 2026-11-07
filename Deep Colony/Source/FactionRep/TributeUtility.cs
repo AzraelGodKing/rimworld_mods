@@ -29,13 +29,7 @@ namespace DeepColony
                 reason = "DC_TributeNoFaction".Translate();
                 return false;
             }
-            Map map = Find.CurrentMap ?? (Find.Maps.Count > 0 ? Find.Maps[0] : null);
-            if (map == null)
-            {
-                reason = "DC_TributeNoSilver".Translate();
-                return false;
-            }
-            if (CountSilver(map) < SilverCost)
+            if (SilverMap() == null)
             {
                 reason = "DC_TributeNoSilver".Translate();
                 return false;
@@ -51,8 +45,8 @@ namespace DeepColony
                 return;
             }
 
-            Map map = Find.CurrentMap ?? Find.Maps[0];
-            if (!TryConsumeSilver(map, SilverCost))
+            Map map = SilverMap();
+            if (map == null || !TryConsumeSilver(map, SilverCost))
             {
                 Messages.Message("DC_TributeNoSilver".Translate(), MessageTypeDefOf.RejectInput, false);
                 return;
@@ -134,6 +128,22 @@ namespace DeepColony
         {
             return Find.FactionManager.AllFactionsListForReading.FindAll(
                 f => !f.IsPlayer && !f.defeated && !f.Hidden);
+        }
+
+        // The first player home map (in Find.Maps order) holding enough silver. Not
+        // Find.CurrentMap: that is per-client view state, and with every map lost the
+        // old Find.Maps[0] fallback threw on an empty list.
+        private static Map SilverMap()
+        {
+            List<Map> maps = Find.Maps;
+            if (maps == null) return null;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Map m = maps[i];
+                if (m != null && m.IsPlayerHome && CountSilver(m) >= SilverCost)
+                    return m;
+            }
+            return null;
         }
 
         private static int CountSilver(Map map)

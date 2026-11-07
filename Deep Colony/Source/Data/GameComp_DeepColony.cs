@@ -42,7 +42,14 @@ namespace DeepColony
         private const int MaxLedgerEntries = 240;
         private const int AggregateWindowTicks = 60000; // merge same reason within a day
 
-        public GameComp_DeepColony(Game game) { }
+        public GameComp_DeepColony(Game game)
+        {
+            DeepColonyPlayerCommand.Reset();
+        }
+
+        // Dev-mode actions only (DebugActions_DeepColony).
+        internal void DebugClearInheritanceProcessed(Pawn pawn) => inheritanceProcessed.Remove(pawn.thingIDNumber);
+        internal IReadOnlyDictionary<int, float> DebugFactionDriftBuffer => factionDriftBuffer;
 
         private static int MassacreDeathThreshold =>
             DeepColonySettings.Get.massacreDeathThreshold;

@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Reflection;
-using HarmonyLib;
 using RimWorld;
 using Verse;
 
@@ -117,41 +115,14 @@ namespace DeepColony
                 return;
             }
             float lost = LostProgress;
-            MethodInfo add = AccessTools.Method(typeof(ResearchManager), "AddProgress");
-            if (add == null)
-            {
-                return;
-            }
-            ParameterInfo[] ps = add.GetParameters();
-            object[] args;
-            if (ps.Length == 2)
-            {
-                args = new object[] { proj, -lost };
-            }
-            else if (ps.Length >= 3)
-            {
-                args = new object[ps.Length];
-                args[0] = proj;
-                args[1] = -lost;
-                for (int i = 2; i < ps.Length; i++)
-                {
-                    args[i] = ps[i].HasDefaultValue ? ps[i].DefaultValue : (ps[i].ParameterType.IsValueType
-                        ? System.Activator.CreateInstance(ps[i].ParameterType)
-                        : null);
-                }
-            }
-            else
-            {
-                return;
-            }
             try
             {
-                add.Invoke(Find.ResearchManager, args);
+                Find.ResearchManager.AddProgress(proj, -lost);
             }
             catch (System.Exception e)
             {
-                Log.WarningOnce("[DeepColony] Codex research loss skipped (AddProgress call failed): "
-                    + (e.InnerException ?? e).Message, 0x5DC0DE01);
+                Log.WarningOnce("[DeepColony] Codex research loss skipped: "
+                    + e.Message, 0x5DC0DE01);
                 return;
             }
             Messages.Message("DC_Codex_TechDecay".Translate(pawn.LabelShortCap, proj.LabelCap),

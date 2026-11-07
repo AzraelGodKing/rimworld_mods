@@ -13,6 +13,10 @@ Deep Colony 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting
 [*] [b]Save size[/b] — touch comfort is only tracked for your own colonists, prisoners and guests, and old entries are cleaned up daily.
 [*] [b]Chronicle export[/b] — if the clipboard copy fails, the text file is still saved, and you are told if both fail.
 [*] [b]Birth safety net[/b] — turning it off now turns off all of it, including the failed-birth recovery.
+[*] [b]Ideology funerals[/b] now ease grief as intended. Before, the funeral was never recognised.
+[*] [b]Loading a save[/b] can no longer apply a perk, heir, divorce, envoy, mentor or tribute click from the game you just left to someone in the new one.
+[*] [b]Tribute[/b] no longer errors when you have no colony map, and takes the silver from a home map that has it.
+[*] [b]Wary factions[/b] block trade caravans on about a third of days, as intended, instead of depending on how often the game re-checks.
 [/list]
 
 [i]Build stamp (Player.log): deepcolony2-net10[/i]

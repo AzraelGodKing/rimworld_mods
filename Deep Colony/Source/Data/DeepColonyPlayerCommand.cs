@@ -34,7 +34,17 @@ namespace DeepColony
             public string s2;
         }
 
-        private static readonly List<Entry> queue = new List<Entry>();
+        // Static, so it would outlive a save: Reset() runs from the GameComp_DeepColony
+        // constructor (new game and load) so a command queued before a load can't hit the
+        // next save's pawns that reuse the same id numbers.
+        private static List<Entry> queue = new List<Entry>();
+        private static List<Entry> draining = new List<Entry>();
+
+        internal static void Reset()
+        {
+            queue.Clear();
+            draining.Clear();
+        }
 
         public static void EnqueueResumeCodex(Thing notebook)
         {
@@ -159,10 +169,12 @@ namespace DeepColony
         public static void Drain()
         {
             if (queue.Count == 0) return;
-            List<Entry> batch = new List<Entry>(queue);
-            queue.Clear();
-            for (int i = 0; i < batch.Count; i++)
-                Apply(batch[i]);
+            // Swap buffers: a command that queues another lands in the fresh list
+            // and runs next tick.
+            (queue, draining) = (draining, queue);
+            for (int i = 0; i < draining.Count; i++)
+                Apply(draining[i]);
+            draining.Clear();
         }
 
         private static void Apply(Entry e)
