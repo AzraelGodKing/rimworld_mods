@@ -22,5 +22,5 @@
 
 - [ ] Custom Azrael portraits (stop reusing Cassandra art) — preferably once, in Homesteader
 - [x] Per-incident chance weights for series events under the Azrael storyteller (`Azrael_SeriesIncidentWeights`)
-- [ ] `XBuildInfo.BuildStamp` in Homesteader, Stormproof, Nemesis, Living World, Date Night, Niceties (hub already reads the convention; mods without a typed stamp stay blank)
-- [ ] Living World traffic weights tied to Azrael (see series ROADMAP)
+- [x] `XBuildInfo.BuildStamp` convention (AZR-588): Azrael, Strata, Deep Colony, Stormproof, Date Night here; Homesteader, Nemesis, Living World, Niceties, Wave Survival Reforged and NanoHive Reforged in their own release branches
+- [x] Living World traffic weights tied to Azrael: `traffic` table + `StorytellerIncidentWeights.TrafficFactor(key)` (AZR-589). Living World still has to read it.
