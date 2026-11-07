@@ -49,6 +49,8 @@ namespace DateNight
             DateNightDoubleDates.Reset();
             DateNightReunions.Reset();
             DateNightRomance.Reset();
+            DateNightHistory.Reset();
+            DateNightAskOut.Reset();
         }
 
         private void SeedScheduleFlags()
@@ -97,6 +99,8 @@ namespace DateNight
             DateNightDoubleDates.ExposeData();
             DateNightReunions.ExposeData();
             DateNightRomance.ExposeData();
+            DateNightHistory.ExposeData();
+            DateNightAskOut.ExposeData();
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
@@ -132,6 +136,7 @@ namespace DateNight
 
             DateNightAnniversaries.Tick();
             DateNightDoubleDates.Tick();
+            DateNightAskOut.Tick();
 
             if (Find.TickManager.TicksGame % 2500 == 0)
             {
@@ -145,6 +150,7 @@ namespace DateNight
                 DateNightAnniversaries.PruneDeadPawns();
                 DateNightRomance.PruneDeadPawns();
                 DateNightRomance.TickBonds();
+                DateNightHistory.PruneDeadPawns();
                 PruneScheduleFlags(wasOnLovin);
                 PruneScheduleFlags(wasOnDate);
             }

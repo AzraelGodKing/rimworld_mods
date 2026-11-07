@@ -72,6 +72,47 @@ namespace DateNight
             return r?.score ?? 0;
         }
 
+        /// <summary>One panel line per couple this couple has double-dated with.</summary>
+        public static List<string> DescribeRapport(Pawn a, Pawn b)
+        {
+            var lines = new List<string>();
+            long mine = DateNightActivities.CoupleKey(a, b);
+            for (int i = 0; i < rapport.Count; i++)
+            {
+                CoupleRapport r = rapport[i];
+                if (r == null)
+                {
+                    continue;
+                }
+                long first = DateNightActivities.CoupleKey(r.a1, r.b1);
+                long second = DateNightActivities.CoupleKey(r.a2, r.b2);
+                int otherA;
+                int otherB;
+                if (first == mine)
+                {
+                    otherA = r.a2;
+                    otherB = r.b2;
+                }
+                else if (second == mine)
+                {
+                    otherA = r.a1;
+                    otherB = r.b1;
+                }
+                else
+                {
+                    continue;
+                }
+                Pawn? x = DateNightDateUtility.FindPawnById(otherA);
+                Pawn? y = DateNightDateUtility.FindPawnById(otherB);
+                if (x == null || y == null)
+                {
+                    continue;
+                }
+                lines.Add("DateNight_Romance_Rapport".Translate(x.LabelShort, y.LabelShort, r.score.ToStringWithSign()));
+            }
+            return lines;
+        }
+
         private static CoupleRapport? FindRapport(int a1, int b1, int a2, int b2)
         {
             if (rapport == null)

@@ -302,6 +302,45 @@ namespace DateNight
             }
         }
 
+        /// <summary>Player-facing name of the remembered spot, or null if it has none.</summary>
+        public static string? Describe(FavoriteVenue fav)
+        {
+            if (fav.score < PreferScore)
+            {
+                return null;
+            }
+            Map? map = null;
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i < maps.Count; i++)
+            {
+                if (maps[i].uniqueID == fav.mapId)
+                {
+                    map = maps[i];
+                    break;
+                }
+            }
+            if (map == null)
+            {
+                return null;
+            }
+            if (fav.thingId != 0)
+            {
+                Thing? thing = fav.ResolveThing(map);
+                if (thing != null)
+                {
+                    return thing.LabelShortCap;
+                }
+            }
+            if (!fav.cell.IsValid || !fav.cell.InBounds(map))
+            {
+                return null;
+            }
+            Room? room = fav.cell.GetRoom(map);
+            return room != null && !room.PsychologicallyOutdoors && room.Role != null
+                ? room.Role.LabelCap.ToString()
+                : "DateNight_Romance_VenueOutdoors".Translate().ToString();
+        }
+
         public static string DebugDescribe(Pawn pawn)
         {
             Pawn? partner = DateNightPawns.LovePartner(pawn);
@@ -448,6 +487,11 @@ namespace DateNight
                 return thing;
             }
             return thing.Position.GetEdifice(thing.Map);
+        }
+
+        public Thing? ResolveThing(Map map)
+        {
+            return thingId == 0 ? null : FindThing(map, thingId);
         }
 
         private static Thing? FindThing(Map map, int id)

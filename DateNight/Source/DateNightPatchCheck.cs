@@ -37,6 +37,7 @@ namespace DateNight
                     AccessTools.Method(typeof(ThinkNode_Priority_GetJoy), nameof(ThinkNode_Priority_GetJoy.GetPriority))),
                 ("JobGiver_GetJoy.TryGiveJob", AccessTools.Method(typeof(JobGiver_GetJoy), "TryGiveJob")),
                 ("Pawn.GetInspectString", AccessTools.Method(typeof(Pawn), nameof(Pawn.GetInspectString))),
+                ("Pawn.GetGizmos", AccessTools.Method(typeof(Pawn), nameof(Pawn.GetGizmos))),
             };
             if (DateNightRjwSoftCompat.Active)
             {

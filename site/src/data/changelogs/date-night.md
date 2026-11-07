@@ -8,9 +8,16 @@ Detailed notes for **Date Night** only.
 
 Player-facing version **2.0.0** (`About.xml` `modVersion`). Stamp `datenight2-net10`. Ships for RimWorld **1.6** and **1.7** from the same source; 1.6 is not frozen.
 
-AZR-511 AZR-521 AZR-538 AZR-539 AZR-542 AZR-557
+AZR-511 AZR-521 AZR-524 AZR-538 AZR-539 AZR-542 AZR-557
+
+### Added
+- **Ask out tonight** (AZR-524) — pawn gizmo on an adult colonist with a lover or ladder partner. Plans one date at the first hour from 18:00 to 23:00 that neither partner painted Sleep or Work (falls back to 18:00), saved as `dateNightPlannedDates`. Starts both pawns when the hour comes unless drafted, in a ritual or on a need job; after a 2-hour grace a "missed" message clears it. Cancel gizmo while planned. Schedules are not touched.
+- **Romance panel** (AZR-524) — "Romance" gizmo opens `Dialog_DateNightRomance`: stage (or ladder progress), time together and anniversary day, last date (how long ago, quality, date count), favourite venue and score, double-date rapport, planned date. Per-couple history is new, saved as `dateNightCoupleHistory` (missing on a 1.x save = no dates yet). Toggle `showRomanceGizmos`.
+- **Gift picker** (AZR-524) — `Dialog_DateNightGiftPicker` lists ingestible items with search. The settings gift list is rows with a remove button; names with no `ThingDef` show in red.
 
 ### Changed
+- **Settings** (AZR-524) — scroll view with Lovin, Dates, Gifts, Romance and Schedule tab sections (fits Russian at 1280×720).
+- **Date button column** (AZR-524) — keeps the known-mod table (Royalty, Rimbody, Schedule Everything) but no longer counts every other Harmony owner of `DrawTimeAssignmentSelectorGrid` as a button. New `scheduleColumnOffset` setting (−4 to +8) for unknown patchers. `Pawn.GetGizmos` added to the startup patch check (now 11, 12 with RJW).
 - **Two builds, one source** (AZR-521) — official 1.6 loads `1.6/Assemblies` (net472, 1.6 refs). 1.7 loads `1.7/Assemblies`, now a .NET 10 build against the 1.7 refs (`Krafs.Rimworld.Ref` 1.7.4998-unstable, Harmony 3.0.0-rc.4). Both report 2.0.0, so the shared `About.xml` version and the update letter are right on both.
 - **Code cleanup** (AZR-557) — nullable reference types on every Date Night source file with no warnings; mod settings are never null, so the 23 null checks are gone; RimJobWorld `can_fuck` / `can_be_fucked` / `can_masturbate` bind once to `Func<Pawn,bool>` delegates and `RJWSettings.override_lovin` to a static field ref (no per-call `object[]`, no boxing); the RJW JobDefs are looked up once; the three pair-selection debug actions share one helper.
 - **1.7 safety** (AZR-538) — one startup line says whether all 10 patches applied (11 with RimJobWorld), or names the ones that did not; the Schedule-tab combo draws with `Widgets.DrawBoxSolid` instead of a raw `GUI.DrawTexture`; the RJW `JobDriver.Cleanup` postfix is only applied when RJW is active (`Prepare()`); dinner dates add the `NutritionEaten` record like vanilla `FinalizeIngest`.

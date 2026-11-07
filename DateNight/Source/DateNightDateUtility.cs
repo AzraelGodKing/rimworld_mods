@@ -314,6 +314,7 @@ namespace DateNight
                 DateNightAnniversaries.NotifyDatedOnAnniversary(pawn, partner);
             }
 
+            DateNightHistory.NotifyFinished(pawn, partner, def);
             DateNightVenues.NotifyFinished(pawn, partner, spot, def);
             DateNightDoubleDates.NotifyFinished(pawn, partner, def);
             DateNightRomance.NotifyDateFinished(pawn, partner, def);
