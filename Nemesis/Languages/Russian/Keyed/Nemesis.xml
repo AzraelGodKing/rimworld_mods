@@ -35,8 +35,10 @@
   <Nemesis_Settings_PostEscapeSabotage>Вес мелкого саботажа после побега: {0}%</Nemesis_Settings_PostEscapeSabotage>
   <Nemesis_Settings_SoftMounts>Мягкие ездовые / эскорт-животные</Nemesis_Settings_SoftMounts>
   <Nemesis_Settings_SoftMountsTip>С 2 уровня капитана рядом при возвращении появляется подходящее фракции животное (лучше с Giddy-Up; без него всё равно дерётся рядом).</Nemesis_Settings_SoftMountsTip>
-  <Nemesis_Settings_SoftMechs>Мягкий эскорт механоидов Biotech</Nemesis_Settings_SoftMechs>
-  <Nemesis_Settings_SoftMechsTip>Капитаны-механиторы при загруженном Biotech могут привести 1–3 механоида в рейде «возвращения с армией».</Nemesis_Settings_SoftMechsTip>
+  <Nemesis_Settings_SoftMechs>Мягкий эскорт: мехи и боевые капсулы</Nemesis_Settings_SoftMechs>
+  <Nemesis_Settings_SoftMechsTip>Капитаны-механиторы приводят 1–3 меха Biotech в рейдах возвращения армии, если загружен Biotech. С 5 уровня капитаны-разрушители и выживальщики приводят бойца в боевой капсуле, если загружен Vanilla Factions Expanded - Pirates.</Nemesis_Settings_SoftMechsTip>
+  <Nemesis_Settings_ShuttleDrops>Высадка шаттлом (Odyssey)</Nemesis_Settings_ShuttleDrops>
+  <Nemesis_Settings_ShuttleDropsTip>С Odyssey капитан фракции индустриального уровня и выше иногда прилетает на шаттле. Шаттл ждёт, и капитан улетает на нём, когда рейд разваливается.</Nemesis_Settings_ShuttleDropsTip>
   <Nemesis_Settings_ActionMix>Набор действий</Nemesis_Settings_ActionMix>
   <Nemesis_Settings_WeightTaunt>Насмешка по связи: {0}</Nemesis_Settings_WeightTaunt>
   <Nemesis_Settings_WeightIdle>Ничего не делать: {0}</Nemesis_Settings_WeightIdle>
@@ -289,4 +291,11 @@
   <Nemesis_Letter_CustodyLostBody>{0} больше не под вашей стражей, а вы так и не решили его участь.\n\nОхота окончена. Может появиться новый немезис.</Nemesis_Letter_CustodyLostBody>
   <Nemesis_Letter_CustodyDiedBody>{0} умер в ваших камерах раньше, чем вы решили его участь.\n\nОхота окончена. Может появиться новый немезис.</Nemesis_Letter_CustodyDiedBody>
 
+  <Nemesis_Msg_Retreat>Рейд {0} разваливается. Они отступают.</Nemesis_Msg_Retreat>
+  <Nemesis_Note_ShuttleExtract>Улетел(а) на шаттле, на котором прибыл(а).</Nemesis_Note_ShuttleExtract>
+  <Nemesis_Letter_ShuttleNote>{0} спускается на шаттле. Он будет ждать на месте посадки.</Nemesis_Letter_ShuttleNote>
+  <Nemesis_Tactic_Desc_Assault>{0} идёт прямо к своей цели.</Nemesis_Tactic_Desc_Assault>
+  <Nemesis_Tactic_Desc_Breach>Налётчики {0} пробьют ваши стены, и {0} войдёт следом.</Nemesis_Tactic_Desc_Breach>
+  <Nemesis_Tactic_Desc_Siege>Налётчики {0} готовятся к осаде, а {0} охотится с фланга.</Nemesis_Tactic_Desc_Siege>
+  <Nemesis_Tactic_Desc_Commander>{0} держится позади и пускает рейд первым. Вступит в бой, когда ваши защитники выдохнутся.</Nemesis_Tactic_Desc_Commander>
 </LanguageData>

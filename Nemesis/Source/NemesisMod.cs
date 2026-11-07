@@ -129,6 +129,10 @@ namespace Nemesis
                 "Nemesis_Settings_SoftMechs".Translate(),
                 ref Settings.enableSoftMechs,
                 "Nemesis_Settings_SoftMechsTip".Translate());
+            listing.CheckboxLabeled(
+                "Nemesis_Settings_ShuttleDrops".Translate(),
+                ref Settings.enableShuttleDrops,
+                "Nemesis_Settings_ShuttleDropsTip".Translate());
             listing.Gap(10f);
 
             listing.GapLine();
