@@ -35,8 +35,10 @@
   <Nemesis_Settings_PostEscapeSabotage>Post-escape petty sabotage weight: {0}%</Nemesis_Settings_PostEscapeSabotage>
   <Nemesis_Settings_SoftMounts>Soft animal mounts / escorts</Nemesis_Settings_SoftMounts>
   <Nemesis_Settings_SoftMountsTip>From captain level 2, assign a faction-appropriate animal that spawns beside them on returns (works better with Giddy-Up; still fights without it).</Nemesis_Settings_SoftMountsTip>
-  <Nemesis_Settings_SoftMechs>Soft Biotech mech escorts</Nemesis_Settings_SoftMechs>
-  <Nemesis_Settings_SoftMechsTip>Mechanitor-focus captains can bring 1–3 Biotech mechs on army-return raids when Biotech is loaded.</Nemesis_Settings_SoftMechsTip>
+  <Nemesis_Settings_SoftMechs>Soft mech and warcasket escorts</Nemesis_Settings_SoftMechs>
+  <Nemesis_Settings_SoftMechsTip>Mechanitor-focus captains can bring 1–3 Biotech mechs on army-return raids when Biotech is loaded. From level 5, Destroyer and Survivor captains bring a warcasket when Vanilla Factions Expanded - Pirates is loaded.</Nemesis_Settings_SoftMechsTip>
+  <Nemesis_Settings_ShuttleDrops>Shuttle drops (Odyssey)</Nemesis_Settings_ShuttleDrops>
+  <Nemesis_Settings_ShuttleDropsTip>With Odyssey, a captain from an industrial or higher faction sometimes lands by shuttle. The shuttle waits, and the captain flies out on it when the raid falls apart.</Nemesis_Settings_ShuttleDropsTip>
   <Nemesis_Settings_ActionMix>Action mix</Nemesis_Settings_ActionMix>
   <Nemesis_Settings_WeightTaunt>Comms taunt: {0}</Nemesis_Settings_WeightTaunt>
   <Nemesis_Settings_WeightIdle>Do nothing: {0}</Nemesis_Settings_WeightIdle>
@@ -290,4 +292,11 @@
   <Nemesis_Letter_CustodyLostBody>{0} is no longer in your custody, and you never decided their fate.\n\nThe hunt ends here. A new nemesis can rise.</Nemesis_Letter_CustodyLostBody>
   <Nemesis_Letter_CustodyDiedBody>{0} died in your cells before you decided their fate.\n\nThe hunt ends here. A new nemesis can rise.</Nemesis_Letter_CustodyDiedBody>
 
+  <Nemesis_Msg_Retreat>{0}'s raid is falling apart. They are pulling back.</Nemesis_Msg_Retreat>
+  <Nemesis_Note_ShuttleExtract>Got away on the shuttle they came in.</Nemesis_Note_ShuttleExtract>
+  <Nemesis_Letter_ShuttleNote>{0} is coming down by shuttle. It will wait for them at the landing spot.</Nemesis_Letter_ShuttleNote>
+  <Nemesis_Tactic_Desc_Assault>{0} is coming straight for their target.</Nemesis_Tactic_Desc_Assault>
+  <Nemesis_Tactic_Desc_Breach>{0}'s raiders will break through your walls, and {0} will follow them in.</Nemesis_Tactic_Desc_Breach>
+  <Nemesis_Tactic_Desc_Siege>{0}'s raiders are digging in for a siege while {0} hunts from the flank.</Nemesis_Tactic_Desc_Siege>
+  <Nemesis_Tactic_Desc_Commander>{0} is holding back and sending the raid in first. They will step in once your defenders are worn down.</Nemesis_Tactic_Desc_Commander>
 </LanguageData>

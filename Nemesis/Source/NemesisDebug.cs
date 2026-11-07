@@ -428,5 +428,47 @@ namespace Nemesis
 
         [DebugAction(ActionsCat, "Kidnap attempt (pawn hunts)", allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void ActionKidnap() => FireAction(NemesisAction.KidnapAttempt);
+
+        // --- Captain tactics (AZR-554) and shuttle (AZR-706) ---
+
+        private static void FireAssault(NemesisTactic tactic, bool? shuttle = null)
+        {
+            if (!RequireActiveHunt(out _, out NemesisData data)) return;
+            Map? map = PreferMap();
+            if (map == null)
+            {
+                Messages.Message("[Nemesis] No map.", MessageTypeDefOf.RejectInput, historical: false);
+                return;
+            }
+            NemesisActions.NemesisAssault(data, map, tactic, NemesisActions.CanKidnap(data, map), shuttle);
+            data.nextActionTick = Find.TickManager.TicksGame + 60000;
+            Messages.Message($"[Nemesis] Assault, tactic {tactic}, shuttle {(shuttle?.ToString() ?? "random")}.",
+                MessageTypeDefOf.NeutralEvent, historical: false);
+        }
+
+        [DebugAction(ActionsCat, "Assault tactic: Assault", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void TacticAssault() => FireAssault(NemesisTactic.Assault, false);
+
+        [DebugAction(ActionsCat, "Assault tactic: Breach", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void TacticBreach() => FireAssault(NemesisTactic.Breach, false);
+
+        [DebugAction(ActionsCat, "Assault tactic: Siege", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void TacticSiege() => FireAssault(NemesisTactic.Siege, false);
+
+        [DebugAction(ActionsCat, "Assault tactic: Commander", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void TacticCommander() => FireAssault(NemesisTactic.Commander, false);
+
+        [DebugAction(ActionsCat, "Assault by shuttle (Odyssey)", allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void TacticShuttle()
+        {
+            if (!NemesisShuttle.Available)
+            {
+                Messages.Message("[Nemesis] Shuttle drop needs Odyssey and the setting on.",
+                    MessageTypeDefOf.RejectInput, historical: false);
+                return;
+            }
+            if (!RequireActiveHunt(out _, out NemesisData data)) return;
+            FireAssault(NemesisTactics.Choose(data), true);
+        }
     }
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- Captain of a nemesis assault: take the fixation target if they are down, otherwise go for
+       them first, then fight like a vanilla raider (AZR-554). -->
+  <DutyDef>
+    <defName>Nemesis_HuntTarget</defName>
+    <alwaysShowWeapon>true</alwaysShowWeapon>
+    <thinkNode Class="ThinkNode_Priority">
+      <subNodes>
+        <li Class="Nemesis.JobGiver_NemesisKidnapTarget" />
+        <li Class="JobGiver_TakeCombatEnhancingDrug" />
+        <li Class="Nemesis.JobGiver_NemesisFightTarget">
+          <targetAcquireRadius>65</targetAcquireRadius>
+          <targetKeepRadius>200</targetKeepRadius>
+        </li>
+        <li Class="JobGiver_AITrashColonyClose" />
+        <li Class="JobGiver_AIGotoNearestHostile" />
+        <li Class="JobGiver_AISapper">
+          <canMineNonMineables>false</canMineNonMineables>
+        </li>
+      </subNodes>
+    </thinkNode>
+  </DutyDef>
+</Defs>

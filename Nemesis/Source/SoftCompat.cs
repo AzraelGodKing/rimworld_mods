@@ -165,6 +165,8 @@ namespace Nemesis
             _rootCellarDef = null;
             _surfaceMap = null;
             _surfaceMapTick = int.MinValue / 2;
+            _warcasketChecked = false;
+            _warcasketKinds = null;
         }
 
         /// <summary>
@@ -255,6 +257,76 @@ namespace Nemesis
             catch (Exception e)
             {
                 Log.Warning("[Nemesis] Mount escort spawn failed (" + kind.defName + "): " + e.Message);
+            }
+        }
+
+        private const int WarcasketMinLevel = 5;
+        private static bool _warcasketChecked;
+        private static List<PawnKindDef>? _warcasketKinds;
+
+        /// <summary>Humanlike pawn kinds named like VFE Pirates warcaskets; empty without that mod.</summary>
+        private static List<PawnKindDef> WarcasketKinds
+        {
+            get
+            {
+                if (!_warcasketChecked)
+                {
+                    _warcasketChecked = true;
+                    _warcasketKinds = new List<PawnKindDef>();
+                    foreach (PawnKindDef k in DefDatabase<PawnKindDef>.AllDefsListForReading)
+                    {
+                        if (k.defName.IndexOf("Warcasket", StringComparison.OrdinalIgnoreCase) >= 0
+                            && k.RaceProps?.Humanlike == true)
+                            _warcasketKinds.Add(k);
+                    }
+                }
+                return _warcasketKinds!;
+            }
+        }
+
+        /// <summary>
+        /// Soft warcasket support: a high-level Destroyer or Survivor brings one warcasket
+        /// (VFE Pirates) of their own faction if it has one, else any. Joins the captain's lord.
+        /// </summary>
+        public static void TrySpawnWarcasketBeside(Map? map, Faction? faction, NemesisData? data, Pawn? near)
+        {
+            if (map == null || faction == null || data == null) return;
+            if (!(NemesisMod.Settings?.enableSoftMechs ?? true)) return;
+            if (data.progressionLevel < WarcasketMinLevel) return;
+            if (data.combatFocus != NemesisCombatFocus.Destroyer && data.combatFocus != NemesisCombatFocus.Survivor) return;
+            if (faction.def.techLevel < TechLevel.Industrial) return;
+            List<PawnKindDef> kinds = WarcasketKinds;
+            if (kinds.Count == 0) return;
+
+            PawnKindDef? kind = null;
+            for (int i = 0; i < kinds.Count; i++)
+            {
+                if (kinds[i].defaultFactionDef == faction.def) { kind = kinds[i]; break; }
+            }
+            kind ??= kinds.RandomElement();
+            try
+            {
+                Pawn casket = PawnGenerator.GeneratePawn(new PawnGenerationRequest(
+                    kind, faction, PawnGenerationContext.NonPlayer,
+                    forceGenerateNewPawn: true, canGeneratePawnRelations: false));
+                IntVec3 cell = IntVec3.Invalid;
+                if (near != null && near.Spawned && near.Map == map)
+                    CellFinder.TryFindRandomSpawnCellForPawnNear(near.Position, map, out cell, 4);
+                if (!cell.IsValid)
+                    CellFinder.TryFindRandomEdgeCellWith(c => c.Standable(map) && !c.Fogged(map), map, 0f, out cell);
+                if (!cell.IsValid) return;
+                GenSpawn.Spawn(casket, cell, map);
+                Lord? lord = near?.GetLord();
+                if (lord != null)
+                    lord.AddPawn(casket);
+                else
+                    LordMaker.MakeNewLord(faction,
+                        new LordJob_AssaultColony(faction, canKidnap: false, canTimeoutOrFlee: true),
+                        map, new[] { casket });
+            }
+            catch (Exception e)
+            {
+                Log.Warning("[Nemesis] Warcasket escort spawn failed (" + kind.defName + "): " + e.Message);
             }
         }
 

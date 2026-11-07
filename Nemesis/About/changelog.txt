@@ -5,6 +5,9 @@ Nemesis 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting eve
 [b]Added[/b]
 [list]
 [*] [b]Several nemeses at once[/b] — each hostile faction can send its own nemesis, up to a limit you set (default 2). A cooldown between new hunts stops one bad raid from creating several, and two nemeses never raid you within half a day of each other. The dossier has a button per hunt.
+[*] [b]Captain AI[/b] — the nemesis goes for their target first, kidnaps only that target, and pulls back when the raid falls apart. Their raid breaches, besieges, or waits behind a commander depending on their combat style.
+[*] [b]Odyssey shuttles[/b] — with Odyssey, a nemesis sometimes lands by shuttle and flies out on it when beaten back.
+[*] [b]Warcaskets[/b] — with Vanilla Factions Expanded - Pirates, a seasoned Destroyer or Survivor brings a warcasket.
 [*] [b]The bounty matters[/b] — while posted it buys better informants (fewer false leads). It is paid out when you kill or capture the nemesis, and returned by drop pod if the hunt ends any other way.
 [*] [b]Settings[/b] — how much calmer a nemesis returns after a truce, the health at which a cornered nemesis gives up, and how many escapes before colonists get upset.
 [*] [b]Multiplayer[/b] — Nemesis's buttons are synced when the Multiplayer mod is on. All players need the host's Nemesis settings. Not tested yet.

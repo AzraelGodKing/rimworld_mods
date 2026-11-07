@@ -1,6 +1,7 @@
 #nullable enable
 using RimWorld;
 using Verse;
+using Verse.AI;
 
 namespace Nemesis
 {
@@ -11,6 +12,7 @@ namespace Nemesis
         public static HediffDef Nemesis_BattleHardened = null!;
         public static ThoughtDef Nemesis_EscapedAgain = null!;
         public static ThingDef Nemesis_CallingCard = null!;
+        public static DutyDef Nemesis_HuntTarget = null!;
 
         static NemesisDefOf()
         {
