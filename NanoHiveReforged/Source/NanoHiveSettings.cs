@@ -1,9 +1,14 @@
-using System.Collections.Generic;
-using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace NanoHiveReforged
 {
+    /// <summary>
+    /// Per-player settings. Since 2.0.0 the gameplay values here are only the
+    /// defaults for a save that has no NanoHive data yet (a new colony, or a 1.x
+    /// save loaded for the first time). The class and field names are unchanged
+    /// so the 1.x settings file still reads.
+    /// </summary>
     public class NanoHiveSettings : ModSettings
     {
         public int repairPerTickRare = 1;
@@ -11,6 +16,21 @@ namespace NanoHiveReforged
         public bool allowRepairInventoryItems = true;
         public bool useRangeOverride = false;
         public float repairRangeOverride = 12f;
+
+        public HiveConfig NewColonyDefaults()
+        {
+            var config = new HiveConfig
+            {
+                range = useRangeOverride ? repairRangeOverride : DefaultRange,
+                repairPerTarget = repairPerTickRare,
+                repairGear = allowRepairApparelEquipment,
+                repairInventory = allowRepairInventoryItems,
+            };
+            config.Clamp();
+            return config;
+        }
+
+        public static float DefaultRange => NanoHiveDefOf.NanoHiveReforged?.specialDisplayRadius ?? 12f;
 
         public override void ExposeData()
         {
@@ -20,11 +40,8 @@ namespace NanoHiveReforged
             Scribe_Values.Look(ref useRangeOverride, "useRangeOverride", false);
             Scribe_Values.Look(ref repairRangeOverride, "repairRangeOverride", 12f);
 
-            repairPerTickRare = repairPerTickRare < 1 ? 1 : repairPerTickRare;
-            if (repairRangeOverride < 1f)
-            {
-                repairRangeOverride = 1f;
-            }
+            repairPerTickRare = Mathf.Clamp(repairPerTickRare, HiveConfig.MinRate, HiveConfig.MaxRate);
+            repairRangeOverride = Mathf.Clamp(repairRangeOverride, HiveConfig.MinRange, HiveConfig.MaxRange);
         }
     }
 
@@ -40,35 +57,44 @@ namespace NanoHiveReforged
 
         public override string SettingsCategory()
         {
-            return "NanoHive Reforged";
+            return "NanoHive_SettingsCategory".Translate();
         }
 
-        public override void DoSettingsWindowContents(UnityEngine.Rect inRect)
+        // Written once by WriteSettings() when the window closes, not every frame.
+        public override void DoSettingsWindowContents(Rect inRect)
         {
             var list = new Listing_Standard();
             list.Begin(inRect);
 
-            list.Label("Repair points per tick (TickRare): " + Settings.repairPerTickRare);
-            Settings.repairPerTickRare = (int)list.Slider(Settings.repairPerTickRare, 1f, 10f);
+            list.Label("NanoHive_Settings_Intro".Translate());
+            if (Current.ProgramState == ProgramState.Playing)
+            {
+                GUI.color = ColoredText.SubtleGrayColor;
+                list.Label("NanoHive_Settings_InGame".Translate());
+                GUI.color = Color.white;
+            }
+            list.GapLine();
+
+            list.Label("NanoHive_Settings_Rate".Translate(Settings.repairPerTickRare));
+            Settings.repairPerTickRare = Mathf.RoundToInt(list.Slider(Settings.repairPerTickRare, HiveConfig.MinRate, HiveConfig.MaxRate));
 
             list.GapLine();
-            list.CheckboxLabeled("Repair colonist apparel + equipment", ref Settings.allowRepairApparelEquipment);
-            list.CheckboxLabeled("Repair colonist inventory items", ref Settings.allowRepairInventoryItems);
+            list.CheckboxLabeled("NanoHive_Settings_Gear".Translate(), ref Settings.allowRepairApparelEquipment);
+            list.CheckboxLabeled("NanoHive_Settings_Inventory".Translate(), ref Settings.allowRepairInventoryItems);
 
             list.GapLine();
-            list.CheckboxLabeled("Override repair radius", ref Settings.useRangeOverride);
+            list.CheckboxLabeled("NanoHive_Settings_RangeOverride".Translate(), ref Settings.useRangeOverride);
             if (Settings.useRangeOverride)
             {
-                list.Label("Repair radius: " + Settings.repairRangeOverride.ToString("F1"));
-                Settings.repairRangeOverride = list.Slider(Settings.repairRangeOverride, 1f, 30f);
+                list.Label("NanoHive_Settings_Range".Translate(Settings.repairRangeOverride.ToString("F0")));
+                Settings.repairRangeOverride = Mathf.Round(list.Slider(Settings.repairRangeOverride, HiveConfig.MinRange, HiveConfig.MaxRange));
             }
             else
             {
-                list.Label("Repair radius uses ThingDef specialDisplayRadius.");
+                list.Label("NanoHive_Settings_RangeDefault".Translate(NanoHiveSettings.DefaultRange.ToString("F0")));
             }
 
             list.End();
-            Settings.Write();
         }
     }
 }
