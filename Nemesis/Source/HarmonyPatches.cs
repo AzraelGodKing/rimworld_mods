@@ -347,4 +347,33 @@ namespace Nemesis
             }), pawn, console);
         }
     }
+
+    /// <summary>
+    /// Generates the <c>Nemesis_HuntSite</c> world object def as a copy of vanilla's Site def
+    /// (same class, comps and icons), so hunt camps behave like any site while their defName
+    /// carries "Nemesis" for Living World's tile avoidance (AZR-555). Implied defs get short
+    /// hashes and resolve with the rest.
+    /// </summary>
+    [HarmonyPatch(typeof(DefGenerator), nameof(DefGenerator.GenerateImpliedDefs_PreResolve))]
+    public static class Patch_DefGenerator_HuntSiteDef
+    {
+        [HarmonyPostfix]
+        static void Postfix(bool __0)
+        {
+            if (DefDatabase<WorldObjectDef>.GetNamedSilentFail(NemesisHuntSites.SiteDefName) != null) return;
+            WorldObjectDef? site = DefDatabase<WorldObjectDef>.GetNamedSilentFail("Site");
+            if (site == null)
+            {
+                Log.Warning("[Nemesis] Vanilla Site def missing; hunt camps are off.");
+                return;
+            }
+            WorldObjectDef copy = (WorldObjectDef)AccessTools.Method(typeof(object), "MemberwiseClone").Invoke(site, null)!;
+            copy.defName = NemesisHuntSites.SiteDefName;
+            copy.shortHash = 0;
+            copy.generated = true;
+            copy.modContentPack = NemesisMod.Pack;
+            copy.fileName = null;
+            DefGenerator.AddImpliedDef(copy, __0);
+        }
+    }
 }

@@ -8,12 +8,14 @@ Nemesis 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting eve
 [*] [b]Captain AI[/b] — the nemesis goes for their target first, kidnaps only that target, and pulls back when the raid falls apart. Their raid breaches, besieges, or waits behind a commander depending on their combat style.
 [*] [b]Odyssey shuttles[/b] — with Odyssey, a nemesis sometimes lands by shuttle and flies out on it when beaten back.
 [*] [b]Warcaskets[/b] — with Vanilla Factions Expanded - Pirates, a seasoned Destroyer or Survivor brings a warcasket.
+[*] [b]Hunt camps[/b] — a good informant lead marks the nemesis's camp on the world map. Send a caravan to catch them there, but some leads are decoys.
 [*] [b]The bounty matters[/b] — while posted it buys better informants (fewer false leads). It is paid out when you kill or capture the nemesis, and returned by drop pod if the hunt ends any other way.
 [*] [b]Settings[/b] — how much calmer a nemesis returns after a truce, the health at which a cornered nemesis gives up, and how many escapes before colonists get upset.
 [*] [b]Multiplayer[/b] — Nemesis's buttons are synced when the Multiplayer mod is on. All players need the host's Nemesis settings. Not tested yet.
 [/list]
 [b]Changed[/b]
 [list]
+[*] [b]Dossier[/b] — after an escape it points at the nemesis faction's home instead of your colony, and notes switch language with the game.
 [*] [b]Comms console[/b] — replying to a nemesis or buying a lead now sends the colonist to the console first, and the options only show when the console can be used.
 [*] [b]Saves[/b] — your 1.x hunt carries over to 2.0 automatically. A 2.0 save does not load on older Nemesis versions.
 [*] [b]RimWorld 1.7[/b] — the 1.7 folder now has its own .NET 10 build made against the 1.7 game files. 1.6 keeps its own build from the same source.

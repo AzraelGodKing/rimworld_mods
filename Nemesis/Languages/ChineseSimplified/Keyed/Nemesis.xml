@@ -210,7 +210,6 @@
   <Nemesis_Weapon_Unknown>未知武器</Nemesis_Weapon_Unknown>
 
   <Nemesis_Note_TellsRolled>特征：{0}口吻，{1}，{2}，{3}。</Nemesis_Note_TellsRolled>
-  <Nemesis_Note_Sighting>曾出现在 {0} 附近。</Nemesis_Note_Sighting>
   <Nemesis_Note_Gear>见过他们拿着 {0}。</Nemesis_Note_Gear>
   <Nemesis_Note_Mark>留下了{0}。</Nemesis_Note_Mark>
   <Nemesis_Note_RaidWarning>有人卖了一条警告：他们正在集结下一次袭击。</Nemesis_Note_RaidWarning>
@@ -239,10 +238,10 @@
   <Nemesis_Intel_Disabled>模组选项里关闭了线人。</Nemesis_Intel_Disabled>
   <Nemesis_Intel_NoSilver>这张地图的库存需要 {0} 银币。</Nemesis_Intel_NoSilver>
   <Nemesis_Intel_Tile>他们最近出现在 {0} 附近。花费 {1} 银币。</Nemesis_Intel_Tile>
+  <Nemesis_Intel_Camp>线人说他们在 {0} 扎营。营地已在世界地图上标出。花费 {1} 白银。</Nemesis_Intel_Camp>
   <Nemesis_Intel_Gear>他们仍带着 {0}。花费 {1} 银币。</Nemesis_Intel_Gear>
   <Nemesis_Intel_Warning>警告：又一次袭击要来了。花费 {0} 银币。</Nemesis_Intel_Warning>
   <Nemesis_Intel_False>这条线索是假的。花费 {0} 银币。</Nemesis_Intel_False>
-  <Nemesis_Intel_FalseTile>一个从来不是他们的地方</Nemesis_Intel_FalseTile>
   <Nemesis_Bounty_Posted>悬赏现为 {0} 银币。</Nemesis_Bounty_Posted>
   <Nemesis_Bounty_PaidOut>针对{1}的 {0} 银币悬赏已付给提供帮助的线人。</Nemesis_Bounty_PaidOut>
   <Nemesis_Bounty_Refunded>针对{1}的 {0} 银币悬赏无人领取，已退还。</Nemesis_Bounty_Refunded>
@@ -298,4 +297,16 @@
   <Nemesis_Tactic_Desc_Breach>{0} 的袭击者会破墙而入，{0} 紧随其后。</Nemesis_Tactic_Desc_Breach>
   <Nemesis_Tactic_Desc_Siege>{0} 的袭击者正在构筑围攻阵地，{0} 从侧翼猎杀。</Nemesis_Tactic_Desc_Siege>
   <Nemesis_Tactic_Desc_Commander>{0} 按兵不动，先派袭击者进攻，等你的守军疲惫后再亲自出手。</Nemesis_Tactic_Desc_Commander>
+  <Nemesis_Note_Camp>线人指出其营地位于 {0}。</Nemesis_Note_Camp>
+  <Nemesis_Note_Heading>最后一次被看到时正前往 {0}。</Nemesis_Note_Heading>
+  <Nemesis_Note_HeadingUnknown>溜走了，没人看到往哪个方向。</Nemesis_Note_HeadingUnknown>
+  <Nemesis_Note_CampGone>还没人赶到，营地就已拆除。</Nemesis_Note_CampGone>
+  <Nemesis_Note_CampFound>在其营地中找到了。</Nemesis_Note_CampFound>
+  <Nemesis_Note_CampMissed>营地是真的，但他们外出狩猎了。</Nemesis_Note_CampMissed>
+  <Nemesis_Note_CampFalse>营地是诱饵，他们从未到过那里。</Nemesis_Note_CampFalse>
+  <Nemesis_Letter_CampFoundTitle>{0} 就在这里</Nemesis_Letter_CampFoundTitle>
+  <Nemesis_Letter_CampFoundBody>线索属实。{0} 和手下就在营地里。杀了他们，或者活捉。</Nemesis_Letter_CampFoundBody>
+  <Nemesis_Letter_CampEmptyTitle>{0} 不在这里</Nemesis_Letter_CampEmptyTitle>
+  <Nemesis_Letter_CampMissedBody>这是 {0} 的营地，但他们出去了。手下还在。</Nemesis_Letter_CampMissedBody>
+  <Nemesis_Letter_CampFalseBody>{0} 从未来过这里。线人卖给你的是诱饵，有人留下了标记等你发现。</Nemesis_Letter_CampFalseBody>
 </LanguageData>

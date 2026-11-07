@@ -28,6 +28,7 @@ namespace Nemesis
         private string buyLeadLabel = "";
         private string postBountyLabel = "";
         private int leadCost;
+        private readonly List<string> noteLines = new List<string>();
 
         private void RefreshLines(NemesisData data)
         {
@@ -55,6 +56,14 @@ namespace Nemesis
             leadCost = NemesisInformants.LeadCost(data);
             buyLeadLabel = "Nemesis_Dossier_BuyLead".Translate(leadCost);
             postBountyLabel = "Nemesis_Dossier_PostBounty".Translate(leadCost);
+            // Notes are keys + args, translated here so they follow the language (AZR-555).
+            noteLines.Clear();
+            List<NemesisNote>? notes = data.notes;
+            if (notes != null)
+            {
+                for (int i = notes.Count - 1; i >= 0; i--)
+                    noteLines.Add(notes[i].Text);
+            }
         }
 
         public override Vector2 RequestedTabSize => new Vector2(620f, 580f);
@@ -144,20 +153,19 @@ namespace Nemesis
             y += 24f;
 
             Rect view = new Rect(inRect.x, y, inRect.width, inRect.yMax - y - 90f);
-            List<NemesisNote> notes = data.notes;
-            if (notes == null || notes.Count == 0)
+            if (noteLines.Count == 0)
             {
                 Widgets.Label(view, "Nemesis_Dossier_NoNotes".Translate());
             }
             else
             {
-                float innerH = notes.Count * 36f;
+                float innerH = noteLines.Count * 36f;
                 Rect inner = new Rect(0f, 0f, view.width - 16f, innerH);
                 Widgets.BeginScrollView(view, ref scrollPos, inner);
                 float rowY = 0f;
-                for (int i = notes.Count - 1; i >= 0; i--)
+                for (int i = 0; i < noteLines.Count; i++)
                 {
-                    Widgets.Label(new Rect(0f, rowY, inner.width, 34f), notes[i].text);
+                    Widgets.Label(new Rect(0f, rowY, inner.width, 34f), noteLines[i]);
                     rowY += 36f;
                 }
                 Widgets.EndScrollView();

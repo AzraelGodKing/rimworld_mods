@@ -10,12 +10,14 @@ namespace Nemesis
     {
         // Set in the Mod constructor, before any def or game code runs.
         public static NemesisSettings Settings { get; private set; } = null!;
+        public static ModContentPack? Pack { get; private set; }
         private Vector2 settingsScroll;
         private float settingsContentHeight = 900f;
 
         public NemesisMod(ModContentPack content) : base(content)
         {
             Settings = GetSettings<NemesisSettings>();
+            Pack = content;
             ModVersionLog.Write("[Nemesis]", content, extra: NemesisBuildInfo.BuildStamp);
             SafePatchAll.Apply(new Harmony("azraelgodking.nemesis"), "[Nemesis]");
         }

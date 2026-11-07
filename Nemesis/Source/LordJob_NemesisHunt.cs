@@ -190,7 +190,7 @@ namespace Nemesis
                 inner.Remove(captain);
                 NemesisPawnUtil.ParkAsWorldNemesis(captain);
                 h.cachedNemesis = captain;
-                NemesisTells.RecordNote(h, "Nemesis_Note_ShuttleExtract".Translate());
+                NemesisTells.RecordNote(h, "Nemesis_Note_ShuttleExtract");
             }
             SendShuttleAway();
         }
