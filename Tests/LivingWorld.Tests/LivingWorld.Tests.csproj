@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Logic tests for Living World simulation rules that do not need the game. Only
+       LivingWorld/Source/Pure is compiled in; no game DLL is loaded. -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>LivingWorld.Tests</RootNamespace>
+    <AssemblyName>LivingWorld.Tests</AssemblyName>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../LivingWorld/Source/Pure/*.cs" Link="LivingWorld/Pure/%(Filename)%(Extension)" />
+    <!-- Plain enums, no game types: checked so saved member names never change. -->
+    <Compile Include="../../LivingWorld/Source/WorldEventKind.cs" Link="LivingWorld/WorldEventKind.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+</Project>

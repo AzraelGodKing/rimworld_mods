@@ -235,9 +235,9 @@ namespace LivingWorld
             Faction b,
             float rate)
         {
-            float roll = Rand.Value;
+            LivingWorldRules.PeaceOutcome outcome = LivingWorldRules.Peace(Rand.Value, rate, CanAlly(a, b));
             // Rare formal pact, never between factions vanilla keeps at odds.
-            if (roll < 0.04f * rate && CanAlly(a, b))
+            if (outcome == LivingWorldRules.PeaceOutcome.Alliance)
             {
                 pair.tone = FactionRelationTone.Alliance;
                 pair.intensity = 1;
@@ -251,7 +251,7 @@ namespace LivingWorld
                 return true;
             }
             // Border friction → tension.
-            if (roll < 0.04f * rate + 0.22f * rate)
+            if (outcome == LivingWorldRules.PeaceOutcome.Tension)
             {
                 pair.tone = FactionRelationTone.Tension;
                 pair.intensity = 1;
@@ -274,11 +274,11 @@ namespace LivingWorld
             Faction b,
             float rate)
         {
-            float roll = Rand.Value;
+            LivingWorldRules.TensionOutcome outcome = LivingWorldRules.Tension(Rand.Value, rate);
             // Cool off toward peace. Factions vanilla keeps hostile stay at least tense.
-            if (roll < 0.28f)
+            if (outcome == LivingWorldRules.TensionOutcome.CoolOff)
             {
-                pair.intensity = System.Math.Max(a.HostileTo(b) ? 1 : 0, pair.intensity - 1);
+                pair.intensity = LivingWorldRules.CoolOffIntensity(pair.intensity, a.HostileTo(b));
                 if (pair.intensity <= 0)
                 {
                     pair.tone = FactionRelationTone.Peace;
@@ -287,7 +287,7 @@ namespace LivingWorld
                 return true;
             }
             // Escalate to war.
-            if (roll < 0.28f + 0.18f * rate)
+            if (outcome == LivingWorldRules.TensionOutcome.Escalate)
             {
                 int maxWars = LivingWorldMod.Settings?.maxConcurrentWars ?? 2;
                 if (CountWars(comp) >= maxWars)
@@ -307,7 +307,7 @@ namespace LivingWorld
                 return true;
             }
             // Skirmish under tension.
-            if (roll < 0.28f + 0.18f * rate + 0.35f)
+            if (outcome == LivingWorldRules.TensionOutcome.Skirmish)
             {
                 pair.intensity = System.Math.Min(3, pair.intensity + 1);
                 return Skirmish(comp, pair, a, b);
@@ -322,9 +322,9 @@ namespace LivingWorld
             Faction b,
             float rate)
         {
-            float roll = Rand.Value;
+            LivingWorldRules.WarOutcome outcome = LivingWorldRules.War(Rand.Value, rate);
             // White peace.
-            if (roll < 0.20f)
+            if (outcome == LivingWorldRules.WarOutcome.WhitePeace)
             {
                 pair.tone = FactionRelationTone.Tension;
                 pair.intensity = 1;
@@ -339,7 +339,7 @@ namespace LivingWorld
                 return true;
             }
             // Battle.
-            if (roll < 0.20f + 0.55f * System.Math.Max(0.35f, rate))
+            if (outcome == LivingWorldRules.WarOutcome.Battle)
             {
                 return ResolveBattle(comp, pair, a, b, forceMajor: false);
             }
@@ -353,16 +353,16 @@ namespace LivingWorld
             Faction b,
             float rate)
         {
-            if (!CanAlly(a, b))
+            LivingWorldRules.AllianceOutcome outcome = LivingWorldRules.Alliance(Rand.Value, rate, CanAlly(a, b));
+            if (outcome == LivingWorldRules.AllianceOutcome.Lapse)
             {
                 // Vanilla turned them against each other: the pact quietly ends.
                 pair.tone = FactionRelationTone.Tension;
                 pair.intensity = 1;
                 return true;
             }
-            float roll = Rand.Value;
             // Rare betrayal.
-            if (roll < 0.08f * rate)
+            if (outcome == LivingWorldRules.AllianceOutcome.Betrayal)
             {
                 int maxWars = LivingWorldMod.Settings?.maxConcurrentWars ?? 2;
                 if (CountWars(comp) >= maxWars && pair.tone != FactionRelationTone.War)
@@ -388,7 +388,7 @@ namespace LivingWorld
                 return true;
             }
             // Soft dissolve toward peace.
-            if (roll < 0.08f * rate + 0.12f)
+            if (outcome == LivingWorldRules.AllianceOutcome.Dissolve)
             {
                 pair.tone = FactionRelationTone.Peace;
                 pair.intensity = 0;

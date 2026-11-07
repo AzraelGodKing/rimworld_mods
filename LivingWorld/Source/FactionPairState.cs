@@ -35,21 +35,11 @@ namespace LivingWorld
             Scribe_Values.Look(ref lastFalloutTick, "lastFalloutTick");
         }
 
-        public static void NormalizeIds(ref int a, ref int b)
-        {
-            if (a > b)
-            {
-                int tmp = a;
-                a = b;
-                b = tmp;
-            }
-        }
-
         public static FactionPairState Create(Faction a, Faction b)
         {
             int idA = a.loadID;
             int idB = b.loadID;
-            NormalizeIds(ref idA, ref idB);
+            LivingWorldRules.NormalizeIds(ref idA, ref idB);
             // Start from vanilla relations: pirates and their prey begin tense, allies allied.
             LivingWorldRules.SeedTone(
                 a.HostileTo(b),
