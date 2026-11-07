@@ -233,7 +233,7 @@ namespace LivingWorld
             {
                 WorldEvent ev = WorldEvent.Create(WorldEventKind.CaravanDiverted, NewsSeverity.Minor, faction);
                 ev.settlementLabel = caravan.destinationLabel;
-                ev.tile = home.Tile;
+                ev.Where = home.Tile;
                 ev.seenByPlayer = true;
                 comp.RecordAndPublish(ev, sendLetter: false);
             }
@@ -263,6 +263,11 @@ namespace LivingWorld
                 Settlement s = all[i];
                 Faction f = s?.Faction;
                 if (f == null || f.IsPlayer || f.defeated || f.def == null || f.def.hidden || !f.def.humanlikeFaction)
+                {
+                    continue;
+                }
+                // Routes use the surface pather; orbital or other-layer settlements are skipped.
+                if (s.Tile.Layer == null || !s.Tile.Layer.IsRootSurface)
                 {
                     continue;
                 }

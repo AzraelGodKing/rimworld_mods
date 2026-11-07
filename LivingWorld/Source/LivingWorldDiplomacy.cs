@@ -467,7 +467,7 @@ namespace LivingWorld
             {
                 loserFactionId = loser?.loadID ?? -1,
                 winnerFactionId = winner?.loadID ?? -1,
-                tile = site?.Tile ?? -1,
+                Where = site?.Tile ?? PlanetTile.Invalid,
                 settlementLabel = site?.Label,
                 enqueueTick = now,
                 kind = FalloutKind.Refugees,
@@ -480,7 +480,7 @@ namespace LivingWorld
                 {
                     loserFactionId = loser?.loadID ?? -1,
                     winnerFactionId = winner?.loadID ?? -1,
-                    tile = site?.Tile ?? -1,
+                    Where = site?.Tile ?? PlanetTile.Invalid,
                     settlementLabel = site?.Label,
                     enqueueTick = now,
                     kind = FalloutKind.Warband,

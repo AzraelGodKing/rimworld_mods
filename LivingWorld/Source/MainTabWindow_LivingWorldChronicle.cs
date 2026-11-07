@@ -84,12 +84,13 @@ namespace LivingWorld
             {
                 WorldEvent ev = shown[i];
                 Rect row = new Rect(0f, ly, outRect.width - 20f, 70f);
-                if (ev.tile >= 0)
+                PlanetTile where = ev.Where;
+                if (where.Valid)
                 {
                     Widgets.DrawHighlightIfMouseover(row);
                     if (Widgets.ButtonInvisible(row))
                     {
-                        CameraJumper.TryJump(new GlobalTargetInfo(ev.tile));
+                        CameraJumper.TryJump(new GlobalTargetInfo(where));
                     }
                 }
                 string when = (Find.TickManager.TicksGame - ev.tick).ToStringTicksToPeriod();

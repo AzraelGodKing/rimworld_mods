@@ -33,7 +33,9 @@ namespace LivingWorld
         }
     }
 
-    [HarmonyPatch(typeof(Settlement), "get_Label")]
+    // Typed target: if a game version stops overriding Label on Settlement, Harmony
+    // fails loudly here instead of patching the base WorldObject getter.
+    [HarmonyPatch(typeof(Settlement), nameof(Settlement.Label), MethodType.Getter)]
     public static class Patch_Settlement_Label
     {
         public static void Postfix(Settlement __instance, ref string __result)

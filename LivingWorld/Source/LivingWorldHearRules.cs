@@ -61,7 +61,8 @@ namespace LivingWorld
 
         internal static bool IsNearby(WorldEvent ev)
         {
-            if (ev.tile < 0)
+            PlanetTile where = ev.Where;
+            if (!where.Valid)
             {
                 return false;
             }
@@ -74,7 +75,7 @@ namespace LivingWorld
                 {
                     continue;
                 }
-                int dist = Find.WorldGrid.TraversalDistanceBetween(map.Tile, ev.tile);
+                int dist = LivingWorldTiles.Distance(map.Tile, where, max);
                 if (dist >= 0 && dist <= max)
                 {
                     return true;

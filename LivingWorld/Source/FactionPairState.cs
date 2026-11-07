@@ -96,6 +96,7 @@ namespace LivingWorld
         public int loserFactionId = -1;
         public int winnerFactionId = -1;
         public int tile = -1;
+        public int tileLayer = -1;
         public int enqueueTick;
         public FalloutKind kind = FalloutKind.Refugees;
         public string settlementLabel;
@@ -105,9 +106,20 @@ namespace LivingWorld
             Scribe_Values.Look(ref loserFactionId, "loserFactionId", -1);
             Scribe_Values.Look(ref winnerFactionId, "winnerFactionId", -1);
             Scribe_Values.Look(ref tile, "tile", -1);
+            Scribe_Values.Look(ref tileLayer, "tileLayer", -1);
             Scribe_Values.Look(ref enqueueTick, "enqueueTick");
             Scribe_Values.Look(ref kind, "kind", FalloutKind.Refugees);
             Scribe_Values.Look(ref settlementLabel, "settlementLabel");
+        }
+
+        public RimWorld.Planet.PlanetTile Where
+        {
+            get => LivingWorldTiles.Make(tile, tileLayer);
+            set
+            {
+                tile = LivingWorldTiles.IdOf(value);
+                tileLayer = LivingWorldTiles.LayerOf(value);
+            }
         }
 
         public Faction Loser() => WorldEvent.FindFaction(loserFactionId);

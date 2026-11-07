@@ -91,6 +91,7 @@ namespace LivingWorld
                 factionBName = ev.trueFactionBName,
                 settlementLabel = ev.settlementLabel,
                 tile = ev.tile,
+                tileLayer = ev.tileLayer,
                 channel = HearChannel.Radio,
             });
             return true;
