@@ -1,4 +1,5 @@
 #nullable enable
+using System;
 using System.Collections.Generic;
 using HarmonyLib;
 using RimWorld;
@@ -13,6 +14,13 @@ namespace Azrael
         public float factor = 1f;
     }
 
+    /// <summary>A named multiplier a sister mod reads for its own world simulation (AZR-589).</summary>
+    public class TrafficWeight
+    {
+        public string? key;
+        public float factor = 1f;
+    }
+
     /// <summary>
     /// Multiplies the pick weight of listed incidents while <see cref="storyteller"/> runs.
     /// Incidents are defNames so entries for series mods that are not loaded are skipped.
@@ -21,12 +29,66 @@ namespace Azrael
     {
         public string? storyteller;
         public List<IncidentWeight> weights = new List<IncidentWeight>();
+        /// <summary>
+        /// Living World traffic multipliers under this storyteller, read through
+        /// <see cref="StorytellerIncidentWeights.TrafficFactor"/>. Keys are owned by Living World.
+        /// </summary>
+        public List<TrafficWeight> traffic = new List<TrafficWeight>();
     }
 
     public static class StorytellerIncidentWeights
     {
         // Keyed by def reference: no string hashing on the incident-pick path.
         private static Dictionary<StorytellerDef, Dictionary<IncidentDef, float>>? byStoryteller;
+        private static Dictionary<StorytellerDef, Dictionary<string, float>>? trafficByStoryteller;
+
+        /// <summary>
+        /// Public contract for Living World (AZR-589), read by reflection: the multiplier for
+        /// <paramref name="key"/> (e.g. "spawnChance") under the running storyteller. 1 when the
+        /// storyteller has no table, the key is unknown, or the series weights setting is off.
+        /// Deterministic for Multiplayer as long as every player has the host's Azrael settings.
+        /// </summary>
+        public static float TrafficFactor(string key)
+        {
+            StorytellerDef? teller = Find.Storyteller?.def;
+            if (teller == null || string.IsNullOrEmpty(key) || AzraelMod.Settings?.seriesIncidentWeights == false)
+            {
+                return 1f;
+            }
+            trafficByStoryteller ??= BuildTraffic();
+            return trafficByStoryteller.TryGetValue(teller, out Dictionary<string, float>? table)
+                && table.TryGetValue(key, out float factor)
+                ? factor
+                : 1f;
+        }
+
+        private static Dictionary<StorytellerDef, Dictionary<string, float>> BuildTraffic()
+        {
+            var built = new Dictionary<StorytellerDef, Dictionary<string, float>>();
+            foreach (StorytellerIncidentWeightsDef def in DefDatabase<StorytellerIncidentWeightsDef>.AllDefsListForReading)
+            {
+                StorytellerDef? teller = def.storyteller.NullOrEmpty()
+                    ? null
+                    : DefDatabase<StorytellerDef>.GetNamedSilentFail(def.storyteller);
+                if (teller == null || def.traffic == null)
+                {
+                    continue;
+                }
+                if (!built.TryGetValue(teller, out Dictionary<string, float>? table))
+                {
+                    table = new Dictionary<string, float>(StringComparer.Ordinal);
+                    built[teller] = table;
+                }
+                foreach (TrafficWeight w in def.traffic)
+                {
+                    if (w != null && !w.key.NullOrEmpty())
+                    {
+                        table[w.key!] = Mathf.Max(0f, w.factor);
+                    }
+                }
+            }
+            return built;
+        }
 
         public static float FactorFor(StorytellerDef? teller, IncidentDef? incident)
         {

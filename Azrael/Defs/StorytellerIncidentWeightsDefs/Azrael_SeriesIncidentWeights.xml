@@ -8,9 +8,11 @@
     <defName>Azrael_SeriesIncidentWeights</defName>
     <storyteller>Azrael</storyteller>
     <weights>
-      <!-- Living World: base 0.05 / 0.02 almost never won a Misc or ThreatSmall pick. -->
-      <li><incident>LivingWorld_Refugees</incident><factor>6</factor></li>
-      <li><incident>LivingWorld_Warband</incident><factor>5</factor></li>
+      <!-- Living World: base 0.05 / 0.02 almost never won a Misc or ThreatSmall pick.
+           Retuned down from x6 / x5 (AZR-589): traffic below now also brings news, and the
+           warband respects its threat-points cap. -->
+      <li><incident>LivingWorld_Refugees</incident><factor>4</factor></li>
+      <li><incident>LivingWorld_Warband</incident><factor>3</factor></li>
 
       <!-- Homesteader -->
       <li><incident>Homesteader_KatsEffect</incident><factor>2</factor></li>
@@ -29,6 +31,14 @@
       <li><incident>Strata_CaveBreakthrough</incident><factor>1.25</factor></li>
       <li><incident>Strata_LostMiners</incident><factor>1.25</factor></li>
     </weights>
+    <!-- Living World traffic under Azrael (AZR-589). Living World reads these through
+         Azrael.StorytellerIncidentWeights.TrafficFactor(key); other storytellers get 1.
+         spawnChance: chance per sim pulse that a trade caravan sets out.
+         divertChance: chance a passing caravan detours toward a nearby colony. -->
+    <traffic>
+      <li><key>spawnChance</key><factor>1.5</factor></li>
+      <li><key>divertChance</key><factor>1.25</factor></li>
+    </traffic>
   </Azrael.StorytellerIncidentWeightsDef>
 
 </Defs>

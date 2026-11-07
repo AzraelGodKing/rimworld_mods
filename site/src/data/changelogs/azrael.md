@@ -14,6 +14,8 @@ Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[Azr
 - **Version mismatch warning** (AZR-688) - a series mod that does not list the running RimWorld version, or is older than the version this Azrael build was tested with (Strata 4.0.0, Stormproof 2.0.0, Date Night 2.0.0 and the current versions of the rest), gets a yellow note under its row and a `!` line in the report.
 - **Bridge summary** (AZR-726) - the Soft-compat section and the report open with "5 of 7 bridges live" (plus how many are broken).
 - **Safe removal sees the whole save** (AZR-587) - Prepare to remove now also lists packed (minified) buildings, blueprints and frames, worn apparel and carried or stored items (inside pawns, graves, shuttles and transporters), plants, creatures, floors, active conditions (Stormproof weather), hediffs and memories from any series mod (Date Night, Niceties, Deep Colony), world-map objects (Living World sites, Nemesis hunt sites), factions, and the mod's saved Game/World/Map components.
+- **More build stamps** (AZR-588) - Stormproof and Date Night now expose `XBuildInfo.BuildStamp` (the slug each already logged), so their hub rows show a stamp. Homesteader, Nemesis, Living World, Niceties, Wave Survival Reforged and NanoHive Reforged add theirs in their own release branches.
+- **Living World traffic weights** (AZR-589) - `Azrael.StorytellerIncidentWeightsDef` gains a `traffic` table (XML-patchable) and Azrael exposes `StorytellerIncidentWeights.TrafficFactor(key)` for Living World to read under the Azrael storyteller: trade caravans set out ×1.5 as often and detour toward colonies ×1.25. Other storytellers get 1. Takes effect once Living World reads it.
 - **Deconstruct confirmation** (AZR-690) - designating a mod's buildings for deconstruction asks first, with the building count.
 
 ### Fixed
@@ -29,6 +31,7 @@ Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[Azr
 - **Player.log path on 1.7** - the startup line said "loaded from  (modified unknown)" on RimWorld 1.7, which loads mod DLLs from memory. It now names the mod folder (all series mods share this line).
 
 ### Changed
+- **Living World incident weights retuned** (AZR-589) - refugees ×6 → ×4 and warbands ×5 → ×3 under Azrael, since traffic now brings news too and the warband respects its points cap.
 - **Multiplayer: soft support** - safe-removal deconstruct is registered as a Multiplayer sync method (by reflection, no Multiplayer DLL shipped), so it applies on every client. The Conflicts note now says it is synced and that every player needs the host's Azrael settings.
 - **Public contracts only** (AZR-585, AZR-686) - the hub reads sister mods through public members: Nemesis `IsEngaged` and `FindNemesisPawn()` (so a pending resolution also blocks removal), Deep Colony's public family-letter list, and Living World's `LivingWorldCompatApi.IsHandlerRegistered(Type)` (until that ships, the goodwill bridge falls back to type presence). The private Nemesis field fallbacks are gone, and opening Mod Options no longer forces Deep Colony's static constructor.
 - **Patch binding** (AZR-603) - the series-weights patch pins `IncidentChanceFinal(IncidentDef, IIncidentTarget)` and binds the incident by position, so a 1.7 overload or rename shows up as a failed patch instead of binding wrong.

@@ -77,7 +77,7 @@ namespace Stormproof
             StormproofMod.Settings.ApplyIncidentChances();
             // The count makes a 1.7 smoke test a one-line check against the previous build.
             LongEventHandler.ExecuteWhenFinished(() => ModVersionLog.Write("[Stormproof]",
-                extra: "stormproof2-visuals, " + patched + " patch classes applied"));
+                extra: StormproofBuildInfo.BuildStamp + ", " + patched + " patch classes applied"));
         }
     }
 
