@@ -91,6 +91,12 @@ namespace Homesteader
         /// <summary>When false, root cellar / icehouse / springhouse omit the passive-cooling inspect line.</summary>
         public bool showCoolingInspect = true;
 
+        /// <summary>Selected root cellar, icehouse or springhouse outlines the cooled cells (AZR-577).</summary>
+        public bool showCoolingOverlay = true;
+
+        /// <summary>Heat-dome shimmer and fountain water (AZR-577). Draw-only.</summary>
+        public bool showEffects = true;
+
         /// <summary>Pantry stock list order, kept between sessions (AZR-696).</summary>
         public int pantrySortMode = 0;
 
@@ -103,6 +109,8 @@ namespace Homesteader
             Scribe_Values.Look(ref revealAllergies, "revealAllergies", defaultValue: false);
             Scribe_Values.Look(ref useRefreshedTextures, "useRefreshedTextures", defaultValue: false);
             Scribe_Values.Look(ref showCoolingInspect, "showCoolingInspect", defaultValue: true);
+            Scribe_Values.Look(ref showCoolingOverlay, "showCoolingOverlay", defaultValue: true);
+            Scribe_Values.Look(ref showEffects, "showEffects", defaultValue: true);
             Scribe_Values.Look(ref pantrySortMode, "pantrySortMode", defaultValue: 0);
             // Same node and keys as 1.x, which kept these flat in the settings file.
             gameplay.ExposeData();
@@ -195,6 +203,14 @@ namespace Homesteader
                 "Homesteader_SettingsShowCoolingInspect".Translate(),
                 ref Settings.showCoolingInspect,
                 "Homesteader_SettingsShowCoolingInspectTip".Translate());
+            listing.CheckboxLabeled(
+                "Homesteader_SettingsShowCoolingOverlay".Translate(),
+                ref Settings.showCoolingOverlay,
+                "Homesteader_SettingsShowCoolingOverlayTip".Translate());
+            listing.CheckboxLabeled(
+                "Homesteader_SettingsShowEffects".Translate(),
+                ref Settings.showEffects,
+                "Homesteader_SettingsShowEffectsTip".Translate());
 
             if (!TextureRefresh.PackPresent())
             {

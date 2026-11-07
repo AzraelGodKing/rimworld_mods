@@ -45,6 +45,22 @@ namespace Homesteader
 
             return "Homesteader_PassiveCoolStorage".Translate(Props.maxTemperature.ToStringTemperature());
         }
+
+        /// <summary>Selected cooler: outline every cooled cell on the map (AZR-577).</summary>
+        public override void PostDrawExtraSelectionOverlays()
+        {
+            base.PostDrawExtraSelectionOverlays();
+            if (!HomesteaderMod.Settings.showCoolingOverlay || !parent.Spawned)
+            {
+                return;
+            }
+
+            List<IntVec3>? cells = CoolingLookup.For(parent.Map)?.CooledCellsForDraw();
+            if (cells != null && cells.Count > 0)
+            {
+                GenDraw.DrawFieldEdges(cells, HomesteaderVisuals.CoolingEdge);
+            }
+        }
     }
 
     /// <summary>
@@ -77,8 +93,25 @@ namespace Homesteader
 
         public bool HasAnyCooling => cooledCells.Count > 0;
 
-        /// <summary>Cooled cells by CellIndices, for the overlay. Valid until the next rebuild.</summary>
-        internal IReadOnlyList<int> CooledCells => cooledCells;
+        // Cells for the selection overlay, made on first draw after each rebuild (AZR-577).
+        private readonly List<IntVec3> drawCells = new List<IntVec3>();
+        private bool drawCellsStale = true;
+
+        /// <summary>Every cooled cell on the map, for the selection overlay. Draw-only.</summary>
+        internal List<IntVec3> CooledCellsForDraw()
+        {
+            if (drawCellsStale)
+            {
+                drawCellsStale = false;
+                drawCells.Clear();
+                for (int i = 0; i < cooledCells.Count; i++)
+                {
+                    drawCells.Add(map.cellIndices.IndexToCell(cooledCells[i]));
+                }
+            }
+
+            return drawCells;
+        }
 
         public bool TryGetCoolingCeiling(IntVec3 cell, out float maxTemperature)
         {
@@ -151,6 +184,7 @@ namespace Homesteader
             }
 
             cooledCells.Clear();
+            drawCellsStale = true;
             foreach (CompRootCellarCooling comp in coolers)
             {
                 Thing t = comp.parent;

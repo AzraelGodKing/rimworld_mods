@@ -396,7 +396,7 @@ namespace Homesteader
         }
     }
 
-    // ~+10°C map temperature offset with a light warm-orange sky tint.
+    // ~+10°C map temperature offset, a light warm-orange sky tint and a heat shimmer.
     public class GameCondition_KatsHeatDome : GameCondition
     {
         private const float TempOffsetCelsius = 10f;
@@ -420,6 +420,12 @@ namespace Homesteader
         public override SkyTarget? SkyTarget(Map map)
         {
             return new SkyTarget(0.9f, HeatDomeSkyColors, 1f, 1f);
+        }
+
+        public override void GameConditionDraw(Map map)
+        {
+            base.GameConditionDraw(map);
+            HomesteaderVisuals.DrawHeatHaze(map, GameConditionUtility.LerpInOutValue(this, 2000f));
         }
     }
 }
