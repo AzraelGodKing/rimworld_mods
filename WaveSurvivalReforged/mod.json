@@ -1,0 +1,19 @@
+{
+  "slug": "wave-survival-reforged",
+  "name": "Wave Survival Reforged",
+  "game": "rimworld",
+  "description": "A storyteller for a combat run. Random events are off, raids arrive on a timer and grow each wave, and supply pods land at your trade beacon every day. A rebuild of Wave Survival [Game Mode] by Justin C.",
+  "version": "2.0.0",
+  "screenshots": [
+    "About/Preview.png"
+  ],
+  "download": {
+    "file": "WaveSurvivalReforged.zip",
+    "url": "https://github.com/AzraelGodKing/rimworld_mods/releases/latest/download/WaveSurvivalReforged.zip"
+  },
+  "links": {
+    "steam": "https://steamcommunity.com/sharedfiles/filedetails/?id=3821001515",
+    "thunderstore": null,
+    "nexus": null
+  }
+}
