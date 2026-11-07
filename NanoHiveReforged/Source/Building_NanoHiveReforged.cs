@@ -25,6 +25,13 @@ namespace NanoHiveReforged
             base.SpawnSetup(map, respawningAfterLoad);
             compPowerTrader = GetComp<CompPowerTrader>();
             config ??= NewConfig();
+            MapComponent_NanoHive.For(map)?.Hives.Add(this);
+        }
+
+        public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
+        {
+            MapComponent_NanoHive.For(Map)?.Hives.Remove(this);
+            base.DeSpawn(mode);
         }
 
         public override void ExposeData()

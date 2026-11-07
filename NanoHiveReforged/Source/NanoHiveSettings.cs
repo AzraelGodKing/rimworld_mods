@@ -17,6 +17,9 @@ namespace NanoHiveReforged
         public bool useRangeOverride = false;
         public float repairRangeOverride = 12f;
 
+        // Visual only, never read by game logic.
+        public bool repairShimmer = true;
+
         public HiveConfig NewColonyDefaults()
         {
             var config = new HiveConfig
@@ -41,6 +44,7 @@ namespace NanoHiveReforged
             Scribe_Values.Look(ref allowRepairInventoryItems, "allowRepairInventoryItems", true);
             Scribe_Values.Look(ref useRangeOverride, "useRangeOverride", false);
             Scribe_Values.Look(ref repairRangeOverride, "repairRangeOverride", 12f);
+            Scribe_Values.Look(ref repairShimmer, "repairShimmer", true);
 
             repairPerTickRare = Mathf.Clamp(repairPerTickRare, HiveConfig.MinRate, HiveConfig.MaxRate);
             repairRangeOverride = Mathf.Clamp(repairRangeOverride, HiveConfig.MinRange, HiveConfig.MaxRange);
@@ -95,6 +99,10 @@ namespace NanoHiveReforged
             {
                 list.Label("NanoHive_Settings_RangeDefault".Translate(NanoHiveSettings.DefaultRange.ToString("F0")));
             }
+
+            list.GapLine();
+            list.CheckboxLabeled("NanoHive_Settings_Shimmer".Translate(), ref Settings.repairShimmer,
+                "NanoHive_Settings_ShimmerTip".Translate());
 
             list.End();
         }

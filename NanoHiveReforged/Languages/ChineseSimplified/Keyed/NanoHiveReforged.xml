@@ -10,6 +10,8 @@
   <NanoHive_Settings_RangeOverride>使用自定义修理半径</NanoHive_Settings_RangeOverride>
   <NanoHive_Settings_Range>修理半径：{0}</NanoHive_Settings_Range>
   <NanoHive_Settings_RangeDefault>修理半径：{0}（建筑默认值）</NanoHive_Settings_RangeDefault>
+  <NanoHive_Settings_Shimmer>修理微光</NanoHive_Settings_Shimmer>
+  <NanoHive_Settings_ShimmerTip>蜂巢修理时会发出柔和的光，被修好的东西上会闪出火花。只影响你看到的画面，所以在多人游戏中与其他玩家设置不同也是安全的。</NanoHive_Settings_ShimmerTip>
   <NanoHive_Inspect_Settings>半径 {0}，每个目标 {1} 点耐久，每个周期最多 {2} 点</NanoHive_Inspect_Settings>
   <NanoHive_Inspect_Repairing>修理中：范围内 {0} 件物品中有 {1} 件受损，上个周期修复了 {2} 点耐久</NanoHive_Inspect_Repairing>
   <NanoHive_Inspect_Idle>待机（{1} 瓦）：范围内 {0} 件物品，均未受损</NanoHive_Inspect_Idle>

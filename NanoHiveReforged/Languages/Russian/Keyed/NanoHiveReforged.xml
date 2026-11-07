@@ -10,6 +10,8 @@
   <NanoHive_Settings_RangeOverride>Свой радиус ремонта</NanoHive_Settings_RangeOverride>
   <NanoHive_Settings_Range>Радиус ремонта: {0}</NanoHive_Settings_Range>
   <NanoHive_Settings_RangeDefault>Радиус ремонта: {0} (значение постройки)</NanoHive_Settings_RangeDefault>
+  <NanoHive_Settings_Shimmer>Мерцание при ремонте</NanoHive_Settings_Shimmer>
+  <NanoHive_Settings_ShimmerTip>Мягкое свечение улья во время ремонта и искра на каждой починенной вещи. Меняет только то, что видите вы, поэтому в мультиплеере эта настройка может отличаться от других игроков.</NanoHive_Settings_ShimmerTip>
   <NanoHive_Inspect_Settings>Радиус {0}, {1} ед. на цель, до {2} ед. за цикл</NanoHive_Inspect_Settings>
   <NanoHive_Inspect_Repairing>Ремонт: повреждено {1} из {0} вещей в радиусе, за прошлый цикл восстановлено {2} ед.</NanoHive_Inspect_Repairing>
   <NanoHive_Inspect_Idle>Ожидание ({1} Вт): {0} вещей в радиусе, повреждённых нет</NanoHive_Inspect_Idle>
