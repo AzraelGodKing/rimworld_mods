@@ -120,7 +120,7 @@ namespace Stormproof
             }
             MapComponent_Stormproof almanac = map.GetComponent<MapComponent_Stormproof>();
             if (almanac != null && almanac.Almanac.Count > 0
-                && (StormproofMod.Settings == null || StormproofMod.Settings.enableAlmanac))
+                && StormproofMod.Settings.enableAlmanac)
             {
                 s += "\n" + "Stormproof_Almanac_Inspect".Translate(almanac.Almanac.Count);
             }
@@ -133,7 +133,7 @@ namespace Stormproof
             {
                 yield return gizmo;
             }
-            if (!Active || (StormproofMod.Settings != null && !StormproofMod.Settings.enableAlmanac))
+            if (!Active || !StormproofMod.Settings.enableAlmanac)
             {
                 yield break;
             }

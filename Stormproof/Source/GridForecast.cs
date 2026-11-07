@@ -37,8 +37,6 @@ namespace Stormproof
             public bool Closed;
         }
 
-        private static readonly List<ShedderSim> shedderSims = new List<ShedderSim>();
-
         internal static CompWeatherForecaster ForecasterOn(PowerNet net)
         {
             if (net?.powerComps == null)
@@ -63,7 +61,7 @@ namespace Stormproof
         internal static GridForecast Project(Map map, PowerNet net, CompWeatherForecaster forecast,
             float stored, float capacity, float lowFraction, float criticalFraction, float[] curve = null)
         {
-            float severity = StormproofMod.Settings != null && StormproofMod.Settings.enableBrownout
+            float severity = StormproofMod.Settings.enableBrownout
                 ? Mathf.Clamp01(StormproofMod.Settings.brownoutSeverity)
                 : 0f;
             float startFraction = capacity <= 0f ? 0f : stored / capacity;
@@ -92,7 +90,8 @@ namespace Stormproof
             float energy = stored;
             float nadir = stored;
             bool canFill = stored < capacity - 0.05f;
-            CollectShedders(map, net);
+            // Per call, not static: Project runs from ticks and from open dialogs.
+            List<ShedderSim> shedders = CollectShedders(map, net);
             long ticksAbs = Find.TickManager.TicksAbs;
             float longitude = Find.WorldGrid.LongLatOf(map.Tile).x;
 
@@ -102,7 +101,9 @@ namespace Stormproof
                 float sky = ProjectedSky(map, elapsed, holds, weatherMul);
                 float wind = holds ? windFrac : windFrac * 0.55f;
                 float startFrac = energy / capacity;
-                float shedDelta = StepShedders(startFrac, GenDate.HourOfDay(ticksAbs + elapsed, longitude));
+                float shedDelta = shedders == null
+                    ? 0f
+                    : StepShedders(shedders, startFrac, GenDate.HourOfDay(ticksAbs + elapsed, longitude));
                 float brownout = BrownoutAt(startFrac, severity);
                 float draw = Mathf.Max(0f, nameplateDraw + shedDelta) * (1f - BrownoutDrawCut * brownout);
                 float watts = solarMax * sky + windMax * wind + otherProd - draw;
@@ -157,13 +158,7 @@ namespace Stormproof
             {
                 return false;
             }
-            float stored = 0f;
-            float capacity = 0f;
-            for (int i = 0; i < net.batteryComps.Count; i++)
-            {
-                stored += net.batteryComps[i].StoredEnergy;
-                capacity += net.batteryComps[i].Props.storedEnergyMax;
-            }
+            BatteryMath.Sum(net, out float stored, out float capacity);
             if (capacity <= 0f)
             {
                 return false;
@@ -172,9 +167,10 @@ namespace Stormproof
             return true;
         }
 
-        private static void CollectShedders(Map map, PowerNet net)
+        // Null when no shedder feeds off this net, so most grids allocate nothing.
+        private static List<ShedderSim> CollectShedders(Map map, PowerNet net)
         {
-            shedderSims.Clear();
+            List<ShedderSim> sims = null;
             foreach (CompLoadShedder shedder in StormproofRegistry.On(StormproofRegistry.LoadShedders, map))
             {
                 if (shedder.ForecastSupplyNet != net)
@@ -186,7 +182,8 @@ namespace Stormproof
                 {
                     continue;
                 }
-                shedderSims.Add(new ShedderSim
+                sims = sims ?? new List<ShedderSim>();
+                sims.Add(new ShedderSim
                 {
                     Shedder = shedder,
                     SideDraw = side,
@@ -194,17 +191,18 @@ namespace Stormproof
                     Closed = shedder.BreakerClosed
                 });
             }
+            return sims;
         }
 
         // Watts to add to today's draw: a shed sub-grid leaves, a reconnecting one rejoins.
-        private static float StepShedders(float fraction, int hourOfDay)
+        private static float StepShedders(List<ShedderSim> sims, float fraction, int hourOfDay)
         {
             float delta = 0f;
-            for (int i = 0; i < shedderSims.Count; i++)
+            for (int i = 0; i < sims.Count; i++)
             {
-                ShedderSim sim = shedderSims[i];
+                ShedderSim sim = sims[i];
                 sim.Closed = sim.Shedder.ProjectClosed(sim.Closed, fraction, hourOfDay);
-                shedderSims[i] = sim;
+                sims[i] = sim;
                 if (sim.Closed != sim.StartClosed)
                 {
                     delta += sim.Closed ? sim.SideDraw : -sim.SideDraw;

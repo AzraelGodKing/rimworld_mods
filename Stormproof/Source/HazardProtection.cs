@@ -10,19 +10,19 @@ namespace Stormproof
     public static class HazardProtection
     {
         public static bool BarrierProtecting(Map map) =>
-            (StormproofMod.Settings == null || StormproofMod.Settings.allowAtmosphericBarrier)
+            StormproofMod.Settings.allowAtmosphericBarrier
             && AnyActive(StormproofRegistry.AtmosphericBarriers, map);
 
         public static bool ClimateProtecting(Map map) =>
-            (StormproofMod.Settings == null || StormproofMod.Settings.allowClimateStabilizer)
+            StormproofMod.Settings.allowClimateStabilizer
             && AnyActive(StormproofRegistry.ClimateStabilizers, map);
 
         public static bool SkyProtecting(Map map) =>
-            (StormproofMod.Settings == null || StormproofMod.Settings.allowSkyRestorer)
+            StormproofMod.Settings.allowSkyRestorer
             && AnyActive(StormproofRegistry.SkyRestorers, map);
 
         public static bool DroughtProtecting(Map map) =>
-            (StormproofMod.Settings == null || StormproofMod.Settings.allowDroughtCondenser)
+            StormproofMod.Settings.allowDroughtCondenser
             && AnyActive(StormproofRegistry.DroughtCondensers, map);
 
         private static bool AnyActive<T>(HashSet<T> set, Map map) where T : ThingComp

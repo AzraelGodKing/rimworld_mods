@@ -27,8 +27,9 @@ namespace Stormproof
 
         public float zzztChanceFactor = 1f;
 
-        private static readonly Dictionary<string, float> OriginalIncidentChance =
-            new Dictionary<string, float>();
+        // Def baseChance as loaded from XML, before any setting scaled it.
+        private static readonly Dictionary<IncidentDef, float> OriginalIncidentChance =
+            new Dictionary<IncidentDef, float>();
 
         public override void ExposeData()
         {
@@ -51,8 +52,8 @@ namespace Stormproof
             Scribe_Values.Look(ref zzztChanceFactor, "zzztChanceFactor", 1f);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
+                // Incident chances are applied by StormproofInit once defs exist.
                 Clamp();
-                ApplyIncidentChances();
             }
         }
 
@@ -132,48 +133,39 @@ namespace Stormproof
 
         public static void CaptureOriginalChances()
         {
-            Remember("Stormproof_IonStorm");
-            Remember("Stormproof_HeatDome");
-            Remember("Stormproof_PolarFront");
-            Remember("Stormproof_ToxicSurge");
-            Remember("Stormproof_DryLightning");
+            foreach (IncidentDef def in StormproofIncidentDefOf.All)
+            {
+                if (def != null && !OriginalIncidentChance.ContainsKey(def))
+                {
+                    OriginalIncidentChance[def] = def.baseChance;
+                }
+            }
         }
 
         public void ApplyIncidentChances()
         {
             Clamp();
-            ApplyOne("Stormproof_IonStorm", incidentIonStorm);
-            ApplyOne("Stormproof_HeatDome", incidentHeatDome);
-            ApplyOne("Stormproof_PolarFront", incidentPolarFront);
-            ApplyOne("Stormproof_ToxicSurge", incidentToxicSurge);
-            ApplyOne("Stormproof_DryLightning", incidentDryLightning);
+            // Settings load in the mod constructor, before defs exist; StormproofInit
+            // applies them again once the DefOfs are bound.
+            ApplyOne(StormproofIncidentDefOf.Stormproof_IonStorm, incidentIonStorm);
+            ApplyOne(StormproofIncidentDefOf.Stormproof_HeatDome, incidentHeatDome);
+            ApplyOne(StormproofIncidentDefOf.Stormproof_PolarFront, incidentPolarFront);
+            ApplyOne(StormproofIncidentDefOf.Stormproof_ToxicSurge, incidentToxicSurge);
+            ApplyOne(StormproofIncidentDefOf.Stormproof_DryLightning, incidentDryLightning);
         }
 
-        private static void Remember(string defName)
+        private void ApplyOne(IncidentDef def, bool enabled)
         {
-            if (OriginalIncidentChance.ContainsKey(defName))
-            {
-                return;
-            }
-            IncidentDef def = DefDatabase<IncidentDef>.GetNamedSilentFail(defName);
-            if (def != null)
-            {
-                OriginalIncidentChance[defName] = def.baseChance;
-            }
-        }
-
-        private void ApplyOne(string defName, bool enabled)
-        {
-            IncidentDef def = DefDatabase<IncidentDef>.GetNamedSilentFail(defName);
             if (def == null)
             {
                 return;
             }
-            if (!OriginalIncidentChance.ContainsKey(defName))
+            if (!OriginalIncidentChance.TryGetValue(def, out float original))
             {
-                OriginalIncidentChance[defName] = def.baseChance;
+                original = def.baseChance;
+                OriginalIncidentChance[def] = original;
             }
-            def.baseChance = enabled ? OriginalIncidentChance[defName] * incidentFrequency : 0f;
+            def.baseChance = enabled ? original * incidentFrequency : 0f;
         }
     }
 }

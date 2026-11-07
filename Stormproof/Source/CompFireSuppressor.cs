@@ -20,7 +20,6 @@ namespace Stormproof
         private CompPowerTrader powerComp;
         private CompFlickable flickComp;
         private CompBreakdownable breakdownComp;
-        private static readonly List<Thing> fireBuffer = new List<Thing>();
 
         public CompProperties_FireSuppressor Props =>
             (CompProperties_FireSuppressor)props;
@@ -36,7 +35,7 @@ namespace Stormproof
         public bool Active =>
             parent.Spawned &&
             !parent.Destroyed &&
-            (StormproofMod.Settings == null || StormproofMod.Settings.allowFireSuppressor) &&
+            StormproofMod.Settings.allowFireSuppressor &&
             (flickComp == null || flickComp.SwitchIsOn) &&
             (breakdownComp == null || !breakdownComp.BrokenDown) &&
             powerComp != null &&
@@ -67,23 +66,26 @@ namespace Stormproof
             }
 
             Map map = parent.Map;
-            fireBuffer.Clear();
-            fireBuffer.AddRange(map.listerThings.ThingsOfDef(ThingDefOf.Fire));
-            float radius = Props.suppressRadius;
+            float radiusSq = Props.suppressRadius * Props.suppressRadius;
             IntVec3 origin = parent.Position;
-            for (int i = 0; i < fireBuffer.Count; i++)
+            MapComponent_Stormproof ledger = null;
+            // Walk the live lister backwards: destroying a fire removes only that
+            // entry, so no snapshot buffer is needed.
+            List<Thing> fires = map.listerThings.ThingsOfDef(ThingDefOf.Fire);
+            for (int i = fires.Count - 1; i >= 0; i--)
             {
-                Thing fire = fireBuffer[i];
-                if (fire.Destroyed || fire.Map != map)
+                if (i >= fires.Count)
                 {
                     continue;
                 }
-                if (fire.Position.DistanceTo(origin) <= radius)
+                Thing fire = fires[i];
+                if (fire.Destroyed || (fire.Position - origin).LengthHorizontalSquared > radiusSq)
                 {
-                    Map fireMap = fire.Map;
-                    fire.Destroy(DestroyMode.Vanish);
-                    fireMap?.GetComponent<MapComponent_Stormproof>()?.NoteFireSnuffed();
+                    continue;
                 }
+                fire.Destroy(DestroyMode.Vanish);
+                ledger = ledger ?? map.GetComponent<MapComponent_Stormproof>();
+                ledger?.NoteFireSnuffed();
             }
         }
 

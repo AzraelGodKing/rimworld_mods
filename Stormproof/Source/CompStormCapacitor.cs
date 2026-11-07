@@ -34,13 +34,13 @@ namespace Stormproof
 
         public void AddEnergy(float amount)
         {
-            storedEnergy = UnityEngine.Mathf.Min(storedEnergy + amount, Props.storedEnergyMax);
+            storedEnergy = System.Math.Min(storedEnergy + amount, Props.storedEnergyMax);
         }
 
         // Removes up to `amount` from storage and returns how much was taken.
         public float DrainEnergy(float amount)
         {
-            float taken = UnityEngine.Mathf.Min(amount, storedEnergy);
+            float taken = System.Math.Min(amount, storedEnergy);
             storedEnergy -= taken;
             return taken;
         }
@@ -83,7 +83,7 @@ namespace Stormproof
             // Grid gain rate excluding our own contribution: only cover the
             // deficit, never feed the grid's batteries from the capacitor.
             float gainWatts = net.CurrentEnergyGainRate() / CompPower.WattsToWattDaysPerTick - powerComp.PowerOutput;
-            float wanted = gainWatts < 0f ? UnityEngine.Mathf.Min(-gainWatts, Props.maxDischargeWatts) : 0f;
+            float wanted = gainWatts < 0f ? System.Math.Min(-gainWatts, Props.maxDischargeWatts) : 0f;
             powerComp.PowerOutput = wanted;
         }
 

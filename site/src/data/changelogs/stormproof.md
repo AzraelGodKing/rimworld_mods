@@ -4,7 +4,17 @@ Detailed notes for **Stormproof** only.
 
 ## [Unreleased]
 
-- **Separate 1.6 and 1.7 assemblies.** Official 1.6 loads `1.6/Assemblies`. Unstable 1.7 loads `1.7/Assemblies`.
+## [2.0.0]
+
+Player-facing version **2.0.0** (`About.xml` `modVersion`). Stamp `stormproof2-net10`. Ships for RimWorld **1.6** and **1.7** from the same source; 1.6 is not frozen.
+
+AZR-492 AZR-493 AZR-500 AZR-667 AZR-668
+
+### Changed
+- **Two builds, one source** (AZR-493) — official 1.6 loads `1.6/Assemblies` (net472, 1.6 refs). 1.7 loads `1.7/Assemblies`, now a .NET 10 build against the 1.7 refs (`Krafs.Rimworld.Ref` 1.7.4998-unstable, Harmony 3.0.0-rc.4).
+- **Weather timer access** (AZR-500) — on 1.7 `WeatherDecider.curWeatherDuration` is read with `[UnsafeAccessor]` instead of reflection. A missing field logs one warning and the forecaster and storm caller degrade quietly, as on 1.6.
+- **Code cleanup** (AZR-500, AZR-668) — one battery-total helper replaces four copies; mod settings are never null, so the 20+ null checks are gone; incident chances use `[DefOf]` fields instead of def-name strings and are applied once defs exist; simulation code uses `System.Math`; the fire suppressor and the grid forecast no longer share static scratch lists between calls.
+- **ROADMAP** (AZR-667) — dropped the dead AZR-109 line and the deleted Strata V4 roadmap link.
 - Dropped unused `docs/img/ArmoredConduit.png`. Atlas script segment output is opt-in (`-OutSegment`); default writes atlas + menu icon only. No gameplay change.
 
 ## [1.7.0]

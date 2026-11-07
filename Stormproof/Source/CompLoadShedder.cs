@@ -1,4 +1,3 @@
-using System.Linq;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -155,7 +154,7 @@ namespace Stormproof
                 {
                     continue;
                 }
-                float capacity = net.batteryComps.Sum(b => b.Props.storedEnergyMax);
+                float capacity = BatteryMath.Capacity(net);
                 if (capacity > bestCapacity)
                 {
                     bestCapacity = capacity;
@@ -167,10 +166,8 @@ namespace Stormproof
 
         private static float StoredFraction(PowerNet net)
         {
-            float capacity = net.batteryComps.Sum(b => b.Props.storedEnergyMax);
-            return capacity <= 0f
-                ? -1f
-                : net.batteryComps.Sum(b => b.StoredEnergy) / capacity;
+            BatteryMath.Sum(net, out float stored, out float capacity);
+            return capacity <= 0f ? -1f : stored / capacity;
         }
 
         public override void CompTick()
