@@ -37,22 +37,19 @@ namespace LivingWorld
                 return false;
             }
 
-            // Weighted picks: prosperity often, flip/abandon/outpost rarer.
+            // Weighted picks: prosperity often, abandon/outpost rarer. Ownership
+            // flips are not random: they only follow battles (TryConquest).
             float roll = Rand.Value;
             bool ok;
-            if (roll < 0.55f)
+            if (roll < 0.62f)
             {
                 ok = TryProsperityDrift(comp, settlements.RandomElement());
             }
             else if (roll < 0.75f)
             {
-                ok = TryOwnershipFlip(comp, settlements);
-            }
-            else if (roll < 0.85f)
-            {
                 ok = TryAbandon(comp, settlements);
             }
-            else if (roll < 0.93f)
+            else if (roll < 0.90f)
             {
                 ok = TryOutpost(comp, settlements);
             }
@@ -78,7 +75,7 @@ namespace LivingWorld
             switch (kind)
             {
                 case MorphKind.OwnershipFlip:
-                    return TryOwnershipFlip(comp, settlements, ignoreCooldown: true);
+                    return TryForceConquest(comp);
                 case MorphKind.Abandon:
                     return TryAbandon(comp, settlements, ignoreCooldown: true);
                 case MorphKind.Outpost:
@@ -227,35 +224,46 @@ namespace LivingWorld
             return true;
         }
 
-        private static bool TryOwnershipFlip(
-            GameComponent_LivingWorld comp,
-            List<Settlement> settlements,
-            bool ignoreCooldown = false)
+        /// <summary>
+        /// After a battle the winner takes the loser's settlement closest to its own
+        /// lands. Settlements in use by the player are never taken.
+        /// </summary>
+        public static bool TryConquest(GameComponent_LivingWorld comp, Faction winner, Faction loser, bool ignoreCooldown = false)
         {
-            Settlement target = settlements.Where(s => !OnCooldown(comp, s, ignoreCooldown)).RandomElementWithFallback();
+            if (comp == null || winner == null || loser == null || winner == loser
+                || winner.defeated || winner.IsPlayer || loser.IsPlayer)
+            {
+                return false;
+            }
+
+            List<Settlement> all = Find.WorldObjects.Settlements;
+            Settlement target = null;
+            float best = float.MaxValue;
+            for (int i = 0; i < all.Count; i++)
+            {
+                Settlement s = all[i];
+                if (s?.Faction != loser || IsPlayerHomeTile(s.Tile) || InActiveUse(s)
+                    || OnCooldown(comp, s, ignoreCooldown))
+                {
+                    continue;
+                }
+                float d = NearestDistanceTo(winner, s, all);
+                // Tile id breaks ties so every client picks the same settlement.
+                if (d < best || (d == best && target != null && s.ID < target.ID))
+                {
+                    best = d;
+                    target = s;
+                }
+            }
             if (target == null)
             {
                 return false;
             }
 
-            Faction winner = Find.FactionManager.AllFactionsListForReading
-                .Where(f => f != null
-                    && !f.IsPlayer
-                    && !f.defeated
-                    && f.def.humanlikeFaction
-                    && !f.def.hidden
-                    && f != target.Faction)
-                .RandomElementWithFallback();
-            if (winner == null)
-            {
-                return false;
-            }
-
-            Faction loser = target.Faction;
             target.SetFaction(winner);
             TouchMorph(comp, target);
             SettlementMood mood = comp.GetOrCreateMood(target);
-            mood.prosperity = 0;
+            mood.prosperity = System.Math.Max(-2, mood.prosperity - 1);
 
             comp.RecordAndPublish(WorldEvent.Create(
                 WorldEventKind.OwnershipFlip,
@@ -267,6 +275,50 @@ namespace LivingWorld
             // Last settlement taken: faction is gone from the rim.
             LivingWorldDiplomacy.MaybePublishFactionCollapse(comp, loser, winner, target);
             return true;
+        }
+
+        private static float NearestDistanceTo(Faction faction, Settlement target, List<Settlement> all)
+        {
+            float best = float.MaxValue;
+            for (int i = 0; i < all.Count; i++)
+            {
+                Settlement s = all[i];
+                if (s?.Faction != faction || s.Tile.Layer != target.Tile.Layer)
+                {
+                    continue;
+                }
+                float d = Find.WorldGrid.ApproxDistanceInTiles(s.Tile, target.Tile);
+                if (d < best)
+                {
+                    best = d;
+                }
+            }
+            return best;
+        }
+
+        /// <summary>Debug: a war pair if there is one, else any pair; the stronger side conquers.</summary>
+        private static bool TryForceConquest(GameComponent_LivingWorld comp)
+        {
+            LivingWorldDiplomacy.EnsurePairs(comp);
+            List<FactionPairState> pairs = comp.PairsMutable;
+            FactionPairState pick = null;
+            for (int i = 0; i < pairs.Count; i++)
+            {
+                if (pairs[i].tone == FactionRelationTone.War)
+                {
+                    pick = pairs[i];
+                    break;
+                }
+            }
+            pick ??= pairs.RandomElementWithFallback();
+            if (pick == null)
+            {
+                return false;
+            }
+            Faction a = pick.FactionA();
+            Faction b = pick.FactionB();
+            return TryConquest(comp, a, b, ignoreCooldown: true)
+                || TryConquest(comp, b, a, ignoreCooldown: true);
         }
 
         private static bool TryAbandon(

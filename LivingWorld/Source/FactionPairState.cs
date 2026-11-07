@@ -50,10 +50,18 @@ namespace LivingWorld
             int idA = a.loadID;
             int idB = b.loadID;
             NormalizeIds(ref idA, ref idB);
+            // Start from vanilla relations: pirates and their prey begin tense, allies allied.
+            LivingWorldRules.SeedTone(
+                a.HostileTo(b),
+                a.RelationKindWith(b) == FactionRelationKind.Ally && LivingWorldDiplomacy.CanAlly(a, b),
+                out int tone,
+                out int intensity);
             return new FactionPairState
             {
                 factionAId = idA,
                 factionBId = idB,
+                tone = (FactionRelationTone)tone,
+                intensity = intensity,
             };
         }
 
