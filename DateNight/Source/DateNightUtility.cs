@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -98,7 +99,7 @@ namespace DateNight
                 return true;
             }
 
-            PawnDuty duty = pawn.mindState?.duty;
+            PawnDuty? duty = pawn.mindState?.duty;
             if (duty?.def == null)
             {
                 return false;
@@ -126,7 +127,7 @@ namespace DateNight
                 return true;
             }
 
-            System.Type t = driver.GetType();
+            System.Type? t = driver.GetType();
             while (t != null && t != typeof(JobDriver))
             {
                 if (NameLooksLikeLovin(t.Name) || NameLooksLikeLovin(t.Namespace))
@@ -138,9 +139,9 @@ namespace DateNight
             return false;
         }
 
-        private static bool NameLooksLikeLovin(string name)
+        private static bool NameLooksLikeLovin(string? name)
         {
-            if (string.IsNullOrEmpty(name))
+            if (name == null || name.Length == 0)
             {
                 return false;
             }
@@ -254,7 +255,7 @@ namespace DateNight
             return IsLovinSchedule(pawn) || IsLovinSchedule(partner);
         }
 
-        public static Job TryMakeBedJob(Pawn pawn)
+        public static Job? TryMakeBedJob(Pawn pawn)
         {
             if (pawn?.Map == null || pawn.Downed || pawn.Drafted)
             {
@@ -273,7 +274,7 @@ namespace DateNight
                 return null;
             }
 
-            Building_Bed target = GetScheduledBed(pawn);
+            Building_Bed? target = GetScheduledBed(pawn);
             if (target == null)
             {
                 return null;
@@ -353,7 +354,7 @@ namespace DateNight
             // Friends / sweethearts painted Lovin: date instead of private time.
             if (partner == null)
             {
-                Pawn dateMate = DateNightRomance.FindDatePartner(pawn);
+                Pawn? dateMate = DateNightRomance.FindDatePartner(pawn);
                 if (dateMate != null
                     && !LovePartnerRelationUtility.LovePartnerRelationExists(pawn, dateMate)
                     && DateNightDateUtility.CanDate(pawn, dateMate))
@@ -363,7 +364,7 @@ namespace DateNight
                 }
             }
 
-            Building_Bed target = GetScheduledBed(pawn);
+            Building_Bed? target = GetScheduledBed(pawn);
             if (target == null)
             {
                 return;
@@ -432,7 +433,7 @@ namespace DateNight
                 return false;
             }
 
-            Pawn partner = LovePartnerRelationUtility.GetPartnerInMyBed(pawn);
+            Pawn? partner = LovePartnerRelationUtility.GetPartnerInMyBed(pawn);
             if (partner == null)
             {
                 // Fallback: love partner physically in the same bed occupants list.
@@ -459,7 +460,7 @@ namespace DateNight
 
             // Pregnancy-safe (default): keep vanilla post-lovin cooldown.
             // Eager: clear leftover cooldown while on the Lovin schedule.
-            if (DateNightMod.Settings != null && DateNightMod.Settings.pregnancySafeCooldown)
+            if (DateNightMod.Settings.pregnancySafeCooldown)
             {
                 if (Find.TickManager.TicksGame < pawn.mindState.canLovinTick
                     || Find.TickManager.TicksGame < partner.mindState.canLovinTick)
@@ -518,7 +519,7 @@ namespace DateNight
             {
                 return false;
             }
-            if (!ignoreSetting && DateNightMod.Settings != null && !DateNightMod.Settings.allowSelfLovin)
+            if (!ignoreSetting && !DateNightMod.Settings.allowSelfLovin)
             {
                 return false;
             }
@@ -548,7 +549,7 @@ namespace DateNight
                 return false;
             }
 
-            Building_Bed bed = pawn.CurrentBed();
+            Building_Bed? bed = pawn.CurrentBed();
             if (!IsUsableAnyBed(bed, pawn))
             {
                 bed = GetSelfLovinBed(pawn);
@@ -589,7 +590,7 @@ namespace DateNight
                 return;
             }
 
-            ThoughtDef thought = DateNightDefOf.DateNight_PrivateTime;
+            ThoughtDef? thought = DateNightDefOf.DateNight_PrivateTime;
             if (thought != null)
             {
                 pawn.needs.mood.thoughts.memories.TryGainMemory(thought);
@@ -602,10 +603,10 @@ namespace DateNight
         /// Couple rendezvous if a partner is likely to join; otherwise any usable bed
         /// (including singles) for self-lovin.
         /// </summary>
-        public static Building_Bed GetScheduledBed(Pawn pawn)
+        public static Building_Bed? GetScheduledBed(Pawn pawn)
         {
             Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
-            Building_Bed couple = GetRendezvousBed(pawn);
+            Building_Bed? couple = GetRendezvousBed(pawn);
             if (couple != null && WaitingForPartner(pawn, partner, couple))
             {
                 return couple;
@@ -621,9 +622,9 @@ namespace DateNight
             return couple;
         }
 
-        private static Building_Bed GetSelfLovinBed(Pawn pawn)
+        private static Building_Bed? GetSelfLovinBed(Pawn pawn)
         {
-            Building_Bed owned = pawn.ownership?.OwnedBed;
+            Building_Bed? owned = pawn.ownership?.OwnedBed;
             if (IsUsableAnyBed(owned, pawn))
             {
                 return owned;
@@ -638,7 +639,7 @@ namespace DateNight
             return null;
         }
 
-        private static bool WaitingForPartner(Pawn pawn, Pawn partner, Building_Bed bed)
+        private static bool WaitingForPartner(Pawn pawn, Pawn? partner, Building_Bed bed)
         {
             if (partner == null || bed == null || bed.SleepingSlotsCount <= 1)
             {
@@ -661,11 +662,11 @@ namespace DateNight
             {
                 return true;
             }
-            if (DateNightMod.Settings != null && DateNightMod.Settings.pregnancySafeCooldown)
+            if (DateNightMod.Settings.pregnancySafeCooldown)
             {
                 return Find.TickManager.TicksGame >= pawn.mindState.canLovinTick;
             }
-            if (IsLovinSchedule(pawn) && DateNightMod.Settings != null && !DateNightMod.Settings.pregnancySafeCooldown)
+            if (IsLovinSchedule(pawn) && !DateNightMod.Settings.pregnancySafeCooldown)
             {
                 pawn.mindState.canLovinTick = 0;
                 return true;
@@ -679,8 +680,7 @@ namespace DateNight
             {
                 return;
             }
-            if (DateNightMod.Settings != null
-                && !DateNightMod.Settings.pregnancySafeCooldown
+            if (!DateNightMod.Settings.pregnancySafeCooldown
                 && DateNightMod.Settings.eagerCooldown
                 && IsLovinSchedule(pawn))
             {
@@ -693,7 +693,7 @@ namespace DateNight
                 + Rand.RangeInclusive(10000, 20000);
         }
 
-        private static bool IsUsableAnyBed(Building_Bed bed, Pawn pawn)
+        private static bool IsUsableAnyBed(Building_Bed? bed, Pawn pawn)
         {
             if (bed == null || bed.Destroyed || !bed.Spawned || bed.Medical)
             {
@@ -751,7 +751,7 @@ namespace DateNight
                 return true;
             }
 
-            Need_Rest rest = pawn.needs?.rest;
+            Need_Rest? rest = pawn.needs?.rest;
             if (rest != null && rest.CurCategory >= RestCategory.Exhausted)
             {
                 return true;
@@ -762,8 +762,8 @@ namespace DateNight
 
         public static bool IsDoingNeedJob(Pawn pawn)
         {
-            JobDef def = pawn?.CurJobDef;
-            if (def == null)
+            JobDef? def = pawn?.CurJobDef;
+            if (pawn == null || def == null)
             {
                 return false;
             }
@@ -798,8 +798,7 @@ namespace DateNight
 
         public static void NotifyEnteredLovinSchedule(Pawn pawn)
         {
-            if (pawn?.mindState != null
-                && (DateNightMod.Settings == null || !DateNightMod.Settings.pregnancySafeCooldown))
+            if (pawn.mindState != null && !DateNightMod.Settings.pregnancySafeCooldown)
             {
                 pawn.mindState.canLovinTick = 0;
             }
@@ -824,7 +823,7 @@ namespace DateNight
         /// <summary>
         /// One stable double bed for the couple. Does not claim ownership (LayDown toil claims).
         /// </summary>
-        public static Building_Bed GetRendezvousBed(Pawn pawn)
+        public static Building_Bed? GetRendezvousBed(Pawn pawn)
         {
             if (pawn?.Map == null)
             {
@@ -840,7 +839,7 @@ namespace DateNight
             long key = DateNightActivities.CoupleKey(pawn, partner);
             if (RendezvousBedIds.TryGetValue(key, out int bedId))
             {
-                Building_Bed cached = FindBedById(pawn.Map, bedId);
+                Building_Bed? cached = FindBedById(pawn.Map, bedId);
                 if (IsUsableDouble(cached, pawn, partner))
                 {
                     return cached;
@@ -848,7 +847,7 @@ namespace DateNight
                 RendezvousBedIds.Remove(key);
             }
 
-            Building_Bed chosen = ResolveNewRendezvousBed(pawn, partner);
+            Building_Bed? chosen = ResolveNewRendezvousBed(pawn, partner);
             if (chosen != null)
             {
                 RendezvousBedIds[key] = chosen.thingIDNumber;
@@ -856,7 +855,7 @@ namespace DateNight
             return chosen;
         }
 
-        private static Building_Bed ResolveNewRendezvousBed(Pawn pawn, Pawn partner)
+        private static Building_Bed? ResolveNewRendezvousBed(Pawn pawn, Pawn partner)
         {
             // Partner already in a double — join (no ownership churn).
             Building_Bed partnerCurrent = partner.CurrentBed();
@@ -872,12 +871,12 @@ namespace DateNight
             }
 
             // Prefer an already-owned double (either partner), without reclaiming others.
-            Building_Bed owned = DoubleBedOrNull(pawn.ownership?.OwnedBed);
+            Building_Bed? owned = DoubleBedOrNull(pawn.ownership?.OwnedBed);
             if (IsUsableDouble(owned, pawn, partner))
             {
                 return owned;
             }
-            Building_Bed partnerOwned = DoubleBedOrNull(partner.ownership?.OwnedBed);
+            Building_Bed? partnerOwned = DoubleBedOrNull(partner.ownership?.OwnedBed);
             if (IsUsableDouble(partnerOwned, pawn, partner))
             {
                 return partnerOwned;
@@ -886,9 +885,9 @@ namespace DateNight
             return FindNearestFreeDouble(pawn, partner);
         }
 
-        private static Building_Bed FindNearestFreeDouble(Pawn pawn, Pawn partner)
+        private static Building_Bed? FindNearestFreeDouble(Pawn pawn, Pawn partner)
         {
-            Building_Bed best = null;
+            Building_Bed? best = null;
             float bestDist = float.MaxValue;
             foreach (Building_Bed bed in pawn.Map.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>())
             {
@@ -931,7 +930,7 @@ namespace DateNight
             return best;
         }
 
-        private static bool IsUsableDouble(Building_Bed bed, Pawn a, Pawn b)
+        private static bool IsUsableDouble(Building_Bed? bed, Pawn a, Pawn b)
         {
             if (bed == null || bed.Destroyed || !bed.Spawned || bed.Medical)
             {
@@ -956,12 +955,12 @@ namespace DateNight
             return true;
         }
 
-        private static Building_Bed DoubleBedOrNull(Building_Bed bed)
+        private static Building_Bed? DoubleBedOrNull(Building_Bed? bed)
         {
             return bed != null && bed.SleepingSlotsCount > 1 ? bed : null;
         }
 
-        private static Building_Bed FindBedById(Map map, int thingId)
+        private static Building_Bed? FindBedById(Map map, int thingId)
         {
             foreach (Building_Bed bed in map.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>())
             {
@@ -973,7 +972,7 @@ namespace DateNight
             return null;
         }
 
-        private static Pawn FindLovePartnerOccupying(Pawn pawn, Building_Bed bed)
+        private static Pawn? FindLovePartnerOccupying(Pawn pawn, Building_Bed bed)
         {
             foreach (Pawn occ in bed.CurOccupants)
             {

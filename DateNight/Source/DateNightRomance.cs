@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -53,11 +54,11 @@ namespace DateNight
 
         private static List<DateNightRomanceBond> bonds = new List<DateNightRomanceBond>();
         private static int partnerCacheTick = -1;
-        private static readonly Dictionary<int, Pawn> partnerCache = new Dictionary<int, Pawn>();
+        private static readonly Dictionary<int, Pawn?> partnerCache = new Dictionary<int, Pawn?>();
 
         public static bool Enabled
         {
-            get { return DateNightMod.Settings == null || DateNightMod.Settings.enableGradualRomance; }
+            get { return DateNightMod.Settings.enableGradualRomance; }
         }
 
         public static void Reset()
@@ -116,7 +117,7 @@ namespace DateNight
                 return DateNightRomanceStage.Partners;
             }
 
-            DateNightRomanceBond bond = GetBond(a, b);
+            DateNightRomanceBond? bond = GetBond(a, b);
             return bond == null ? DateNightRomanceStage.None : bond.stage;
         }
 
@@ -143,7 +144,7 @@ namespace DateNight
             return EligibleForNewBond(a, b);
         }
 
-        public static Pawn FindDatePartner(Pawn pawn)
+        public static Pawn? FindDatePartner(Pawn pawn)
         {
             if (pawn == null)
             {
@@ -157,24 +158,24 @@ namespace DateNight
                 partnerCacheTick = now;
             }
 
-            if (partnerCache.TryGetValue(pawn.thingIDNumber, out Pawn cached))
+            if (partnerCache.TryGetValue(pawn.thingIDNumber, out Pawn? cached))
             {
                 return cached;
             }
 
-            Pawn found = FindDatePartnerUncached(pawn);
+            Pawn? found = FindDatePartnerUncached(pawn);
             partnerCache[pawn.thingIDNumber] = found;
             return found;
         }
 
-        public static string InspectLine(Pawn pawn)
+        public static string? InspectLine(Pawn pawn)
         {
             if (!Enabled || pawn == null || !pawn.RaceProps.Humanlike)
             {
                 return null;
             }
 
-            Pawn other = FindDatePartner(pawn);
+            Pawn? other = FindDatePartner(pawn);
             if (other == null)
             {
                 return null;
@@ -205,20 +206,20 @@ namespace DateNight
 
         public static string DebugDescribe(Pawn pawn)
         {
-            Pawn other = FindDatePartner(pawn);
+            Pawn? other = FindDatePartner(pawn);
             if (other == null)
             {
                 return "none";
             }
 
-            DateNightRomanceBond bond = GetBond(pawn, other);
+            DateNightRomanceBond? bond = GetBond(pawn, other);
             DateNightRomanceStage stage = GetStage(pawn, other);
             int progress = bond != null ? bond.progress : 0;
             return stage + " with " + other.LabelShort + " progress=" + progress
                 + (LovePartnerRelationUtility.LovePartnerRelationExists(pawn, other) ? " (lovers)" : "");
         }
 
-        public static void EnsureBondStarted(Pawn a, Pawn b)
+        public static void EnsureBondStarted(Pawn a, Pawn? b)
         {
             if (!Enabled || a == null || b == null)
             {
@@ -252,7 +253,7 @@ namespace DateNight
                 MessageTypeDefOf.PositiveEvent);
         }
 
-        public static void NotifyDateFinished(Pawn pawn, Pawn partner, ThoughtDef quality)
+        public static void NotifyDateFinished(Pawn pawn, Pawn? partner, ThoughtDef? quality)
         {
             if (!Enabled || pawn == null || partner == null)
             {
@@ -264,7 +265,7 @@ namespace DateNight
             }
 
             EnsureBondStarted(pawn, partner);
-            DateNightRomanceBond bond = GetBond(pawn, partner);
+            DateNightRomanceBond? bond = GetBond(pawn, partner);
             if (bond == null)
             {
                 return;
@@ -312,8 +313,8 @@ namespace DateNight
                     continue;
                 }
 
-                Pawn a = DateNightDateUtility.FindPawnById(bond.pawnA);
-                Pawn b = DateNightDateUtility.FindPawnById(bond.pawnB);
+                Pawn? a = DateNightDateUtility.FindPawnById(bond.pawnA);
+                Pawn? b = DateNightDateUtility.FindPawnById(bond.pawnB);
                 if (a == null || b == null)
                 {
                     continue;
@@ -343,7 +344,7 @@ namespace DateNight
 
         public static void NotifyBreakup(Pawn a, Pawn b)
         {
-            DateNightRomanceBond bond = GetBond(a, b);
+            DateNightRomanceBond? bond = GetBond(a, b);
             if (bond == null)
             {
                 return;
@@ -365,7 +366,7 @@ namespace DateNight
             }
             if (stage == DateNightRomanceStage.None)
             {
-                DateNightRomanceBond existing = GetBond(a, b);
+                DateNightRomanceBond? existing = GetBond(a, b);
                 if (existing != null)
                 {
                     bonds.Remove(existing);
@@ -374,7 +375,7 @@ namespace DateNight
                 return true;
             }
 
-            DateNightRomanceBond bond = GetBond(a, b);
+            DateNightRomanceBond? bond = GetBond(a, b);
             if (bond == null)
             {
                 bond = new DateNightRomanceBond
@@ -392,7 +393,7 @@ namespace DateNight
             return true;
         }
 
-        private static Pawn FindDatePartnerUncached(Pawn pawn)
+        private static Pawn? FindDatePartnerUncached(Pawn pawn)
         {
             Pawn love = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
             if (love != null && !love.Dead)
@@ -405,7 +406,7 @@ namespace DateNight
                 return null;
             }
 
-            Pawn bestBond = null;
+            Pawn? bestBond = null;
             int bestStage = 0;
             int bestOpinion = int.MinValue;
             if (bonds != null)
@@ -418,7 +419,7 @@ namespace DateNight
                         continue;
                     }
 
-                    Pawn other = OtherOf(bond, pawn.thingIDNumber);
+                    Pawn? other = OtherOf(bond, pawn.thingIDNumber);
                     if (other == null || other.Dead || !other.RaceProps.Humanlike)
                     {
                         continue;
@@ -443,20 +444,20 @@ namespace DateNight
             return FindNewFriendCandidate(pawn);
         }
 
-        private static Pawn FindNewFriendCandidate(Pawn pawn)
+        private static Pawn? FindNewFriendCandidate(Pawn pawn)
         {
             if (pawn.Map == null || pawn.relations == null)
             {
                 return null;
             }
 
-            List<Pawn> colonists = pawn.Map.mapPawns?.FreeColonistsSpawned;
+            List<Pawn>? colonists = pawn.Map.mapPawns?.FreeColonistsSpawned;
             if (colonists == null)
             {
                 return null;
             }
 
-            Pawn best = null;
+            Pawn? best = null;
             float bestScore = 0f;
             for (int i = 0; i < colonists.Count; i++)
             {
@@ -514,7 +515,7 @@ namespace DateNight
         }
 
         private static void SetStage(Pawn a, Pawn b, DateNightRomanceBond bond,
-            DateNightRomanceStage next, ThoughtDef thought, string messageKey)
+            DateNightRomanceStage next, ThoughtDef? thought, string messageKey)
         {
             bond.stage = next;
             bond.progress = 0;
@@ -693,7 +694,7 @@ namespace DateNight
             return left < right ? left : right;
         }
 
-        private static DateNightRomanceBond GetBond(Pawn a, Pawn b)
+        private static DateNightRomanceBond? GetBond(Pawn a, Pawn b)
         {
             if (a == null || b == null || bonds == null)
             {
@@ -714,13 +715,13 @@ namespace DateNight
             return null;
         }
 
-        private static Pawn OtherOf(DateNightRomanceBond bond, int id)
+        private static Pawn? OtherOf(DateNightRomanceBond bond, int id)
         {
             int otherId = bond.pawnA == id ? bond.pawnB : bond.pawnB == id ? bond.pawnA : 0;
             return otherId == 0 ? null : DateNightDateUtility.FindPawnById(otherId);
         }
 
-        private static void NotifyStageThoughts(Pawn a, Pawn b, ThoughtDef def)
+        private static void NotifyStageThoughts(Pawn a, Pawn b, ThoughtDef? def)
         {
             DateNightDateUtility.TryGainThought(a, b, def);
             DateNightDateUtility.TryGainThought(b, a, def);

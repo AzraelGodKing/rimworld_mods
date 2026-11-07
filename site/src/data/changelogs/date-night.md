@@ -4,6 +4,16 @@ Detailed notes for **Date Night** only.
 
 ## [Unreleased]
 
+## [2.0.0]
+
+Player-facing version **2.0.0** (`About.xml` `modVersion`). Stamp `datenight2-net10`. Ships for RimWorld **1.6** and **1.7** from the same source; 1.6 is not frozen.
+
+AZR-511 AZR-521 AZR-557
+
+### Changed
+- **Two builds, one source** (AZR-521) — official 1.6 loads `1.6/Assemblies` (net472, 1.6 refs). 1.7 loads `1.7/Assemblies`, now a .NET 10 build against the 1.7 refs (`Krafs.Rimworld.Ref` 1.7.4998-unstable, Harmony 3.0.0-rc.4). Both report 2.0.0, so the shared `About.xml` version and the update letter are right on both.
+- **Code cleanup** (AZR-557) — nullable reference types on every Date Night source file with no warnings; mod settings are never null, so the 23 null checks are gone; RimJobWorld `can_fuck` / `can_be_fucked` / `can_masturbate` bind once to `Func<Pawn,bool>` delegates and `RJWSettings.override_lovin` to a static field ref (no per-call `object[]`, no boxing); the RJW JobDefs are looked up once; the three pair-selection debug actions share one helper.
+
 ## [1.8.0]
 
 Player-facing version **1.8.0** (`About.xml` `modVersion`). Stamp `gradual-romance-v1`.

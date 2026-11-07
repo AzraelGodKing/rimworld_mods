@@ -1,3 +1,16 @@
+2.0.0
+[h1]Date Night — 2.0.0[/h1]
+Date Night 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting every update, and the same save carries over to 1.7.
+
+[b]Changed[/b]
+[list]
+[*] [b]RimWorld 1.7[/b] — the 1.7 folder now has its own .NET 10 build made against the 1.7 game files. 1.6 keeps its own build from the same source.
+[*] [b]RimJobWorld[/b] — the RJW checks are bound once at startup instead of called through reflection every second, so scheduled Lovin costs less with RJW on.
+[/list]
+
+[i]Build stamp (Player.log): datenight2-net10[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/date-night.md[/i]
+
 1.8.0
 [h1]Date Night — 1.8.0[/h1]
 [b]Added[/b]

@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -8,7 +9,7 @@ namespace DateNight
     {
         private readonly Dictionary<int, bool> wasOnLovin = new Dictionary<int, bool>();
         private readonly Dictionary<int, bool> wasOnDate = new Dictionary<int, bool>();
-        private string lastNewsVersion;
+        private string? lastNewsVersion;
 
         public GameComponent_DateNight(Game game)
         {

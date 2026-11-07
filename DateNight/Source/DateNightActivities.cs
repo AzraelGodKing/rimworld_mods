@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -29,13 +30,13 @@ namespace DateNight
         public static DateActivity ForcedActivity = DateActivity.Unresolved;
         public static int ForcedActivityExpireTick = -1;
 
-        public static DateActivity Resolve(Pawn pawn, Pawn partner)
+        public static DateActivity Resolve(Pawn? pawn, Pawn partner)
         {
             if (pawn?.Map == null || partner == null)
             {
                 return DateActivity.Hangout;
             }
-            if (DateNightMod.Settings != null && !DateNightMod.Settings.enableDateActivities)
+            if (!DateNightMod.Settings.enableDateActivities)
             {
                 return DateActivity.Hangout;
             }
@@ -114,10 +115,10 @@ namespace DateNight
 
         public static bool AllowGifts()
         {
-            return DateNightMod.Settings == null || DateNightMod.Settings.allowGiftDates;
+            return DateNightMod.Settings.allowGiftDates;
         }
 
-        public static bool IsInitiator(Pawn pawn, Pawn partner)
+        public static bool IsInitiator(Pawn pawn, Pawn? partner)
         {
             return partner == null || pawn.thingIDNumber < partner.thingIDNumber;
         }
@@ -180,14 +181,14 @@ namespace DateNight
         }
 
         /// <summary>Best reachable, reservable prepared meal for this pawn.</summary>
-        public static Thing FindMealFor(Pawn pawn, Pawn partner)
+        public static Thing? FindMealFor(Pawn pawn, Pawn partner)
         {
             if (pawn?.Map == null)
             {
                 return null;
             }
 
-            Thing best = null;
+            Thing? best = null;
             float bestScore = float.MinValue;
             List<Thing> foods = pawn.Map.listerThings.ThingsInGroup(ThingRequestGroup.FoodSourceNotPlantOrTree);
             for (int i = 0; i < foods.Count; i++)
@@ -227,7 +228,7 @@ namespace DateNight
 
         // Sorted by defName (ordinal) so CoreCLR per-process HashSet order cannot
         // desync Multiplayer clients or change picks between launches (AZR-540).
-        private static ThingDef[] resolvedGiftDefs;
+        private static ThingDef[]? resolvedGiftDefs;
 
         internal static void InvalidateGiftCache()
         {
@@ -242,7 +243,7 @@ namespace DateNight
             }
 
             HashSet<string> names = new HashSet<string>();
-            List<string> configured = DateNightMod.Settings?.giftDefNames;
+            List<string> configured = DateNightMod.Settings.giftDefNames;
             if (configured != null && configured.Count > 0)
             {
                 for (int i = 0; i < configured.Count; i++)
@@ -261,7 +262,7 @@ namespace DateNight
                 }
             }
 
-            if (DateNightMod.Settings == null || DateNightMod.Settings.extendGiftsWithJoyItems)
+            if (DateNightMod.Settings.extendGiftsWithJoyItems)
             {
                 foreach (ThingDef def in DefDatabase<ThingDef>.AllDefsListForReading)
                 {
@@ -296,14 +297,14 @@ namespace DateNight
         }
 
         /// <summary>A small luxury the giver can fetch and hand over.</summary>
-        public static Thing FindGiftFor(Pawn giver, Pawn receiver)
+        public static Thing? FindGiftFor(Pawn giver, Pawn receiver)
         {
             if (giver?.Map == null)
             {
                 return null;
             }
 
-            Thing best = null;
+            Thing? best = null;
             float bestDist = float.MaxValue;
             int bestId = int.MaxValue;
             ThingDef[] defs = GiftDefs();
@@ -379,13 +380,13 @@ namespace DateNight
             return true;
         }
 
-        public static Thing FindGatherSpotFor(Pawn pawn, Pawn partner)
+        public static Thing? FindGatherSpotFor(Pawn pawn, Pawn? partner)
         {
             if (pawn?.Map == null)
             {
                 return null;
             }
-            Thing best = null;
+            Thing? best = null;
             int bestId = int.MaxValue;
             foreach (Building building in pawn.Map.listerBuildings.allBuildingsColonist)
             {
@@ -408,13 +409,13 @@ namespace DateNight
         }
 
         /// <summary>Nearest colonist joy building (chess table, TV, horseshoes...).</summary>
-        public static Building FindJoyBuildingFor(Pawn pawn, Pawn partner)
+        public static Building? FindJoyBuildingFor(Pawn pawn, Pawn partner)
         {
             if (pawn?.Map == null)
             {
                 return null;
             }
-            Building best = null;
+            Building? best = null;
             int bestId = int.MaxValue;
             foreach (Building building in pawn.Map.listerBuildings.allBuildingsColonist)
             {
@@ -497,7 +498,7 @@ namespace DateNight
             return true;
         }
 
-        internal static bool BothCanReach(Pawn pawn, Pawn partner, Thing thing)
+        internal static bool BothCanReach(Pawn pawn, Pawn? partner, Thing thing)
         {
             if (!pawn.CanReach(thing, PathEndMode.Touch, Danger.Some))
             {
@@ -560,7 +561,7 @@ namespace DateNight
                 }
                 case DateActivity.Dance:
                 {
-                    Thing gather = FindGatherSpotFor(pawn, partner);
+                    Thing? gather = FindGatherSpotFor(pawn, partner);
                     if (gather != null)
                     {
                         venue = gather;
@@ -569,7 +570,7 @@ namespace DateNight
                 }
                 case DateActivity.Recreation:
                 {
-                    Building joy = FindJoyBuildingFor(pawn, partner);
+                    Building? joy = FindJoyBuildingFor(pawn, partner);
                     if (joy != null)
                     {
                         venue = joy;
@@ -632,7 +633,7 @@ namespace DateNight
 
         private static LocalTargetInfo FindDinnerTable(Pawn pawn, Pawn partner)
         {
-            Building best = null;
+            Building? best = null;
             int bestId = int.MaxValue;
             foreach (Building building in pawn.Map.listerBuildings.allBuildingsColonist)
             {
@@ -742,7 +743,7 @@ namespace DateNight
         }
 
         /// <summary>Partner stands next to the shared venue instead of occupying the same cell.</summary>
-        public static LocalTargetInfo AdjacentTo(LocalTargetInfo venue, Pawn pawn, Pawn partner)
+        public static LocalTargetInfo AdjacentTo(LocalTargetInfo venue, Pawn pawn, Pawn? partner)
         {
             IntVec3 root = venue.HasThing ? venue.Thing.Position : venue.Cell;
             Map map = pawn.Map;
@@ -772,13 +773,13 @@ namespace DateNight
         private static IntVec3 StableSearchRoot(Pawn pawn, Pawn partner)
         {
             Map map = pawn.Map;
-            Thing gather = FindGatherSpotFor(pawn, partner);
+            Thing? gather = FindGatherSpotFor(pawn, partner);
             if (gather != null)
             {
                 return gather.Position;
             }
 
-            Building first = null;
+            Building? first = null;
             int bestId = int.MaxValue;
             foreach (Building building in map.listerBuildings.allBuildingsColonist)
             {

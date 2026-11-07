@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Reflection;
 using HarmonyLib;
@@ -21,10 +22,14 @@ namespace DateNight
         private static bool bound;
         private static bool logged;
         private static bool active;
-        private static MethodInfo canFuck;
-        private static MethodInfo canBeFucked;
-        private static MethodInfo canMasturbate;
-        private static FieldInfo overrideLovin;
+        // Bound once to delegates: no per-call object[] or boxing (AZR-557).
+        // Not [UnsafeAccessorType]: that throws when RJW is not installed.
+        private static Func<Pawn, bool>? canFuck;
+        private static Func<Pawn, bool>? canBeFucked;
+        private static Func<Pawn, bool>? canMasturbate;
+        private static AccessTools.FieldRef<bool>? overrideLovin;
+        private static JobDef? joinInBedDef;
+        private static JobDef? masturbateDef;
 
         public static bool Active
         {
@@ -35,21 +40,21 @@ namespace DateNight
             }
         }
 
-        public static JobDef JoinInBedDef
+        public static JobDef? JoinInBedDef
         {
             get
             {
                 Bind();
-                return DefDatabase<JobDef>.GetNamedSilentFail(JoinInBedDefName);
+                return joinInBedDef;
             }
         }
 
-        public static JobDef MasturbateDef
+        public static JobDef? MasturbateDef
         {
             get
             {
                 Bind();
-                return DefDatabase<JobDef>.GetNamedSilentFail(MasturbateDefName);
+                return masturbateDef;
             }
         }
 
@@ -70,14 +75,7 @@ namespace DateNight
                 {
                     return JoinInBedDef != null;
                 }
-                try
-                {
-                    return (bool)overrideLovin.GetValue(null);
-                }
-                catch
-                {
-                    return JoinInBedDef != null;
-                }
+                return overrideLovin();
             }
         }
 
@@ -87,7 +85,7 @@ namespace DateNight
             {
                 if (OverrideVanillaLovin)
                 {
-                    JobDef join = JoinInBedDef;
+                    JobDef? join = JoinInBedDef;
                     if (join != null)
                     {
                         return join;
@@ -107,7 +105,7 @@ namespace DateNight
             {
                 return true;
             }
-            JobDef join = JoinInBedDef;
+            JobDef? join = JoinInBedDef;
             return join != null && def == join;
         }
 
@@ -131,7 +129,7 @@ namespace DateNight
                 return true;
             }
 
-            Type driverType = pawn.jobs?.curDriver?.GetType();
+            Type? driverType = pawn.jobs?.curDriver?.GetType();
             while (driverType != null && driverType != typeof(JobDriver))
             {
                 string typeName = driverType.Name;
@@ -140,7 +138,7 @@ namespace DateNight
                         || typeName.IndexOf("Masturbate", StringComparison.OrdinalIgnoreCase) >= 0
                         || typeName.IndexOf("JoinInBed", StringComparison.OrdinalIgnoreCase) >= 0))
                 {
-                    string ns = driverType.Namespace;
+                    string? ns = driverType.Namespace;
                     if (ns == "rjw" || (ns != null && ns.StartsWith("rjw.", StringComparison.Ordinal)))
                     {
                         return true;
@@ -169,7 +167,7 @@ namespace DateNight
                 return false;
             }
 
-            JobDef def = JoinInBedDef;
+            JobDef? def = JoinInBedDef;
             if (def == null)
             {
                 return false;
@@ -181,14 +179,14 @@ namespace DateNight
             return pawn.CurJobDef == def;
         }
 
-        public static bool TryStartMasturbate(Pawn pawn, Building_Bed bed)
+        public static bool TryStartMasturbate(Pawn pawn, Building_Bed? bed)
         {
             if (!Active || pawn?.jobs == null || bed == null)
             {
                 return false;
             }
 
-            JobDef def = MasturbateDef;
+            JobDef? def = MasturbateDef;
             if (def == null)
             {
                 return false;
@@ -240,7 +238,7 @@ namespace DateNight
             return InvokeBool(canMasturbate, pawn);
         }
 
-        private static bool InvokeBool(MethodInfo method, Pawn pawn)
+        private static bool InvokeBool(Func<Pawn, bool>? method, Pawn pawn)
         {
             if (method == null)
             {
@@ -248,17 +246,22 @@ namespace DateNight
             }
             try
             {
-                object result = method.Invoke(null, new object[] { pawn });
-                if (result is bool)
-                {
-                    return (bool)result;
-                }
-                return true;
+                return method(pawn);
             }
             catch
             {
                 return true;
             }
+        }
+
+        private static Func<Pawn, bool>? BindPredicate(Type type, string name)
+        {
+            MethodInfo method = AccessTools.Method(type, name, new[] { typeof(Pawn) });
+            if (method == null || !method.IsStatic || method.ReturnType != typeof(bool))
+            {
+                return null;
+            }
+            return AccessTools.MethodDelegate<Func<Pawn, bool>>(method);
         }
 
         private static void Bind()
@@ -280,16 +283,23 @@ namespace DateNight
                     return;
                 }
 
+                joinInBedDef = DefDatabase<JobDef>.GetNamedSilentFail(JoinInBedDefName);
+                masturbateDef = DefDatabase<JobDef>.GetNamedSilentFail(MasturbateDefName);
+
                 if (xxx != null)
                 {
-                    canFuck = AccessTools.Method(xxx, "can_fuck", new[] { typeof(Pawn) });
-                    canBeFucked = AccessTools.Method(xxx, "can_be_fucked", new[] { typeof(Pawn) });
-                    canMasturbate = AccessTools.Method(xxx, "can_masturbate", new[] { typeof(Pawn) });
+                    canFuck = BindPredicate(xxx, "can_fuck");
+                    canBeFucked = BindPredicate(xxx, "can_be_fucked");
+                    canMasturbate = BindPredicate(xxx, "can_masturbate");
                 }
 
                 if (settings != null)
                 {
-                    overrideLovin = AccessTools.Field(settings, "override_lovin");
+                    FieldInfo field = AccessTools.Field(settings, "override_lovin");
+                    if (field != null && field.IsStatic && field.FieldType == typeof(bool))
+                    {
+                        overrideLovin = AccessTools.StaticFieldRefAccess<bool>(field);
+                    }
                 }
 
                 if (!logged)

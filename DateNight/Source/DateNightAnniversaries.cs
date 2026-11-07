@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -58,7 +59,7 @@ namespace DateNight
                 return;
             }
 
-            List<long> remove = null;
+            List<long>? remove = null;
             foreach (long key in dict.Keys)
             {
                 int a = (int)(key >> 32);
@@ -86,7 +87,7 @@ namespace DateNight
 
         public static void Tick()
         {
-            if (DateNightMod.Settings != null && !DateNightMod.Settings.enableAnniversaries)
+            if (!DateNightMod.Settings.enableAnniversaries)
             {
                 return;
             }
@@ -151,11 +152,11 @@ namespace DateNight
 
         public static bool IsAnniversaryToday(Pawn pawn, Pawn partner)
         {
-            if (DateNightMod.Settings != null && !DateNightMod.Settings.enableAnniversaries)
+            if (!DateNightMod.Settings.enableAnniversaries)
             {
                 return false;
             }
-            DirectPawnRelation rel = GetLoveRelation(pawn, partner);
+            DirectPawnRelation? rel = GetLoveRelation(pawn, partner);
             if (rel == null)
             {
                 return false;
@@ -171,11 +172,11 @@ namespace DateNight
 
         public static bool WasAnniversaryYesterday(Pawn pawn, Pawn partner)
         {
-            if (DateNightMod.Settings != null && !DateNightMod.Settings.enableAnniversaries)
+            if (!DateNightMod.Settings.enableAnniversaries)
             {
                 return false;
             }
-            DirectPawnRelation rel = GetLoveRelation(pawn, partner);
+            DirectPawnRelation? rel = GetLoveRelation(pawn, partner);
             if (rel == null)
             {
                 return false;
@@ -217,7 +218,7 @@ namespace DateNight
         public static bool TryGetYearsTogether(Pawn pawn, Pawn partner, out int years)
         {
             years = 0;
-            DirectPawnRelation rel = GetLoveRelation(pawn, partner);
+            DirectPawnRelation? rel = GetLoveRelation(pawn, partner);
             if (rel == null)
             {
                 return false;
@@ -226,7 +227,7 @@ namespace DateNight
             return years >= 0;
         }
 
-        public static DirectPawnRelation GetLoveRelation(Pawn pawn, Pawn partner)
+        public static DirectPawnRelation? GetLoveRelation(Pawn pawn, Pawn partner)
         {
             if (pawn?.relations == null || partner == null)
             {
@@ -234,7 +235,7 @@ namespace DateNight
             }
 
             List<DirectPawnRelation> relations = pawn.relations.DirectRelations;
-            DirectPawnRelation best = null;
+            DirectPawnRelation? best = null;
             for (int i = 0; i < relations.Count; i++)
             {
                 DirectPawnRelation rel = relations[i];
@@ -270,14 +271,14 @@ namespace DateNight
 
         public static void DebugSetBondAgeYears(Pawn pawn, Pawn partner, int years)
         {
-            DirectPawnRelation rel = GetLoveRelation(pawn, partner);
+            DirectPawnRelation? rel = GetLoveRelation(pawn, partner);
             if (rel == null)
             {
                 return;
             }
             int ticks = years * GenDate.TicksPerYear;
             rel.startTicks = Find.TickManager.TicksGame - ticks;
-            DirectPawnRelation other = GetLoveRelation(partner, pawn);
+            DirectPawnRelation? other = GetLoveRelation(partner, pawn);
             if (other != null)
             {
                 other.startTicks = rel.startTicks;
@@ -293,7 +294,7 @@ namespace DateNight
         {
             bool milestone = IsMilestoneYear(years)
                 && DateNightDefOf.DateNight_AnniversaryMilestone != null;
-            ThoughtDef thought = milestone
+            ThoughtDef? thought = milestone
                 ? DateNightDefOf.DateNight_AnniversaryMilestone
                 : DateNightDefOf.DateNight_Anniversary;
             DateNightDateUtility.TryGainThought(pawn, partner, thought);
@@ -365,7 +366,7 @@ namespace DateNight
                 DateNightDefOf.DateNight_AnniversaryMissed, other);
         }
 
-        private static bool HasThought(Pawn pawn, ThoughtDef def, Pawn other)
+        private static bool HasThought(Pawn pawn, ThoughtDef? def, Pawn other)
         {
             if (pawn?.needs?.mood?.thoughts?.memories == null || def == null || other == null)
             {
@@ -383,7 +384,7 @@ namespace DateNight
             return false;
         }
 
-        private static void RemoveAbout(Pawn pawn, ThoughtDef def, Pawn other)
+        private static void RemoveAbout(Pawn pawn, ThoughtDef? def, Pawn other)
         {
             if (pawn?.needs?.mood?.thoughts?.memories == null || def == null || other == null)
             {

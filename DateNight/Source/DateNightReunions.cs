@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using RimWorld.Planet;
@@ -87,11 +88,11 @@ namespace DateNight
                 return;
             }
 
-            List<long> remove = null;
+            List<long>? remove = null;
             foreach (long key in separatedSince.Keys)
             {
-                Pawn a = DateNightDateUtility.FindPawnById((int)(key >> 32));
-                Pawn b = DateNightDateUtility.FindPawnById((int)(key & 0xffffffffL));
+                Pawn? a = DateNightDateUtility.FindPawnById((int)(key >> 32));
+                Pawn? b = DateNightDateUtility.FindPawnById((int)(key & 0xffffffffL));
                 if (a == null || b == null || !LovePartnerRelationUtility.LovePartnerRelationExists(a, b))
                 {
                     if (remove == null)

@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -71,7 +72,7 @@ namespace DateNight
                     continue;
                 }
 
-                Map map = null;
+                Map? map = null;
                 if (Find.Maps != null)
                 {
                     for (int m = 0; m < Find.Maps.Count; m++)
@@ -94,8 +95,8 @@ namespace DateNight
                 }
 
                 fav.notifiedDestroyed = true;
-                Pawn a = DateNightDateUtility.FindPawnById(fav.pawnA);
-                Pawn b = DateNightDateUtility.FindPawnById(fav.pawnB);
+                Pawn? a = DateNightDateUtility.FindPawnById(fav.pawnA);
+                Pawn? b = DateNightDateUtility.FindPawnById(fav.pawnB);
                 ThoughtDef lost = DateNightDefOf.DateNight_VenueDestroyed
                     ?? DefDatabase<ThoughtDef>.GetNamedSilentFail("DateNight_VenueDestroyed");
                 if (lost != null)
@@ -129,8 +130,8 @@ namespace DateNight
                     continue;
                 }
 
-                Pawn a = DateNightDateUtility.FindPawnById(fav.pawnA);
-                Pawn b = DateNightDateUtility.FindPawnById(fav.pawnB);
+                Pawn? a = DateNightDateUtility.FindPawnById(fav.pawnA);
+                Pawn? b = DateNightDateUtility.FindPawnById(fav.pawnB);
                 if (a == null || b == null || a.Dead || b.Dead)
                 {
                     continue;
@@ -143,7 +144,7 @@ namespace DateNight
                 fav.notifiedBreakup = true;
                 fav.score = 0f;
                 DateNightRomance.NotifyBreakup(a, b);
-                ThoughtDef over = DateNightDefOf.DateNight_DatesOver;
+                ThoughtDef? over = DateNightDefOf.DateNight_DatesOver;
                 // Old breakups from saves made before this existed reset silently.
                 if (over != null && EndedRecently(a, b))
                 {
@@ -155,7 +156,7 @@ namespace DateNight
 
         private static bool EndedRecently(Pawn a, Pawn b)
         {
-            List<DirectPawnRelation> relations = a.relations?.DirectRelations;
+            List<DirectPawnRelation>? relations = a.relations?.DirectRelations;
             if (relations == null)
             {
                 return false;
@@ -182,10 +183,10 @@ namespace DateNight
 
         public static bool Remembering
         {
-            get { return DateNightMod.Settings == null || DateNightMod.Settings.rememberFavoriteSpot; }
+            get { return DateNightMod.Settings.rememberFavoriteSpot; }
         }
 
-        public static FavoriteVenue Get(Pawn a, Pawn b)
+        public static FavoriteVenue? Get(Pawn a, Pawn b)
         {
             if (a == null || b == null || venues == null)
             {
@@ -210,13 +211,13 @@ namespace DateNight
                 return false;
             }
 
-            FavoriteVenue fav = Get(pawn, partner);
+            FavoriteVenue? fav = Get(pawn, partner);
             if (fav == null || fav.score < PreferScore)
             {
                 return false;
             }
 
-            Map map = pawn?.Map;
+            Map? map = pawn.Map;
             if (map == null || fav.mapId != map.uniqueID)
             {
                 return false;
@@ -233,7 +234,7 @@ namespace DateNight
 
         public static bool IsAtFavorite(Pawn pawn, Pawn partner, LocalTargetInfo spot)
         {
-            FavoriteVenue fav = Get(pawn, partner);
+            FavoriteVenue? fav = Get(pawn, partner);
             if (fav == null || pawn?.Map == null || fav.score < PreferScore)
             {
                 return false;
@@ -246,7 +247,7 @@ namespace DateNight
             return fav.Near(cell);
         }
 
-        public static void NotifyFinished(Pawn pawn, Pawn partner, LocalTargetInfo spot, ThoughtDef quality)
+        public static void NotifyFinished(Pawn pawn, Pawn partner, LocalTargetInfo spot, ThoughtDef? quality)
         {
             if (!Remembering || pawn?.Map == null || partner == null)
             {
@@ -278,7 +279,7 @@ namespace DateNight
             }
         }
 
-        public static void NotifyRuined(Pawn pawn, Pawn partner, LocalTargetInfo spot)
+        public static void NotifyRuined(Pawn pawn, Pawn? partner, LocalTargetInfo spot)
         {
             if (!Remembering || pawn?.Map == null || partner == null)
             {
@@ -298,7 +299,7 @@ namespace DateNight
         public static string DebugDescribe(Pawn pawn)
         {
             Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
-            FavoriteVenue fav = Get(pawn, partner);
+            FavoriteVenue? fav = Get(pawn, partner);
             if (fav == null)
             {
                 return "none";
@@ -308,7 +309,7 @@ namespace DateNight
 
         private static FavoriteVenue GetOrCreate(Pawn a, Pawn b, Map map, LocalTargetInfo spot)
         {
-            FavoriteVenue existing = Get(a, b);
+            FavoriteVenue? existing = Get(a, b);
             if (existing != null)
             {
                 return existing;
@@ -386,11 +387,11 @@ namespace DateNight
             return cell.IsValid && cell.InBounds(map) && cell.Standable(map);
         }
 
-        public LocalTargetInfo Resolve(Map map, Pawn pawn, Pawn partner)
+        public LocalTargetInfo Resolve(Map map, Pawn pawn, Pawn? partner)
         {
             if (thingId != 0)
             {
-                Thing thing = FindThing(map, thingId);
+                Thing? thing = FindThing(map, thingId);
                 if (thing != null && DateNightActivities.BothCanReach(pawn, partner, thing))
                 {
                     return thing;
@@ -437,7 +438,7 @@ namespace DateNight
             return thing.Position.GetEdifice(thing.Map);
         }
 
-        private static Thing FindThing(Map map, int id)
+        private static Thing? FindThing(Map map, int id)
         {
             foreach (Building building in map.listerBuildings.allBuildingsColonist)
             {

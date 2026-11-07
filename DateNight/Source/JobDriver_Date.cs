@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -272,7 +273,7 @@ namespace DateNight
                 activity = DateActivity.Hangout;
             }
 
-            Thing item = null;
+            Thing? item = null;
             if (activity == DateActivity.Dinner || activity == DateActivity.Picnic)
             {
                 item = DateNightActivities.FindMealFor(pawn, partner);
@@ -488,14 +489,15 @@ namespace DateNight
                 return;
             }
 
-            Thing carried = pawn.carryTracker?.CarriedThing;
-            if (carried == null)
+            Pawn_CarryTracker? carry = pawn.carryTracker;
+            Thing? carried = carry?.CarriedThing;
+            if (carry == null || carried == null)
             {
                 giftDelivered = true;
                 return;
             }
 
-            if (pawn.carryTracker.innerContainer.TryTransferToContainer(
+            if (carry.innerContainer.TryTransferToContainer(
                     carried, partner.inventory.innerContainer, 1) > 0)
             {
                 giftDelivered = true;
@@ -505,7 +507,7 @@ namespace DateNight
                     FleckMaker.ThrowMetaIcon(partner.Position, pawn.Map, FleckDefOf.Heart, 1.2f);
                 }
             }
-            else if (pawn.carryTracker.TryDropCarriedThing(
+            else if (carry.TryDropCarriedThing(
                     partner.Position, ThingPlaceMode.Near, out Thing _))
             {
                 // Inventory full / rejected — still deliver at their feet so the
@@ -522,7 +524,7 @@ namespace DateNight
 
         private void EatTick()
         {
-            Thing meal = pawn.carryTracker?.CarriedThing;
+            Thing? meal = pawn.carryTracker?.CarriedThing;
             if (meal == null)
             {
                 eatTicksLeft = -1;
@@ -568,10 +570,10 @@ namespace DateNight
 
         private void DropUneatenItem()
         {
-            Thing carried = pawn.carryTracker?.CarriedThing;
-            if (carried != null)
+            Pawn_CarryTracker? carry = pawn.carryTracker;
+            if (carry?.CarriedThing != null)
             {
-                pawn.carryTracker.TryDropCarriedThing(pawn.Position, ThingPlaceMode.Near, out _);
+                carry.TryDropCarriedThing(pawn.Position, ThingPlaceMode.Near, out _);
             }
         }
     }

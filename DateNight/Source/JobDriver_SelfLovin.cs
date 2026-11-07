@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -12,7 +13,7 @@ namespace DateNight
 
         private int ticksLeft;
 
-        private Building_Bed Bed => job.GetTarget(BedInd).Thing as Building_Bed;
+        private Building_Bed? Bed => job.GetTarget(BedInd).Thing as Building_Bed;
 
         public override void ExposeData()
         {
@@ -22,7 +23,7 @@ namespace DateNight
 
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
-            Building_Bed bed = Bed;
+            Building_Bed? bed = Bed;
             if (bed == null)
             {
                 return false;

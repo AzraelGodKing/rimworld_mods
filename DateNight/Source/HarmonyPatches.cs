@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -37,8 +38,8 @@ namespace DateNight
 
         private static void DrawCombo(Rect rect)
         {
-            TimeAssignmentDef date = DateNightDefOf.DateNight_Date;
-            TimeAssignmentDef lovin = DateNightDefOf.DateNight_Lovin;
+            TimeAssignmentDef? date = DateNightDefOf.DateNight_Date;
+            TimeAssignmentDef? lovin = DateNightDefOf.DateNight_Lovin;
             if (date == null && lovin == null)
             {
                 return;
@@ -161,8 +162,8 @@ namespace DateNight
             try
             {
                 Type type = AccessTools.TypeByName("Maux36.Rimbody.Rimbody");
-                FieldInfo field = type == null ? null : AccessTools.Field(type, "ExosuitFrameworkLoaded");
-                return field != null && field.FieldType == typeof(bool) && (bool)field.GetValue(null);
+                FieldInfo? field = type == null ? null : AccessTools.Field(type, "ExosuitFrameworkLoaded");
+                return field != null && field.FieldType == typeof(bool) && field.GetValue(null) is bool loaded && loaded;
             }
             catch
             {
@@ -222,9 +223,9 @@ namespace DateNight
             return n;
         }
 
-        private static void DrawComboButton(Rect rect, TimeAssignmentDef date, TimeAssignmentDef lovin)
+        private static void DrawComboButton(Rect rect, TimeAssignmentDef? date, TimeAssignmentDef? lovin)
         {
-            TimeAssignmentDef shown = ShownAssignment(date, lovin);
+            TimeAssignmentDef? shown = ShownAssignment(date, lovin);
             if (shown == null)
             {
                 return;
@@ -299,7 +300,7 @@ namespace DateNight
             }
         }
 
-        private static TimeAssignmentDef ShownAssignment(TimeAssignmentDef date, TimeAssignmentDef lovin)
+        private static TimeAssignmentDef? ShownAssignment(TimeAssignmentDef? date, TimeAssignmentDef? lovin)
         {
             TimeAssignmentDef selected = TimeAssignmentSelector.selectedAssignment;
             if (selected != null && (selected == date || selected == lovin))
@@ -310,7 +311,7 @@ namespace DateNight
             return date ?? lovin;
         }
 
-        private static void OpenDropdown(TimeAssignmentDef date, TimeAssignmentDef lovin)
+        private static void OpenDropdown(TimeAssignmentDef? date, TimeAssignmentDef? lovin)
         {
             var options = new List<FloatMenuOption>();
             if (date != null)
@@ -362,7 +363,7 @@ namespace DateNight
         {
             if (DateNightUtility.IsDateSchedule(pawn))
             {
-                Need_Rest rest = pawn.needs?.rest;
+                Need_Rest? rest = pawn.needs?.rest;
                 if (rest != null && rest.CurCategory >= RestCategory.Exhausted)
                 {
                     return true;
@@ -400,7 +401,7 @@ namespace DateNight
     [HarmonyPatch(typeof(JobGiver_GetRest), "TryGiveJob")]
     public static class Patch_GetRest_TryGiveJob
     {
-        public static bool Prefix(Pawn pawn, ref Job __result)
+        public static bool Prefix(Pawn pawn, ref Job? __result)
         {
             if (!DateNightUtility.IsLovinSchedule(pawn))
             {
@@ -424,7 +425,7 @@ namespace DateNight
                 return true;
             }
 
-            Job bedJob = DateNightUtility.TryMakeBedJob(pawn);
+            Job? bedJob = DateNightUtility.TryMakeBedJob(pawn);
             if (bedJob != null)
             {
                 __result = bedJob;
@@ -480,7 +481,7 @@ namespace DateNight
             }
 
             // A good date leaves a spark: better lovin chance for a day after.
-            if ((DateNightMod.Settings == null || DateNightMod.Settings.postDateLovinBoost)
+            if (DateNightMod.Settings.postDateLovinBoost
                 && (DateNightDateUtility.HadRecentGoodDate(pawn)
                     || DateNightDateUtility.HadRecentGoodDate(partner)))
             {
@@ -499,7 +500,7 @@ namespace DateNight
 
         public static void Postfix(Pawn pawn, ref int __result)
         {
-            if (DateNightMod.Settings == null || DateNightMod.Settings.pregnancySafeCooldown)
+            if (DateNightMod.Settings.pregnancySafeCooldown)
             {
                 return;
             }
@@ -544,7 +545,7 @@ namespace DateNight
     [HarmonyPatch(typeof(JobGiver_GetJoy), "TryGiveJob")]
     public static class Patch_GetJoy_TryGiveJob
     {
-        public static bool Prefix(Pawn pawn, ref Job __result)
+        public static bool Prefix(Pawn pawn, ref Job? __result)
         {
             if (!DateNightUtility.IsDateSchedule(pawn))
             {
@@ -556,7 +557,7 @@ namespace DateNight
                 return false;
             }
 
-            Pawn partner = DateNightRomance.FindDatePartner(pawn);
+            Pawn? partner = DateNightRomance.FindDatePartner(pawn);
             if (partner == null || !DateNightUtility.IsDateSchedule(partner)
                 || !DateNightDateUtility.CanDate(pawn, partner))
             {
@@ -583,8 +584,8 @@ namespace DateNight
     {
         public static void Postfix(Pawn __instance, ref string __result)
         {
-            string line = DateNightRomance.InspectLine(__instance);
-            if (line.NullOrEmpty())
+            string? line = DateNightRomance.InspectLine(__instance);
+            if (line == null || line.Length == 0)
             {
                 return;
             }
