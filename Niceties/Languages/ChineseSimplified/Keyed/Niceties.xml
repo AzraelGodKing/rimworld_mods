@@ -61,6 +61,38 @@
   <Niceties_Apparel_ReducedWear>每日损耗：原版的 {0}。</Niceties_Apparel_ReducedWear>
   <Niceties_Hunt_TooBig>{0} 体型过大，不适合近战狩猎。</Niceties_Hunt_TooBig>
   <Niceties_CryptoHiddenCount>+{0} 冷冻休眠中</Niceties_CryptoHiddenCount>
-  <Niceties_CryptoHiddenCountTip>冷冻休眠舱中的殖民者已被 Niceties 从殖民者栏隐藏。可在模组选项中关闭。</Niceties_CryptoHiddenCountTip>
+  <Niceties_CryptoHiddenCountTip>被 Niceties 从殖民者栏隐藏的殖民者：冬眠舱，以及你勾选的成长舱和舱体。可在模组设置中关闭。</Niceties_CryptoHiddenCountTip>
 
+  <Niceties_Hunt_TooDangerous>{0} 太可能反击近战猎手。</Niceties_Hunt_TooDangerous>
+  <Niceties_Hunt_TooBigInspect>近战猎手会跳过这只动物：体型超过近战狩猎上限。</Niceties_Hunt_TooBigInspect>
+  <Niceties_Hunt_TooDangerousInspect>近战猎手会跳过这只动物：它太可能反击。</Niceties_Hunt_TooDangerousInspect>
+  <Niceties_OpenBuilds_WouldEncloseNamed>完成它会把 {0} 砌在里面。</Niceties_OpenBuilds_WouldEncloseNamed>
+  <Niceties_HiddenCount>+{0} 已隐藏</Niceties_HiddenCount>
+  <Niceties_CryptoRosterTip>点击可列出他们并跳转。</Niceties_CryptoRosterTip>
+  <Niceties_Settings_CryptoRoster>点击提示可列出他们</Niceties_Settings_CryptoRoster>
+  <Niceties_Settings_CryptoRosterTip>点击提示会打开被隐藏殖民者的列表。选择一人即可跳转到其冬眠舱。仅影响本机。</Niceties_Settings_CryptoRosterTip>
+  <Niceties_Settings_HideVats>同时隐藏成长舱中的孩子</Niceties_Settings_HideVats>
+  <Niceties_Settings_HideVatsTip>生物科技成长舱中的孩子也不显示在殖民者栏中。仅影响本机。</Niceties_Settings_HideVatsTip>
+  <Niceties_Settings_HidePods>同时隐藏生物塑形舱和子核扫描仪中的角色</Niceties_Settings_HidePods>
+  <Niceties_Settings_HidePodsTip>生物塑形舱或子核扫描仪中的殖民者也不显示在殖民者栏中。仅影响本机。</Niceties_Settings_HidePodsTip>
+  <Niceties_Settings_NobleAlert>贵族住在共享房间时提醒</Niceties_Settings_NobleAlert>
+  <Niceties_Settings_NobleAlertTip>警报会列出床位在标记为共享房间中的有头衔殖民者，因为头衔要求独立卧室。</Niceties_Settings_NobleAlertTip>
+  <Niceties_NobleSharedRoom>贵族住在共享房间</Niceties_NobleSharedRoom>
+  <Niceties_NobleSharedRoomDesc>{0} 的床在标记为共享的房间里。皇家头衔要求独立卧室，共享房间不算。取消“共享房间”，或给他们单独的卧室。</Niceties_NobleSharedRoomDesc>
+  <Niceties_SharedRoleSuffix>（共享）</Niceties_SharedRoleSuffix>
+  <Niceties_Settings_EncloseOverlay>标出所选墙框会封闭的区域</Niceties_Settings_EncloseOverlay>
+  <Niceties_Settings_EncloseOverlayTip>选中一个墙框时，完成它会封住的格子以橙色描边。</Niceties_Settings_EncloseOverlayTip>
+  <Niceties_Settings_MaxRoom>视为被封闭的最大区域：{0} 格</Niceties_Settings_MaxRoom>
+  <Niceties_Settings_MaxRoomTip>新墙旁边可行走格子少于此数的区域视为封闭。默认 80，所以 9×9 的房间视为开放。数值越大能识别越大的房间，但更耗性能。</Niceties_Settings_MaxRoomTip>
+  <Niceties_Settings_MeleeCapButtonTip>把上限设为{0}（{1}）。</Niceties_Settings_MeleeCapButtonTip>
+  <Niceties_Settings_Revenge>跳过反击几率高于此值的动物：{0}</Niceties_Settings_Revenge>
+  <Niceties_Settings_RevengeOff>无限制</Niceties_Settings_RevengeOff>
+  <Niceties_Settings_RevengeTip>近战猎手会跳过受伤后发狂几率高于此值的动物。被跳过的狩猎目标会在检视面板中说明原因。</Niceties_Settings_RevengeTip>
+  <Niceties_Settings_ResetOne>重置</Niceties_Settings_ResetOne>
+  <Niceties_Settings_ResetOneTip>把{0}恢复默认。其他便利项不受影响。</Niceties_Settings_ResetOneTip>
+  <Niceties_Status_NeedsRoyaltyIdeology>未生效：需要同时拥有皇权和文化。</Niceties_Status_NeedsRoyaltyIdeology>
+  <Niceties_Status_SmarterConstruction>未生效：已加载 Smarter Construction，由它负责。</Niceties_Status_SmarterConstruction>
+  <Niceties_Status_Unavailable>此 RimWorld 版本不可用。见 Player.log。</Niceties_Status_Unavailable>
+  <Niceties_Status_RoommateSleepUnavailable>室友睡眠部分在此 RimWorld 版本不可用。见 Player.log。</Niceties_Status_RoommateSleepUnavailable>
+  <Niceties_Status_HostBaked>多人游戏：本局使用主机的设置。</Niceties_Status_HostBaked>
 </LanguageData>

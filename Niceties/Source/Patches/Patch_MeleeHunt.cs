@@ -61,13 +61,34 @@ namespace Niceties
 
         internal static bool PreyFitsMelee(Pawn? prey)
         {
+            return Refusal(prey) == null;
+        }
+
+        /// <summary>
+        /// Why melee hunters skip this animal, as a translation key, or null if they may hunt it.
+        /// Size uses the animal's real size, so a juvenile is judged by its own size (AZR-550).
+        /// The revenge cap uses the chance the animal turns manhunter when hurt (AZR-568).
+        /// </summary>
+        internal static string? Refusal(Pawn? prey)
+        {
             if (prey?.RaceProps == null)
             {
-                return true;
+                return null;
             }
 
-            // Real size, so a juvenile is judged by its own size, not the adult's (AZR-550).
-            return prey.BodySize <= NicetiesSim.Settings.meleeHuntMaxBodySize;
+            NicetiesSimFlags settings = NicetiesSim.Settings;
+            if (prey.BodySize > settings.meleeHuntMaxBodySize)
+            {
+                return "Niceties_Hunt_TooBig";
+            }
+
+            if (settings.meleeHuntMaxRevengeChance < 0.999f
+                && PawnUtility.GetManhunterOnDamageChance(prey) > settings.meleeHuntMaxRevengeChance + 0.0001f)
+            {
+                return "Niceties_Hunt_TooDangerous";
+            }
+
+            return null;
         }
 
         internal static bool UsesMeleeForHunt(Pawn hunter)
@@ -135,11 +156,40 @@ namespace Niceties
                 return;
             }
 
-            Pawn? prey = t as Pawn;
-            if (prey != null && !MeleeHunt.PreyFitsMelee(prey))
+            if (t is not Pawn prey)
+            {
+                return;
+            }
+
+            string? refusal = MeleeHunt.Refusal(prey);
+            if (refusal != null)
             {
                 __result = false;
-                JobFailReason.Is("Niceties_Hunt_TooBig".Translate(prey.LabelShort));
+                JobFailReason.Is(refusal.Translate(prey.LabelShort));
+            }
+        }
+    }
+
+    /// <summary>
+    /// A hunt-designated animal that melee hunters will skip says so in its inspect pane,
+    /// so a stalled hunt designation has a visible reason (AZR-568).
+    /// </summary>
+    [HarmonyPatch(typeof(Pawn), nameof(Pawn.GetInspectString))]
+    internal static class Patch_Pawn_GetInspectString_MeleeHunt
+    {
+        private static void Postfix(Pawn __instance, ref string __result)
+        {
+            if (!__instance.Spawned || __instance.RaceProps == null || !__instance.RaceProps.Animal
+                || !NicetiesSim.Settings.meleeHunting
+                || __instance.Map.designationManager.DesignationOn(__instance, DesignationDefOf.Hunt) == null)
+            {
+                return;
+            }
+
+            string? refusal = MeleeHunt.Refusal(__instance);
+            if (refusal != null)
+            {
+                ApparelCare.AppendInspect(ref __result, (refusal + "Inspect").Translate());
             }
         }
     }

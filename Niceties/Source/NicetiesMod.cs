@@ -7,6 +7,12 @@ namespace Niceties
     public class NicetiesMod : Mod
     {
         public static NicetiesSettings Settings = new NicetiesSettings();
+
+        private static readonly bool[] Expanded = { true, true, true, true, true, true, true };
+
+        /// <summary>Vanilla animals offered as one-click melee caps (AZR-702). Missing defs are skipped.</summary>
+        private static readonly string[] CapButtons = { "Cat", "Alpaca", "Deer", "Muffalo" };
+
         private Vector2 settingsScroll;
         private float settingsContentHeight = 2000f;
 
@@ -20,17 +26,115 @@ namespace Niceties
         public override void DoSettingsWindowContents(Rect inRect)
         {
             NicetiesSimFlags before = Settings.sim;
-            bool beforeCount = Settings.showCryptosleepCount;
+            var beforeUi = Settings.UiState();
 
             Listing_Standard listing = new Listing_Standard { maxOneColumn = true };
             float viewHeight = Mathf.Max(settingsContentHeight, inRect.height);
             Rect viewRect = new Rect(0f, 0f, inRect.width - 20f, viewHeight);
             Widgets.BeginScrollView(inRect, ref settingsScroll, viewRect);
-            listing.Begin(new Rect(0f, 0f, viewRect.width, 99999f));
+            listing.Begin(new Rect(0f, 0f, viewRect.width, viewHeight));
 
             listing.Label("Niceties_Settings_Intro".Translate());
             listing.Gap(6f);
+            DrawPresets(listing);
+            DrawSaveSnapshotNotice(listing);
 
+            ref NicetiesSimFlags sim = ref Settings.sim;
+
+            if (DrawFeature(listing, NicetiesFeature.ApparelCare, "Niceties_Settings_ApparelCare",
+                    "Niceties_Settings_ApparelCareTip", ref sim.enableApparelCare))
+            {
+                listing.CheckboxLabeled("Niceties_Settings_QualityScale".Translate(),
+                    ref sim.apparelQualityScaling, "Niceties_Settings_QualityScaleTip".Translate());
+                listing.CheckboxLabeled("Niceties_Settings_CraftingBonus".Translate(),
+                    ref sim.apparelCraftingBonus, "Niceties_Settings_CraftingBonusTip".Translate());
+                listing.CheckboxLabeled("Niceties_Settings_CorpseApparel".Translate(),
+                    ref sim.protectCorpseApparel, "Niceties_Settings_CorpseApparelTip".Translate());
+            }
+
+            DrawFeature(listing, NicetiesFeature.ThroneAltar, "Niceties_Settings_ThroneAltar",
+                "Niceties_Settings_ThroneAltarTip", ref sim.allowThroneAltars);
+
+            if (DrawFeature(listing, NicetiesFeature.WearAnyGender, "Niceties_Settings_WearAny",
+                    "Niceties_Settings_WearAnyTip", ref sim.wearAnyGender))
+            {
+                listing.CheckboxLabeled("Niceties_Settings_WearAnyGenerated".Translate(),
+                    ref sim.wearAnyGenderGenerated, "Niceties_Settings_WearAnyGeneratedTip".Translate());
+            }
+
+            if (DrawFeature(listing, NicetiesFeature.HideCryptosleep, "Niceties_Settings_HideCrypto",
+                    "Niceties_Settings_HideCryptoTip", ref sim.hideCryptosleep))
+            {
+                listing.CheckboxLabeled("Niceties_Settings_CryptoCount".Translate(),
+                    ref Settings.showCryptosleepCount, "Niceties_Settings_CryptoCountTip".Translate());
+                if (Settings.showCryptosleepCount)
+                {
+                    listing.CheckboxLabeled("Niceties_Settings_CryptoRoster".Translate(),
+                        ref Settings.cryptosleepRoster, "Niceties_Settings_CryptoRosterTip".Translate());
+                }
+
+                if (ModsConfig.BiotechActive)
+                {
+                    listing.CheckboxLabeled("Niceties_Settings_HideVats".Translate(),
+                        ref Settings.hideGrowthVats, "Niceties_Settings_HideVatsTip".Translate());
+                }
+
+                if (ModsConfig.IdeologyActive || ModsConfig.BiotechActive)
+                {
+                    listing.CheckboxLabeled("Niceties_Settings_HidePods".Translate(),
+                        ref Settings.hidePods, "Niceties_Settings_HidePodsTip".Translate());
+                }
+            }
+
+            if (DrawFeature(listing, NicetiesFeature.MeleeHunting, "Niceties_Settings_MeleeHunt",
+                    "Niceties_Settings_MeleeHuntTip", ref sim.meleeHunting))
+            {
+                DrawMeleeKnobs(listing, ref sim);
+            }
+
+            if (DrawFeature(listing, NicetiesFeature.SharedRooms, "Niceties_Settings_SharedRooms",
+                    "Niceties_Settings_SharedRoomsTip", ref sim.enableSharedRooms))
+            {
+                listing.CheckboxLabeled("Niceties_Settings_SkipDisturbedSleep".Translate(),
+                    ref sim.skipDisturbedSleepWhenSharing, "Niceties_Settings_SkipDisturbedSleepTip".Translate());
+                if (ModsConfig.RoyaltyActive)
+                {
+                    listing.CheckboxLabeled("Niceties_Settings_NobleAlert".Translate(),
+                        ref Settings.sharedRoomNobleAlert, "Niceties_Settings_NobleAlertTip".Translate());
+                }
+            }
+
+            if (DrawFeature(listing, NicetiesFeature.LeaveAWayOut, "Niceties_Settings_LeaveAWayOut",
+                    "Niceties_Settings_LeaveAWayOutTip", ref sim.enableLeaveAWayOut))
+            {
+                listing.CheckboxLabeled("Niceties_Settings_EncloseOverlay".Translate(),
+                    ref Settings.showEncloseOverlay, "Niceties_Settings_EncloseOverlayTip".Translate());
+                listing.Label("Niceties_Settings_MaxRoom".Translate(sim.leaveAWayOutMaxRoom),
+                    tooltip: "Niceties_Settings_MaxRoomTip".Translate());
+                sim.leaveAWayOutMaxRoom = Mathf.RoundToInt(listing.Slider(sim.leaveAWayOutMaxRoom,
+                    NicetiesSettings.MinMaxRoom, NicetiesSettings.MaxMaxRoom));
+            }
+
+            listing.GapLine();
+            if (listing.ButtonText("Niceties_Settings_Reset".Translate()))
+            {
+                Settings.ResetToDefaults();
+            }
+
+            settingsContentHeight = Mathf.Max(listing.CurHeight + 24f, inRect.height);
+            listing.End();
+            Widgets.EndScrollView();
+            Settings.sim.Clamp();
+            if (Settings.sim != before || !Settings.UiState().Equals(beforeUi))
+            {
+                Settings.Write();
+                NicetiesSim.SyncFromModSettings();
+                OnSettingsChanged();
+            }
+        }
+
+        private static void DrawPresets(Listing_Standard listing)
+        {
             Rect presetRow = listing.GetRect(28f);
             float bw = (presetRow.width - 16f) / 3f;
             if (Widgets.ButtonText(new Rect(presetRow.x, presetRow.y, bw, 28f),
@@ -38,11 +142,13 @@ namespace Niceties
             {
                 Settings.ApplyPreset(NicetiesPreset.Soft);
             }
+
             if (Widgets.ButtonText(new Rect(presetRow.x + bw + 8f, presetRow.y, bw, 28f),
                     "Niceties_Settings_PresetDefault".Translate()))
             {
                 Settings.ApplyPreset(NicetiesPreset.Default);
             }
+
             if (Widgets.ButtonText(new Rect(presetRow.x + 2f * (bw + 8f), presetRow.y, bw, 28f),
                     "Niceties_Settings_PresetHard".Translate()))
             {
@@ -52,83 +158,120 @@ namespace Niceties
             listing.Gap(4f);
             listing.Label("Niceties_Settings_ActivePreset".Translate(Settings.ActivePresetLabelKey().Translate()));
             listing.Label("Niceties_Settings_PresetsTip".Translate());
-            DrawSaveSnapshotNotice(listing);
+        }
 
-            DrawFeature(listing, "Niceties_Settings_ApparelCare", "Niceties_Settings_ApparelCareTip",
-                ref Settings.sim.enableApparelCare);
-            if (Settings.sim.enableApparelCare)
+        private static void DrawMeleeKnobs(Listing_Standard listing, ref NicetiesSimFlags sim)
+        {
+            listing.CheckboxLabeled("Niceties_Settings_UnarmedHunt".Translate(),
+                ref sim.unarmedHunting, "Niceties_Settings_UnarmedHuntTip".Translate());
+            listing.Label("Niceties_Settings_MeleeSize".Translate(sim.meleeHuntMaxBodySize.ToString("F1")));
+            sim.meleeHuntMaxBodySize = listing.Slider(sim.meleeHuntMaxBodySize,
+                NicetiesSettings.MinMeleeCap, NicetiesSettings.MaxMeleeCap);
+            string? example = MeleeHunt.ReferenceAnimalLabel(sim.meleeHuntMaxBodySize);
+            listing.Label(example != null
+                ? "Niceties_Settings_MeleeSizeExample".Translate(example)
+                : "Niceties_Settings_MeleeSizeTiny".Translate());
+
+            Rect row = listing.GetRect(26f);
+            float x = row.x;
+            for (int i = 0; i < CapButtons.Length; i++)
             {
-                listing.CheckboxLabeled("Niceties_Settings_QualityScale".Translate(),
-                    ref Settings.sim.apparelQualityScaling, "Niceties_Settings_QualityScaleTip".Translate());
-                listing.CheckboxLabeled("Niceties_Settings_CraftingBonus".Translate(),
-                    ref Settings.sim.apparelCraftingBonus, "Niceties_Settings_CraftingBonusTip".Translate());
-                listing.CheckboxLabeled("Niceties_Settings_CorpseApparel".Translate(),
-                    ref Settings.sim.protectCorpseApparel, "Niceties_Settings_CorpseApparelTip".Translate());
+                ThingDef? def = DefDatabase<ThingDef>.GetNamedSilentFail(CapButtons[i]);
+                if (def?.race == null)
+                {
+                    continue;
+                }
+
+                string label = def.LabelCap;
+                float w = Mathf.Max(70f, Text.CalcSize(label).x + 16f);
+                if (x + w > row.xMax)
+                {
+                    break;
+                }
+
+                if (Widgets.ButtonText(new Rect(x, row.y, w, 24f), label))
+                {
+                    sim.meleeHuntMaxBodySize = def.race.baseBodySize;
+                }
+
+                TooltipHandler.TipRegion(new Rect(x, row.y, w, 24f),
+                    "Niceties_Settings_MeleeCapButtonTip".Translate(label, def.race.baseBodySize.ToString("0.##")));
+                x += w + 6f;
             }
 
-            DrawFeature(listing, "Niceties_Settings_ThroneAltar", "Niceties_Settings_ThroneAltarTip",
-                ref Settings.sim.allowThroneAltars);
+            listing.Gap(4f);
+            string revenge = sim.meleeHuntMaxRevengeChance >= 0.999f
+                ? "Niceties_Settings_RevengeOff".Translate().ToString()
+                : sim.meleeHuntMaxRevengeChance.ToStringPercent();
+            listing.Label("Niceties_Settings_Revenge".Translate(revenge),
+                tooltip: "Niceties_Settings_RevengeTip".Translate());
+            sim.meleeHuntMaxRevengeChance = Mathf.Round(listing.Slider(sim.meleeHuntMaxRevengeChance, 0f, 1f) * 20f) / 20f;
+        }
 
-            DrawFeature(listing, "Niceties_Settings_WearAny", "Niceties_Settings_WearAnyTip",
-                ref Settings.sim.wearAnyGender);
-            if (Settings.sim.wearAnyGender)
-            {
-                listing.CheckboxLabeled("Niceties_Settings_WearAnyGenerated".Translate(),
-                    ref Settings.sim.wearAnyGenderGenerated, "Niceties_Settings_WearAnyGeneratedTip".Translate());
-            }
-
-            DrawFeature(listing, "Niceties_Settings_HideCrypto", "Niceties_Settings_HideCryptoTip",
-                ref Settings.sim.hideCryptosleep);
-            if (Settings.sim.hideCryptosleep)
-            {
-                listing.CheckboxLabeled("Niceties_Settings_CryptoCount".Translate(),
-                    ref Settings.showCryptosleepCount, "Niceties_Settings_CryptoCountTip".Translate());
-            }
-
-            DrawFeature(listing, "Niceties_Settings_MeleeHunt", "Niceties_Settings_MeleeHuntTip",
-                ref Settings.sim.meleeHunting);
-            if (Settings.sim.meleeHunting)
-            {
-                listing.CheckboxLabeled("Niceties_Settings_UnarmedHunt".Translate(),
-                    ref Settings.sim.unarmedHunting, "Niceties_Settings_UnarmedHuntTip".Translate());
-                listing.Label("Niceties_Settings_MeleeSize".Translate(
-                    Settings.sim.meleeHuntMaxBodySize.ToString("F1")));
-                Settings.sim.meleeHuntMaxBodySize = listing.Slider(Settings.sim.meleeHuntMaxBodySize,
-                    NicetiesSettings.MinMeleeCap, NicetiesSettings.MaxMeleeCap);
-                string? example = MeleeHunt.ReferenceAnimalLabel(Settings.sim.meleeHuntMaxBodySize);
-                listing.Label(example != null
-                    ? "Niceties_Settings_MeleeSizeExample".Translate(example)
-                    : "Niceties_Settings_MeleeSizeTiny".Translate());
-            }
-
-            DrawFeature(listing, "Niceties_Settings_SharedRooms", "Niceties_Settings_SharedRoomsTip",
-                ref Settings.sim.enableSharedRooms);
-            if (Settings.sim.enableSharedRooms)
-            {
-                listing.CheckboxLabeled("Niceties_Settings_SkipDisturbedSleep".Translate(),
-                    ref Settings.sim.skipDisturbedSleepWhenSharing,
-                    "Niceties_Settings_SkipDisturbedSleepTip".Translate());
-            }
-
-            DrawFeature(listing, "Niceties_Settings_LeaveAWayOut", "Niceties_Settings_LeaveAWayOutTip",
-                ref Settings.sim.enableLeaveAWayOut);
-
+        /// <summary>
+        /// Section header: collapse arrow, master toggle, a per-feature reset (AZR-656), and a
+        /// status line when the nicety cannot run here (AZR-533). Returns true when the nested
+        /// knobs should be drawn.
+        /// </summary>
+        private static bool DrawFeature(Listing_Standard listing, NicetiesFeature feature, string labelKey,
+            string tipKey, ref bool enabled)
+        {
             listing.GapLine();
-            if (listing.ButtonText("Niceties_Settings_Reset".Translate()))
+            int index = (int)feature;
+            Rect row = listing.GetRect(Text.LineHeight + 4f);
+            Rect arrow = new Rect(row.x, row.y + 2f, 18f, 18f);
+            if (Widgets.ButtonImage(arrow, Expanded[index] ? TexButton.Collapse : TexButton.Reveal))
             {
-                Settings.ResetToDefaults();
+                Expanded[index] = !Expanded[index];
             }
 
-            settingsContentHeight = Mathf.Max(listing.MaxColumnHeightSeen + 24f, inRect.height);
-            listing.End();
-            Widgets.EndScrollView();
-            Settings.sim.Clamp();
-            if (Settings.sim != before || Settings.showCryptosleepCount != beforeCount)
+            const float resetWidth = 90f;
+            Rect reset = new Rect(row.xMax - resetWidth, row.y, resetWidth, row.height);
+            if (Widgets.ButtonText(reset, "Niceties_Settings_ResetOne".Translate()))
             {
-                Settings.Write();
-                NicetiesSim.SyncFromModSettings();
-                OnFeatureTogglesChanged();
+                Settings.ResetFeature(feature);
             }
+
+            TooltipHandler.TipRegion(reset, "Niceties_Settings_ResetOneTip".Translate(labelKey.Translate()));
+            Rect check = new Rect(arrow.xMax + 4f, row.y, reset.x - arrow.xMax - 12f, row.height);
+            Widgets.CheckboxLabeled(check, labelKey.Translate(), ref enabled);
+            TooltipHandler.TipRegion(check, tipKey.Translate());
+
+            string? status = StatusFor(feature);
+            if (status != null)
+            {
+                GameFont font = Text.Font;
+                Color color = GUI.color;
+                Text.Font = GameFont.Tiny;
+                GUI.color = new Color(1f, 0.75f, 0.45f);
+                listing.Label(status);
+                GUI.color = color;
+                Text.Font = font;
+            }
+
+            return enabled && Expanded[index];
+        }
+
+        private static string? StatusFor(NicetiesFeature feature)
+        {
+            switch (feature)
+            {
+                case NicetiesFeature.ThroneAltar when !ThroneAltar.DlcsActive:
+                    return "Niceties_Status_NeedsRoyaltyIdeology".Translate();
+                case NicetiesFeature.LeaveAWayOut when OpenBuilds.SmarterConstructionLoaded:
+                    return "Niceties_Status_SmarterConstruction".Translate();
+                case NicetiesFeature.HideCryptosleep when PatchTargets.Unavailable(PatchTargets.HideCryptosleep):
+                    return "Niceties_Status_Unavailable".Translate();
+                case NicetiesFeature.SharedRooms when PatchTargets.Unavailable(PatchTargets.RoommateSleep):
+                    return "Niceties_Status_RoommateSleepUnavailable".Translate();
+            }
+
+            if (Current.Game != null && !NicetiesSim.CanApplyModSettingsNow)
+            {
+                return "Niceties_Status_HostBaked".Translate();
+            }
+
+            return null;
         }
 
         private static void DrawSaveSnapshotNotice(Listing_Standard listing)
@@ -150,20 +293,14 @@ namespace Niceties
             if (listing.ButtonText("Niceties_Settings_SnapshotApply".Translate()))
             {
                 gc.PullFromModSettings();
-                OnFeatureTogglesChanged();
+                OnSettingsChanged();
             }
         }
 
-        private static void DrawFeature(Listing_Standard listing, string labelKey, string tipKey,
-            ref bool enabled)
-        {
-            listing.GapLine();
-            listing.CheckboxLabeled(labelKey.Translate(), ref enabled, tipKey.Translate());
-        }
-
-        private static void OnFeatureTogglesChanged()
+        private static void OnSettingsChanged()
         {
             CryptosleepBar.MarkDirty();
+            OpenBuilds.ClearCache();
         }
     }
 }

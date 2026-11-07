@@ -6,7 +6,21 @@ Detailed notes for **Niceties** only.
 
 Player-facing version **2.0.0** (`About.xml` `modVersion`). Stamp `niceties2` (`niceties2-net10, 1.7 build` or `niceties2, 1.6 build` in Player.log). Ships for RimWorld **1.6** and **1.7** from the same source; 1.6 is not frozen.
 
-AZR-509 AZR-518 AZR-531 AZR-547 AZR-549 AZR-550 AZR-551 AZR-653 AZR-654 AZR-699 AZR-700 AZR-701
+AZR-509 AZR-518 AZR-531 AZR-547 AZR-549 AZR-550 AZR-551 AZR-533 AZR-568 AZR-653 AZR-654 AZR-655 AZR-656 AZR-699 AZR-700 AZR-701 AZR-702 AZR-703
+
+### Added
+- **Cryptosleep roster** (AZR-568) — with `cryptosleepRoster` (UI-only, default on) the "+N" note is a button: a `FloatMenu` of the hidden pawns, each jumping to and selecting the holding building (`CameraJumper.TryJumpAndSelect`). Local only, no sync.
+- **Hide categories** (AZR-568) — UI-only `hideGrowthVats` (`Building_GrowthVat`) and `hidePods` (`CompBiosculpterPod`, `Building_SubcoreScanner`), off by default, shown when the DLC is active. The note reads "+N hidden" when anyone besides casket pawns is hidden.
+- **Melee revenge cap** (AZR-568) — sim knob `meleeHuntMaxRevengeChance` (default 1 = off; Hard preset 0.5) against `PawnUtility.GetManhunterOnDamageChance(prey)`. Postfix on `Pawn.GetInspectString` adds the reason on hunt-designated animals melee hunters skip.
+- **Reference-animal buttons** (AZR-702) — Cat, Alpaca, Deer, Muffalo (whichever defs exist) set the cap to that animal's `baseBodySize`.
+- **Enclose overlay** (AZR-568) — postfix on `Frame.DrawExtraSelectionOverlays` draws `GenDraw.DrawFieldEdges` over the cached enclosed cells with one wall frame selected (UI-only `showEncloseOverlay`). `leaveAWayOutMaxRoom` sim setting (20–400, default 80) replaces the hardcoded `MaxRegionSize`. `OpenBuildsResult.Trapped` names the first trapped colonist in `Niceties_OpenBuilds_WouldEncloseNamed`.
+- **Shared room display** (AZR-703) — postfix on `Room.GetRoomRoleLabel` appends "(shared)" from the room cache, so the room stats readout shows it.
+- **Multi-select share** (AZR-568) — `Command_ShareRoom.ProcessGroupInput` sets every selected bed's room to the opposite of the first bed's state, once per room (the default grouped toggle flipped twice for two beds in one room).
+- **Noble alert** (AZR-568) — `Alert_NicetiesNobleSharedRoom` (UI-only `sharedRoomNobleAlert`, Royalty only): colonists with `HighestTitleWithBedroomRequirements()` whose owned bed is in a marked room and `!HasPersonalBedroom()`.
+- **Settings UX** (AZR-533, AZR-656) — collapsible section per nicety with a per-feature Reset (`ResetFeature`, including that feature's UI-only fields) and a status line: missing Royalty+Ideology, Smarter Construction loaded, `PatchTargets.Unavailable(...)`, or host-baked in a Multiplayer session. The listing rect is the real view height instead of `99999f` (AZR-532).
+
+### Not done
+- **Prisoner cells** (AZR-655) — vanilla `CheckForDisturbedSleep` returns early for any sleeper not in the player faction, so prisoners are never woken by cellmates in the first place; nothing to add. Listed in the in-game test list to confirm.
 
 ### Changed
 - **RimWorld 1.7 build** (AZR-518, AZR-531) — `Niceties.1.7.csproj` targets `net10.0` against `Krafs.Rimworld.Ref 1.7.4998-unstable` and Harmony 3. Every Niceties file is `#nullable enable` and both builds compile with no nullable warnings. `NicetiesMod.Settings` and `NicetiesSim.Settings` are never null, so the ~25 defensive null checks are gone. The build stamp names the folder.
