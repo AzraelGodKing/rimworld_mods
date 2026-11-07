@@ -8,9 +8,18 @@
   <Azrael_ScenPart_PreferMountainSummary>默认与随机起始地点优先选择大丘陵或山地。</Azrael_ScenPart_PreferMountainSummary>
 
   <Azrael_SettingsCategory>Azrael</Azrael_SettingsCategory>
+  <Azrael_Settings_SeriesWeights>Azrael 叙事者下的系列事件权重</Azrael_Settings_SeriesWeights>
+  <Azrael_Settings_SeriesWeightsTip>开启：以 Azrael 为叙事者时，系列事件（Living World、Homesteader、Stormproof、Strata）在其类别中更常被选中。关闭：原版 Azrael 节奏。事件触发频率不变。多人联机时所有玩家需使用房主的设置。</Azrael_Settings_SeriesWeightsTip>
   <Azrael_Hub_Intro>系列总览。已加载的模组与版本、DLC、软兼容桥（含未加载 vs 类型缺失）、已知冲突，以及失败的 Harmony 补丁。主菜单或游戏内均可复制报告。</Azrael_Hub_Intro>
   <Azrael_Hub_Copy>复制报告</Azrael_Hub_Copy>
   <Azrael_Hub_Copied>已复制到剪贴板。</Azrael_Hub_Copied>
+  <Azrael_Hub_SaveReport>保存报告到文件</Azrael_Hub_SaveReport>
+  <Azrael_Hub_Saved>已保存：{0}</Azrael_Hub_Saved>
+  <Azrael_Hub_SaveFailed>无法保存报告：{0}</Azrael_Hub_SaveFailed>
+  <Azrael_Hub_Runtime>运行时：{0}</Azrael_Hub_Runtime>
+  <Azrael_Hub_Folder>文件夹 {0}</Azrael_Hub_Folder>
+  <Azrael_Hub_Mismatch_Game>支持版本中未列出 RimWorld {0}。请更新，否则可能出错。</Azrael_Hub_Mismatch_Game>
+  <Azrael_Hub_Mismatch_Older>早于 {0}（本 Azrael 版本测试时使用的版本）。报告错误前请先更新。</Azrael_Hub_Mismatch_Older>
   <Azrael_Hub_Mods>系列模组</Azrael_Hub_Mods>
   <Azrael_Hub_Loaded>已加载</Azrael_Hub_Loaded>
   <Azrael_Hub_NotLoaded>未加载</Azrael_Hub_NotLoaded>
@@ -20,6 +29,8 @@
   <Azrael_Hub_BridgeWaiting>{0} 未加载</Azrael_Hub_BridgeWaiting>
   <Azrael_Hub_BridgeNoHook>两者均已加载 — 尚无生效钩子</Azrael_Hub_BridgeNoHook>
   <Azrael_Hub_BridgeNoType>已加载，但未找到 {0}</Azrael_Hub_BridgeNoType>
+  <Azrael_Hub_BridgeSummary>{1} 个桥接中 {0} 个生效。</Azrael_Hub_BridgeSummary>
+  <Azrael_Hub_BridgeSummaryBroken>{1} 个桥接中 {0} 个生效，{2} 个损坏（两个模组都已加载，但缺少挂钩）。</Azrael_Hub_BridgeSummaryBroken>
   <Azrael_Hub_Bridge_RootCellar>Homesteader ↔ Strata — 地窖</Azrael_Hub_Bridge_RootCellar>
   <Azrael_Hub_Bridge_Wells>Homesteader ↔ Strata — 水井</Azrael_Hub_Bridge_Wells>
   <Azrael_Hub_Bridge_StormRooms>Strata ↔ Stormproof — 地下房间</Azrael_Hub_Bridge_StormRooms>
@@ -50,6 +61,8 @@
   <Azrael_Removal_NeedSave>请先载入一个殖民地。</Azrael_Removal_NeedSave>
   <Azrael_Removal_Empty>地图与商队上没有该模组的东西。</Azrael_Removal_Empty>
   <Azrael_Removal_Blocked>请先处理标出的阻碍项。</Azrael_Removal_Blocked>
+  <Azrael_Removal_NothingToDeconstruct>此模组没有需要拆除的建筑。</Azrael_Removal_NothingToDeconstruct>
+  <Azrael_Removal_Confirm>在所有地图上为 {1} 的 {0} 座建筑指定拆除？只能手动取消指定来撤销。</Azrael_Removal_Confirm>
   <Azrael_Removal_NemesisHunt>Nemesis 狩猎仍在进行（或休战中）— 请先在游戏里结束，再移除 Nemesis。</Azrael_Removal_NemesisHunt>
   <Azrael_Removal_NemesisWorldPawn>仍有停泊在世界地图上的 Nemesis 小人（卸载会清掉）。</Azrael_Removal_NemesisWorldPawn>
   <Azrael_Removal_StrataPawns>仍有 {0} 名殖民者在口袋层 — 请先把他们带上来。</Azrael_Removal_StrataPawns>

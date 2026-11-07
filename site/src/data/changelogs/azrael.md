@@ -7,7 +7,17 @@ First public release. One source builds two DLLs: `1.6/Assemblies` for RimWorld 
 
 Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[Azrael] v1.0.0 loaded from ...` in Player.log.
 
+### Added
+- **Series event weights toggle** (AZR-727) - Mod Options → Azrael has a checkbox to turn off the series incident weights for plain Azrael pacing. On by default.
+- **Save report to file** (AZR-689) - writes the hub report as `Azrael hub report.txt` in the RimWorld save-data folder, for setups where pasting from the clipboard is awkward (Linux, Steam Deck). Copy report falls back to the file if the clipboard throws (AZR-603).
+- **Runtime and load folder** (AZR-602) - the hub and the report show the CLR and engine (e.g. .NET 10 / Waylith on 1.7, Mono / Unity on 1.6) and which version folder each series mod loaded (`1.6`, `1.7`, or `/`).
+- **Version mismatch warning** (AZR-688) - a series mod that does not list the running RimWorld version, or is older than the version this Azrael build was tested with (Strata 4.0.0, Stormproof 2.0.0, Date Night 2.0.0 and the current versions of the rest), gets a yellow note under its row and a `!` line in the report.
+- **Bridge summary** (AZR-726) - the Soft-compat section and the report open with "5 of 7 bridges live" (plus how many are broken).
+- **Deconstruct confirmation** (AZR-690) - designating a mod's buildings for deconstruction asks first, with the building count.
+
 ### Fixed
+- **Hub refresh** (AZR-602, AZR-725) - the hub rescans every time Mod Options → Azrael is opened. Before, it scanned once per session (only Copy report refreshed it), so a hub first opened at the main menu stayed stale after loading a save.
+- **Hub page height** (AZR-687) - the scroll area sizes to what the page actually drew last frame, so new rows and sections never clip.
 - **Safe-removal deconstruct lost on save** (AZR-684) - "Designate buildings for deconstruction" waited for the next game tick, so pausing, saving and quitting dropped it while the message said it worked. Designations now apply on click, paused or not.
 - **Chinese and Russian start text for The Deep Homestead** (AZR-724) - the translated start dialog targeted the wrong scenario part and never showed. It is now keyed by the part's name, so it works with and without Odyssey.
 - **Hub with a changed Nemesis** (AZR-685) - the Nemesis checks in Prepare to remove no longer throw if Nemesis renames something; they read as "nothing there" like the other probes.

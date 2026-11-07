@@ -419,10 +419,22 @@ namespace Azrael
                 {
                     Messages.Message("Azrael_Removal_Blocked".Translate(), MessageTypeDefOf.RejectInput);
                 }
+                else if (report.Deconstructables.Count == 0)
+                {
+                    Messages.Message("Azrael_Removal_NothingToDeconstruct".Translate(), MessageTypeDefOf.RejectInput, historical: false);
+                }
                 else
                 {
-                    SeriesRemoval.DesignateDeconstruct(report);
-                    Close();
+                    // Map-wide and only undone by hand, so confirm first (AZR-690).
+                    RemovalReport confirmed = report;
+                    Find.WindowStack.Add(Dialog_MessageBox.CreateConfirmation(
+                        "Azrael_Removal_Confirm".Translate(confirmed.Deconstructables.Count, confirmed.Display),
+                        () =>
+                        {
+                            SeriesRemoval.DesignateDeconstruct(confirmed);
+                            Close();
+                        },
+                        destructive: true));
                 }
             }
         }
