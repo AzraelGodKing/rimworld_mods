@@ -689,8 +689,8 @@
       "tagline": "Small colony comforts: well-kept apparel, throne-room altars, any outfit cut, hidden cryptosleep, melee hunting, shared bedrooms, and leave a way out while building.",
       "badges": ["RimWorld 1.6 / 1.7", "Requires Harmony", "QoL"],
       "overview": [
-        "Vanilla never shipped these. Niceties is one Harmony QoL companion: each nicety is its own Mod Options toggle. Soft / Default / Hard only seed the knobs — they are not a forced bundle.",
-        "Combat, fire, and outdoor rot stay vanilla. Royalty and Ideology are optional; those toggles no-op without the DLC. Safe to add mid-save; removing it logs a few harmless errors once on the next load. Inspired by older Workshop ideas, written from scratch — not a port of those mods."
+        "Vanilla never shipped these. Niceties is one Harmony QoL companion: each nicety is its own Mod Options section with its own toggle and Reset. Soft / Default / Hard only set the knobs under each nicety — never which niceties are on.",
+        "Combat, fire, and outdoor rot stay vanilla. Royalty and Ideology are optional; those parts switch themselves off without the DLC, and Mod Options says so. Niceties 2 ships for RimWorld 1.6 and 1.7 from the same source. Safe to add mid-save; removing it logs a few harmless errors once on the next load. Inspired by older Workshop ideas, written from scratch — not a port of those mods."
       ],
       "featureTabs": [
         {
@@ -714,15 +714,17 @@
           "id": "outfit",
           "label": "Wear any outfit",
           "features": [
-            { "title": "Gender tags off", "body": "Apparel gender tags are captured at load and cleared so mixed royal cuts do not apply the wrong-gender thought." },
-            { "title": "Toggle restores tags", "body": "Turn the nicety off and the original tags come back." }
+            { "title": "Any cut, no bad thought", "body": "Colonists may wear mixed royal cuts and other gendered apparel without the wrong-gender thought, and pick clothes without caring about the cut." },
+            { "title": "Raiders dress as vanilla", "body": "Niceties 2 no longer edits the apparel defs, so pawns the game generates (raiders, traders, new joiners) still wear vanilla cuts. A nested toggle lets them wear any cut too." }
           ]
         },
         {
           "id": "crypto",
           "label": "Hidden cryptosleep",
           "features": [
-            { "title": "Off the bar", "body": "Pawns already in a cryptosleep casket drop off the colonist bar and reappear when ejected." },
+            { "title": "Off the bar", "body": "Pawns already in a cryptosleep casket drop off the colonist bar and reappear when ejected. A map whose colonists are all asleep keeps its slot." },
+            { "title": "Click the note", "body": "The small \"+N in cryptosleep\" note lists the hidden colonists; pick one to jump to their casket." },
+            { "title": "Vats and pods", "body": "Optional, off by default: also hide growth-vat children and pawns in biosculpter pods or subcore scanners." },
             { "title": "Carrying in stays visible", "body": "Carrying someone to a casket does not hide them early — that crash is what broke older hide-from-bar mods." }
           ]
         },
@@ -731,7 +733,8 @@
           "label": "Melee hunting",
           "features": [
             { "title": "Hunt with a melee weapon", "body": "Hunters may hunt with a melee weapon instead of only a ranged one." },
-            { "title": "Body-size cap", "body": "A prey size cap keeps people from charging a thrumbo with a knife unless you raise it." },
+            { "title": "Body-size cap", "body": "A prey size cap keeps people from charging a thrumbo with a knife unless you raise it. Young animals count at their own size. One-click buttons set the cap to a cat, alpaca, deer or muffalo." },
+            { "title": "Revenge cap", "body": "Optional: skip animals that are too likely to turn on their hunter. Hunt-marked animals that melee hunters skip say why in their inspect pane." },
             { "title": "Unarmed optional", "body": "Unarmed hunting is off by default." }
           ]
         },
@@ -739,9 +742,9 @@
           "id": "rooms",
           "label": "Shared bedrooms",
           "features": [
-            { "title": "Mark the room", "body": "Select a bed and toggle Share room. Every bed in that room shares the flag." },
-            { "title": "Stays a bedroom", "body": "Extra beds no longer flip the room to barracks, so Slept in bedroom and royal bedroom requirements still apply." },
-            { "title": "No disturbed sleep", "body": "Pawns who share a room — marked, or another colonist assigned a bed there — skip the disturbed-sleep thought. A private room still notices haulers walking through." },
+            { "title": "Mark the room", "body": "Select a bed (or several) and toggle Share room. Every bed in that room shares the flag, and the room stats read \"Bedroom (shared)\"." },
+            { "title": "Stays a bedroom", "body": "Extra beds no longer flip the room to barracks, so Slept in bedroom still applies. Nobles want a room of their own; an optional alert says when the share mark is in the way." },
+            { "title": "No disturbed sleep", "body": "A roommate who owns a bed in the same room no longer wakes the sleeper. Visitors and other colonists still do, and outdoor sleep is vanilla." },
             { "title": "Same mattress", "body": "Sharing one bed with someone who is not a partner is still vanilla." }
           ]
         },
@@ -749,37 +752,39 @@
           "id": "builds",
           "label": "Leave a way out",
           "features": [
-            { "title": "Don't wall anyone in", "body": "Pawns skip finishing a wall that would trap someone or block leftover frames. They step aside before closing themselves in." },
+            { "title": "Don't wall anyone in", "body": "Pawns skip finishing a wall that would trap someone or block leftover frames, and say who would be trapped. They step aside before closing themselves in." },
+            { "title": "See it coming", "body": "Select a wall frame to see the area finishing it would close off. Stairs and other map portals count as a way out, so Strata stairwells are never walled off by mistake." },
             { "title": "Replace Stuff frames", "body": "Unfinished Replace Stuff frames count as open construction, same as vanilla wall frames. In-place wood-to-stone wall replace stays solid, so you can still swap a freezer from inside." },
-            { "title": "Force construct", "body": "Right-click force construct still builds it. Do not run alongside Smarter Construction — they overlap the same job." }
+            { "title": "Force construct", "body": "Right-click force construct still builds it. Do not run alongside Smarter Construction — Niceties switches this part off when it sees it." }
           ]
         },
         {
           "id": "settings",
           "label": "Settings",
           "features": [
-            { "title": "Independent toggles", "body": "Each nicety is its own on/off. Nested knobs (quality scaling, unarmed hunt, body-size cap) only apply while that nicety is on." },
-            { "title": "Soft", "body": "No daily clothing wear, corpse clothes included, unarmed hunting, any prey size. A starting point — not a bundle you must keep." },
-            { "title": "Default", "body": "Quality-scaled wear, melee up to body size 1.5, no unarmed." },
-            { "title": "Hard", "body": "No crafting bonus, melee only small game (0.8)." }
+            { "title": "Independent toggles", "body": "Each nicety is its own collapsible section with its own Reset. Nested knobs only apply while that nicety is on, and a status line says when a nicety cannot run here." },
+            { "title": "Soft", "body": "No daily clothing wear, corpse clothes included, unarmed hunting, any prey size." },
+            { "title": "Default", "body": "Quality-scaled wear, melee up to body size 1.5, no unarmed, no revenge cap." },
+            { "title": "Hard", "body": "No crafting bonus, melee only small game (0.8), and skip animals with over 50% revenge chance." }
           ]
         }
       ],
       "gallery": [],
       "goodToKnow": [
-        "Safe to add or remove mid-save.",
+        "Safe to add mid-save. Removing it logs a few harmless errors once on the next load.",
         "Chinese Simplified and Russian are included.",
         "Requires Harmony. Royalty and Ideology are optional.",
-        "Do not run alongside Jecs Everlasting Apparel, Allow Altars in Throneroom, Wear What You Want, Hide Cryptosleep Pawn, Share Rooms [LWM], or Smarter Construction — they overlap the same jobs.",
+        "Do not run alongside Jecs Everlasting Apparel, Allow Altars in Throneroom, Wear What You Want, Hide Cryptosleep Pawn, Hunters Use Melee! (Continued), Share Rooms [LWM], or Smarter Construction — they overlap the same jobs.",
+        "Multiplayer: soft support. Every player uses the host's settings in a Multiplayer game, and Share room is synced. Not tested with two clients yet.",
         "Workshop preview is an options-card collage (Homesteader straw-hat sprite + pixel icons), not a painted poster."
       ],
       "compatibility": {
         "compatibleWith": [
           { "name": "Harmony", "note": "Required" },
-          { "name": "Royalty", "note": "Optional — throne-and-altar no-ops without it" },
-          { "name": "Ideology", "note": "Optional — altar checks no-op without it" },
-          { "name": "Homesteader", "note": "Sister mod in this series" },
-          { "name": "Date Night", "note": "Sister mod in this series" },
+          { "name": "Royalty", "note": "Optional — throne-and-altar needs Royalty and Ideology; noble shared-room alert" },
+          { "name": "Ideology", "note": "Optional — throne-and-altar needs Royalty and Ideology" },
+          { "name": "Strata", "note": "Sister mod — stairs count as a way out for leave a way out" },
+          { "name": "Date Night", "note": "Sister mod — Date Night leaves beds in Niceties' shared rooms alone" },
           { "name": "Replace Stuff - Continued", "url": "https://steamcommunity.com/workshop/filedetails/?id=3526354009", "note": "Optional — leave-a-way-out treats its frames like unfinished walls" }
         ],
         "incompatibleWith": [
@@ -787,11 +792,13 @@
           { "name": "Allow Altars in Throneroom", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3725636235", "note": "Overlaps throne-and-altar" },
           { "name": "Wear What You Want", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2079833048", "note": "Overlaps wear-any-outfit" },
           { "name": "Hide Cryptosleep Pawn", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3401278576", "note": "Overlaps hidden cryptosleep" },
+          { "name": "Hunters Use Melee! (Continued)", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2900108163", "note": "Overlaps melee hunting" },
           { "name": "Share Rooms [LWM]", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3398139756", "note": "Overlaps shared bedrooms" },
           { "name": "Smarter Construction", "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2202185773", "note": "Overlaps leave a way out" }
         ],
         "notes": [
-          "Harmony patches fail-open: one missing target logs and skips instead of aborting the rest of Niceties."
+          "Harmony patches fail-open: one missing target logs and skips instead of aborting the rest of Niceties, and Mod Options shows which nicety is off.",
+          "Full matrix: Niceties/COMPATIBILITY.md in the repo."
         ]
       },
       "changelogPath": "changelogs/niceties.md"

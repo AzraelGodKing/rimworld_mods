@@ -9,6 +9,7 @@ Niceties 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting ev
 [*] [b]Melee hunting[/b] — an optional cap on how likely an animal is to turn on its hunter, one-click animal buttons for the size cap, and an inspect line on hunt-marked animals that melee hunters will skip.
 [*] [b]Leave a way out[/b] — select a wall frame to see the area it would close off. The "would wall someone in" reason now names who. The largest area that counts as walled in is a setting (80 cells by default, so a 9×9 room still counts as open).
 [*] [b]Shared bedrooms[/b] — the room role reads "Bedroom (shared)" in the room stats, Share room works on several selected beds at once, and an optional alert names nobles whose bed is in a shared room.
+[*] [b]Strata[/b] — stairs, and any other map portal, count as a way out, so leave a way out never holds back a wall around a stairwell.
 [*] [b]Mod Options[/b] — each nicety is a collapsible section with its own Reset button, and says when it cannot run: missing DLC, Smarter Construction loaded, a RimWorld update renamed what it patches, or a Multiplayer game using the host's settings.
 [/list]
 [b]Changed[/b]
@@ -29,7 +30,8 @@ Niceties 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting ev
 [*] [b]Leave a way out[/b] — finishing a wall only resets the enclose checks near it, not every check on every map.
 [/list]
 
-[i]Build stamp (Player.log): niceties2[/i]
+[i]Build stamp (Player.log): niceties2-net10, 1.7 build / niceties2, 1.6 build[/i]
+[i]Compatibility: https://github.com/AzraelGodKing/rimworld_mods/blob/main/Niceties/COMPATIBILITY.md[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/niceties.md[/i]
 
 [h1]Niceties — 1.6.1[/h1]

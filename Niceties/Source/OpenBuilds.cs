@@ -72,6 +72,24 @@ namespace Niceties
                 IntVec3 loc = map.cellIndices.IndexToCell(index);
                 return map.pathing.Normal.pathGrid.Walkable(loc) || WalkableIgnoringFrames(map, loc);
             }
+
+            /// <summary>
+            /// Any map portal: Strata's stairs (up, down, gravship) subclass <c>MapPortal</c>, as do
+            /// vanilla's pit gates and cave exits, so no Strata reference is needed (AZR-569).
+            /// </summary>
+            public bool IsExit(int index)
+            {
+                List<Thing> things = map.thingGrid.ThingsListAtFast(index);
+                for (int i = 0; i < things.Count; i++)
+                {
+                    if (things[i] is MapPortal)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
         }
 
         private static readonly Dictionary<int, Geometry> GeometryCache = new Dictionary<int, Geometry>();
@@ -182,7 +200,7 @@ namespace Niceties
         /// </summary>
         internal static void DrawEncloseOverlay(Frame frame)
         {
-            if (!frame.Spawned || !Enabled || !NicetiesMod.Settings.showEncloseOverlay || !IsImpassableBuild(frame)
+            if (!frame.Spawned || !Enabled || !NicetiesMod.Settings.ui.showEncloseOverlay || !IsImpassableBuild(frame)
                 || Find.Selector.NumSelected != 1)
             {
                 return;

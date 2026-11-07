@@ -76,7 +76,7 @@ namespace Niceties
         public override AlertReport GetReport()
         {
             culprits.Clear();
-            if (!ModsConfig.RoyaltyActive || !NicetiesMod.Settings.sharedRoomNobleAlert || !SharedRooms.Enabled())
+            if (!ModsConfig.RoyaltyActive || !NicetiesMod.Settings.ui.sharedRoomNobleAlert || !SharedRooms.Enabled())
             {
                 return false;
             }
@@ -113,6 +113,7 @@ namespace Niceties
     {
         private bool shared;
 
+        /// <summary>Date Night reads this property by name (DateNightNicetiesSoftCompat); keep it.</summary>
         public bool Shared => shared;
 
         public override void PostExposeData()
