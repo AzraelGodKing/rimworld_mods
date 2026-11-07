@@ -82,4 +82,7 @@ The run is on the best-runs list in the mod settings.</WSR_RunOverText>
   <WSR_SettingsBestRunRow>{0}. Wave {1}: {2}, {3} days, {4} killed, {5} lost ({6}, {7}, {8})</WSR_SettingsBestRunRow>
   <WSR_SettingsBestRunsClear>Clear the list</WSR_SettingsBestRunsClear>
 
+  <WSR_SettingsScreenEffect>Wave screen effect</WSR_SettingsScreenEffect>
+  <WSR_SettingsScreenEffectTip>The screen edges glow in the wave's colour as it gets close and flash when it arrives. Turn off if flashing light bothers you.</WSR_SettingsScreenEffectTip>
+
 </LanguageData>

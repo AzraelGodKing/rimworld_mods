@@ -82,4 +82,7 @@
   <WSR_SettingsBestRunRow>{0}. 第 {1} 波：{2}，{3} 天，击杀 {4}，损失 {5}（{6}，{7}，{8}）</WSR_SettingsBestRunRow>
   <WSR_SettingsBestRunsClear>清空列表</WSR_SettingsBestRunsClear>
 
+  <WSR_SettingsScreenEffect>波次屏幕效果</WSR_SettingsScreenEffect>
+  <WSR_SettingsScreenEffectTip>波次临近时屏幕边缘会以该波次的颜色发光，到来时会闪烁。如果闪光让你不适，请关闭。</WSR_SettingsScreenEffectTip>
+
 </LanguageData>

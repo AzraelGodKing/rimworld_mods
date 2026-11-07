@@ -103,6 +103,13 @@ namespace WaveSurvivalReforged
             }
         }
 
+#if RIMWORLD_1_7
+        public override void GameComponentUpdate()
+        {
+            WaveVignette.Draw(this);
+        }
+
+#endif
         public override void GameComponentOnGUI()
         {
             WaveHud.Draw(this);

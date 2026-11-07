@@ -82,4 +82,7 @@
   <WSR_SettingsBestRunRow>{0}. Волна {1}: {2}, {3} дн., убито {4}, потеряно {5} ({6}, {7}, {8})</WSR_SettingsBestRunRow>
   <WSR_SettingsBestRunsClear>Очистить список</WSR_SettingsBestRunsClear>
 
+  <WSR_SettingsScreenEffect>Экранный эффект волны</WSR_SettingsScreenEffect>
+  <WSR_SettingsScreenEffectTip>Края экрана светятся цветом волны по мере её приближения и вспыхивают при её прибытии. Отключите, если вспышки вам мешают.</WSR_SettingsScreenEffectTip>
+
 </LanguageData>
