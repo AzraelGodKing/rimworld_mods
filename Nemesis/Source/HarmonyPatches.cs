@@ -360,15 +360,15 @@ namespace Nemesis
         [HarmonyPostfix]
         static void Postfix(bool __0)
         {
-            if (DefDatabase<WorldObjectDef>.GetNamedSilentFail(NemesisHuntSites.SiteDefName) != null) return;
+            if (DefDatabase<WorldObjectDef>.GetNamedSilentFail(NemesisHuntSites.HuntSiteDefId) != null) return;
             WorldObjectDef? site = DefDatabase<WorldObjectDef>.GetNamedSilentFail("Site");
             if (site == null)
             {
                 Log.Warning("[Nemesis] Vanilla Site def missing; hunt camps are off.");
                 return;
             }
-            WorldObjectDef copy = (WorldObjectDef)AccessTools.Method(typeof(object), "MemberwiseClone").Invoke(site, null)!;
-            copy.defName = NemesisHuntSites.SiteDefName;
+            WorldObjectDef copy = (WorldObjectDef)typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance)!.Invoke(site, null)!;
+            copy.defName = NemesisHuntSites.HuntSiteDefId;
             copy.shortHash = 0;
             copy.generated = true;
             copy.modContentPack = NemesisMod.Pack;
