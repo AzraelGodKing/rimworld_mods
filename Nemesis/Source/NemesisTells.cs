@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
@@ -33,7 +34,7 @@ namespace Nemesis
     public class NemesisNote : IExposable
     {
         public int tick;
-        public string text;
+        public string? text;
 
         public void ExposeData()
         {
@@ -44,14 +45,14 @@ namespace Nemesis
 
     public class NemesisEpitaph : IExposable
     {
-        public string name;
-        public string factionName;
-        public string focusKey;
-        public string voiceKey;
-        public string markKey;
-        public string habitKey;
-        public string targetName;
-        public string endKey;
+        public string? name;
+        public string? factionName;
+        public string? focusKey;
+        public string? voiceKey;
+        public string? markKey;
+        public string? habitKey;
+        public string? targetName;
+        public string? endKey;
         public int escapes;
         public int days;
         public int tick;
@@ -84,17 +85,22 @@ namespace Nemesis
     /// <summary>Persistent signatures for one hunt. Never required to end it.</summary>
     public static class NemesisTells
     {
-        public static void RollIfNeeded(NemesisData data, Pawn pawn)
+        // Every value of each enum, so adding one never needs a hand-kept count (AZR-535).
+        private static readonly NemesisVoice[] Voices = (NemesisVoice[])System.Enum.GetValues(typeof(NemesisVoice));
+        private static readonly NemesisMark[] Marks = (NemesisMark[])System.Enum.GetValues(typeof(NemesisMark));
+        private static readonly NemesisHabit[] Habits = (NemesisHabit[])System.Enum.GetValues(typeof(NemesisHabit));
+
+        public static void RollIfNeeded(NemesisData? data, Pawn? pawn)
         {
             if (data == null || data.tellsRolled)
                 return;
 
-            data.voice = (NemesisVoice)Rand.RangeInclusive(0, 3);
-            data.mark = (NemesisMark)Rand.RangeInclusive(0, 3);
-            data.habit = (NemesisHabit)Rand.RangeInclusive(0, 4);
+            data.voice = Voices.RandomElement();
+            data.mark = Marks.RandomElement();
+            data.habit = Habits.RandomElement();
             if (string.IsNullOrEmpty(data.weaponDefName) && pawn != null)
             {
-                ThingDef weapon = NemesisProgression.PeekWeaponDef(data.combatFocus,
+                ThingDef? weapon = NemesisProgression.PeekWeaponDef(data.combatFocus,
                     pawn.Faction?.def?.techLevel ?? TechLevel.Industrial);
                 data.weaponDefName = weapon?.defName;
             }
@@ -135,9 +141,9 @@ namespace Nemesis
 
         public static string WeaponLabel(NemesisData data)
         {
-            if (!string.IsNullOrEmpty(data?.weaponDefName))
+            if (data?.weaponDefName is string defName && defName.Length > 0)
             {
-                ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(data.weaponDefName);
+                ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(defName);
                 if (def != null)
                     return def.LabelCap;
             }
@@ -159,7 +165,7 @@ namespace Nemesis
                 data.notes.RemoveAt(0);
         }
 
-        public static void RecordSighting(NemesisData data, Map map)
+        public static void RecordSighting(NemesisData data, Map? map)
         {
             if (data == null || map == null)
                 return;
@@ -170,7 +176,7 @@ namespace Nemesis
             RecordNote(data, "Nemesis_Note_Sighting".Translate(data.lastKnownTileLabel));
         }
 
-        public static void RecordGear(NemesisData data, Pawn pawn)
+        public static void RecordGear(NemesisData data, Pawn? pawn)
         {
             if (data == null || pawn?.equipment?.Primary == null)
                 return;
@@ -189,9 +195,7 @@ namespace Nemesis
             if (data.mark != NemesisMark.CallingCard && data.mark != NemesisMark.SabotageToken)
                 return;
 
-            ThingDef card = DefDatabase<ThingDef>.GetNamedSilentFail("Nemesis_CallingCard");
-            if (card == null)
-                return;
+            ThingDef card = NemesisDefOf.Nemesis_CallingCard;
             IntVec3 cell = near ?? map.Center;
             if (!cell.InBounds(map) || !cell.Standable(map))
                 cell = CellFinderLoose.RandomCellWith(c => c.Standable(map), map, 40);

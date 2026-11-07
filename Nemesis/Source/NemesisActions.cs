@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using RimWorld.Planet;
@@ -116,7 +117,7 @@ namespace Nemesis
 
         private static void DirectRaid(NemesisData data, Map map)
         {
-            Faction faction = FindFaction(data);
+            Faction? faction = FindFaction(data);
             if (faction == null || faction.IsPlayer)
             {
                 CommsTaunt(data, map);
@@ -130,8 +131,8 @@ namespace Nemesis
                 return;
             }
 
-            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
-            Pawn nemesis = comp?.FindNemesisPawnFor(data);
+            GameComponent_Nemesis? comp = GameComponent_Nemesis.Instance;
+            Pawn? nemesis = comp?.FindNemesisPawnFor(data);
             bool armyReturn = data.escapeCount > 0;
             bool canInject = nemesis != null
                 && !nemesis.Dead
@@ -143,7 +144,7 @@ namespace Nemesis
             parms.faction = faction;
             float points = Mathf.Max(250f, parms.points * AggressionRaidFactor(data.EffectiveAggression));
             points *= NemesisProgression.RaidPointsFactor(data);
-            if (canInject)
+            if (canInject && nemesis != null)
             {
                 NemesisPawnUtil.EnsureHuntFaction(nemesis, data.faction ?? faction);
                 NemesisProgression.Apply(nemesis, data);
@@ -205,7 +206,7 @@ namespace Nemesis
             else if (armyReturn)
             {
                 // Inject may place them mid-raid; try near any spawned nemesis or map edge.
-                Pawn onMap = nemesis != null && nemesis.Spawned ? nemesis : null;
+                Pawn? onMap = nemesis != null && nemesis.Spawned ? nemesis : null;
                 NemesisProgression.TrySpawnMechEscort(map, faction, data, onMap);
                 NemesisProgression.TrySpawnMountEscort(map, faction, data, onMap);
             }
@@ -218,7 +219,7 @@ namespace Nemesis
         public static bool CanKidnap(NemesisData data, Map map)
         {
             if (data == null || map == null || data.targetMode != NemesisTargetMode.Pawn) return false;
-            Pawn target = GameComponent_Nemesis.Instance?.FindTargetPawn(data);
+            Pawn? target = GameComponent_Nemesis.Instance?.FindTargetPawn(data);
             return target != null && target.Spawned && !target.Dead && target.Map == map;
         }
 
@@ -234,8 +235,8 @@ namespace Nemesis
 
         private static void NemesisAssault(NemesisData data, Map map, bool kidnap = false)
         {
-            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
-            Pawn nemesis = comp?.FindNemesisPawnFor(data);
+            GameComponent_Nemesis? comp = GameComponent_Nemesis.Instance;
+            Pawn? nemesis = comp?.FindNemesisPawnFor(data);
 
             if (nemesis == null || nemesis.Dead || nemesis.Destroyed)
             {
@@ -261,8 +262,12 @@ namespace Nemesis
             }
 
             data.cachedNemesis = nemesis;
-            NemesisProgression.TrySpawnMechEscort(map, FindFaction(data), data, nemesis);
-            NemesisProgression.TrySpawnMountEscort(map, FindFaction(data), data, nemesis);
+            Faction? escortFaction = FindFaction(data);
+            if (escortFaction != null)
+            {
+                NemesisProgression.TrySpawnMechEscort(map, escortFaction, data, nemesis);
+                NemesisProgression.TrySpawnMountEscort(map, escortFaction, data, nemesis);
+            }
 
             // canTimeoutOrFlee: true so they pull back when losing; Kill intercept still handles "death".
             if (nemesis.Faction != null && !nemesis.Faction.IsPlayer && nemesis.GetLord() == null)
@@ -274,7 +279,7 @@ namespace Nemesis
                     new[] { nemesis });
             }
 
-            Faction faction = FindFaction(data);
+            Faction? faction = FindFaction(data);
             if (faction != null)
             {
                 IncidentDef raidDef = DefDatabase<IncidentDef>.GetNamedSilentFail("RaidEnemy");
@@ -350,7 +355,7 @@ namespace Nemesis
             data.pendingFakeAmbush = false;
             data.fakeAmbushTick = -1;
 
-            Faction faction = FindFaction(data);
+            Faction? faction = FindFaction(data);
             IncidentDef raidDef = DefDatabase<IncidentDef>.GetNamedSilentFail("RaidEnemy");
             if (faction == null || raidDef == null)
             {
@@ -371,7 +376,7 @@ namespace Nemesis
         private static void CaravanHarass(NemesisData data, Map map)
         {
             List<Caravan> caravans = Find.WorldObjects.Caravans;
-            Caravan target = null;
+            Caravan? target = null;
             for (int i = 0; i < caravans.Count; i++)
             {
                 Caravan c = caravans[i];
@@ -528,9 +533,9 @@ namespace Nemesis
                     ? "Nemesis_Letter_FoodCellar".Translate(data.nemesisName, ruined)
                     : "Nemesis_Letter_FoodBody".Translate(data.nemesisName, ruined);
 
-            Pawn victim = GameComponent_Nemesis.Instance?.FindTargetPawn(data);
-            string fav = SoftCompat.TryFavoriteFoodLabel(victim);
-            if (fav != null)
+            Pawn? victim = GameComponent_Nemesis.Instance?.FindTargetPawn(data);
+            string? fav = SoftCompat.TryFavoriteFoodLabel(victim);
+            if (fav != null && victim != null)
                 body += "\n\n" + "Nemesis_Letter_FoodFavoriteNote".Translate(data.nemesisName, victim.LabelShort, fav);
 
             Find.LetterStack.ReceiveLetter(
@@ -579,7 +584,7 @@ namespace Nemesis
         private static float AggressionRaidFactor(float aggressionLevel) =>
             Mathf.Lerp(0.55f, 2.2f, (aggressionLevel - 1f) / 9f);
 
-        public static Faction FindFaction(NemesisData data)
+        public static Faction? FindFaction(NemesisData? data)
         {
             if (data == null) return null;
 

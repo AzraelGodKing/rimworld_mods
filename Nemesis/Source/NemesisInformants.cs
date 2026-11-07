@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
@@ -14,10 +15,10 @@ namespace Nemesis
             return Mathf.Max(50, baseCost + bump);
         }
 
-        public static bool TryBuyLead(NemesisData data, Map map)
+        public static bool TryBuyLead(NemesisData data, Map? map)
         {
             string message;
-            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
+            GameComponent_Nemesis? comp = GameComponent_Nemesis.Instance;
             if (!(NemesisMod.Settings?.enableInformants ?? true))
             {
                 Messages.Message("Nemesis_Intel_Disabled".Translate(), MessageTypeDefOf.RejectInput, historical: false);
@@ -39,14 +40,14 @@ namespace Nemesis
             int roll = RollLead(data);
             if (roll == 0)
             {
-                Map home = SoftCompat.PreferHarassmentMap(map ?? Find.AnyPlayerHomeMap);
+                Map? home = SoftCompat.PreferHarassmentMap(map ?? Find.AnyPlayerHomeMap);
                 NemesisTells.RecordSighting(data, home);
                 message = "Nemesis_Intel_Tile".Translate(
                     data.lastKnownTileLabel ?? "—", cost);
             }
             else if (roll == 1)
             {
-                Pawn pawn = comp.FindNemesisPawnFor(data);
+                Pawn? pawn = comp.FindNemesisPawnFor(data);
                 NemesisTells.RecordGear(data, pawn);
                 message = "Nemesis_Intel_Gear".Translate(
                     data.lastGearSeen ?? NemesisTells.WeaponLabel(data), cost);
@@ -69,7 +70,7 @@ namespace Nemesis
             return true;
         }
 
-        public static bool TryPostBounty(NemesisData data, Map map, int silver)
+        public static bool TryPostBounty(NemesisData data, Map? map, int silver)
         {
             if (data == null || !data.active || silver <= 0)
             {
@@ -110,9 +111,10 @@ namespace Nemesis
         /// helped; any other end returns it by drop pod (AZR-657). Called before the hunt's
         /// bounty is cleared.
         /// </summary>
-        public static void SettleBounty(NemesisData data, bool won)
+        public static void SettleBounty(NemesisData? data, bool won)
         {
-            int silver = data?.bountySilver ?? 0;
+            if (data == null) return;
+            int silver = data.bountySilver;
             if (silver <= 0) return;
             data.bountySilver = 0;
             string name = data.nemesisName ?? "Nemesis_Phrase_Someone".Translate();
@@ -122,7 +124,7 @@ namespace Nemesis
                 return;
             }
 
-            Map map = SoftCompat.PreferHarassmentMap(Find.AnyPlayerHomeMap);
+            Map? map = SoftCompat.PreferHarassmentMap(Find.AnyPlayerHomeMap);
             if (map == null) return;
             var stacks = new List<Thing>();
             int left = silver;
@@ -139,7 +141,7 @@ namespace Nemesis
                 new TargetInfo(spot, map), MessageTypeDefOf.NeutralEvent);
         }
 
-        static bool TryChargeSilver(Map map, int cost)
+        static bool TryChargeSilver(Map? map, int cost)
         {
             if (map == null)
                 map = Find.AnyPlayerHomeMap;

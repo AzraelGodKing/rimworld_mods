@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using UnityEngine;
 using Verse;
@@ -16,7 +17,7 @@ namespace Nemesis
 
         public Dialog_NemesisEpitaphs(List<NemesisEpitaph> epitaphs)
         {
-            _epitaphs = epitaphs;
+            _epitaphs = epitaphs ?? new List<NemesisEpitaph>();
             doCloseButton = true;
             doCloseX = true;
             closeOnClickedOutside = true;
@@ -31,7 +32,7 @@ namespace Nemesis
             Text.Font = GameFont.Small;
 
             Rect outRect = new Rect(inRect.x, inRect.y + 38f, inRect.width, inRect.height - 38f - CloseButSize.y - 8f);
-            int count = _epitaphs?.Count ?? 0;
+            int count = _epitaphs.Count;
             if (count == 0)
             {
                 Widgets.Label(outRect, "Nemesis_Dossier_NoEpitaphs".Translate());

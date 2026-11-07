@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -58,7 +59,7 @@ namespace Nemesis
                         NemesisPlayerCommand.BuyLead(huntId, map);
                         break;
                     case NemesisCommsKind.PostBounty:
-                        NemesisData h = GameComponent_Nemesis.Instance?.HuntById(huntId);
+                        NemesisData? h = GameComponent_Nemesis.Instance?.HuntById(huntId);
                         if (h != null)
                             NemesisPlayerCommand.PostBounty(huntId, map, NemesisInformants.LeadCost(h));
                         break;

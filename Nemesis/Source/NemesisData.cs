@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using RimWorld.Planet;
@@ -77,15 +78,15 @@ namespace Nemesis
         public bool active;
         public int nemesisPawnId = -1;
         /// <summary>Saved reference next to the ID; the ID stays the source of truth.</summary>
-        public Pawn nemesisPawn;
-        public Pawn targetPawn;
-        public string nemesisName;
-        public string factionName;
-        public Faction faction;
+        public Pawn? nemesisPawn;
+        public Pawn? targetPawn;
+        public string? nemesisName;
+        public string? factionName;
+        public Faction? faction;
         public NemesisTargetMode targetMode;
         public NemesisTrigger trigger;
         public int targetPawnId = -1;
-        public string targetPawnName;
+        public string? targetPawnName;
         public float aggressionLevel = 1f;
         public int nextActionTick;
         public int escapeCount;
@@ -106,24 +107,29 @@ namespace Nemesis
         public int appliedProgressionLevel = -1;
         public NemesisCombatFocus combatFocus = NemesisCombatFocus.Survivor;
         /// <summary>Soft Giddy-Up mount animal kind defName, if assigned.</summary>
-        public string mountKindDefName;
+        public string? mountKindDefName;
 
         public bool tellsRolled;
         public NemesisVoice voice = NemesisVoice.Cold;
         public NemesisMark mark = NemesisMark.CallingCard;
         public NemesisHabit habit = NemesisHabit.PowerFirst;
-        public string weaponDefName;
+        public string? weaponDefName;
         public int huntStartTick;
         public PlanetTile lastKnownTile = PlanetTile.Invalid;
-        public string lastKnownTileLabel;
+        public string? lastKnownTileLabel;
         /// <summary>Silver the player posted against this hunt (AZR-657).</summary>
         public int bountySilver;
-        public string lastGearSeen;
+        public string? lastGearSeen;
         public List<NemesisNote> notes = new List<NemesisNote>();
 
         // Lookup caches; not saved.
-        [Unsaved] public Pawn cachedNemesis;
-        [Unsaved] public Pawn cachedTarget;
+        [Unsaved] public Pawn? cachedNemesis;
+        [Unsaved] public Pawn? cachedTarget;
+
+        // Tick of the last full pawn scan that found nobody, so a missing pawn costs at most
+        // one scan of every map and world pawn per MissRescanTicks (AZR-535).
+        [Unsaved] public int nemesisMissTick = int.MinValue / 2;
+        [Unsaved] public int targetMissTick = int.MinValue / 2;
 
         /// <summary>Active, in truce, or waiting on the capture dialog.</summary>
         public bool Engaged => active || truceUntilTick > 0 || pendingResolution;
@@ -132,6 +138,7 @@ namespace Nemesis
         {
             cachedNemesis = null;
             cachedTarget = null;
+            nemesisMissTick = targetMissTick = int.MinValue / 2;
         }
 
         /// <summary>Name in the hunt faction's colour, for letter titles.</summary>

@@ -1,3 +1,4 @@
+#nullable enable
 using RimWorld;
 using RimWorld.Planet;
 using UnityEngine;
@@ -72,12 +73,12 @@ namespace Nemesis
         /// <summary>Applies the player's choice; reached only through <see cref="NemesisPlayerCommand.Resolve"/>.</summary>
         internal static void ApplyOutcome(NemesisData data, NemesisOutcome outcome)
         {
-            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
+            GameComponent_Nemesis? comp = GameComponent_Nemesis.Instance;
             if (comp == null || data == null || !data.pendingResolution) return;
-            Pawn nemesis = comp.FindNemesisPawnFor(data);
+            Pawn? nemesis = comp.FindNemesisPawnFor(data);
             if (nemesis == null || nemesis.Destroyed) return;
 
-            Faction faction = (data.faction != null && !data.faction.IsPlayer)
+            Faction? faction = (data.faction != null && !data.faction.IsPlayer)
                 ? data.faction
                 : NemesisActions.FindFaction(data);
 
