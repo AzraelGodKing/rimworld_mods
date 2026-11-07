@@ -398,35 +398,7 @@ namespace DeepColony
             return null;
         }
 
-        private static Pawn FindPawnAnywhere(int thingId)
-        {
-            List<Map> maps = Find.Maps;
-            if (maps != null)
-            {
-                for (int i = 0; i < maps.Count; i++)
-                {
-                    IReadOnlyList<Pawn> pawns = maps[i]?.mapPawns?.AllPawns;
-                    if (pawns == null) continue;
-                    for (int j = 0; j < pawns.Count; j++)
-                    {
-                        if (pawns[j] != null && pawns[j].thingIDNumber == thingId)
-                            return pawns[j];
-                    }
-                }
-            }
-
-            List<Pawn> world = PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive;
-            if (world != null)
-            {
-                for (int i = 0; i < world.Count; i++)
-                {
-                    if (world[i] != null && world[i].thingIDNumber == thingId)
-                        return world[i];
-                }
-            }
-
-            return null;
-        }
+        private static Pawn FindPawnAnywhere(int thingId) => PawnIdIndex.Find(thingId);
 
         private static bool LooksLikeFight(Pawn victim, DamageInfo? dinfo)
         {

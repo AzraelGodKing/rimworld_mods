@@ -15,6 +15,8 @@ namespace DeepColony
         public bool enablePerks = true;
         public bool showPerkHediffs = false;
         public bool announceVisitorPerkUnlocks = false;
+        // Off skips perk sync and perk hediffs for every non-player pawn (raid spawn cost).
+        public bool npcPerks = true;
         public bool enableTrauma = true;
         public bool enableMentoring = true;
         public bool enableInheritance = true;
@@ -91,6 +93,7 @@ namespace DeepColony
             Scribe_Values.Look(ref enablePerks, "enablePerks", true);
             Scribe_Values.Look(ref showPerkHediffs, "showPerkHediffs", false);
             Scribe_Values.Look(ref announceVisitorPerkUnlocks, "announceVisitorPerkUnlocks", false);
+            Scribe_Values.Look(ref npcPerks, "npcPerks", true);
             Scribe_Values.Look(ref enableTrauma, "enableTrauma", true);
             Scribe_Values.Look(ref enableMentoring, "enableMentoring", true);
             Scribe_Values.Look(ref enableInheritance, "enableInheritance", true);
@@ -240,6 +243,7 @@ namespace DeepColony
             enablePerks = true;
             showPerkHediffs = false;
             announceVisitorPerkUnlocks = false;
+            npcPerks = true;
             enableTrauma = true;
             enableMentoring = true;
             enableInheritance = true;

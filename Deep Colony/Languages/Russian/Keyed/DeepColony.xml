@@ -66,6 +66,8 @@
   <DC_Settings_ShowPerkHediffsTip>По умолчанию выкл. Бонусы перков всё равно действуют; это только список на Здоровье.</DC_Settings_ShowPerkHediffsTip>
   <DC_Settings_AnnounceVisitorPerks>Сообщения о перках посетителей</DC_Settings_AnnounceVisitorPerks>
   <DC_Settings_AnnounceVisitorPerksTip>По умолчанию выкл. Посетители, гости и налётчики могут заспамить «достиг навыка для перка …» слева при появлении — на слабых ПК это тормозит. Сообщения колонистов остаются.</DC_Settings_AnnounceVisitorPerksTip>
+  <DC_Settings_NpcPerks>Перки у гостей и налётчиков</DC_Settings_NpcPerks>
+  <DC_Settings_NpcPerksTip>По умолчанию вкл. Гости, торговцы и налётчики получают перки по своим навыкам, как колонисты. Выключите, чтобы не тратить на это время при большом налёте или караване; вступившие в колонию всё равно получат перки.</DC_Settings_NpcPerksTip>
   <DC_Settings_EnableQuietHours>Тихие часы (шум комнаты)</DC_Settings_EnableQuietHours>
   <DC_Settings_EnableQuietHoursTip>Верстаки, генераторы, турели и добыча ухудшают сон, совет и наставничество. Стены держат шум. Осмотр спальни предупреждает до штрафа настроения. Мягкий слабее, Сложный громче. Это не шум заражения Strata.</DC_Settings_EnableQuietHoursTip>
   <DC_Settings_QuietHoursIntensity>Интенсивность тихих часов: {0}</DC_Settings_QuietHoursIntensity>

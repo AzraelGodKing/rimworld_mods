@@ -9,9 +9,16 @@ namespace DeepColony.Patches
     {
         private const float MentorProximityCells = 8f;
 
-        public static void Prefix(SkillRecord __instance, ref float xp, bool direct, out int __state)
+        // Prefix hands the comp to Postfix so the hot path looks it up once (AZR-663).
+        public struct LearnState
         {
-            __state = __instance.levelInt;
+            public int level;
+            public Comp_DeepColony comp;
+        }
+
+        public static void Prefix(SkillRecord __instance, ref float xp, bool direct, out LearnState __state)
+        {
+            __state = new LearnState { level = __instance.levelInt };
             if (xp == 0f || direct) return;
 
             Pawn pawn = __instance.Pawn;
@@ -19,6 +26,7 @@ namespace DeepColony.Patches
 
             var comp = pawn.TryGetComp<Comp_DeepColony>();
             if (comp == null) return;
+            __state.comp = comp;
 
             if (xp < 0f && DeepColonySettings.Get.enablePerks)
             {
@@ -69,24 +77,19 @@ namespace DeepColony.Patches
 
             // Biotech blackboard in room during active teaching
             if (active)
-            {
-                mult *= MentorshipUtility.ChalkboardRoomMultiplier(pawn);
-                mult *= MentorshipUtility.ClassroomExtraMultiplier(pawn);
-            }
+                mult *= MentorshipUtility.CachedRoomMultiplier(pawn);
 
             xp *= mult;
             xp *= QuietHoursUtility.MentorXpMultiplier(pawn);
         }
 
-        public static void Postfix(SkillRecord __instance, float xp, bool direct, int __state)
+        public static void Postfix(SkillRecord __instance, float xp, bool direct, LearnState __state)
         {
-            if (direct) return;
-
-            Pawn pawn = __instance.Pawn;
-            if (pawn?.IsColonistPlayerControlled != true) return;
-
-            var comp = pawn.TryGetComp<Comp_DeepColony>();
+            // Null when Prefix bailed: direct XP, zero XP, or not a player colonist.
+            Comp_DeepColony comp = __state.comp;
             if (comp == null) return;
+            Pawn pawn = comp.Pawn;
+            int startLevel = __state.level;
 
             if (xp > 0f)
             {
@@ -96,13 +99,13 @@ namespace DeepColony.Patches
                     MentorshipUtility.TryGraduate(comp.mentor, pawn);
             }
 
-            if (__instance.levelInt == __state) return;
+            if (__instance.levelInt == startLevel) return;
             if (!DeepColonySettings.Get.enablePerks) return;
 
-            if (__instance.levelInt > __state)
+            if (__instance.levelInt > startLevel)
             {
                 int newLevel = __instance.levelInt;
-                for (int level = __state + 1; level <= newLevel; level++)
+                for (int level = startLevel + 1; level <= newLevel; level++)
                 {
                     if (level == 5 || level == 10 || level == 15 || level == 20)
                         comp.NotifySkillLevelUp(__instance.def, level);

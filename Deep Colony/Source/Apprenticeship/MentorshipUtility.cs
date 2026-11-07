@@ -561,10 +561,51 @@ namespace DeepColony
             return null;
         }
 
+        private const int RoomMultiplierCacheTicks = 250;
+        private static readonly Dictionary<int, (int tick, float mult)> roomMultiplierCache =
+            new Dictionary<int, (int tick, float mult)>();
+        private static ThingDef blackboardDef;
+        private static bool blackboardLooked;
+
+        internal static void ResetCache()
+        {
+            roomMultiplierCache.Clear();
+        }
+
+        /// <summary>
+        /// Blackboard room x classroom multiplier for an apprentice, cached for about
+        /// 250 ticks: it runs on every active-mentoring XP gain (AZR-663).
+        /// </summary>
+        public static float CachedRoomMultiplier(Pawn apprentice)
+        {
+            if (apprentice == null) return 1f;
+            int now = Find.TickManager.TicksGame;
+            int id = apprentice.thingIDNumber;
+            if (roomMultiplierCache.TryGetValue(id, out var hit) && now - hit.tick < RoomMultiplierCacheTicks)
+                return hit.mult;
+            float chalk = ChalkboardRoomMultiplier(apprentice);
+            float mult = chalk > 1f ? chalk * ClassroomExtraMultiplier(apprentice) : 1f;
+            roomMultiplierCache[id] = (now, mult);
+            return mult;
+        }
+
+        private static ThingDef Blackboard
+        {
+            get
+            {
+                if (!blackboardLooked)
+                {
+                    blackboardDef = DefDatabase<ThingDef>.GetNamedSilentFail("Blackboard");
+                    blackboardLooked = true;
+                }
+                return blackboardDef;
+            }
+        }
+
         public static float ChalkboardRoomMultiplier(Pawn pawn)
         {
             if (pawn?.Map == null || !pawn.Spawned) return 1f;
-            ThingDef blackboard = DefDatabase<ThingDef>.GetNamedSilentFail("Blackboard");
+            ThingDef blackboard = Blackboard;
             if (blackboard == null) return 1f;
             Room room = pawn.GetRoom();
             if (room == null || room.PsychologicallyOutdoors) return 1f;
@@ -576,10 +617,10 @@ namespace DeepColony
             return 1f;
         }
 
-        /// <summary>D04 — two or more apprentices of the same mentor in a blackboard room.</summary>
-        public static float ClassroomExtraMultiplier(Pawn apprentice)
+        /// <summary>D04 — two or more apprentices of the same mentor in the room. Call only
+        /// when the room already has a blackboard (see CachedRoomMultiplier).</summary>
+        private static float ClassroomExtraMultiplier(Pawn apprentice)
         {
-            if (ChalkboardRoomMultiplier(apprentice) <= 1f) return 1f;
             var comp = apprentice.TryGetComp<Comp_DeepColony>();
             if (comp?.mentor == null || apprentice.Map == null) return 1f;
             Room room = apprentice.GetRoom();

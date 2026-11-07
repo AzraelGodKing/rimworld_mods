@@ -306,7 +306,7 @@ namespace DeepColony
 
         private static Pawn FindPawn(int id)
         {
-            return FamilyTreeUtility.FindPawnById(id);
+            return PawnIdIndex.Find(id);
         }
 
         private static Faction FindFaction(int loadId)

@@ -8,13 +8,19 @@ namespace DeepColony
     {
         private const int MinLevel = 8;
         private const int LevelBand = 2;
-        private const int CheckInterval = 2500;
+        // The hourly O(n²) pair sweep is split into slices run every 250 ticks: slice k
+        // checks the pairs whose first colonist sits at an index ≡ k (mod 10). Every
+        // pair is still checked once an hour (AZR-665).
+        private const int SliceTicks = 250;
+        private const int Slices = TickPhase.Interval / SliceTicks;
         private static readonly List<Pawn> Scratch = new List<Pawn>();
 
         public static void GameTick()
         {
             if (!DeepColonySettings.Get.enableMentoring) return;
-            if (!TickPhase.Due(0)) return;
+            int ticks = Find.TickManager.TicksGame;
+            if (ticks % SliceTicks != 0) return;
+            int slice = ticks / SliceTicks % Slices;
 
             Scratch.Clear();
             foreach (Map map in Find.Maps)
@@ -27,7 +33,7 @@ namespace DeepColony
             int n = Scratch.Count;
             if (n < 2) return;
 
-            for (int i = 0; i < n; i++)
+            for (int i = slice; i < n; i += Slices)
             {
                 for (int j = i + 1; j < n; j++)
                     TryFormRivalry(Scratch[i], Scratch[j]);

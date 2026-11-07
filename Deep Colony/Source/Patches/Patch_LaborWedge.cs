@@ -210,7 +210,7 @@ namespace DeepColony.Patches
         internal static void RecoverStuckLabor()
         {
             recoveredBuffer.Clear();
-            foreach (Pawn pawn in EnumeratePawns())
+            foreach (Pawn pawn in EnumeratePawns(includeWorld: true))
             {
                 if (TryRepairPawn(pawn, default, hasSnapshot: false) && pawn != null)
                 {
@@ -233,16 +233,30 @@ namespace DeepColony.Patches
                 return;
             }
 
+            // Hourly: only pawns on maps or travelling who carry a labor hediff. The full
+            // sweep over every world pawn runs once on load (RecoverStuckLabor) (AZR-619).
             recoveredBuffer.Clear();
-            foreach (Pawn pawn in EnumeratePawns())
+            foreach (Pawn pawn in EnumeratePawns(includeWorld: false))
             {
-                if (TryRepairPawn(pawn, default, hasSnapshot: false) && pawn != null)
+                if (!HasLaborHediff(pawn)) continue;
+                if (TryRepairPawn(pawn, default, hasSnapshot: false))
                 {
                     recoveredBuffer.Add(pawn);
                 }
             }
 
             SendLetter(recoveredBuffer);
+        }
+
+        private static bool HasLaborHediff(Pawn pawn)
+        {
+            List<Hediff> hediffs = pawn?.health?.hediffSet?.hediffs;
+            if (hediffs == null) return false;
+            for (int i = 0; i < hediffs.Count; i++)
+            {
+                if (IsLaborStage(hediffs[i])) return true;
+            }
+            return false;
         }
 
         private static void DrainPending()
@@ -554,20 +568,9 @@ namespace DeepColony.Patches
             }
         }
 
-        private static Pawn FindPawn(int thingId)
-        {
-            foreach (Pawn pawn in EnumeratePawns())
-            {
-                if (pawn != null && pawn.thingIDNumber == thingId)
-                {
-                    return pawn;
-                }
-            }
+        private static Pawn FindPawn(int thingId) => PawnIdIndex.Find(thingId);
 
-            return null;
-        }
-
-        private static IEnumerable<Pawn> EnumeratePawns()
+        private static IEnumerable<Pawn> EnumeratePawns(bool includeWorld)
         {
             if (Find.Maps != null)
             {
@@ -593,6 +596,17 @@ namespace DeepColony.Patches
                         yield return spawned[i];
                     }
                 }
+            }
+
+            if (!includeWorld)
+            {
+                List<Pawn> travelling = PawnsFinder.AllCaravansAndTravellingTransporters_Alive;
+                if (travelling == null) yield break;
+                for (int i = 0; i < travelling.Count; i++)
+                {
+                    yield return travelling[i];
+                }
+                yield break;
             }
 
             IEnumerable<Pawn> world = null;

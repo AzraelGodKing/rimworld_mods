@@ -93,36 +93,7 @@ namespace DeepColony
                 JumpTo(pawn);
         }
 
-        public static Pawn FindPawnById(int id)
-        {
-            if (id <= 0) return null;
-            if (Find.Maps != null)
-            {
-                for (int i = 0; i < Find.Maps.Count; i++)
-                {
-                    Map map = Find.Maps[i];
-                    if (map?.mapPawns?.AllPawns == null) continue;
-                    List<Pawn> pawns = map.mapPawns.AllPawns;
-                    for (int j = 0; j < pawns.Count; j++)
-                    {
-                        if (pawns[j] != null && pawns[j].thingIDNumber == id)
-                            return pawns[j];
-                    }
-                }
-            }
-            if (Find.WorldPawns != null)
-            {
-                foreach (Pawn p in Find.WorldPawns.AllPawnsAlive)
-                {
-                    if (p != null && p.thingIDNumber == id) return p;
-                }
-                foreach (Pawn p in Find.WorldPawns.AllPawnsDead)
-                {
-                    if (p != null && p.thingIDNumber == id) return p;
-                }
-            }
-            return null;
-        }
+        public static Pawn FindPawnById(int id) => PawnIdIndex.Find(id);
 
         public static string RelationLabel(Pawn focus, Pawn other)
         {

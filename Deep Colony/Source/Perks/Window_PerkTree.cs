@@ -61,11 +61,7 @@ namespace DeepColony
             float scrollY = divY + 6f;
             Rect outRect = new Rect(inRect.x, scrollY, inRect.width, inRect.yMax - scrollY - 40f);
 
-            var skillGroups = DefDatabase<PerkDef>.AllDefs
-                .Where(p => p.skill != null && Comp_DeepColony.PerkVisible(p))
-                .GroupBy(p => p.skill)
-                .OrderBy(g => g.Key.listOrder)
-                .ToList();
+            List<(SkillDef skill, List<PerkDef> perks)> skillGroups = Layout();
 
             float viewH = skillGroups.Count * RowHeight + 10f;
             Rect viewRect = new Rect(0, 0, outRect.width - 16f, viewH);
@@ -74,10 +70,33 @@ namespace DeepColony
             float y = 0f;
             foreach (var group in skillGroups)
             {
-                DrawSkillRow(viewRect.width, y, group.Key, OrderPerks(group.ToList()));
+                DrawSkillRow(viewRect.width, y, group.skill, group.perks);
                 y += RowHeight;
             }
             Widgets.EndScrollView();
+        }
+
+        // Rows depend only on the perk defs and the two visibility settings, so they are
+        // built once instead of every frame (AZR-619).
+        private static List<(SkillDef skill, List<PerkDef> perks)> layout;
+        private static bool layoutCapstones;
+        private static bool layoutBranching;
+
+        private static List<(SkillDef skill, List<PerkDef> perks)> Layout()
+        {
+            var s = DeepColonySettings.Get;
+            if (layout != null && layoutCapstones == s.enableSkill20Capstones
+                && layoutBranching == s.enableBranchingPerks)
+                return layout;
+            layoutCapstones = s.enableSkill20Capstones;
+            layoutBranching = s.enableBranchingPerks;
+            layout = DefDatabase<PerkDef>.AllDefs
+                .Where(p => p.skill != null && Comp_DeepColony.PerkVisible(p))
+                .GroupBy(p => p.skill)
+                .OrderBy(g => g.Key.listOrder)
+                .Select(g => (g.Key, OrderPerks(g.ToList())))
+                .ToList();
+            return layout;
         }
 
         private static List<PerkDef> OrderPerks(List<PerkDef> perks)

@@ -8,6 +8,14 @@ namespace DeepColony
     {
         private Vector2 scrollPos;
 
+        // The tree walks relations of every relative; rebuilt per pawn every ~1 second
+        // of real time instead of every frame (AZR-619).
+        private const float SnapshotSeconds = 1f;
+        private FamilyTreeSnapshot snapCache;
+        private Pawn snapPawn;
+        private bool snapPedigree;
+        private float snapTime = float.MinValue;
+
         public ITab_Pawn_FamilyTree()
         {
             size = new Vector2(500f, 460f);
@@ -40,7 +48,16 @@ namespace DeepColony
             size = pedigree ? new Vector2(560f, 500f) : new Vector2(500f, 460f);
             inner = new Rect(0f, 0f, size.x, size.y).ContractedBy(10f);
 
-            FamilyTreeSnapshot snap = FamilyTreeUtility.Build(pawn);
+            float now = Time.realtimeSinceStartup;
+            if (snapCache == null || snapPawn != pawn || snapPedigree != pedigree
+                || now - snapTime >= SnapshotSeconds)
+            {
+                snapPedigree = pedigree;
+                snapCache = FamilyTreeUtility.Build(pawn);
+                snapPawn = pawn;
+                snapTime = now;
+            }
+            FamilyTreeSnapshot snap = snapCache;
             Rect outRect = new Rect(inner.x, inner.y + FamilyTreeDrawer.TitleRowH + 2f,
                 inner.width, inner.height - FamilyTreeDrawer.TitleRowH - 6f);
             Vector2 need = FamilyTreeDrawer.MeasureSize(snap, includeTitle: false);
