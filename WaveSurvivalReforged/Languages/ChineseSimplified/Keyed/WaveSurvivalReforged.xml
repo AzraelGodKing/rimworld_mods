@@ -8,7 +8,9 @@
   <WSR_WaveTimerSpecial>这是一个特殊波次：可能是围攻、工兵、破墙者、机械体，或发狂的动物。</WSR_WaveTimerSpecial>
 
   <WSR_NeedBeaconLabel>建造贸易信标</WSR_NeedBeaconLabel>
-  <WSR_NeedBeaconExplanation>波次生存模式每天通过空投舱把补给投放到你的轨道贸易信标处。在你建好信标之前，不会有补给送达。\n\n请尽快建造一座。</WSR_NeedBeaconExplanation>
+  <WSR_NeedBeaconExplanation>波次生存模式每天通过空投舱把补给投放到你的轨道贸易信标处。在你建好信标之前，每日空投会一直等待。
+
+请尽快建造一座。</WSR_NeedBeaconExplanation>
 
   <WSR_WaveArrived>第 {0} 波来袭：{1}！</WSR_WaveArrived>
   <WSR_SpecialWaveArrived>特殊波次第 {0} 波来袭：{1}！</WSR_SpecialWaveArrived>
@@ -19,5 +21,25 @@
   <WSR_WaveWithFaction>{0}（{1}）</WSR_WaveWithFaction>
   <WSR_WavePostponed>第 {0} 波无法开始：没有任何敌对势力能够发动进攻。将在 {1} 后重试。</WSR_WavePostponed>
   <WSR_WavePostponedNoHome>第 {0} 波正在等待你拥有一张家园地图。将在 {1} 后重试。</WSR_WavePostponedNoHome>
+
+  <WSR_NeedBeaconFallback>连续 {0} 天没有信标后，一批较小且不含武器的补给会改为投放到殖民地附近。</WSR_NeedBeaconFallback>
+  <WSR_WaveSplit>{0}，分为两批</WSR_WaveSplit>
+  <WSR_WaveTimerPlan>预计：{0}，约 {1} 威胁点数。</WSR_WaveTimerPlan>
+  <WSR_SupplyDropFallback>由于没有贸易信标，一批较小的补给已空投到殖民地附近。</WSR_SupplyDropFallback>
+  <WSR_WaveSummaryLabel>第 {0} 波结束</WSR_WaveSummaryLabel>
+  <WSR_WaveSummaryText>第 {0} 波（{1}）已经结束。
+
+击杀：{2}
+击倒：{3}
+逃离：{4}</WSR_WaveSummaryText>
+  <WSR_WaveSummaryLeft>下一波到来时，仍有 {0} 名敌人站着。</WSR_WaveSummaryLeft>
+  <WSR_SettingsCategory>波次生存重制版</WSR_SettingsCategory>
+  <WSR_SettingsShowHud>显示波次信息面板</WSR_SettingsShowHud>
+  <WSR_SettingsShowHudTip>屏幕顶部的小面板，显示下一波、它的内容，以及上一波的结果。</WSR_SettingsShowHudTip>
+  <WSR_HudNext>第 {0} 波：{1} 后</WSR_HudNext>
+  <WSR_HudPlan>{0} · 约 {1} 点</WSR_HudPlan>
+  <WSR_HudPlanUnknown>尚未决定</WSR_HudPlanUnknown>
+  <WSR_HudActive>第 {0} 波：还有 {1} 名敌人站着</WSR_HudActive>
+  <WSR_HudLast>第 {0} 波：击杀 {1}，击倒 {2}，逃离 {3}</WSR_HudLast>
 
 </LanguageData>

@@ -8,7 +8,9 @@
   <WSR_WaveTimerSpecial>Это особая волна: осада, сапёры, взломщики, механоиды или обезумевшие животные.</WSR_WaveTimerSpecial>
 
   <WSR_NeedBeaconLabel>Постройте торговый маяк</WSR_NeedBeaconLabel>
-  <WSR_NeedBeaconExplanation>В режиме «Выживание волнами» припасы раз в день доставляются капсулами к вашему орбитальному торговому маяку. Пока маяка нет, припасы не приходят.\n\nПостройте его как можно скорее.</WSR_NeedBeaconExplanation>
+  <WSR_NeedBeaconExplanation>В режиме «Выживание волнами» припасы раз в день доставляются капсулами к вашему орбитальному торговому маяку. Пока маяка нет, ежедневная посылка ждёт.
+
+Постройте его как можно скорее.</WSR_NeedBeaconExplanation>
 
   <WSR_WaveArrived>Волна {0} прибыла: {1}!</WSR_WaveArrived>
   <WSR_SpecialWaveArrived>Особая волна {0} прибыла: {1}!</WSR_SpecialWaveArrived>
@@ -19,5 +21,25 @@
   <WSR_WaveWithFaction>{0} ({1})</WSR_WaveWithFaction>
   <WSR_WavePostponed>Волна {0} не смогла начаться: никто из врагов не может напасть. Новая попытка через {1}.</WSR_WavePostponed>
   <WSR_WavePostponedNoHome>Волна {0} ждёт, пока у вас появится домашняя карта. Новая попытка через {1}.</WSR_WavePostponedNoHome>
+
+  <WSR_NeedBeaconFallback>Если маяка нет {0} дн. подряд, вместо этого у колонии приземлится посылка поменьше и без оружия.</WSR_NeedBeaconFallback>
+  <WSR_WaveSplit>{0}, двумя группами</WSR_WaveSplit>
+  <WSR_WaveTimerPlan>Ожидается: {0}, около {1} очков угрозы.</WSR_WaveTimerPlan>
+  <WSR_SupplyDropFallback>Торгового маяка нет, поэтому посылка поменьше приземлилась у колонии.</WSR_SupplyDropFallback>
+  <WSR_WaveSummaryLabel>Волна {0} окончена</WSR_WaveSummaryLabel>
+  <WSR_WaveSummaryText>Волна {0} ({1}) окончена.
+
+Убито: {2}
+Повержено: {3}
+Сбежало: {4}</WSR_WaveSummaryText>
+  <WSR_WaveSummaryLeft>Когда пришла следующая волна, на ногах ещё оставалось врагов: {0}.</WSR_WaveSummaryLeft>
+  <WSR_SettingsCategory>Wave Survival Reforged</WSR_SettingsCategory>
+  <WSR_SettingsShowHud>Показывать панель волн</WSR_SettingsShowHud>
+  <WSR_SettingsShowHudTip>Небольшая панель вверху экрана: следующая волна, какой она будет и чем кончилась прошлая.</WSR_SettingsShowHudTip>
+  <WSR_HudNext>Волна {0} через {1}</WSR_HudNext>
+  <WSR_HudPlan>{0} · около {1} очков</WSR_HudPlan>
+  <WSR_HudPlanUnknown>Ещё не определена</WSR_HudPlanUnknown>
+  <WSR_HudActive>Волна {0}: врагов на ногах — {1}</WSR_HudActive>
+  <WSR_HudLast>Волна {0}: убито {1}, повержено {2}, сбежало {3}</WSR_HudLast>
 
 </LanguageData>
