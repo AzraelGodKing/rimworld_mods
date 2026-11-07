@@ -8,14 +8,14 @@ namespace Nemesis
     public class Dialog_NemesisResolution : Window
     {
         private readonly NemesisData _data;
-        private readonly Pawn _nemesis;
+
+        public int HuntId => _data.huntId;
 
         public override Vector2 InitialSize => new Vector2(520f, 440f);
 
         public Dialog_NemesisResolution(NemesisData data, Pawn nemesis)
         {
             _data = data;
-            _nemesis = nemesis;
             forcePause = true;
             absorbInputAroundWindow = true;
             closeOnClickedOutside = false;
@@ -31,7 +31,7 @@ namespace Nemesis
             listing.Begin(inRect);
 
             Text.Font = GameFont.Medium;
-            listing.Label("Nemesis_Dialog_Title".Translate(_data.nemesisName));
+            listing.Label("Nemesis_Dialog_Title".Translate(_data.ColoredName));
             Text.Font = GameFont.Small;
             listing.Gap(8f);
 
@@ -65,24 +65,18 @@ namespace Nemesis
 
         private void Choose(NemesisOutcome outcome)
         {
-            NemesisPlayerCommand.EnqueueResolution(outcome, _nemesis);
+            NemesisPlayerCommand.Resolve(_data.huntId, outcome);
             Close();
         }
 
-        /// <summary>Runs from the tick drain, never from the button handler.</summary>
-        internal static void ApplyQueuedOutcome(NemesisOutcome outcome, int pawnId)
+        /// <summary>Applies the player's choice; reached only through <see cref="NemesisPlayerCommand.Resolve"/>.</summary>
+        internal static void ApplyOutcome(NemesisData data, NemesisOutcome outcome)
         {
             GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
-            NemesisData data = comp?.Data;
-            if (data == null || !data.pendingResolution) return;
-            if (pawnId < 0 || pawnId != data.nemesisPawnId) return;
-            Pawn nemesis = comp.FindNemesisPawn();
+            if (comp == null || data == null || !data.pendingResolution) return;
+            Pawn nemesis = comp.FindNemesisPawnFor(data);
             if (nemesis == null || nemesis.Destroyed) return;
-            ApplyOutcome(data, nemesis, outcome);
-        }
 
-        private static void ApplyOutcome(NemesisData data, Pawn nemesis, NemesisOutcome outcome)
-        {
             Faction faction = (data.faction != null && !data.faction.IsPlayer)
                 ? data.faction
                 : NemesisActions.FindFaction(data);
@@ -96,7 +90,7 @@ namespace Nemesis
                     faction?.TryAffectGoodwillWith(Faction.OfPlayer, -30, canSendMessage: true, canSendHostilityLetter: true);
 
                     Find.LetterStack.ReceiveLetter(
-                        "Nemesis_Letter_ExecutedTitle".Translate(data.nemesisName),
+                        "Nemesis_Letter_ExecutedTitle".Translate(data.ColoredName),
                         "Nemesis_Letter_ExecutedBody".Translate(data.nemesisName, faction != null ? data.factionName : ""),
                         LetterDefOf.NeutralEvent);
                     break;
@@ -107,14 +101,14 @@ namespace Nemesis
                     faction?.TryAffectGoodwillWith(Faction.OfPlayer, 20, canSendMessage: true, canSendHostilityLetter: false);
 
                     Find.LetterStack.ReceiveLetter(
-                        "Nemesis_Letter_ReleasedTitle".Translate(data.nemesisName),
+                        "Nemesis_Letter_ReleasedTitle".Translate(data.ColoredName),
                         "Nemesis_Letter_ReleasedBody".Translate(data.nemesisName, faction != null ? data.factionName : ""),
                         LetterDefOf.PositiveEvent);
                     break;
 
                 case NemesisOutcome.KeepPrisoner:
                     Find.LetterStack.ReceiveLetter(
-                        "Nemesis_Letter_KeptTitle".Translate(data.nemesisName),
+                        "Nemesis_Letter_KeptTitle".Translate(data.ColoredName),
                         "Nemesis_Letter_KeptBody".Translate(data.nemesisName),
                         LetterDefOf.NeutralEvent,
                         nemesis);
@@ -127,7 +121,7 @@ namespace Nemesis
                     data.truceUntilTick = Find.TickManager.TicksGame + days * 60000;
 
                     Find.LetterStack.ReceiveLetter(
-                        "Nemesis_Letter_TruceTitle".Translate(data.nemesisName),
+                        "Nemesis_Letter_TruceTitle".Translate(data.ColoredName),
                         "Nemesis_Letter_TruceBody".Translate(data.nemesisName, days),
                         LetterDefOf.NeutralEvent);
                     break;
@@ -142,10 +136,10 @@ namespace Nemesis
                 _ => "Nemesis_End_Captured",
             };
             if (outcome != NemesisOutcome.Truce)
-                GameComponent_Nemesis.Instance?.RecordEpitaph(endKey);
+                comp.RecordEpitaph(data, endKey);
 
-            GameComponent_Nemesis.Instance?.ClearPendingResolution();
-            NemesisRegistry.Clear();
+            data.pendingResolution = false;
+            data.ClearCaches();
         }
 
         private static void SendNemesisAway(Pawn nemesis, PawnDiscardDecideMode discardMode)

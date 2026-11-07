@@ -11,6 +11,10 @@ namespace Nemesis
         public float woundedEscapeChance = 0.12f;
         public int truceDurationDays = 30;
         public int maxEscapes = 4;
+        /// <summary>Hunts that may run at once, at most one per hostile faction (AZR-537).</summary>
+        public int maxConcurrentHunts = 2;
+        /// <summary>Days after a hunt starts before another may start (AZR-572).</summary>
+        public float huntCooldownDays = 3f;
 
         public float maxAggressionCap = 0.6f;
         public float escalationRatePerDay = 0.06f;
@@ -48,6 +52,8 @@ namespace Nemesis
             Scribe_Values.Look(ref woundedEscapeChance, "woundedEscapeChance", 0.12f);
             Scribe_Values.Look(ref truceDurationDays, "truceDurationDays", 30);
             Scribe_Values.Look(ref maxEscapes, "maxEscapes", 4);
+            Scribe_Values.Look(ref maxConcurrentHunts, "maxConcurrentHunts", 2);
+            Scribe_Values.Look(ref huntCooldownDays, "huntCooldownDays", 3f);
             Scribe_Values.Look(ref maxAggressionCap, "maxAggressionCap", 0.6f);
             Scribe_Values.Look(ref escalationRatePerDay, "escalationRatePerDay", 0.06f);
             Scribe_Values.Look(ref minActionCooldownTicks, "minActionCooldownTicks", 90000);
@@ -80,6 +86,8 @@ namespace Nemesis
             woundedEscapeChance = 0.12f;
             truceDurationDays = 30;
             maxEscapes = 4;
+            maxConcurrentHunts = 2;
+            huntCooldownDays = 3f;
             maxAggressionCap = 0.6f;
             escalationRatePerDay = 0.06f;
             minActionCooldownTicks = 90000;

@@ -14,6 +14,10 @@
   <Nemesis_Settings_WoundedEscape>Wounded-and-escaped chance: {0}%</Nemesis_Settings_WoundedEscape>
   <Nemesis_Settings_TruceDays>Truce duration: {0} days</Nemesis_Settings_TruceDays>
   <Nemesis_Settings_MaxEscapes>Escapes before cornered: {0}</Nemesis_Settings_MaxEscapes>
+  <Nemesis_Settings_MaxHunts>Hunts at once: {0}</Nemesis_Settings_MaxHunts>
+  <Nemesis_Settings_MaxHuntsTip>How many nemeses can hunt you at the same time. Each hostile faction can have at most one.</Nemesis_Settings_MaxHuntsTip>
+  <Nemesis_Settings_HuntCooldown>Days between new hunts: {0}</Nemesis_Settings_HuntCooldown>
+  <Nemesis_Settings_HuntCooldownTip>After a hunt starts, no other hunt can start for this many days, so one bad raid cannot create several nemeses.</Nemesis_Settings_HuntCooldownTip>
   <Nemesis_Settings_Pacing>Nemesis pacing</Nemesis_Settings_Pacing>
   <Nemesis_Settings_MaxAggression>Maximum aggression intensity: {0}%</Nemesis_Settings_MaxAggression>
   <Nemesis_Settings_Escalation>Escalation rate: {0} per day</Nemesis_Settings_Escalation>
@@ -64,7 +68,6 @@
   <Nemesis_Taunt_Ion>{0}: "I like dry lightning. Your grid will too, {1}."</Nemesis_Taunt_Ion>
 
   <!-- Intro -->
-  <Nemesis_Intro_Title>A Nemesis Emerges</Nemesis_Intro_Title>
   <Nemesis_Intro_KilledAlly>{0} killed someone who mattered.\n\nA {1} named {2} has made it personal. They will not stop coming until {0} answers for it, or until they are taken alive.</Nemesis_Intro_KilledAlly>
   <Nemesis_Intro_Wounded>{0} left a wound that didn't heal.\n\n{1} of {2} survived, and they remember who did it. They are coming back.</Nemesis_Intro_Wounded>
   <Nemesis_Intro_Fixation>Someone from {0} killed one of yours — and for them, that wasn't enough.\n\n{1} has developed an unhealthy fixation on {2}. They're coming, and they're not interested in anyone else.</Nemesis_Intro_Fixation>
@@ -73,6 +76,7 @@
   <Nemesis_Intro_Slave>A slave rebellion made the wrong enemies.\n\n{0} of {1} has decided your colony owes a debt in blood.</Nemesis_Intro_Slave>
   <Nemesis_Intro_Retaliation>{0} has had enough.\n\n{1} has been given authority to make your colony pay for it.</Nemesis_Intro_Retaliation>
   <Nemesis_Intro_ColonyDefault>Something your colony did drew the wrong kind of attention.\n\n{0} of {1} has made your destruction a personal mission.</Nemesis_Intro_ColonyDefault>
+  <Nemesis_Intro_TitleNamed>A Nemesis Emerges: {0}</Nemesis_Intro_TitleNamed>
 
   <!-- Letters: harassment -->
   <Nemesis_Letter_CommsTitle>Message from Comms Console</Nemesis_Letter_CommsTitle>
@@ -205,6 +209,7 @@
 
   <Nemesis_Dossier_Title>Nemesis dossier</Nemesis_Dossier_Title>
   <Nemesis_Dossier_Empty>No hunt is active. Epitaphs of finished hunts stay here.</Nemesis_Dossier_Empty>
+  <Nemesis_Dossier_Truce>{0} is under truce. The hunt resumes in {1}.</Nemesis_Dossier_Truce>
   <Nemesis_Dossier_Identity>{0} of {1} — {2}</Nemesis_Dossier_Identity>
   <Nemesis_Dossier_Target>Fixation: {0}. Aggression {1}. Escapes {2}. Captain {3}.</Nemesis_Dossier_Target>
   <Nemesis_Dossier_Tells>Voice {0}. Weapon {1}. Mark: {2}. Habit: {3}.</Nemesis_Dossier_Tells>
@@ -230,12 +235,11 @@
   <Nemesis_Intel_False>The lead was a lie. Cost {0} silver.</Nemesis_Intel_False>
   <Nemesis_Intel_FalseTile>somewhere that was never them</Nemesis_Intel_FalseTile>
   <Nemesis_Bounty_Posted>Bounty is now {0} silver.</Nemesis_Bounty_Posted>
-  <Nemesis_Bounty_Cleared>Bounty withdrawn.</Nemesis_Bounty_Cleared>
-  <Nemesis_Comms_BuyLead>Buy a lead on the nemesis ({0} silver)</Nemesis_Comms_BuyLead>
-  <Nemesis_Comms_PostBounty>Add {0} silver to the nemesis bounty</Nemesis_Comms_PostBounty>
   <Nemesis_Comms_TauntBack>Broadcast a taunt back at {0}</Nemesis_Comms_TauntBack>
   <Nemesis_Comms_OfferTruce>Offer {0} a truce</Nemesis_Comms_OfferTruce>
   <Nemesis_Comms_DemandSurrender>Demand {0} surrender</Nemesis_Comms_DemandSurrender>
+  <Nemesis_Comms_BuyLeadNamed>Buy a lead on {1} ({0} silver)</Nemesis_Comms_BuyLeadNamed>
+  <Nemesis_Comms_PostBountyNamed>Add {0} silver to the bounty on {1}</Nemesis_Comms_PostBountyNamed>
 
   <Nemesis_Dossier_PendingResolution>{0} is captured — choose their fate.</Nemesis_Dossier_PendingResolution>
   <Nemesis_Dossier_OpenResolution>Open resolution dialog</Nemesis_Dossier_OpenResolution>

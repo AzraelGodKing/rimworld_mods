@@ -5,38 +5,22 @@ using Verse;
 namespace Nemesis
 {
     /// <summary>
-    /// Mod-local performance: cached refs so tick work does not scan maps / world pawns every interval.
+    /// Mod-local flags and checks shared by the hunt tick. Pawn caches live on each
+    /// <see cref="NemesisData"/>.
     /// </summary>
     public static class NemesisRegistry
     {
-        public static Pawn CachedNemesis;
-        public static Pawn CachedTarget;
-        public static int CachedNemesisId = -1;
-        public static int CachedTargetId = -1;
+        /// <summary>Set by Kill / faction / guest patches; the next tick re-checks end conditions.</summary>
         public static bool ResolutionDirty;
-
-        public static void InvalidateNemesis()
-        {
-            CachedNemesis = null;
-            CachedNemesisId = -1;
-        }
-
-        public static void InvalidateTarget()
-        {
-            CachedTarget = null;
-            CachedTargetId = -1;
-        }
 
         public static void Clear()
         {
-            InvalidateNemesis();
-            InvalidateTarget();
             ResolutionDirty = false;
-        }
-
-        public static bool MapIsViewed(Map map)
-        {
-            return map != null && Find.CurrentMap == map;
+            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
+            if (comp == null) return;
+            IReadOnlyList<NemesisData> hunts = comp.Hunts;
+            for (int i = 0; i < hunts.Count; i++)
+                hunts[i].ClearCaches();
         }
 
         /// <summary>

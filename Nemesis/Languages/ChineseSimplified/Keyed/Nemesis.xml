@@ -14,6 +14,10 @@
   <Nemesis_Settings_WoundedEscape>重伤逃脱概率：{0}%</Nemesis_Settings_WoundedEscape>
   <Nemesis_Settings_TruceDays>休战时长：{0} 天</Nemesis_Settings_TruceDays>
   <Nemesis_Settings_MaxEscapes>走投无路前的逃脱次数：{0}</Nemesis_Settings_MaxEscapes>
+  <Nemesis_Settings_MaxHunts>同时进行的狩猎：{0}</Nemesis_Settings_MaxHunts>
+  <Nemesis_Settings_MaxHuntsTip>同时追杀你的宿敌数量上限。每个敌对派系最多一名。</Nemesis_Settings_MaxHuntsTip>
+  <Nemesis_Settings_HuntCooldown>新狩猎间隔天数：{0}</Nemesis_Settings_HuntCooldown>
+  <Nemesis_Settings_HuntCooldownTip>一次狩猎开始后，在这些天内不会开始新的狩猎，避免一次糟糕的袭击产生多名宿敌。</Nemesis_Settings_HuntCooldownTip>
   <Nemesis_Settings_Pacing>宿敌节奏</Nemesis_Settings_Pacing>
   <Nemesis_Settings_MaxAggression>最大侵略强度：{0}%</Nemesis_Settings_MaxAggression>
   <Nemesis_Settings_Escalation>升级速率：每天 {0}</Nemesis_Settings_Escalation>
@@ -64,7 +68,6 @@
   <Nemesis_Taunt_Ion>{0}：「我喜欢干闪电。你的电网也会喜欢的，{1}。」</Nemesis_Taunt_Ion>
 
   <!-- Intro -->
-  <Nemesis_Intro_Title>宿敌现身</Nemesis_Intro_Title>
   <Nemesis_Intro_KilledAlly>{0}杀了某个重要的人。\n\n一个名叫{2}的{1}把这当成了私人恩怨。他们会不断回来，直到{0}为此付出代价，或直到被活捉。</Nemesis_Intro_KilledAlly>
   <Nemesis_Intro_Wounded>{0}留下了一道愈合不了的伤。\n\n来自{2}的{1}活了下来，他们记得是谁干的。他们会回来。</Nemesis_Intro_Wounded>
   <Nemesis_Intro_Fixation>有人来自{0}杀了你们的人——而对他们来说，这还不够。\n\n{1}对{2}产生了病态的执念。他们来了，而且只盯着那一个人。</Nemesis_Intro_Fixation>
@@ -73,6 +76,7 @@
   <Nemesis_Intro_Slave>一场奴隶叛乱树错了敌人。\n\n来自{1}的{0}认定你们的殖民地欠下一笔血债。</Nemesis_Intro_Slave>
   <Nemesis_Intro_Retaliation>{0}受够了。\n\n{1}已被授权，让你们的殖民地为此付出代价。</Nemesis_Intro_Retaliation>
   <Nemesis_Intro_ColonyDefault>你们殖民地的所作所为引来了错误的关注。\n\n来自{1}的{0}已将摧毁你们当成私人使命。</Nemesis_Intro_ColonyDefault>
+  <Nemesis_Intro_TitleNamed>宿敌现身：{0}</Nemesis_Intro_TitleNamed>
 
   <!-- Letters: harassment -->
   <Nemesis_Letter_CommsTitle>来自通讯控制台的讯息</Nemesis_Letter_CommsTitle>
@@ -204,6 +208,7 @@
 
   <Nemesis_Dossier_Title>仇敌档案</Nemesis_Dossier_Title>
   <Nemesis_Dossier_Empty>当前没有进行中的狩猎。已结束的狩猎墓志铭会留在这里。</Nemesis_Dossier_Empty>
+  <Nemesis_Dossier_Truce>与{0}的停战仍在持续。狩猎将在{1}后恢复。</Nemesis_Dossier_Truce>
   <Nemesis_Dossier_Identity>{1}的{0} — {2}</Nemesis_Dossier_Identity>
   <Nemesis_Dossier_Target>执念：{0}。敌意 {1}。逃脱 {2}。队长 {3}。</Nemesis_Dossier_Target>
   <Nemesis_Dossier_Tells>口吻 {0}。武器 {1}。印记：{2}。习惯：{3}。</Nemesis_Dossier_Tells>
@@ -229,12 +234,11 @@
   <Nemesis_Intel_False>这条线索是假的。花费 {0} 银币。</Nemesis_Intel_False>
   <Nemesis_Intel_FalseTile>一个从来不是他们的地方</Nemesis_Intel_FalseTile>
   <Nemesis_Bounty_Posted>悬赏现为 {0} 银币。</Nemesis_Bounty_Posted>
-  <Nemesis_Bounty_Cleared>悬赏已撤回。</Nemesis_Bounty_Cleared>
-  <Nemesis_Comms_BuyLead>买一条仇敌线索（{0} 银币）</Nemesis_Comms_BuyLead>
-  <Nemesis_Comms_PostBounty>向仇敌悬赏追加 {0} 银币</Nemesis_Comms_PostBounty>
   <Nemesis_Comms_TauntBack>向 {0} 回传嘲讽</Nemesis_Comms_TauntBack>
   <Nemesis_Comms_OfferTruce>向 {0} 提出休战</Nemesis_Comms_OfferTruce>
   <Nemesis_Comms_DemandSurrender>要求 {0} 投降</Nemesis_Comms_DemandSurrender>
+  <Nemesis_Comms_BuyLeadNamed>买一条关于{1}的线索（{0} 银币）</Nemesis_Comms_BuyLeadNamed>
+  <Nemesis_Comms_PostBountyNamed>向{1}的悬赏追加 {0} 银币</Nemesis_Comms_PostBountyNamed>
 
   <Nemesis_Dossier_PendingResolution>{0} 已被俘——决定其命运。</Nemesis_Dossier_PendingResolution>
   <Nemesis_Dossier_OpenResolution>打开决议对话框</Nemesis_Dossier_OpenResolution>
