@@ -194,5 +194,10 @@
   <Stormproof_LoadShedder_HoldSmart>Hold: Smart</Stormproof_LoadShedder_HoldSmart>
   <Stormproof_LoadShedder_SmartHolding>Smart hold: reconnecting now would hit the cutoff in {0}. Staying shed.</Stormproof_LoadShedder_SmartHolding>
   <Stormproof_Settings_AzraelStack>Under the Azrael storyteller, which also weights these picks: {0}</Stormproof_Settings_AzraelStack>
+  <Stormproof_Settings_Visuals>Visual effects</Stormproof_Settings_Visuals>
+  <Stormproof_Settings_VisualEffects>Show Stormproof effects</Stormproof_Settings_VisualEffects>
+  <Stormproof_Settings_VisualEffectsTip>Defender fields while protecting, the storm spire's arc, capacitor glow, coloured coverage rings, and the ion storm aurora, heat dome haze, polar front frost and toxic surge fog. Off: buildings and weather look like vanilla.</Stormproof_Settings_VisualEffectsTip>
+  <Stormproof_Settings_ReducedEffects>Reduced intensity (photosensitivity)</Stormproof_Settings_ReducedEffects>
+  <Stormproof_Settings_ReducedEffectsTip>Dimmer effects with no pulsing and no flashes.</Stormproof_Settings_ReducedEffectsTip>
 
 </LanguageData>

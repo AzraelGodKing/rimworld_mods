@@ -20,7 +20,7 @@ namespace Stormproof
             {
                 return true;
             }
-            if (!CompEmpDampener.Shielded(thing))
+            if (!CompEmpDampener.Block(thing))
             {
                 return true;
             }

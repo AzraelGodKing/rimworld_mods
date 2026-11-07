@@ -47,6 +47,22 @@ namespace Stormproof
 
         // Map.GetComponent walks every map component; patches on hot paths ask
         // for the same map over and over, so remember the last answer.
+        // Live spire and pylon arcs; visual only, never saved.
+        internal readonly List<StormproofVisuals.Arc> Arcs = new List<StormproofVisuals.Arc>();
+
+        public override void MapComponentUpdate()
+        {
+            base.MapComponentUpdate();
+            if (StormproofVisuals.ShouldDraw(map))
+            {
+                StormproofVisuals.DrawMap(map, this);
+            }
+            else if (Arcs.Count > 0)
+            {
+                Arcs.Clear();
+            }
+        }
+
         public static MapComponent_Stormproof For(Map map)
         {
             if (map == null)

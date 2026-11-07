@@ -24,6 +24,13 @@ namespace Stormproof
 
         public override SkyTarget? SkyTarget(Map map) =>
             new SkyTarget(0.95f, HeatDomeSkyColors, 1f, 1f);
+
+        public override void GameConditionDraw(Map map)
+        {
+            base.GameConditionDraw(map);
+            StormproofVisuals.DrawHeatHaze(map, GameConditionUtility.LerpInOutValue(this, TransitionTicks),
+                HazardProtection.ClimateProtecting(map));
+        }
     }
 
     public class GameCondition_PolarFront : GameCondition
@@ -45,6 +52,25 @@ namespace Stormproof
 
         public override SkyTarget? SkyTarget(Map map) =>
             new SkyTarget(0.75f, PolarSkyColors, 1f, 1f);
+
+        public override void GameConditionDraw(Map map)
+        {
+            base.GameConditionDraw(map);
+            StormproofVisuals.DrawFrost(map, GameConditionUtility.LerpInOutValue(this, TransitionTicks),
+                HazardProtection.ClimateProtecting(map));
+        }
+    }
+
+    // Vanilla toxic fallout plus a denser drifting fog that calms while a
+    // barrier holds it off. Saves made before 2.0.0 keep the vanilla class.
+    public class GameCondition_ToxicSurge : GameCondition_ToxicFallout
+    {
+        public override void GameConditionDraw(Map map)
+        {
+            base.GameConditionDraw(map);
+            StormproofVisuals.DrawToxicFog(map, GameConditionUtility.LerpInOutValue(this, TransitionTicks),
+                HazardProtection.BarrierProtecting(map));
+        }
     }
 
     public class GameCondition_DryLightning : GameCondition

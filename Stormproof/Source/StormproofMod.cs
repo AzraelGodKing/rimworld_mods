@@ -146,6 +146,16 @@ namespace Stormproof
             }
 
             listing.GapLine();
+            listing.Label("Stormproof_Settings_Visuals".Translate());
+            listing.CheckboxLabeled("Stormproof_Settings_VisualEffects".Translate(),
+                ref Settings.visualEffects, "Stormproof_Settings_VisualEffectsTip".Translate());
+            if (Settings.visualEffects)
+            {
+                listing.CheckboxLabeled("Stormproof_Settings_ReducedEffects".Translate(),
+                    ref Settings.reducedEffects, "Stormproof_Settings_ReducedEffectsTip".Translate());
+            }
+
+            listing.GapLine();
             listing.Label("Stormproof_Settings_Suppressors".Translate());
             listing.CheckboxLabeled("Stormproof_Settings_Barrier".Translate(),
                 ref Settings.allowAtmosphericBarrier, "Stormproof_Settings_SuppressorTip".Translate());
