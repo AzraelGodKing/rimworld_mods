@@ -38,4 +38,8 @@
   <DC_Trauma_ToxicRelationship.description>一次次复合把爱变成了伤口。疏导仍能帮忙。</DC_Trauma_ToxicRelationship.description>
   <DC_Trauma_ToxicRelationship.triggerMessage>陷在有毒关系里</DC_Trauma_ToxicRelationship.triggerMessage>
 
+  <DC_Trauma_Hunted.label>被猎杀</DC_Trauma_Hunted.label>
+  <DC_Trauma_Hunted.description>一个有名有姓的敌人找上了殖民地，带走了亲近的人。仇恨如今有了一张脸。</DC_Trauma_Hunted.description>
+  <DC_Trauma_Hunted.triggerMessage>因宿敌失去了亲近的人</DC_Trauma_Hunted.triggerMessage>
+
 </LanguageData>

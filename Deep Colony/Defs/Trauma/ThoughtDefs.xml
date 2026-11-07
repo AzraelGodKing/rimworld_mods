@@ -851,4 +851,28 @@
     </stages>
   </ThoughtDef>
 
+  <!-- AZR-630: Nemesis kill. {0} is the nemesis. -->
+  <ThoughtDef ParentName="DC_TraumaThoughtBase" MayRequire="AzraelGodKing.Nemesis">
+    <defName>DC_Thought_Hunted</defName>
+    <label>hunted</label>
+    <durationDays>40</durationDays>
+    <stages>
+      <li>
+        <label>{0} took one of us</label>
+        <description>They know the name now, and the face. It will not leave them alone until it is settled.</description>
+        <baseMoodEffect>-10</baseMoodEffect>
+      </li>
+      <li>
+        <label>grudge against {0}</label>
+        <description>The anger has cooled into something patient.</description>
+        <baseMoodEffect>-6</baseMoodEffect>
+      </li>
+      <li>
+        <label>remembers what {0} did</label>
+        <description>It still comes back on quiet nights.</description>
+        <baseMoodEffect>-3</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
 </Defs>

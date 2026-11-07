@@ -290,4 +290,12 @@
   <DC_Thought_Isolation.stages_2.label>隔绝渐淡</DC_Thought_Isolation.stages_2.label>
   <DC_Thought_Isolation.stages_2.description>大地与同伴正慢慢说服他们：自己回来了。</DC_Thought_Isolation.stages_2.description>
 
+  <DC_Thought_Hunted.label>被猎杀</DC_Thought_Hunted.label>
+  <DC_Thought_Hunted.stages_0.label>{0}夺走了我们的人</DC_Thought_Hunted.stages_0.label>
+  <DC_Thought_Hunted.stages_0.description>他们记住了那个名字和那张脸。在了结之前，这件事不会放过他们。</DC_Thought_Hunted.stages_0.description>
+  <DC_Thought_Hunted.stages_1.label>对{0}的仇恨</DC_Thought_Hunted.stages_1.label>
+  <DC_Thought_Hunted.stages_1.description>怒火已冷却成某种耐心的东西。</DC_Thought_Hunted.stages_1.description>
+  <DC_Thought_Hunted.stages_2.label>记得{0}做过的事</DC_Thought_Hunted.stages_2.label>
+  <DC_Thought_Hunted.stages_2.description>在安静的夜里，它仍会回来。</DC_Thought_Hunted.stages_2.description>
+
 </LanguageData>

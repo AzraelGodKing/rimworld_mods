@@ -15,6 +15,7 @@ namespace DeepColony
     public static class DespicableKarmaSoftCompat
     {
         private static readonly MethodInfo applyOutcome;
+        private static readonly ParameterInfo[] applyParams;
         private static bool logged;
 
         static DespicableKarmaSoftCompat()
@@ -31,6 +32,7 @@ namespace DeepColony
                     if (p.Length < 8) continue;
                     if (p[0].ParameterType != typeof(int) || p[1].ParameterType != typeof(int)) continue;
                     applyOutcome = m;
+                    applyParams = p;
                     break;
                 }
                 if (applyOutcome != null)
@@ -49,7 +51,7 @@ namespace DeepColony
             if (karmaDelta == 0 && standingDelta == 0) return;
             try
             {
-                ParameterInfo[] p = applyOutcome.GetParameters();
+                ParameterInfo[] p = applyParams;
                 var args = new object[p.Length];
                 args[0] = karmaDelta;
                 args[1] = standingDelta;

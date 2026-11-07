@@ -26,6 +26,8 @@ namespace DeepColony
         public static TraumaDef DC_Trauma_Insect;
         public static TraumaDef DC_Trauma_Betrayal;
         public static TraumaDef DC_Trauma_ToxicRelationship;
+        [MayRequire("AzraelGodKing.Nemesis")]
+        public static TraumaDef DC_Trauma_Hunted;
         [MayRequire("Ludeon.RimWorld.Anomaly")]
         public static TraumaDef DC_Trauma_Horror;
         [MayRequire("Ludeon.RimWorld.Odyssey")]

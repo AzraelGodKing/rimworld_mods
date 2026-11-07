@@ -38,4 +38,8 @@
   <DC_Trauma_ToxicRelationship.description>Сходиться снова и снова превратило любовь в рану. Консультации всё ещё могут помочь.</DC_Trauma_ToxicRelationship.description>
   <DC_Trauma_ToxicRelationship.triggerMessage>застрял(а) в токсичных отношениях</DC_Trauma_ToxicRelationship.triggerMessage>
 
+  <DC_Trauma_Hunted.label>затравлен(а)</DC_Trauma_Hunted.label>
+  <DC_Trauma_Hunted.description>Враг с именем пришёл за колонией и забрал близкого. Теперь у обиды есть лицо.</DC_Trauma_Hunted.description>
+  <DC_Trauma_Hunted.triggerMessage>потерял(а) близкого из-за немезиды</DC_Trauma_Hunted.triggerMessage>
+
 </LanguageData>
