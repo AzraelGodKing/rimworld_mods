@@ -10,6 +10,10 @@
   <NanoHive_Settings_RangeOverride>使用自定义修理半径</NanoHive_Settings_RangeOverride>
   <NanoHive_Settings_Range>修理半径：{0}</NanoHive_Settings_Range>
   <NanoHive_Settings_RangeDefault>修理半径：{0}（建筑默认值）</NanoHive_Settings_RangeDefault>
+  <NanoHive_Inspect_Settings>半径 {0}，每个目标 {1} 点耐久，每个周期最多 {2} 点</NanoHive_Inspect_Settings>
+  <NanoHive_Inspect_Repairing>修理中：范围内 {0} 件物品中有 {1} 件受损，上个周期修复了 {2} 点耐久</NanoHive_Inspect_Repairing>
+  <NanoHive_Inspect_Idle>待机（{1} 瓦）：范围内 {0} 件物品，均未受损</NanoHive_Inspect_Idle>
+  <NanoHive_Inspect_NoPower>未在修理：没有电力</NanoHive_Inspect_NoPower>
   <NanoHive_Toggle_Buildings>修理建筑</NanoHive_Toggle_Buildings>
   <NanoHive_Toggle_BuildingsDesc>修理范围内你的殖民地的建筑。蜂巢总是会修理自己。</NanoHive_Toggle_BuildingsDesc>
   <NanoHive_Toggle_Items>修理物品</NanoHive_Toggle_Items>

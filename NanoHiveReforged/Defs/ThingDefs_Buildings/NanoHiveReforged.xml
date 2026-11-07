@@ -56,9 +56,12 @@
     <building>
       <canPlaceOverWall>true</canPlaceOverWall>
     </building>
-    <specialDisplayRadius>12</specialDisplayRadius>
+    <placeWorkers>
+      <li>NanoHiveReforged.PlaceWorker_NanoHiveRange</li>
+    </placeWorkers>
     <modExtensions>
       <li Class="NanoHiveReforged.NanoHiveProps">
+        <defaultRange>12</defaultRange>
         <idlePowerConsumption>200</idlePowerConsumption>
         <budgetTargets>40</budgetTargets>
       </li>

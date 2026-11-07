@@ -7,6 +7,10 @@ namespace NanoHiveReforged
     /// </summary>
     public class NanoHiveProps : DefModExtension
     {
+        // Repair radius a new colony starts with. The selection ring and the
+        // placement ghost draw the real radius, not specialDisplayRadius.
+        public float defaultRange = 12f;
+
         // Watts drawn while nothing in range needs repair. The full
         // basePowerConsumption is drawn while repairing.
         public float idlePowerConsumption = 200f;
