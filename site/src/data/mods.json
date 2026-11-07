@@ -690,7 +690,7 @@
       "badges": ["RimWorld 1.6 / 1.7", "Requires Harmony", "QoL"],
       "overview": [
         "Vanilla never shipped these. Niceties is one Harmony QoL companion: each nicety is its own Mod Options toggle. Soft / Default / Hard only seed the knobs — they are not a forced bundle.",
-        "Combat, fire, and outdoor rot stay vanilla. Royalty and Ideology are optional; those toggles no-op without the DLC. Safe to add or remove mid-save. Inspired by older Workshop ideas, rewritten from scratch for 1.6 — not a port of those mods."
+        "Combat, fire, and outdoor rot stay vanilla. Royalty and Ideology are optional; those toggles no-op without the DLC. Safe to add mid-save; removing it logs a few harmless errors once on the next load. Inspired by older Workshop ideas, written from scratch — not a port of those mods."
       ],
       "featureTabs": [
         {

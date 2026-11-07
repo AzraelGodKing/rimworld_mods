@@ -1,3 +1,4 @@
+#nullable enable
 using UnityEngine;
 using Verse;
 
@@ -5,7 +6,7 @@ namespace Niceties
 {
     public class NicetiesMod : Mod
     {
-        public static NicetiesSettings Settings;
+        public static NicetiesSettings Settings = new NicetiesSettings();
         private Vector2 settingsScroll;
         private float settingsContentHeight = 2000f;
 
@@ -18,11 +19,6 @@ namespace Niceties
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
-            if (Settings == null)
-            {
-                return;
-            }
-
             int before = Settings.ContentFingerprint();
 
             Listing_Standard listing = new Listing_Standard { maxOneColumn = true };
@@ -94,7 +90,7 @@ namespace Niceties
                 listing.Label("Niceties_Settings_MeleeSize".Translate(
                     Settings.meleeHuntMaxBodySize.ToString("F1")));
                 Settings.meleeHuntMaxBodySize = listing.Slider(Settings.meleeHuntMaxBodySize, 0.2f, 8f);
-                string example = MeleeHunt.ReferenceAnimalLabel(Settings.meleeHuntMaxBodySize);
+                string? example = MeleeHunt.ReferenceAnimalLabel(Settings.meleeHuntMaxBodySize);
                 listing.Label(example != null
                     ? "Niceties_Settings_MeleeSizeExample".Translate(example)
                     : "Niceties_Settings_MeleeSizeTiny".Translate());
@@ -133,7 +129,7 @@ namespace Niceties
 
         private static void DrawSaveSnapshotNotice(Listing_Standard listing)
         {
-            GameComponent_NicetiesSim gc = GameComponent_NicetiesSim.Get();
+            GameComponent_NicetiesSim? gc = GameComponent_NicetiesSim.Get();
             if (gc == null || !gc.DiffersFromModSettings())
             {
                 return;

@@ -51,7 +51,7 @@
   <Niceties_ShareRoomInspect>房间已共用。</Niceties_ShareRoomInspect>
   <Niceties_ShareRoomInspectWith>房间已共用：{0}。</Niceties_ShareRoomInspectWith>
   <Niceties_Settings_LeaveAWayOut>留出出路</Niceties_Settings_LeaveAWayOut>
-  <Niceties_Settings_LeaveAWayOutTip>殖民者不会完成会困住他人或挡住剩余框架的墙。把自己砌进去之前会先让开。Replace Stuff 的替换框架同样生效；就地换墙材（木墙换石墙）仍视为实心，所以仍可从冷冻室内部替换。右键强制建造仍会砌上。灵感来自 Smarter Construction，1.6 原写，并非移植。</Niceties_Settings_LeaveAWayOutTip>
+  <Niceties_Settings_LeaveAWayOutTip>殖民者不会完成会困住他人或挡住剩余框架的墙。把自己砌进去之前会先让开。Replace Stuff 的替换框架同样生效；就地换墙材（木墙换石墙）仍视为实心，所以仍可从冷冻室内部替换。右键强制建造仍会砌上。灵感来自 Smarter Construction，原创代码，并非移植。</Niceties_Settings_LeaveAWayOutTip>
   <Niceties_OpenBuilds_WouldEnclose>完成这个会把人砌在里面。</Niceties_OpenBuilds_WouldEnclose>
   <Niceties_OpenBuilds_WouldTrapSelf>完成这个会把建造者困在里面且无出路。</Niceties_OpenBuilds_WouldTrapSelf>
   <Niceties_Settings_Reset>重置为默认</Niceties_Settings_Reset>

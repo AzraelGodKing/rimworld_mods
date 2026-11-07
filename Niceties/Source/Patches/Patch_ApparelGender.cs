@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using Verse;
 
@@ -26,7 +27,7 @@ namespace Niceties
         internal static void ApplyEffective()
         {
             NicetiesSettings settings = NicetiesSim.Settings;
-            Apply(settings == null || settings.wearAnyGender);
+            Apply(settings.wearAnyGender);
         }
 
         internal static void Apply(bool wearAny)
