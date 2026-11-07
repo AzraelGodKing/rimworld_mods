@@ -24,6 +24,10 @@ namespace Nemesis
 
         public override string SettingsCategory() => "Nemesis";
 
+        /// <summary>An action weight of 0 turns that action off; say so instead of "0.00".</summary>
+        private static string WeightText(float weight) =>
+            weight <= 0f ? "Nemesis_Settings_WeightOff".Translate().ToString() : weight.ToString("F2");
+
         public override void DoSettingsWindowContents(Rect inRect)
         {
             var listing = new Listing_Standard { maxOneColumn = true };
@@ -31,6 +35,18 @@ namespace Nemesis
             var viewRect = new Rect(0f, 0f, inRect.width - 20f, viewHeight);
             Widgets.BeginScrollView(inRect, ref settingsScroll, viewRect);
             listing.Begin(new Rect(0f, 0f, viewRect.width, 99999f));
+
+            // Presets (AZR-572).
+            Rect presetRow = listing.GetRect(30f);
+            float third = (presetRow.width - 12f) / 3f;
+            if (Widgets.ButtonText(new Rect(presetRow.x, presetRow.y, third, 30f), "Nemesis_Settings_PresetRelentless".Translate()))
+                Settings.ApplyPreset(relentless: true);
+            if (Widgets.ButtonText(new Rect(presetRow.x + third + 6f, presetRow.y, third, 30f), "Nemesis_Settings_PresetDefault".Translate()))
+                Settings.ResetToDefaults();
+            if (Widgets.ButtonText(new Rect(presetRow.x + 2f * (third + 6f), presetRow.y, third, 30f), "Nemesis_Settings_PresetSlowBurn".Translate()))
+                Settings.ApplyPreset(relentless: false);
+            listing.Label("Nemesis_Settings_PresetTip".Translate());
+            listing.Gap(6f);
 
             listing.Label("Nemesis_Settings_Triggers".Translate());
             listing.Gap(4f);
@@ -135,6 +151,14 @@ namespace Nemesis
                 "Nemesis_Settings_ShuttleDrops".Translate(),
                 ref Settings.enableShuttleDrops,
                 "Nemesis_Settings_ShuttleDropsTip".Translate());
+            listing.CheckboxLabeled(
+                "Nemesis_Settings_IonBaiting".Translate(),
+                ref Settings.enableIonStormBaiting,
+                "Nemesis_Settings_IonBaitingTip".Translate());
+            listing.CheckboxLabeled(
+                "Nemesis_Settings_LivingWorldEscalate".Translate(),
+                ref Settings.livingWorldCollapseEscalates,
+                "Nemesis_Settings_LivingWorldEscalateTip".Translate());
             listing.Gap(10f);
 
             listing.GapLine();
@@ -156,37 +180,37 @@ namespace Nemesis
             Text.Font = GameFont.Small;
             listing.Gap(4f);
 
-            listing.Label("Nemesis_Settings_WeightTaunt".Translate(Settings.actionWeightTaunt.ToString("F2")));
+            listing.Label("Nemesis_Settings_WeightTaunt".Translate(WeightText(Settings.actionWeightTaunt)));
             Settings.actionWeightTaunt = listing.Slider(Settings.actionWeightTaunt, 0f, 1f);
             listing.Gap(4f);
-            listing.Label("Nemesis_Settings_WeightIdle".Translate(Settings.actionWeightIdle.ToString("F2")));
+            listing.Label("Nemesis_Settings_WeightIdle".Translate(WeightText(Settings.actionWeightIdle)));
             Settings.actionWeightIdle = listing.Slider(Settings.actionWeightIdle, 0f, 1f);
             listing.Gap(4f);
-            listing.Label("Nemesis_Settings_WeightRaid".Translate(Settings.actionWeightRaid.ToString("F2")));
+            listing.Label("Nemesis_Settings_WeightRaid".Translate(WeightText(Settings.actionWeightRaid)));
             Settings.actionWeightRaid = listing.Slider(Settings.actionWeightRaid, 0f, 1f);
             listing.Gap(4f);
-            listing.Label("Nemesis_Settings_WeightAssault".Translate(Settings.actionWeightAssault.ToString("F2")));
+            listing.Label("Nemesis_Settings_WeightAssault".Translate(WeightText(Settings.actionWeightAssault)));
             Settings.actionWeightAssault = listing.Slider(Settings.actionWeightAssault, 0f, 1f);
             listing.Gap(4f);
-            listing.Label("Nemesis_Settings_WeightWaste".Translate(Settings.actionWeightWaste.ToString("F2")));
+            listing.Label("Nemesis_Settings_WeightWaste".Translate(WeightText(Settings.actionWeightWaste)));
             Settings.actionWeightWaste = listing.Slider(Settings.actionWeightWaste, 0f, 1f);
             listing.Gap(4f);
-            listing.Label("Nemesis_Settings_WeightFakeSignal".Translate(Settings.actionWeightFakeSignal.ToString("F2")));
+            listing.Label("Nemesis_Settings_WeightFakeSignal".Translate(WeightText(Settings.actionWeightFakeSignal)));
             Settings.actionWeightFakeSignal = listing.Slider(Settings.actionWeightFakeSignal, 0f, 1f);
             listing.Gap(4f);
-            listing.Label("Nemesis_Settings_WeightCaravan".Translate(Settings.actionWeightCaravan.ToString("F2")));
+            listing.Label("Nemesis_Settings_WeightCaravan".Translate(WeightText(Settings.actionWeightCaravan)));
             Settings.actionWeightCaravan = listing.Slider(Settings.actionWeightCaravan, 0f, 1f);
             listing.Gap(4f);
-            listing.Label("Nemesis_Settings_WeightSabotage".Translate(Settings.actionWeightSabotage.ToString("F2")));
+            listing.Label("Nemesis_Settings_WeightSabotage".Translate(WeightText(Settings.actionWeightSabotage)));
             Settings.actionWeightSabotage = listing.Slider(Settings.actionWeightSabotage, 0f, 1f);
             listing.Gap(4f);
-            listing.Label("Nemesis_Settings_WeightFood".Translate(Settings.actionWeightFood.ToString("F2")));
+            listing.Label("Nemesis_Settings_WeightFood".Translate(WeightText(Settings.actionWeightFood)));
             Settings.actionWeightFood = listing.Slider(Settings.actionWeightFood, 0f, 1f);
             listing.Gap(4f);
-            listing.Label("Nemesis_Settings_WeightAnomaly".Translate(Settings.actionWeightAnomaly.ToString("F2")));
+            listing.Label("Nemesis_Settings_WeightAnomaly".Translate(WeightText(Settings.actionWeightAnomaly)));
             Settings.actionWeightAnomaly = listing.Slider(Settings.actionWeightAnomaly, 0f, 1f);
             listing.Gap(4f);
-            listing.Label("Nemesis_Settings_WeightKidnap".Translate(Settings.actionWeightKidnap.ToString("F2")));
+            listing.Label("Nemesis_Settings_WeightKidnap".Translate(WeightText(Settings.actionWeightKidnap)));
             Settings.actionWeightKidnap = listing.Slider(Settings.actionWeightKidnap, 0f, 1f);
             listing.Gap(12f);
 
@@ -206,6 +230,7 @@ namespace Nemesis
         static NemesisInit()
         {
             NemesisMultiplayer.RegisterAll();
+            NemesisLivingWorld.TryRegister();
         }
     }
 }

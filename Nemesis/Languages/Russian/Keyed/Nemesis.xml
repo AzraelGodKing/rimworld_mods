@@ -309,4 +309,21 @@
   <Nemesis_Letter_CampEmptyTitle>{0} здесь нет</Nemesis_Letter_CampEmptyTitle>
   <Nemesis_Letter_CampMissedBody>Это лагерь {0}, но их самих нет. Их люди всё ещё здесь.</Nemesis_Letter_CampMissedBody>
   <Nemesis_Letter_CampFalseBody>{0} здесь никогда не было. Осведомитель продал вам приманку, а кто-то оставил для вас знак.</Nemesis_Letter_CampFalseBody>
+  <Nemesis_Settings_PresetRelentless>Беспощадный</Nemesis_Settings_PresetRelentless>
+  <Nemesis_Settings_PresetDefault>По умолчанию</Nemesis_Settings_PresetDefault>
+  <Nemesis_Settings_PresetSlowBurn>Медленное тление</Nemesis_Settings_PresetSlowBurn>
+  <Nemesis_Settings_PresetTip>Пресеты задают шансы запуска, лимиты охот, темп и веса рейдов. Ниже можно подстроить. Вес 0 отключает действие.</Nemesis_Settings_PresetTip>
+  <Nemesis_Settings_WeightOff>выкл.</Nemesis_Settings_WeightOff>
+  <Nemesis_Settings_IonBaiting>Удар во время ионной бури (Stormproof)</Nemesis_Settings_IonBaiting>
+  <Nemesis_Settings_IonBaitingTip>Со Stormproof агрессивный немезида действует раньше во время ионной бури и предпочитает рейды и штурм саботажу, пока у вас нет питания.</Nemesis_Settings_IonBaitingTip>
+  <Nemesis_Settings_LivingWorldEscalate>Гибель фракции ожесточает немезиду (Living World)</Nemesis_Settings_LivingWorldEscalate>
+  <Nemesis_Settings_LivingWorldEscalateTip>С Living World, когда фракция охоты уничтожена, немезиде нечего терять: агрессия +2 и ход в течение дня. Выкл.: вместо этого затихает на 15 дней.</Nemesis_Settings_LivingWorldEscalateTip>
+  <Nemesis_Note_IonBait>Действует раньше, под прикрытием ионной бури.</Nemesis_Note_IonBait>
+  <Nemesis_Note_FactionCollapsedEscalate>{0} пала. Терять больше нечего.</Nemesis_Note_FactionCollapsedEscalate>
+  <Nemesis_Note_FactionCollapsedDormant>{0} пала. Пока залёг(ла) на дно.</Nemesis_Note_FactionCollapsedDormant>
+  <Nemesis_Note_FactionWon>{0} одержала решающую победу. Осмелел(а).</Nemesis_Note_FactionWon>
+  <Nemesis_Note_FactionLost>{0} проиграла решающую битву. Зализывает раны.</Nemesis_Note_FactionLost>
+  <Nemesis_Letter_FactionCollapsedTitle>Народа {0} больше нет</Nemesis_Letter_FactionCollapsedTitle>
+  <Nemesis_Letter_FactionCollapsedEscalate>{1} уничтожена. {0} нечего терять, и вы — всё, что осталось ненавидеть.</Nemesis_Letter_FactionCollapsedEscalate>
+  <Nemesis_Letter_FactionCollapsedDormant>{1} уничтожена. {0} залёг(ла) на дно. Ждите возвращения примерно через {2} дн.</Nemesis_Letter_FactionCollapsedDormant>
 </LanguageData>
