@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <NanoHive_SettingsCategory>NanoHive Reforged</NanoHive_SettingsCategory>
+  <NanoHive_Settings_Intro>Это начальные значения для новой колонии, а также для сохранения NanoHive 1.x при первой загрузке. После этого каждое сохранение хранит свои значения, а у каждого улья есть свои кнопки.</NanoHive_Settings_Intro>
+  <NanoHive_Settings_InGame>У этой колонии уже есть свои значения по умолчанию, поэтому изменения здесь применятся к следующей новой колонии. Чтобы изменить значения этой колонии, настройте улей и нажмите «Сделать значениями колонии».</NanoHive_Settings_InGame>
+  <NanoHive_Settings_Rate>Ремонт одной цели за цикл: {0} ед. прочности</NanoHive_Settings_Rate>
+  <NanoHive_Settings_Gear>Чинить одежду и снаряжение колонистов</NanoHive_Settings_Gear>
+  <NanoHive_Settings_Inventory>Чинить предметы в инвентаре колонистов</NanoHive_Settings_Inventory>
+  <NanoHive_Settings_RangeOverride>Свой радиус ремонта</NanoHive_Settings_RangeOverride>
+  <NanoHive_Settings_Range>Радиус ремонта: {0}</NanoHive_Settings_Range>
+  <NanoHive_Settings_RangeDefault>Радиус ремонта: {0} (значение постройки)</NanoHive_Settings_RangeDefault>
+  <NanoHive_Toggle_Buildings>Чинить постройки</NanoHive_Toggle_Buildings>
+  <NanoHive_Toggle_BuildingsDesc>Чинить постройки вашей колонии в радиусе. Улей всегда чинит сам себя.</NanoHive_Toggle_BuildingsDesc>
+  <NanoHive_Toggle_Items>Чинить предметы</NanoHive_Toggle_Items>
+  <NanoHive_Toggle_ItemsDesc>Чинить предметы под крышей в радиусе.</NanoHive_Toggle_ItemsDesc>
+  <NanoHive_Toggle_Gear>Чинить снаряжение</NanoHive_Toggle_Gear>
+  <NanoHive_Toggle_GearDesc>Чинить одежду и снаряжение колонистов в радиусе.</NanoHive_Toggle_GearDesc>
+  <NanoHive_Toggle_Inventory>Чинить инвентарь</NanoHive_Toggle_Inventory>
+  <NanoHive_Toggle_InventoryDesc>Чинить предметы, которые несут колонисты в радиусе.</NanoHive_Toggle_InventoryDesc>
+  <NanoHive_Range>Радиус: {0}</NanoHive_Range>
+  <NanoHive_RangeDesc>Задать, как далеко действует улей. Применяется ко всем выбранным ульям.</NanoHive_RangeDesc>
+  <NanoHive_RangeSlider>Радиус ремонта: {0}</NanoHive_RangeSlider>
+  <NanoHive_Rate>Скорость: {0} ед.</NanoHive_Rate>
+  <NanoHive_RateDesc>Задать, сколько прочности получает каждая цель за цикл ремонта (примерно каждые 4 секунды). Всего за цикл улей тратит не больше 40-кратного значения, самые повреждённые первыми. Применяется ко всем выбранным ульям.</NanoHive_RateDesc>
+  <NanoHive_RateSlider>Ремонт одной цели: {0} ед.</NanoHive_RateSlider>
+  <NanoHive_MakeDefault>Сделать значениями колонии</NanoHive_MakeDefault>
+  <NanoHive_MakeDefaultDesc>Новые ульи этой колонии получат настройки этого улья.</NanoHive_MakeDefaultDesc>
+  <NanoHive_CopyAll>Копировать во все ульи</NanoHive_CopyAll>
+  <NanoHive_CopyAllDesc>Дать всем ульям на этой карте настройки этого улья.</NanoHive_CopyAllDesc>
+
+</LanguageData>

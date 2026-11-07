@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <NanoHive_SettingsCategory>NanoHive Reforged</NanoHive_SettingsCategory>
+  <NanoHive_Settings_Intro>这些是新殖民地的初始值，也用于 NanoHive 1.x 存档第一次载入时。之后每个存档保留自己的数值，每个纳米蜂巢也有自己的按钮。</NanoHive_Settings_Intro>
+  <NanoHive_Settings_InGame>这个殖民地已经有自己的默认值，所以这里的更改只对你的下一个新殖民地生效。要更改这个殖民地的默认值，请设置好一个蜂巢并点击"设为殖民地默认"。</NanoHive_Settings_InGame>
+  <NanoHive_Settings_Rate>每个修理周期对每个目标修复：{0} 点耐久</NanoHive_Settings_Rate>
+  <NanoHive_Settings_Gear>修理殖民者的服装和装备</NanoHive_Settings_Gear>
+  <NanoHive_Settings_Inventory>修理殖民者背包中的物品</NanoHive_Settings_Inventory>
+  <NanoHive_Settings_RangeOverride>使用自定义修理半径</NanoHive_Settings_RangeOverride>
+  <NanoHive_Settings_Range>修理半径：{0}</NanoHive_Settings_Range>
+  <NanoHive_Settings_RangeDefault>修理半径：{0}（建筑默认值）</NanoHive_Settings_RangeDefault>
+  <NanoHive_Toggle_Buildings>修理建筑</NanoHive_Toggle_Buildings>
+  <NanoHive_Toggle_BuildingsDesc>修理范围内你的殖民地的建筑。蜂巢总是会修理自己。</NanoHive_Toggle_BuildingsDesc>
+  <NanoHive_Toggle_Items>修理物品</NanoHive_Toggle_Items>
+  <NanoHive_Toggle_ItemsDesc>修理范围内放在屋顶下的物品。</NanoHive_Toggle_ItemsDesc>
+  <NanoHive_Toggle_Gear>修理装备</NanoHive_Toggle_Gear>
+  <NanoHive_Toggle_GearDesc>修理范围内殖民者的服装和装备。</NanoHive_Toggle_GearDesc>
+  <NanoHive_Toggle_Inventory>修理背包</NanoHive_Toggle_Inventory>
+  <NanoHive_Toggle_InventoryDesc>修理范围内殖民者携带的物品。</NanoHive_Toggle_InventoryDesc>
+  <NanoHive_Range>半径：{0}</NanoHive_Range>
+  <NanoHive_RangeDesc>设置这个蜂巢的作用范围。对所有选中的蜂巢生效。</NanoHive_RangeDesc>
+  <NanoHive_RangeSlider>修理半径：{0}</NanoHive_RangeSlider>
+  <NanoHive_Rate>速率：{0} 点耐久</NanoHive_Rate>
+  <NanoHive_RateDesc>设置每个修理周期（约 4 秒）每个目标恢复多少耐久。蜂巢每个周期总共最多花费这个数值的 40 倍，损坏最严重的优先。对所有选中的蜂巢生效。</NanoHive_RateDesc>
+  <NanoHive_RateSlider>每个目标修复：{0} 点耐久</NanoHive_RateSlider>
+  <NanoHive_MakeDefault>设为殖民地默认</NanoHive_MakeDefault>
+  <NanoHive_MakeDefaultDesc>这个殖民地新建的蜂巢会使用这个蜂巢的设置。</NanoHive_MakeDefaultDesc>
+  <NanoHive_CopyAll>复制到所有蜂巢</NanoHive_CopyAll>
+  <NanoHive_CopyAllDesc>把这个蜂巢的设置复制给本地图上的所有蜂巢。</NanoHive_CopyAllDesc>
+
+</LanguageData>
