@@ -8,15 +8,24 @@ First public release. One source builds two DLLs: `1.6/Assemblies` for RimWorld 
 Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[Azrael] v1.0.0 loaded from ...` in Player.log.
 
 ### Fixed
+- **Safe-removal deconstruct lost on save** (AZR-684) - "Designate buildings for deconstruction" waited for the next game tick, so pausing, saving and quitting dropped it while the message said it worked. Designations now apply on click, paused or not.
+- **Chinese and Russian start text for The Deep Homestead** (AZR-724) - the translated start dialog targeted the wrong scenario part and never showed. It is now keyed by the part's name, so it works with and without Odyssey.
+- **Hub with a changed Nemesis** (AZR-685) - the Nemesis checks in Prepare to remove no longer throw if Nemesis renames something; they read as "nothing there" like the other probes.
+- **Forced storyteller keeps its state** (AZR-603) - The Deep Homestead swaps the storyteller def in place (as the in-game storyteller change does) instead of building a new storyteller, so difficulty and incident history carry over.
+- **Mountain start with other start-site mods** (AZR-603) - the start-tile patch runs last and keeps a pick that is already large hills or mountains.
 - **Copy report RimWorld version** - the report always said "(version unread)" because it looked up the version type in the wrong namespace. It now prints the real version.
 - **Player.log path on 1.7** - the startup line said "loaded from  (modified unknown)" on RimWorld 1.7, which loads mod DLLs from memory. It now names the mod folder (all series mods share this line).
 
 ### Changed
+- **Multiplayer: soft support** - safe-removal deconstruct is registered as a Multiplayer sync method (by reflection, no Multiplayer DLL shipped), so it applies on every client. The Conflicts note now says it is synced and that every player needs the host's Azrael settings.
+- **Public contracts only** (AZR-585, AZR-686) - the hub reads sister mods through public members: Nemesis `IsEngaged` and `FindNemesisPawn()` (so a pending resolution also blocks removal), Deep Colony's public family-letter list, and Living World's `LivingWorldCompatApi.IsHandlerRegistered(Type)` (until that ships, the goodwill bridge falls back to type presence). The private Nemesis field fallbacks are gone, and opening Mod Options no longer forces Deep Colony's static constructor.
+- **Patch binding** (AZR-603) - the series-weights patch pins `IncidentChanceFinal(IncidentDef, IIncidentTarget)` and binds the incident by position, so a 1.7 overload or rename shows up as a failed patch instead of binding wrong.
 - **Separate 1.6 and 1.7 assemblies.** RimWorld 1.6 loads `1.6/Assemblies`, RimWorld 1.7 loads `1.7/Assemblies` (.NET 10, built against the 1.7 refs).
 - **Released builds** - CI now packs `Azrael.zip` for the site downloads, and Release & Publish accepts Azrael.
 - **Build stamps** - the hub no longer scrapes Player.log for a stamp. Only mods that expose `XBuildInfo.BuildStamp` show one.
 
 ### Internal
+- **Frozen save surface** (AZR-605) - ModChecks now fails if `Azrael.ScenPart_ForcedStoryteller`, `Azrael.ScenPart_PreferMountainStart`, `Azrael.GameComponent_UpdateNews` or their scribe labels change, since saves reference them.
 - .NET 10 pass (AZR-601): nullable reference types on every Azrael file with no warnings, a typed series roster with a case-insensitive packageId index, `System.Threading.Lock` in the patch-failure sink on .NET 10, series incident weights keyed by `StorytellerDef` instead of defName strings, switch expressions.
 - Shared `ModPack.ForExecutingAssembly` for the UpdateNews and ModVersionLog pack lookup. No gameplay change.
 - Removed unread `RemovalLine.CanDeconstruct` and the hub probe for nonexistent `Homesteader_HandDugWell` (the well is `Wellspring_HandDugWell`). No gameplay change.

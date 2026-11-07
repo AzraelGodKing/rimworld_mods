@@ -33,20 +33,19 @@
   <Azrael_Hub_Conflict_Stack>Stacked maps fight Strata. Do not run this with Strata.</Azrael_Hub_Conflict_Stack>
   <Azrael_Hub_Conflict_Wellspring>Standalone Wellspring leftover; water ships inside Homesteader.</Azrael_Hub_Conflict_Wellspring>
   <Azrael_Hub_Conflict_LoadOrder>Load Azrael after series content. {0} is currently after Azrael — move Azrael last among the series.</Azrael_Hub_Conflict_LoadOrder>
-  <Azrael_Hub_Conflict_Multiplayer>Safe-removal deconstruct acts on your client only. In a multiplayer session, designate by hand in play instead.</Azrael_Hub_Conflict_Multiplayer>
+  <Azrael_Hub_Conflict_Multiplayer>Safe-removal deconstruct is synced to every player. Mod settings are not synced: every player needs the host's Azrael settings.</Azrael_Hub_Conflict_Multiplayer>
   <Azrael_Hub_Harmony>Failed patches</Azrael_Hub_Harmony>
   <Azrael_Hub_HarmonyNone>No failed series patch classes this session.</Azrael_Hub_HarmonyNone>
   <Azrael_Hub_HarmonyCount>{0} failed patch class(es).</Azrael_Hub_HarmonyCount>
 
   <Azrael_Removal_Section>Safe removal</Azrael_Removal_Section>
-  <Azrael_Removal_SectionHint>Does not edit the save. Lists what would orphan if you uninstall a series mod, then can queue deconstruction.</Azrael_Removal_SectionHint>
+  <Azrael_Removal_SectionHint>Does not edit the save. Lists what would orphan if you uninstall a series mod, then can designate its buildings for deconstruction.</Azrael_Removal_SectionHint>
   <Azrael_Removal_Prep>Prepare to remove {0}</Azrael_Removal_Prep>
   <Azrael_Removal_Title>Remove {0}</Azrael_Removal_Title>
   <Azrael_Removal_Intro>Per map and caravan. This does not strip save data.</Azrael_Removal_Intro>
   <Azrael_Removal_Jump>Jump</Azrael_Removal_Jump>
   <Azrael_Removal_Deconstruct>Designate buildings for deconstruction</Azrael_Removal_Deconstruct>
-  <Azrael_Removal_Designated>Queued deconstruction on {0} {1} building(s).</Azrael_Removal_Designated>
-  <Azrael_Removal_Queued>Deconstruction will be designated when the game unpauses.</Azrael_Removal_Queued>
+  <Azrael_Removal_Designated>Designated {0} {1} building(s) for deconstruction.</Azrael_Removal_Designated>
   <Azrael_Removal_Summary>{0} to deconstruct · {1} to consume or sell · {2} need attention · {3} safe</Azrael_Removal_Summary>
   <Azrael_Removal_NeedSave>Load a colony first.</Azrael_Removal_NeedSave>
   <Azrael_Removal_Empty>Nothing from this mod is on the maps or caravans.</Azrael_Removal_Empty>

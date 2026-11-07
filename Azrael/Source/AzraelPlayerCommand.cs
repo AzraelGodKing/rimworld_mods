@@ -6,55 +6,22 @@ using Verse;
 namespace Azrael
 {
     /// <summary>
-    /// Enqueue safe-removal map mutations from Mod Options; drain on GameComponentTick
-    /// (same MP-safer pattern as DeepColonyPlayerCommand; no Multiplayer.API).
+    /// The one map change Azrael makes from Mod Options: deconstruct designations for
+    /// safe removal. Applied at once (works while paused, nothing to lose on save), and
+    /// registered as a Multiplayer sync method so it runs on every client.
     /// </summary>
     internal static class AzraelPlayerCommand
     {
-        private struct Entry
+        // Multiplayer sync target (AzraelMultiplayer): keep the signature MP-serialisable.
+        public static void DesignateDeconstruct(int[] thingIds, string display)
         {
-            public HashSet<int> thingIds;
-            public string display;
-        }
-
-        private static readonly List<Entry> queue = new List<Entry>();
-
-        public static void EnqueueDeconstruct(List<Thing> things, string display)
-        {
-            if (things == null || things.Count == 0)
+            if (thingIds == null || thingIds.Length == 0 || Current.Game == null)
             {
                 return;
             }
-            var ids = new HashSet<int>();
-            for (int i = 0; i < things.Count; i++)
-            {
-                if (things[i] != null)
-                {
-                    ids.Add(things[i].thingIDNumber);
-                }
-            }
-            queue.Add(new Entry { thingIds = ids, display = display });
-        }
-
-        public static void Drain()
-        {
-            if (queue.Count == 0)
-            {
-                return;
-            }
-            List<Entry> batch = new List<Entry>(queue);
-            queue.Clear();
-            for (int i = 0; i < batch.Count; i++)
-            {
-                int n = SeriesRemoval.ApplyDeconstruct(FindBuildings(batch[i].thingIds));
-                Messages.Message("Azrael_Removal_Designated".Translate(n, batch[i].display),
-                    MessageTypeDefOf.TaskCompletion);
-            }
-        }
-
-        public static void Clear()
-        {
-            queue.Clear();
+            int n = SeriesRemoval.ApplyDeconstruct(FindBuildings(new HashSet<int>(thingIds)));
+            Messages.Message("Azrael_Removal_Designated".Translate(n, display ?? ""),
+                MessageTypeDefOf.TaskCompletion, historical: false);
         }
 
         private static List<Thing> FindBuildings(HashSet<int> ids)

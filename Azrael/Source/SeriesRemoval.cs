@@ -68,14 +68,21 @@ namespace Azrael
             return report;
         }
 
-        public static void DesignateDeconstruct(RemovalReport report)
+        public static void DesignateDeconstruct(RemovalReport? report)
         {
-            if (report?.Deconstructables == null)
+            if (report?.Deconstructables == null || report.Deconstructables.Count == 0)
             {
                 return;
             }
-            AzraelPlayerCommand.EnqueueDeconstruct(report.Deconstructables, report.Display);
-            Messages.Message("Azrael_Removal_Queued".Translate(), MessageTypeDefOf.NeutralEvent, historical: false);
+            var ids = new List<int>(report.Deconstructables.Count);
+            foreach (Thing t in report.Deconstructables)
+            {
+                if (t != null)
+                {
+                    ids.Add(t.thingIDNumber);
+                }
+            }
+            AzraelPlayerCommand.DesignateDeconstruct(ids.ToArray(), report.Display);
         }
 
         internal static int ApplyDeconstruct(List<Thing> things)
@@ -193,7 +200,7 @@ namespace Azrael
         private static void AddPawnState(string packageId, RemovalReport report)
         {
             if (packageId.IndexOf("Nemesis", System.StringComparison.OrdinalIgnoreCase) >= 0
-                && HuntActive())
+                && SisterContracts.NemesisEngaged())
             {
                 report.Blockers.Add("Azrael_Removal_NemesisHunt".Translate());
                 report.Lines.Add(new RemovalLine
@@ -246,10 +253,10 @@ namespace Azrael
         private static void AddWorldState(string packageId, RemovalReport report)
         {
             if (packageId.IndexOf("Nemesis", System.StringComparison.OrdinalIgnoreCase) >= 0
-                && NemesisWorldPawnParked())
+                && SisterContracts.NemesisPawnParked())
             {
                 // HuntActive already blocks when engaged; parked pawn without engagement is rare.
-                if (!HuntActive())
+                if (!SisterContracts.NemesisEngaged())
                 {
                     report.Lines.Add(new RemovalLine
                     {
@@ -262,7 +269,7 @@ namespace Azrael
 
             if (packageId.IndexOf("DeepColony", System.StringComparison.OrdinalIgnoreCase) >= 0)
             {
-                int letters = DeepColonyFamilyLetterCount();
+                int letters = SisterContracts.DeepColonyFamilyLetterCount();
                 if (letters > 0)
                 {
                     report.Lines.Add(new RemovalLine
@@ -340,84 +347,6 @@ namespace Azrael
                 }
             }
             return n;
-        }
-
-        private static bool HuntActive()
-        {
-            System.Type? t = AccessTools.TypeByName("Nemesis.GameComponent_Nemesis");
-            if (t == null || Current.Game == null)
-            {
-                return false;
-            }
-            object? inst = Current.Game.GetComponent(t);
-            if (inst == null)
-            {
-                return false;
-            }
-
-            // Prefer IsEngaged (active hunt OR truce window).
-            object? engaged = AccessTools.Property(t, "IsEngaged")?.GetValue(inst);
-            if (engaged is bool e)
-            {
-                return e;
-            }
-
-            object? data = AccessTools.Field(t, "data")?.GetValue(inst)
-                ?? AccessTools.Property(t, "Data")?.GetValue(inst);
-            if (data == null)
-            {
-                return false;
-            }
-            object? active = AccessTools.Field(data.GetType(), "active")?.GetValue(data);
-            if (active is bool b && b)
-            {
-                return true;
-            }
-            object? truce = AccessTools.Field(data.GetType(), "truceUntilTick")?.GetValue(data);
-            return truce is int tick && tick > 0;
-        }
-
-        private static bool NemesisWorldPawnParked()
-        {
-            System.Type? t = AccessTools.TypeByName("Nemesis.GameComponent_Nemesis");
-            if (t == null || Current.Game == null)
-            {
-                return false;
-            }
-            object? inst = Current.Game.GetComponent(t);
-            if (inst == null)
-            {
-                return false;
-            }
-            object? pawn = AccessTools.Method(t, "FindNemesisPawn")?.Invoke(inst, null);
-            return pawn is Pawn p && !p.Destroyed && !p.Dead;
-        }
-
-        private static int DeepColonyFamilyLetterCount()
-        {
-            try
-            {
-                System.Type? t = AccessTools.TypeByName("DeepColony.GameComp_DeepColony");
-                if (t == null || Current.Game == null)
-                {
-                    return 0;
-                }
-                object? inst = AccessTools.Property(t, "Instance")?.GetValue(null)
-                    ?? Current.Game.GetComponent(t);
-                if (inst == null)
-                {
-                    return 0;
-                }
-                object? letters = AccessTools.Field(t, "familyLetters")?.GetValue(inst);
-                if (letters is System.Collections.ICollection coll)
-                {
-                    return coll.Count;
-                }
-            }
-            catch
-            {
-            }
-            return 0;
         }
     }
 
