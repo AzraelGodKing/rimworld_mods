@@ -44,8 +44,12 @@
     <weaponBudget>200~400</weaponBudget>
     <weaponBudgetPerWave>25</weaponBudgetPerWave>
 
+    <!-- Days in a row without a trade beacon before a half-size drop (no weapon) lands near
+         the colony instead. 0 turns this off. -->
+    <noBeaconFallbackDays>3</noBeaconFallbackDays>
+
     <!-- Rolled once a day and dropped at the orbital trade beacon. Nothing drops while the
-         colony already holds maxStockpile of that item. Survival meals drop whenever food
+         colony already holds maxStockpile of that item, counting loose items near the beacon. Survival meals drop whenever food
          runs low; that is not tunable here. -->
     <supplyDrops>
       <li>

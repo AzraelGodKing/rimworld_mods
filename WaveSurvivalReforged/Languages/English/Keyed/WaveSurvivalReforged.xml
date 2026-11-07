@@ -8,7 +8,9 @@
   <WSR_WaveTimerSpecial>This is a special wave: a siege, sappers, breachers, mechanoids, or maddened animals.</WSR_WaveTimerSpecial>
 
   <WSR_NeedBeaconLabel>Build a trade beacon</WSR_NeedBeaconLabel>
-  <WSR_NeedBeaconExplanation>Wave Survival drops supplies by pod at your orbital trade beacon once a day. Until you build one, no supplies arrive.\n\nBuild one as soon as you can.</WSR_NeedBeaconExplanation>
+  <WSR_NeedBeaconExplanation>Wave Survival drops supplies by pod at your orbital trade beacon once a day. Until you build one, the daily drop waits.
+
+Build one as soon as you can.</WSR_NeedBeaconExplanation>
 
   <WSR_WaveArrived>Wave {0} has arrived: {1}!</WSR_WaveArrived>
   <WSR_SpecialWaveArrived>Special wave {0} has arrived: {1}!</WSR_SpecialWaveArrived>
@@ -19,5 +21,25 @@
   <WSR_WaveWithFaction>{0} ({1})</WSR_WaveWithFaction>
   <WSR_WavePostponed>Wave {0} could not start: nobody hostile is able to attack. Trying again in {1}.</WSR_WavePostponed>
   <WSR_WavePostponedNoHome>Wave {0} is waiting for you to have a home map. Trying again in {1}.</WSR_WavePostponedNoHome>
+
+  <WSR_NeedBeaconFallback>After {0} days without a beacon, a smaller drop with no weapon lands near the colony instead.</WSR_NeedBeaconFallback>
+  <WSR_WaveSplit>{0}, in two groups</WSR_WaveSplit>
+  <WSR_WaveTimerPlan>Expected: {0}, about {1} threat points.</WSR_WaveTimerPlan>
+  <WSR_SupplyDropFallback>With no trade beacon, a smaller supply drop has landed near the colony.</WSR_SupplyDropFallback>
+  <WSR_WaveSummaryLabel>Wave {0} over</WSR_WaveSummaryLabel>
+  <WSR_WaveSummaryText>Wave {0} ({1}) is over.
+
+Killed: {2}
+Downed: {3}
+Fled: {4}</WSR_WaveSummaryText>
+  <WSR_WaveSummaryLeft>{0} of them were still standing when the next wave came.</WSR_WaveSummaryLeft>
+  <WSR_SettingsCategory>Wave Survival Reforged</WSR_SettingsCategory>
+  <WSR_SettingsShowHud>Show the wave HUD</WSR_SettingsShowHud>
+  <WSR_SettingsShowHudTip>A small box at the top of the screen with the next wave, what it will be, and how the last one went.</WSR_SettingsShowHudTip>
+  <WSR_HudNext>Wave {0} in {1}</WSR_HudNext>
+  <WSR_HudPlan>{0} · about {1} points</WSR_HudPlan>
+  <WSR_HudPlanUnknown>Not rolled yet</WSR_HudPlanUnknown>
+  <WSR_HudActive>Wave {0}: {1} enemies standing</WSR_HudActive>
+  <WSR_HudLast>Wave {0}: {1} killed, {2} downed, {3} fled</WSR_HudLast>
 
 </LanguageData>

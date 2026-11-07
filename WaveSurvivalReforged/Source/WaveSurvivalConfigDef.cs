@@ -40,6 +40,9 @@ namespace WaveSurvivalReforged
         public FloatRange weaponBudget = new FloatRange(200f, 400f);
         public float weaponBudgetPerWave = 25f;
 
+        // Days in a row without a trade beacon before a smaller drop lands near the colony. 0: never.
+        public int noBeaconFallbackDays = 3;
+
         public List<SupplyDrop> supplyDrops = new List<SupplyDrop>();
 
         public override IEnumerable<string> ConfigErrors()
@@ -74,6 +77,8 @@ namespace WaveSurvivalReforged
                 yield return error;
             if (weaponBudget.min < 0f || weaponBudget.max < weaponBudget.min)
                 yield return "weaponBudget must be a range of 0 or more";
+            if (noBeaconFallbackDays < 0)
+                yield return "noBeaconFallbackDays must be 0 (off) or more";
             for (int i = 0; i < supplyDrops.Count; i++)
             {
                 SupplyDrop drop = supplyDrops[i];
