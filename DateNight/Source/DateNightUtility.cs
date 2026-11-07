@@ -14,11 +14,20 @@ namespace DateNight
 
         // Stable rendezvous bed per couple for the current Lovin window (no claim churn).
         // Ephemeral — cleared on new/load game (not scribed); thing IDs reset across colonies.
-        private static readonly Dictionary<long, int> RendezvousBedIds = new Dictionary<long, int>();
+        // Holds the bed itself, not its id: the old id cache scanned every colonist
+        // bed to find it again, every 60 ticks per Lovin pawn (AZR-542).
+        private static readonly Dictionary<long, RendezvousEntry> RendezvousBeds = new Dictionary<long, RendezvousEntry>();
+        private const int ReachRecheckTicks = 250;
+
+        private struct RendezvousEntry
+        {
+            public Building_Bed bed;
+            public int reachCheckedTick;
+        }
 
         public static void ClearEphemeral()
         {
-            RendezvousBedIds.Clear();
+            RendezvousBeds.Clear();
         }
 
         public static bool IsLovinSchedule(Pawn pawn)
@@ -99,93 +108,78 @@ namespace DateNight
                 return true;
             }
 
-            PawnDuty? duty = pawn.mindState?.duty;
-            if (duty?.def == null)
+            DutyDef? duty = pawn.mindState?.duty?.def;
+            if (duty == null)
             {
                 return false;
             }
-            string n = duty.def.defName;
-            if (n.IndexOf("Ritual", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            if (!RitualDuty.TryGetValue(duty, out bool ritual))
             {
-                return true;
+                ritual = ContainsAny(duty.defName, RitualDutyTokens);
+                RitualDuty[duty] = ritual;
             }
-            if (n.IndexOf("Spectate", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            return ritual;
+        }
+
+        // Defs and types never change after load, so each name is classified once
+        // instead of string-searched on every check (AZR-542).
+        private static readonly Dictionary<DutyDef, bool> RitualDuty = new Dictionary<DutyDef, bool>();
+        private static readonly Dictionary<JobDef, bool> LovinJobDef = new Dictionary<JobDef, bool>();
+        private static readonly Dictionary<System.Type, bool> LovinDriverType = new Dictionary<System.Type, bool>();
+
+        private static readonly string[] RitualDutyTokens = { "Ritual", "Spectate", "Bestow" };
+
+        private static readonly string[] LovinTokens =
+        {
+            "Lovin", "JobDriver_Sex", "SexBase", "JoinInBed", "GettinLoved", "Masturbate",
+            "Quickie", "Breeding", "Rimworld_Animations", "RimworldAnimations",
+        };
+
+        internal static bool ContainsAny(string? name, string[] tokens)
+        {
+            if (name == null || name.Length == 0)
             {
-                return true;
+                return false;
             }
-            if (n.IndexOf("Bestow", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            for (int i = 0; i < tokens.Length; i++)
             {
-                return true;
+                if (name.IndexOf(tokens[i], System.StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    return true;
+                }
             }
             return false;
         }
 
         private static bool LooksLikeLovinJob(JobDef def, JobDriver driver)
         {
-            if (NameLooksLikeLovin(def.defName) || NameLooksLikeLovin(def.driverClass?.Name))
+            if (!LovinJobDef.TryGetValue(def, out bool byDef))
+            {
+                byDef = ContainsAny(def.defName, LovinTokens) || ContainsAny(def.driverClass?.Name, LovinTokens);
+                LovinJobDef[def] = byDef;
+            }
+            if (byDef)
             {
                 return true;
             }
 
-            System.Type? t = driver.GetType();
-            while (t != null && t != typeof(JobDriver))
+            System.Type driverType = driver.GetType();
+            if (!LovinDriverType.TryGetValue(driverType, out bool byType))
             {
-                if (NameLooksLikeLovin(t.Name) || NameLooksLikeLovin(t.Namespace))
+                byType = false;
+                System.Type? t = driverType;
+                while (t != null && t != typeof(JobDriver))
                 {
-                    return true;
+                    if (ContainsAny(t.Name, LovinTokens) || ContainsAny(t.Namespace, LovinTokens))
+                    {
+                        byType = true;
+                        break;
+                    }
+                    t = t.BaseType;
                 }
-                t = t.BaseType;
+                LovinDriverType[driverType] = byType;
             }
-            return false;
-        }
-
-        private static bool NameLooksLikeLovin(string? name)
-        {
-            if (name == null || name.Length == 0)
-            {
-                return false;
-            }
-            if (name.IndexOf("Lovin", System.StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                return true;
-            }
-            if (name.IndexOf("JobDriver_Sex", System.StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                return true;
-            }
-            if (name.IndexOf("SexBase", System.StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                return true;
-            }
-            if (name.IndexOf("JoinInBed", System.StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                return true;
-            }
-            if (name.IndexOf("GettinLoved", System.StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                return true;
-            }
-            if (name.IndexOf("Masturbate", System.StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                return true;
-            }
-            if (name.IndexOf("Quickie", System.StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                return true;
-            }
-            if (name.IndexOf("Breeding", System.StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                return true;
-            }
-            if (name.IndexOf("Rimworld_Animations", System.StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                return true;
-            }
-            if (name.IndexOf("RimworldAnimations", System.StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                return true;
-            }
-            return false;
+            return byType;
         }
 
         public static bool HasAnyHour(Pawn pawn, TimeAssignmentDef def)
@@ -288,7 +282,7 @@ namespace DateNight
                 return null;
             }
 
-            Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
+            Pawn? partner = DateNightPawns.LovePartner(pawn);
             if (!WaitingForPartner(pawn, partner, target)
                 && CanSelfLovin(pawn)
                 && OnLovinCooldownReady(pawn)
@@ -322,7 +316,7 @@ namespace DateNight
                 return;
             }
 
-            Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
+            Pawn? partner = DateNightPawns.LovePartner(pawn);
             if (partner != null && IsBusyWithLovin(partner))
             {
                 return;
@@ -605,7 +599,7 @@ namespace DateNight
         /// </summary>
         public static Building_Bed? GetScheduledBed(Pawn pawn)
         {
-            Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
+            Pawn? partner = DateNightPawns.LovePartner(pawn);
             Building_Bed? couple = GetRendezvousBed(pawn);
             if (couple != null && WaitingForPartner(pawn, partner, couple))
             {
@@ -804,19 +798,19 @@ namespace DateNight
             }
 
             // Drop cached rendezvous so a new window can pick a sensible bed once.
-            Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
+            Pawn? partner = DateNightPawns.LovePartner(pawn);
             if (partner != null)
             {
-                RendezvousBedIds.Remove(DateNightActivities.CoupleKey(pawn, partner));
+                RendezvousBeds.Remove(DateNightActivities.CoupleKey(pawn, partner));
             }
         }
 
         public static void NotifyLeftLovinSchedule(Pawn pawn)
         {
-            Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
+            Pawn? partner = DateNightPawns.LovePartner(pawn);
             if (partner != null && !IsLovinSchedule(partner))
             {
-                RendezvousBedIds.Remove(DateNightActivities.CoupleKey(pawn, partner));
+                RendezvousBeds.Remove(DateNightActivities.CoupleKey(pawn, partner));
             }
         }
 
@@ -830,27 +824,36 @@ namespace DateNight
                 return null;
             }
 
-            Pawn partner = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
+            Pawn? partner = DateNightPawns.LovePartner(pawn);
             if (partner == null)
             {
                 return DoubleBedOrNull(pawn.ownership?.OwnedBed) ?? RestUtility.FindBedFor(pawn);
             }
 
             long key = DateNightActivities.CoupleKey(pawn, partner);
-            if (RendezvousBedIds.TryGetValue(key, out int bedId))
+            int now = Find.TickManager.TicksGame;
+            if (RendezvousBeds.TryGetValue(key, out RendezvousEntry entry))
             {
-                Building_Bed? cached = FindBedById(pawn.Map, bedId);
-                if (IsUsableDouble(cached, pawn, partner))
+                Building_Bed cached = entry.bed;
+                bool stillThere = !cached.Destroyed && cached.Spawned && !cached.Medical
+                    && cached.Map == pawn.Map;
+                if (stillThere && now - entry.reachCheckedTick < ReachRecheckTicks)
                 {
                     return cached;
                 }
-                RendezvousBedIds.Remove(key);
+                if (stillThere && IsUsableDouble(cached, pawn, partner))
+                {
+                    entry.reachCheckedTick = now;
+                    RendezvousBeds[key] = entry;
+                    return cached;
+                }
+                RendezvousBeds.Remove(key);
             }
 
             Building_Bed? chosen = ResolveNewRendezvousBed(pawn, partner);
             if (chosen != null)
             {
-                RendezvousBedIds[key] = chosen.thingIDNumber;
+                RendezvousBeds[key] = new RendezvousEntry { bed = chosen, reachCheckedTick = now };
             }
             return chosen;
         }
@@ -960,17 +963,6 @@ namespace DateNight
             return bed != null && bed.SleepingSlotsCount > 1 ? bed : null;
         }
 
-        private static Building_Bed? FindBedById(Map map, int thingId)
-        {
-            foreach (Building_Bed bed in map.listerBuildings.AllBuildingsColonistOfClass<Building_Bed>())
-            {
-                if (bed.thingIDNumber == thingId)
-                {
-                    return bed;
-                }
-            }
-            return null;
-        }
 
         private static Pawn? FindLovePartnerOccupying(Pawn pawn, Building_Bed bed)
         {

@@ -437,6 +437,7 @@ namespace DateNight
             ClearLoveRelations(a, keep: b);
             ClearLoveRelations(b, keep: a);
             a.relations.AddDirectRelation(PawnRelationDefOf.Lover, b);
+            DateNightPawns.InvalidatePartners();
             detail = "Assign a shared double bed, then paint Lovin on both.";
             return true;
         }

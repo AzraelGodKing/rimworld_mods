@@ -404,7 +404,7 @@ namespace DateNight
         /// </summary>
         public static Pawn? FindCommittedPartner(Pawn pawn)
         {
-            Pawn love = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
+            Pawn? love = DateNightPawns.LovePartner(pawn);
             if (love != null && !love.Dead)
             {
                 return love;
@@ -557,6 +557,7 @@ namespace DateNight
             }
 
             a.relations.AddDirectRelation(PawnRelationDefOf.Lover, b);
+            DateNightPawns.InvalidatePartners();
             bond.stage = DateNightRomanceStage.Partners;
             bond.progress = 0;
             bond.lastAdvanceTick = Find.TickManager.TicksGame;
@@ -660,7 +661,7 @@ namespace DateNight
 
         private static bool HasOtherLovePartner(Pawn pawn, Pawn except)
         {
-            Pawn existing = LovePartnerRelationUtility.ExistingMostLikedLovePartner(pawn, allowDead: false);
+            Pawn? existing = DateNightPawns.LovePartner(pawn);
             return existing != null && existing != except;
         }
 

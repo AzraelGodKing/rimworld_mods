@@ -308,7 +308,7 @@ namespace DateNight
                     continue;
                 }
 
-                Pawn b = LovePartnerRelationUtility.ExistingMostLikedLovePartner(a, allowDead: false);
+                Pawn? b = DateNightPawns.LovePartner(a);
                 if (b == null || b == pawn || b == partner)
                 {
                     continue;
@@ -349,8 +349,8 @@ namespace DateNight
 
         private static void ApplyNoShow(DoubleDateSession session)
         {
-            Pawn? a = FindPawn(session.hostA);
-            Pawn? b = FindPawn(session.hostB);
+            Pawn? a = DateNightPawns.Colonist(session.hostA);
+            Pawn? b = DateNightPawns.Colonist(session.hostB);
             GiveMood(a, DateNightDefOf.DateNight_DoubleDateNoShow);
             GiveMood(b, DateNightDefOf.DateNight_DoubleDateNoShow);
         }
@@ -369,7 +369,7 @@ namespace DateNight
             bool friendly = pairRapport != null && pairRapport.score >= FriendlyRapport;
             for (int i = 0; i < others.Count; i++)
             {
-                Pawn? other = FindPawn(others[i]);
+                Pawn? other = DateNightPawns.Colonist(others[i]);
                 if (other == null || other.Dead)
                 {
                     continue;
@@ -402,22 +402,6 @@ namespace DateNight
             pawn.needs.mood.thoughts.memories.TryGainMemory(def);
         }
 
-        private static Pawn? FindPawn(int id)
-        {
-            List<Pawn> pawns = PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_FreeColonists;
-            if (pawns == null)
-            {
-                return null;
-            }
-            for (int i = 0; i < pawns.Count; i++)
-            {
-                if (pawns[i] != null && pawns[i].thingIDNumber == id)
-                {
-                    return pawns[i];
-                }
-            }
-            return null;
-        }
     }
 
     public class DoubleDateSession : IExposable
@@ -604,24 +588,8 @@ namespace DateNight
 
         private static bool IsDating(int id)
         {
-            if (id == 0)
-            {
-                return false;
-            }
-            List<Pawn> pawns = PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_FreeColonists;
-            if (pawns == null)
-            {
-                return false;
-            }
-            for (int i = 0; i < pawns.Count; i++)
-            {
-                Pawn p = pawns[i];
-                if (p != null && p.thingIDNumber == id)
-                {
-                    return p.CurJobDef == DateNightDefOf.DateNight_GoOnDate;
-                }
-            }
-            return false;
+            Pawn? p = id == 0 ? null : DateNightPawns.Colonist(id);
+            return p != null && p.CurJobDef == DateNightDefOf.DateNight_GoOnDate;
         }
     }
 

@@ -6,6 +6,7 @@ Date Night 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting 
 [list]
 [*] [b]RimWorld 1.7[/b] — the 1.7 folder now has its own .NET 10 build made against the 1.7 game files. 1.6 keeps its own build from the same source.
 [*] [b]RimJobWorld[/b] — the RJW checks are bound once at startup instead of called through reflection every second, so scheduled Lovin costs less with RJW on.
+[*] [b]Performance[/b] — the once-a-second schedule check skips colonists who are on neither slot, partners and colonists are looked up once per tick, the Lovin bed is remembered instead of searched for, and starting a date scans the map once instead of three or more times. Bigger colonies and older saves gain the most.
 [/list]
 [b]Fixed[/b]
 [list]

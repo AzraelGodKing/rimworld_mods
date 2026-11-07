@@ -224,32 +224,9 @@ namespace DateNight
             return FindPawnById(id) != null;
         }
 
-        private static Dictionary<int, Pawn>? pawnById;
-        private static int pawnByIdTick = -1;
-
         internal static Pawn? FindPawnById(int id)
         {
-            int now = Find.TickManager != null ? Find.TickManager.TicksGame : -1;
-            if (pawnById == null || pawnByIdTick != now)
-            {
-                pawnById = new Dictionary<int, Pawn>();
-                pawnByIdTick = now;
-                List<Pawn> all = PawnsFinder.AllMapsWorldAndTemporary_Alive;
-                if (all != null)
-                {
-                    for (int i = 0; i < all.Count; i++)
-                    {
-                        Pawn p = all[i];
-                        if (p != null)
-                        {
-                            pawnById[p.thingIDNumber] = p;
-                        }
-                    }
-                }
-            }
-
-            pawnById.TryGetValue(id, out Pawn? found);
-            return found;
+            return DateNightPawns.Alive(id);
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 #nullable enable
+using System;
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -188,8 +189,9 @@ namespace DateNight
                 return null;
             }
 
-            Thing? best = null;
-            float bestScore = float.MinValue;
+            // Cheap filters and the score first, reach checks last and only until one
+            // passes (AZR-542). Ties break on thing id so every client agrees.
+            Candidates.Clear();
             List<Thing> foods = pawn.Map.listerThings.ThingsInGroup(ThingRequestGroup.FoodSourceNotPlantOrTree);
             for (int i = 0; i < foods.Count; i++)
             {
@@ -205,20 +207,12 @@ namespace DateNight
                 {
                     continue;
                 }
-                if (!pawn.CanReserveAndReach(food, PathEndMode.ClosestTouch, Danger.Some, 10, 1))
-                {
-                    continue;
-                }
 
                 float score = (float)food.def.ingestible.preferability * 1000f
                     - pawn.Position.DistanceToSquared(food.Position);
-                if (score > bestScore)
-                {
-                    bestScore = score;
-                    best = food;
-                }
+                Candidates.Add(new Candidate(food, -score));
             }
-            return best;
+            return FirstReservable(pawn);
         }
 
         private static readonly string[] DefaultGiftDefNames =
@@ -304,14 +298,11 @@ namespace DateNight
                 return null;
             }
 
-            Thing? best = null;
-            float bestDist = float.MaxValue;
-            int bestId = int.MaxValue;
+            Candidates.Clear();
             ThingDef[] defs = GiftDefs();
             for (int d = 0; d < defs.Length; d++)
             {
-                ThingDef def = defs[d];
-                List<Thing> things = giver.Map.listerThings.ThingsOfDef(def);
+                List<Thing> things = giver.Map.listerThings.ThingsOfDef(defs[d]);
                 for (int i = 0; i < things.Count; i++)
                 {
                     Thing thing = things[i];
@@ -323,21 +314,47 @@ namespace DateNight
                     {
                         continue;
                     }
-                    if (!giver.CanReserveAndReach(thing, PathEndMode.ClosestTouch, Danger.Some, 10, 1))
-                    {
-                        continue;
-                    }
-                    float dist = giver.Position.DistanceToSquared(thing.Position);
-                    if (dist < bestDist
-                        || (dist == bestDist && thing.thingIDNumber < bestId))
-                    {
-                        bestDist = dist;
-                        bestId = thing.thingIDNumber;
-                        best = thing;
-                    }
+                    Candidates.Add(new Candidate(thing, giver.Position.DistanceToSquared(thing.Position)));
                 }
             }
-            return best;
+            return FirstReservable(giver);
+        }
+
+        private readonly struct Candidate
+        {
+            public readonly Thing thing;
+            public readonly float cost;
+
+            public Candidate(Thing thing, float cost)
+            {
+                this.thing = thing;
+                this.cost = cost;
+            }
+        }
+
+        // Main-thread scratch, reused between calls.
+        private static readonly List<Candidate> Candidates = new List<Candidate>();
+
+        private static readonly Comparison<Candidate> ByCostThenId = (a, b) =>
+        {
+            int c = a.cost.CompareTo(b.cost);
+            return c != 0 ? c : a.thing.thingIDNumber.CompareTo(b.thing.thingIDNumber);
+        };
+
+        private static Thing? FirstReservable(Pawn pawn)
+        {
+            Candidates.Sort(ByCostThenId);
+            for (int i = 0; i < Candidates.Count; i++)
+            {
+                Thing thing = Candidates[i].thing;
+                if (pawn.CanReserveAndReach(thing, PathEndMode.ClosestTouch, Danger.Some, 10, 1))
+                {
+                    Candidates.Clear();
+                    return thing;
+                }
+            }
+            Candidates.Clear();
+            return null;
         }
 
         /// <summary>
@@ -382,58 +399,90 @@ namespace DateNight
 
         public static Thing? FindGatherSpotFor(Pawn pawn, Pawn? partner)
         {
-            if (pawn?.Map == null)
-            {
-                return null;
-            }
-            Thing? best = null;
-            int bestId = int.MaxValue;
-            foreach (Building building in pawn.Map.listerBuildings.allBuildingsColonist)
-            {
-                CompGatherSpot gather = building.TryGetComp<CompGatherSpot>();
-                if (gather == null || !gather.Active)
-                {
-                    continue;
-                }
-                if (!BothCanReach(pawn, partner, building))
-                {
-                    continue;
-                }
-                if (building.thingIDNumber < bestId)
-                {
-                    bestId = building.thingIDNumber;
-                    best = building;
-                }
-            }
-            return best;
+            return LowestIdVenue(pawn, partner, VenueKind.Gather);
         }
 
         /// <summary>Nearest colonist joy building (chess table, TV, horseshoes...).</summary>
         public static Building? FindJoyBuildingFor(Pawn pawn, Pawn partner)
         {
+            return LowestIdVenue(pawn, partner, VenueKind.Joy);
+        }
+
+        private enum VenueKind
+        {
+            Gather,
+            Joy,
+            Table,
+        }
+
+        private static int venueMemoTick = -1;
+        private static readonly Dictionary<(long couple, VenueKind kind), Building?> VenueMemo =
+            new Dictionary<(long couple, VenueKind kind), Building?>();
+        private static readonly List<Building> VenueScratch = new List<Building>();
+        private static readonly Comparison<Building> ById = (a, b) => a.thingIDNumber.CompareTo(b.thingIDNumber);
+
+        /// <summary>
+        /// Lowest-id colonist building of a kind that both can reach. One date start
+        /// asked for the same gather spot three or more times (activity pick, venue,
+        /// search root), each a full building scan with reach checks. Now it is
+        /// memoised per couple per tick, and reach is only checked in id order
+        /// until one passes (AZR-542).
+        /// </summary>
+        private static Building? LowestIdVenue(Pawn pawn, Pawn? partner, VenueKind kind)
+        {
             if (pawn?.Map == null)
             {
                 return null;
             }
-            Building? best = null;
-            int bestId = int.MaxValue;
+
+            int now = Find.TickManager.TicksGame;
+            if (venueMemoTick != now)
+            {
+                venueMemoTick = now;
+                VenueMemo.Clear();
+            }
+            long couple = partner == null ? pawn.thingIDNumber : CoupleKey(pawn, partner);
+            if (VenueMemo.TryGetValue((couple, kind), out Building? memo))
+            {
+                return memo;
+            }
+
+            VenueScratch.Clear();
             foreach (Building building in pawn.Map.listerBuildings.allBuildingsColonist)
             {
-                if (building.def.building?.joyKind == null)
+                if (IsVenueKind(building, kind))
                 {
-                    continue;
-                }
-                if (!BothCanReach(pawn, partner, building))
-                {
-                    continue;
-                }
-                if (building.thingIDNumber < bestId)
-                {
-                    bestId = building.thingIDNumber;
-                    best = building;
+                    VenueScratch.Add(building);
                 }
             }
-            return best;
+            VenueScratch.Sort(ById);
+
+            Building? found = null;
+            for (int i = 0; i < VenueScratch.Count; i++)
+            {
+                if (BothCanReach(pawn, partner, VenueScratch[i]))
+                {
+                    found = VenueScratch[i];
+                    break;
+                }
+            }
+            VenueScratch.Clear();
+            VenueMemo[(couple, kind)] = found;
+            return found;
+        }
+
+        private static bool IsVenueKind(Building building, VenueKind kind)
+        {
+            switch (kind)
+            {
+                case VenueKind.Gather:
+                    CompGatherSpot? gather = building.TryGetComp<CompGatherSpot>();
+                    return gather != null && gather.Active;
+                case VenueKind.Joy:
+                    return building.def.building?.joyKind != null;
+                default:
+                    return building.def.IsTable;
+            }
         }
 
         /// <summary>Best-of-N random unroofed cell, preferring beauty. For picnics and stargazing.</summary>
@@ -633,25 +682,8 @@ namespace DateNight
 
         private static LocalTargetInfo FindDinnerTable(Pawn pawn, Pawn partner)
         {
-            Building? best = null;
-            int bestId = int.MaxValue;
-            foreach (Building building in pawn.Map.listerBuildings.allBuildingsColonist)
-            {
-                if (!building.def.IsTable)
-                {
-                    continue;
-                }
-                if (!BothCanReach(pawn, partner, building))
-                {
-                    continue;
-                }
-                if (building.thingIDNumber < bestId)
-                {
-                    bestId = building.thingIDNumber;
-                    best = building;
-                }
-            }
-            return best == null ? LocalTargetInfo.Invalid : best;
+            Building? table = LowestIdVenue(pawn, partner, VenueKind.Table);
+            return table == null ? LocalTargetInfo.Invalid : table;
         }
 
         private static LocalTargetInfo DinnerSeatAt(LocalTargetInfo table, Pawn pawn, Pawn partner)

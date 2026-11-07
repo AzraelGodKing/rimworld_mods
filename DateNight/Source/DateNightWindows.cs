@@ -68,6 +68,13 @@ namespace DateNight
 
         public static void NotifyScheduleTick(Pawn pawn, bool onLovin, bool onDate)
         {
+            // Most colonists are on neither slot most of the day; they only matter
+            // here while a window they opened is still waiting to close (AZR-542).
+            if (!onLovin && !onDate && !HasWindow(pawn.thingIDNumber))
+            {
+                return;
+            }
+
             Pawn? partner = DateNightRomance.FindDatePartner(pawn);
             if (partner == null)
             {
@@ -122,6 +129,18 @@ namespace DateNight
                 Windows.Remove(key);
                 ReleaseBedClaim(key);
             }
+        }
+
+        private static bool HasWindow(int pawnId)
+        {
+            foreach (SocialWindow window in Windows.Values)
+            {
+                if (window.pawnA == pawnId || window.pawnB == pawnId)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public static void NotifyLeftSharedSchedule(Pawn pawn)
@@ -332,8 +351,8 @@ namespace DateNight
             }
             window.awarded = true;
 
-            Pawn? a = FindPawn(window.pawnA);
-            Pawn? b = FindPawn(window.pawnB);
+            Pawn? a = DateNightPawns.Colonist(window.pawnA);
+            Pawn? b = DateNightPawns.Colonist(window.pawnB);
             if (a == null || b == null || a.Dead || b.Dead)
             {
                 return;
@@ -369,8 +388,8 @@ namespace DateNight
             }
             Claims.Remove(key);
 
-            Pawn? a = FindPawn(claim.pawnA);
-            Pawn? b = FindPawn(claim.pawnB);
+            Pawn? a = DateNightPawns.Colonist(claim.pawnA);
+            Pawn? b = DateNightPawns.Colonist(claim.pawnB);
             Building_Bed? bed = FindBed(a, b, claim.bedId);
 
             if (claim.claimedA && a?.ownership != null && a.ownership.OwnedBed == bed)
@@ -428,22 +447,6 @@ namespace DateNight
         }
 
 
-        private static Pawn? FindPawn(int id)
-        {
-            List<Pawn> pawns = PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_FreeColonists;
-            if (pawns == null)
-            {
-                return null;
-            }
-            for (int i = 0; i < pawns.Count; i++)
-            {
-                if (pawns[i] != null && pawns[i].thingIDNumber == id)
-                {
-                    return pawns[i];
-                }
-            }
-            return null;
-        }
 
         private static Building_Bed? FindBed(Pawn? a, Pawn? b, int bedId)
         {
