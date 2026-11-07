@@ -52,7 +52,7 @@ namespace Homesteader
         internal static PantryReport Snapshot()
         {
             int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-            if (cached != null && now - cachedTick < 60)
+            if (cached != null && now >= cachedTick && now - cachedTick < 60)
             {
                 return cached;
             }
@@ -64,6 +64,7 @@ namespace Homesteader
 
         internal static void Invalidate()
         {
+            cached = null;
             cachedTick = -99999;
         }
 

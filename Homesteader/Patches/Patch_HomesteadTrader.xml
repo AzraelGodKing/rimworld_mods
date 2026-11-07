@@ -4,12 +4,26 @@
   <!-- Append the homestead supplier to the abstract outlander base list.
        Adding a fresh <caravanTraderKinds> node on a concrete child (e.g. OutlanderCivil)
        replaces the inherited list instead of merging. Patching the base <li> list keeps
-       vanilla traders and covers every faction that inherits OutlanderFactionBase. -->
-  <Operation Class="PatchOperationAdd">
+       vanilla traders and covers every faction that inherits OutlanderFactionBase.
+       If a game version or mod renames the base, fall back to the two concrete outlander
+       factions' own lists when they have one; otherwise skip quietly (AZR-541). -->
+  <Operation Class="PatchOperationConditional">
     <xpath>/Defs/FactionDef[@Name="OutlanderFactionBase"]/caravanTraderKinds</xpath>
-    <value>
-      <li>Homesteader_Caravan_HomesteadSupplier</li>
-    </value>
+    <match Class="PatchOperationAdd">
+      <xpath>/Defs/FactionDef[@Name="OutlanderFactionBase"]/caravanTraderKinds</xpath>
+      <value>
+        <li>Homesteader_Caravan_HomesteadSupplier</li>
+      </value>
+    </match>
+    <nomatch Class="PatchOperationConditional">
+      <xpath>/Defs/FactionDef[defName="OutlanderCivil" or defName="OutlanderRough"]/caravanTraderKinds</xpath>
+      <match Class="PatchOperationAdd">
+        <xpath>/Defs/FactionDef[defName="OutlanderCivil" or defName="OutlanderRough"]/caravanTraderKinds</xpath>
+        <value>
+          <li>Homesteader_Caravan_HomesteadSupplier</li>
+        </value>
+      </match>
+    </nomatch>
   </Operation>
 
 </Patch>

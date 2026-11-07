@@ -47,7 +47,6 @@
   <Homesteader_SettingsDevModeHint>Включите режим разработчика, чтобы увидеть параметры Homesteader для разработчиков.</Homesteader_SettingsDevModeHint>
   <Homesteader_SettingsSpoilageTriage>Сначала портящееся</Homesteader_SettingsSpoilageTriage>
   <Homesteader_SettingsSpoilageTriageTip>Колонисты берут самую порченую съедобную стопку, а закатки — плоды, которые вот-вот скиснут. По умолчанию включено.</Homesteader_SettingsSpoilageTriageTip>
-  <Homesteader_SettingsGameplayHeader>Настройки геймплея</Homesteader_SettingsGameplayHeader>
   <Homesteader_SettingsAllergyFlare>Сила аллергии (0 = только обнаружение)</Homesteader_SettingsAllergyFlare>
   <Homesteader_SettingsFavoriteMood>Сила настроения от любимой еды (0 = выкл.)</Homesteader_SettingsFavoriteMood>
   <Homesteader_SettingsCoopEggInterval>Интервал яиц в курятнике (выше = меньше яиц)</Homesteader_SettingsCoopEggInterval>
@@ -106,4 +105,9 @@
   <Homesteader_KatsLetter_FoundationHeader>Дополнение Фонда // Объект № SCP-27272727 // Keter (Обаятельный)</Homesteader_KatsLetter_FoundationHeader>
   <Homesteader_KatsLetter_ContainmentNote>Примечание по содержанию: увлажнять / лечить / жевать. Не отводите взгляд от числа.</Homesteader_KatsLetter_ContainmentNote>
 
+  <Homesteader_TastesNotYetKnown>Пока неизвестно. Вкусы появятся, когда колония начнёт их кормить.</Homesteader_TastesNotYetKnown>
+  <Homesteader_SettingsGameplayHeaderSave>Геймплей (это сохранение). Хранится вместе с колонией; новые игры начинаются с вашего последнего выбора.</Homesteader_SettingsGameplayHeaderSave>
+  <Homesteader_SettingsGameplayHeaderNewGames>Геймплей (по умолчанию для новых игр). У каждого сохранения своя копия.</Homesteader_SettingsGameplayHeaderNewGames>
+  <Homesteader_SettingsDisplayHeader>Отображение (только на этом компьютере)</Homesteader_SettingsDisplayHeader>
+  <Homesteader_KatsFallbackRace>человека</Homesteader_KatsFallbackRace>
 </LanguageData>

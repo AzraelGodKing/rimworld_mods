@@ -47,7 +47,6 @@
   <Homesteader_SettingsDevModeHint>Enable Development mode to show Homesteader developer options.</Homesteader_SettingsDevModeHint>
   <Homesteader_SettingsSpoilageTriage>Use spoiling food first</Homesteader_SettingsSpoilageTriage>
   <Homesteader_SettingsSpoilageTriageTip>Colonists prefer the most-spoiled edible stack, and preserving bills take produce closest to turning. On by default.</Homesteader_SettingsSpoilageTriageTip>
-  <Homesteader_SettingsGameplayHeader>Gameplay dials</Homesteader_SettingsGameplayHeader>
   <Homesteader_SettingsAllergyFlare>Allergy flare intensity (0 = discover only)</Homesteader_SettingsAllergyFlare>
   <Homesteader_SettingsFavoriteMood>Favorite-food mood strength (0 = off)</Homesteader_SettingsFavoriteMood>
   <Homesteader_SettingsCoopEggInterval>Chicken coop egg interval (higher = fewer eggs)</Homesteader_SettingsCoopEggInterval>
@@ -106,4 +105,9 @@
   <Homesteader_KatsLetter_FoundationHeader>Foundation addendum // Item # SCP-27272727 // Keter (Adorable)</Homesteader_KatsLetter_FoundationHeader>
   <Homesteader_KatsLetter_ContainmentNote>Containment note: hydrate / medicate / masticate. Do not look away from the number.</Homesteader_KatsLetter_ContainmentNote>
 
+  <Homesteader_TastesNotYetKnown>Not known yet. Tastes form once the colony feeds them.</Homesteader_TastesNotYetKnown>
+  <Homesteader_SettingsGameplayHeaderSave>Gameplay (this save). Saved with the colony; new games start from your latest choice.</Homesteader_SettingsGameplayHeaderSave>
+  <Homesteader_SettingsGameplayHeaderNewGames>Gameplay (defaults for new games). Each save keeps its own copy.</Homesteader_SettingsGameplayHeaderNewGames>
+  <Homesteader_SettingsDisplayHeader>Display (this computer only)</Homesteader_SettingsDisplayHeader>
+  <Homesteader_KatsFallbackRace>person</Homesteader_KatsFallbackRace>
 </LanguageData>

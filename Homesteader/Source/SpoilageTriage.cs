@@ -10,7 +10,7 @@ namespace Homesteader
     internal static class SpoilageTriage
     {
         internal static bool Enabled =>
-            HomesteaderMod.Settings.spoilageTriage;
+            HomesteaderGameplay.Active.spoilageTriage;
 
         internal static void ApplyEatBias(Thing? foodSource, ref float optimality)
         {

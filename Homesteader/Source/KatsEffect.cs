@@ -29,7 +29,7 @@ namespace Homesteader
 
         protected override bool CanFireNowSub(IncidentParms parms)
         {
-            if (!HomesteaderMod.Settings.enableKatsEffect)
+            if (!HomesteaderGameplay.Active.enableKatsEffect)
             {
                 return false;
             }
@@ -48,11 +48,13 @@ namespace Homesteader
                 return false;
             }
 
-            int durationTicks = Mathf.RoundToInt(def.durationDays.RandomInRange * GenDate.TicksPerDay);
-            GameCondition condition = GameConditionMaker.MakeCondition(
-                DefDatabase<GameConditionDef>.GetNamed("Homesteader_KatsHeatDome"),
-                durationTicks);
-            map.gameConditionManager.RegisterCondition(condition);
+            // Silent lookup like every other def here (AZR-694): no dome, the rest still runs.
+            GameConditionDef? domeDef = DefDatabase<GameConditionDef>.GetNamedSilentFail("Homesteader_KatsHeatDome");
+            if (domeDef != null)
+            {
+                int durationTicks = Mathf.RoundToInt(def.durationDays.RandomInRange * GenDate.TicksPerDay);
+                map.gameConditionManager.RegisterCondition(GameConditionMaker.MakeCondition(domeDef, durationTicks));
+            }
 
             int silverTaken = TryTakeSilver(map, SuperChatCost);
             Pawn? kats = null;
@@ -176,7 +178,7 @@ namespace Homesteader
             }
             else if (kats != null)
             {
-                string raceLabel = kats.def?.label ?? "pawn";
+                string raceLabel = kats.def?.label ?? "Homesteader_KatsFallbackRace".Translate().ToString();
                 sb.Append("Homesteader_KatsLetter_KatsSpawned".Translate(SuperChatCost, raceLabel));
             }
             else
@@ -224,11 +226,21 @@ namespace Homesteader
                 forceNoIdeo: true,
                 forcedXenotype: xenotype);
 
-            Pawn kats = PawnGenerator.GeneratePawn(request);
-            kats.Name = new NameTriple("Kats", "Kats", "Kats");
-            ApplyOrangeLook(kats);
-
-            GenSpawn.Spawn(kats, entry, map);
+            // A third-party race or xenotype can make generation throw. Kats then
+            // stays unspawned and the letter says she failed to appear (AZR-681).
+            Pawn kats;
+            try
+            {
+                kats = PawnGenerator.GeneratePawn(request);
+                kats.Name = new NameTriple("Kats", "Kats", "Kats");
+                ApplyOrangeLook(kats);
+                GenSpawn.Spawn(kats, entry, map);
+            }
+            catch (System.Exception e)
+            {
+                Log.Warning("[Homesteader] Kats could not be generated from " + kind.defName + ": " + e.Message);
+                return null;
+            }
 
             // Keep her hostile and hunting the colony rather than milling at the edge.
             LordMaker.MakeNewLord(
