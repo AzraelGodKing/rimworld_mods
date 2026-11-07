@@ -18,11 +18,20 @@ namespace Azrael
         private const BindingFlags PublicInstance = BindingFlags.Public | BindingFlags.Instance;
         private const BindingFlags PublicStatic = BindingFlags.Public | BindingFlags.Static;
 
-        /// <summary>Nemesis <c>GameComponent_Nemesis.IsEngaged</c>: active hunt, truce, or pending resolution.</summary>
+        /// <summary>
+        /// Any Nemesis hunt engaged (active, truce, captured or pending resolution). Nemesis 2
+        /// runs several hunts, so <c>NemesisCompatApi.EngagedHuntCount</c> wins when present;
+        /// older builds fall back to <c>GameComponent_Nemesis.IsEngaged</c>.
+        /// </summary>
         internal static bool NemesisEngaged()
         {
             try
             {
+                if (Current.Game != null
+                    && AccessTools.TypeByName("Nemesis.NemesisCompatApi")?.GetProperty("EngagedHuntCount", PublicStatic)?.GetValue(null) is int hunts)
+                {
+                    return hunts > 0;
+                }
                 object? nemesis = StaticInstance("Nemesis.GameComponent_Nemesis");
                 return nemesis?.GetType().GetProperty("IsEngaged", PublicInstance)?.GetValue(nemesis) is true;
             }

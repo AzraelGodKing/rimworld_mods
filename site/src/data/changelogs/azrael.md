@@ -5,7 +5,7 @@
 
 First public release. One source builds two DLLs: `1.6/Assemblies` for RimWorld 1.6 (.NET Framework 4.7.2) and `1.7/Assemblies` for RimWorld 1.7 (.NET 10). `LoadFolders.xml` picks the right one, so there is no frozen 1.6 build (AZR-586, AZR-595).
 
-Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[Azrael] v1.0.0 loaded from ...` in Player.log.
+Player-facing version **1.0.0** (`About.xml` `modVersion`). Stamp `series-release-v1`. Startup writes `[Azrael] v1.0.0 loaded from ...; series-release-v1` in Player.log.
 
 ### Added
 - **Series event weights toggle** (AZR-727) - Mod Options → Azrael has a checkbox to turn off the series incident weights for plain Azrael pacing. On by default.
@@ -31,6 +31,9 @@ Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[Azr
 - **Player.log path on 1.7** - the startup line said "loaded from  (modified unknown)" on RimWorld 1.7, which loads mod DLLs from memory. It now names the mod folder (all series mods share this line).
 
 ### Changed
+- **Storyteller description** (AZR-611) - the standalone Azrael storyteller now says the first raid is not forced until day 30 (Cassandra: 20). EN/CN/RU.
+- **Release metadata** (AZR-611) - About.xml links the mod's GitHub folder, the build stamp is `series-release-v1`, and STEAM.md's playtest list is now the release checklist.
+- **Nemesis 2 aware** - the removal blocker counts every engaged Nemesis hunt through `NemesisCompatApi.EngagedHuntCount` when Nemesis 2 is loaded, and falls back to `IsEngaged` on older builds.
 - **Living World incident weights retuned** (AZR-589) - refugees ×6 → ×4 and warbands ×5 → ×3 under Azrael, since traffic now brings news too and the warband respects its points cap.
 - **Multiplayer: soft support** - safe-removal deconstruct is registered as a Multiplayer sync method (by reflection, no Multiplayer DLL shipped), so it applies on every client. The Conflicts note now says it is synced and that every player needs the host's Azrael settings.
 - **Public contracts only** (AZR-585, AZR-686) - the hub reads sister mods through public members: Nemesis `IsEngaged` and `FindNemesisPawn()` (so a pending resolution also blocks removal), Deep Colony's public family-letter list, and Living World's `LivingWorldCompatApi.IsHandlerRegistered(Type)` (until that ships, the goodwill bridge falls back to type presence). The private Nemesis field fallbacks are gone, and opening Mod Options no longer forces Deep Colony's static constructor.

@@ -19,5 +19,5 @@ First release.
 [*] [b]Update letter[/b] - loading a colony sends a letter with these notes and a link to the full changelog.
 [/list]
 
-[i]Build stamp (Player.log): removal-queue-v1[/i]
+[i]Build stamp (Player.log): series-release-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/azrael.md[/i]
