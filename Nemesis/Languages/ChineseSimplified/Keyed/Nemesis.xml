@@ -13,7 +13,13 @@
   <Nemesis_Settings_Fixation>执念概率：{0}%</Nemesis_Settings_Fixation>
   <Nemesis_Settings_WoundedEscape>重伤逃脱概率：{0}%</Nemesis_Settings_WoundedEscape>
   <Nemesis_Settings_TruceDays>休战时长：{0} 天</Nemesis_Settings_TruceDays>
+  <Nemesis_Settings_TruceDiscount>停战后降低的侵略性：{0}</Nemesis_Settings_TruceDiscount>
+  <Nemesis_Settings_TruceDiscountTip>停战结束时，宿敌的侵略性降低这么多（最低为 1），让停战成为真正的喘息。</Nemesis_Settings_TruceDiscountTip>
   <Nemesis_Settings_MaxEscapes>走投无路前的逃脱次数：{0}</Nemesis_Settings_MaxEscapes>
+  <Nemesis_Settings_SubdueHealth>走投无路的宿敌在生命值低于 {0}% 时屈服</Nemesis_Settings_SubdueHealth>
+  <Nemesis_Settings_SubdueHealthTip>宿敌用完所有逃脱次数后，生命值低于此值时会被制服（止血、镇静），以便你俘获。</Nemesis_Settings_SubdueHealthTip>
+  <Nemesis_Settings_EscapeMood>殖民者开始沮丧前的逃脱次数：{0}</Nemesis_Settings_EscapeMood>
+  <Nemesis_Settings_EscapeMoodTip>从这次逃脱起，每次逃脱都会让殖民者心情变差，被盯上的目标最严重。</Nemesis_Settings_EscapeMoodTip>
   <Nemesis_Settings_MaxHunts>同时进行的狩猎：{0}</Nemesis_Settings_MaxHunts>
   <Nemesis_Settings_MaxHuntsTip>同时追杀你的宿敌数量上限。每个敌对派系最多一名。</Nemesis_Settings_MaxHuntsTip>
   <Nemesis_Settings_HuntCooldown>新狩猎间隔天数：{0}</Nemesis_Settings_HuntCooldown>
@@ -150,6 +156,8 @@
   <Nemesis_Letter_RogueBodyAlone>你们与{1}讲和了。{0}没有。\n\n如今他们独自猎杀你们。条约无法终结宿怨。</Nemesis_Letter_RogueBodyAlone>
   <Nemesis_Letter_EndedKilledTitle>{0}：狩猎结束</Nemesis_Letter_EndedKilledTitle>
   <Nemesis_Letter_EndedKilledBody>{0}死了。频道归于寂静。</Nemesis_Letter_EndedKilledBody>
+  <Nemesis_Letter_EndedCapturedTitle>{0}：被俘</Nemesis_Letter_EndedCapturedTitle>
+  <Nemesis_Letter_EndedCapturedBody>{0}已被关押。狩猎结束。</Nemesis_Letter_EndedCapturedBody>
   <Nemesis_Letter_EndedTargetDiedTitle>{0}：失去兴趣</Nemesis_Letter_EndedTargetDiedTitle>
   <Nemesis_Letter_EndedTargetDiedBody>{1}死了。{0}以某种方式得到了他们想要的。\n\n狩猎结束。他们不庆祝。只是停下。</Nemesis_Letter_EndedTargetDiedBody>
   <Nemesis_Letter_EndedHandedTitle>{0}：夺走猎物</Nemesis_Letter_EndedHandedTitle>
@@ -234,6 +242,8 @@
   <Nemesis_Intel_False>这条线索是假的。花费 {0} 银币。</Nemesis_Intel_False>
   <Nemesis_Intel_FalseTile>一个从来不是他们的地方</Nemesis_Intel_FalseTile>
   <Nemesis_Bounty_Posted>悬赏现为 {0} 银币。</Nemesis_Bounty_Posted>
+  <Nemesis_Bounty_PaidOut>针对{1}的 {0} 银币悬赏已付给提供帮助的线人。</Nemesis_Bounty_PaidOut>
+  <Nemesis_Bounty_Refunded>针对{1}的 {0} 银币悬赏无人领取，已退还。</Nemesis_Bounty_Refunded>
   <Nemesis_Comms_TauntBack>向 {0} 回传嘲讽</Nemesis_Comms_TauntBack>
   <Nemesis_Comms_OfferTruce>向 {0} 提出休战</Nemesis_Comms_OfferTruce>
   <Nemesis_Comms_DemandSurrender>要求 {0} 投降</Nemesis_Comms_DemandSurrender>

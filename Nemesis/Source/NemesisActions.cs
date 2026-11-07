@@ -183,8 +183,18 @@ namespace Nemesis
             }
             if (injectMissed && nemesis != null && (!nemesis.Spawned || nemesis.Map != map))
             {
-                if (RCellFinder.TryFindRandomPawnEntryCell(out IntVec3 entry, map, 0f))
-                    NemesisPawnUtil.TrySpawnOnMap(nemesis, map, entry);
+                // The raid group never took them; walk in at the edge with their own assault
+                // lord, or a lordless raider just stands there (AZR-659).
+                if (RCellFinder.TryFindRandomPawnEntryCell(out IntVec3 entry, map, 0f)
+                    && NemesisPawnUtil.TrySpawnOnMap(nemesis, map, entry)
+                    && nemesis.GetLord() == null && nemesis.Faction != null && !nemesis.Faction.IsPlayer)
+                {
+                    LordMaker.MakeNewLord(
+                        nemesis.Faction,
+                        new LordJob_AssaultColony(nemesis.Faction, canKidnap: false, canTimeoutOrFlee: true),
+                        map,
+                        new[] { nemesis });
+                }
             }
 
             if (armyReturn && canInject && nemesis != null && nemesis.Spawned && nemesis.Map == map)
