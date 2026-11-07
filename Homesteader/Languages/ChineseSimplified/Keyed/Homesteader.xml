@@ -47,7 +47,6 @@
   <Homesteader_SettingsDevModeHint>启用开发模式以显示 Homesteader 开发者选项。</Homesteader_SettingsDevModeHint>
   <Homesteader_SettingsSpoilageTriage>先吃快坏的</Homesteader_SettingsSpoilageTriage>
   <Homesteader_SettingsSpoilageTriageTip>殖民者优先吃最接近腐烂的可食用堆，腌制账单也取快坏的原料。默认开启。</Homesteader_SettingsSpoilageTriageTip>
-  <Homesteader_SettingsGameplayHeader>玩法调节</Homesteader_SettingsGameplayHeader>
   <Homesteader_SettingsAllergyFlare>过敏发作强度（0 = 仅发现）</Homesteader_SettingsAllergyFlare>
   <Homesteader_SettingsFavoriteMood>最爱食物心情强度（0 = 关闭）</Homesteader_SettingsFavoriteMood>
   <Homesteader_SettingsCoopEggInterval>鸡舍产蛋间隔（越高蛋越少）</Homesteader_SettingsCoopEggInterval>
@@ -106,4 +105,9 @@
   <Homesteader_KatsLetter_FoundationHeader>基金会附录 // 项目编号 SCP-27272727 // Keter（可爱）</Homesteader_KatsLetter_FoundationHeader>
   <Homesteader_KatsLetter_ContainmentNote>收容备注：补水 / 用药 / 咀嚼。不要把目光从那个数字上移开。</Homesteader_KatsLetter_ContainmentNote>
 
+  <Homesteader_TastesNotYetKnown>尚不清楚。殖民地开始供养他们后才会形成口味。</Homesteader_TastesNotYetKnown>
+  <Homesteader_SettingsGameplayHeaderSave>玩法（当前存档）。随殖民地一起保存；新游戏使用你最近的选择。</Homesteader_SettingsGameplayHeaderSave>
+  <Homesteader_SettingsGameplayHeaderNewGames>玩法（新游戏默认值）。每个存档保留自己的副本。</Homesteader_SettingsGameplayHeaderNewGames>
+  <Homesteader_SettingsDisplayHeader>显示（仅限本电脑）</Homesteader_SettingsDisplayHeader>
+  <Homesteader_KatsFallbackRace>人</Homesteader_KatsFallbackRace>
 </LanguageData>

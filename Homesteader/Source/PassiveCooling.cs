@@ -157,6 +157,11 @@ namespace Homesteader
         private static readonly Dictionary<int, RootCellarCoolingMapComponent> byMapId =
             new Dictionary<int, RootCellarCoolingMapComponent>();
 
+        internal static void Clear()
+        {
+            byMapId.Clear();
+        }
+
         internal static void Register(RootCellarCoolingMapComponent? comp)
         {
             if (comp?.map == null)

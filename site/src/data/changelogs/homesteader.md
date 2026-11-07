@@ -8,13 +8,24 @@ Detailed notes for Homesteader only.
 
 Player-facing version **2.0.0** (`About.xml` `modVersion`). Stamp `homesteader-2-v1`. Ships for RimWorld **1.6** and **1.7** from the same source; 1.6 is not frozen.
 
-AZR-512 AZR-525 AZR-543 AZR-695
+AZR-512 AZR-525 AZR-527 AZR-541 AZR-543 AZR-544 AZR-680 AZR-681 AZR-694 AZR-695
+
+### Added
+- **Soft Multiplayer** (AZR-527) — `HomesteaderMultiplayer` registers `HomesteaderSync.SetGameplay`, `RerollTastes` and `AddBill` through `Multiplayer.API.MP.RegisterSyncMethod`, found by reflection (no DLL), the Date Night pattern. Every UI action that changes the game goes through `HomesteaderSync`. The two-client test is still to do.
+- **Per-save gameplay settings** (AZR-527) — `GameComponent_HomesteaderGameplay` saves spoilage triage, allergy flare, favourite-food mood, coop egg interval and the Kats toggle as `hsGameplay`. New games copy the mod-settings defaults; a pre-2.0 save copies them on its first load (`hsGameplaySeeded`). In game, the settings window edits this save and applies on close through the synced `SetGameplay`, and the choice also becomes the new-game default. Mod settings keep the same flat keys, so 1.x settings files keep their values. Display options (cooling inspect line, refresh pack, reveal allergies) stay per computer.
 
 ### Changed
+- **Tastes only for pawns the colony feeds** (AZR-527) — favourites and allergies roll for colonists, prisoners, slaves and hosted guests (`IsTasteEligible`), on spawn or on the first food event. Raiders, visitors and traders are never rolled. Saving drops tastes for pawns that no longer exist; a pre-2.0 save also drops non-colony tastes once on its first load (`hsTastesPruned`). Kidnapped colonists keep theirs.
+- **Tastes tab is read-only** (AZR-527) — `TryPeekTastes` never rolls, so opening the tab cannot advance `Rand`. A pawn with no tastes yet shows "Not known yet". The god-mode reroll goes through `HomesteaderSync`.
+- **Stale caches** (AZR-527) — the cooling lookup and the pantry stock and Make caches are cleared when a game is created or loaded (map ids repeat across saves). A cache from a later tick is never treated as fresh.
+- **Harvest festival** (AZR-680) — saving drops festival years for maps that no longer exist.
+- **Outlander trader patch** (AZR-541) — `PatchOperationConditional`: if `OutlanderFactionBase` is gone, the supplier goes onto `OutlanderCivil` / `OutlanderRough` lists when they have one, otherwise it is skipped without an error.
 - **Package layout** (AZR-525) — one set of defs for both game versions. The Homesteaders scenario (was `1.6/Defs`) and the backstories (was `1.5/Defs`) moved to root `Defs/`. `LoadFolders.xml` loads `/` plus `1.6` or `1.7` (assemblies only) plus `Odyssey` when Odyssey is active. Def names and classes are unchanged.
 - **.NET 10 build for 1.7** (AZR-543) — `Homesteader.1.7.csproj` targets net10.0 against `Krafs.Rimworld.Ref` 1.7.4998-unstable and Lib.Harmony 3.0.0-rc.4. The 1.6 build stays net472.
 - **Private fields** (AZR-543, AZR-695) — `PrivateAccess` binds `RegionAndRoomUpdater.map` and `GraphicData.cachedGraphic` with `[UnsafeAccessor]` on 1.7 and Harmony `FieldRef`s on 1.6, probed once at startup. No `FieldInfo.GetValue` on the room-rebuild path. A missing field logs one warning; the room hook then falls back to the 250-tick rescan, and the refresh pack logs an error and keeps the original art instead of silently doing nothing.
 - **Refresh texture pack is startup-only** (AZR-541, AZR-577) — swaps def art once at startup, before any map exists. `Thing.graphicInt` is no longer touched and spawned things are never rebuilt. The toggle takes effect on the next start.
+- **Kats Effect** (AZR-694, AZR-681) — the heat-dome def is looked up silently, and a pawn-generation failure (a third-party race or xenotype) is caught: Kats does not appear and the letter says so. The fallback race word is translated.
+- **Save compatibility** (AZR-544) — no class, namespace or save key was renamed. New keys only: `hsGameplay`, `hsGameplaySeeded`, `hsTastesPruned`.
 - **Nullable reference types** on every Homesteader file, no warnings on either build. `HomesteaderMod.Settings` is never null. `AllergyCatalog` and `PreserveCatalog` indexes are built eagerly.
 
 ### Internal

@@ -41,10 +41,47 @@ namespace Homesteader
         public override void ExposeData()
         {
             base.ExposeData();
+            if (Scribe.mode == LoadSaveMode.Saving)
+            {
+                PruneLostMaps();
+            }
+
             Scribe_Collections.Look(ref lastFestivalYearByMap, "hsLastFestivalYearByMap", LookMode.Value, LookMode.Value);
             if (Scribe.mode == LoadSaveMode.PostLoadInit && lastFestivalYearByMap == null)
             {
                 lastFestivalYearByMap = new Dictionary<int, int>();
+            }
+        }
+
+        /// <summary>Abandoned or destroyed colonies drop out of the saved list (AZR-680).</summary>
+        private void PruneLostMaps()
+        {
+            if (lastFestivalYearByMap == null || lastFestivalYearByMap.Count == 0 || Find.Maps == null)
+            {
+                return;
+            }
+
+            var live = new HashSet<int>();
+            for (int i = 0; i < Find.Maps.Count; i++)
+            {
+                live.Add(Find.Maps[i].uniqueID);
+            }
+
+            List<int>? drop = null;
+            foreach (int id in lastFestivalYearByMap.Keys)
+            {
+                if (!live.Contains(id))
+                {
+                    (drop ??= new List<int>()).Add(id);
+                }
+            }
+
+            if (drop != null)
+            {
+                for (int i = 0; i < drop.Count; i++)
+                {
+                    lastFestivalYearByMap.Remove(drop[i]);
+                }
             }
         }
 

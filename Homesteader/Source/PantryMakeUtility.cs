@@ -43,7 +43,7 @@ namespace Homesteader
         internal static PantryMakeReport Snapshot()
         {
             int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-            if (cached != null && now - cachedTick < 60)
+            if (cached != null && now >= cachedTick && now - cachedTick < 60)
             {
                 return cached;
             }
@@ -55,6 +55,7 @@ namespace Homesteader
 
         internal static void Invalidate()
         {
+            cached = null;
             cachedTick = -99999;
         }
 
@@ -65,7 +66,7 @@ namespace Homesteader
                 return;
             }
 
-            table.billStack.AddBill(new Bill_Production(recipe));
+            HomesteaderSync.AddBill(recipe, table);
             CameraJumper.TryJumpAndSelect(table);
         }
 

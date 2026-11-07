@@ -2,8 +2,16 @@
 [h1]Homesteader — 2.0.0[/h1]
 Homesteader 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting every update, and the same save carries over to 1.7.
 
+[b]Added[/b]
+[list]
+[*] [b]Multiplayer[/b] — Homesteader's buttons are synced when the Multiplayer mod is on, and gameplay settings travel with the save. Not tested yet.
+[*] [b]Settings per save[/b] — spoilage triage, allergy flares, favourite-food mood, egg rate and the Kats Effect are now saved with each colony. In a game, the settings window changes that colony; at the main menu it sets the defaults for new games. Old saves start with your current settings.
+[/list]
+
 [b]Changed[/b]
 [list]
+[*] [b]Tastes[/b] — only colonists, prisoners, slaves and guests you host get favourite foods and allergies. Raiders and traders no longer fill your save with tastes; old saves are cleaned up once on load. The Tastes tab shows "Not known yet" for anyone without tastes.
+[*] [b]Kats Effect[/b] — no longer breaks if another mod's race or xenotype stops Kats from appearing.
 [*] [b]RimWorld 1.7[/b] — the 1.7 folder now has its own .NET 10 build made against the 1.7 game files. 1.6 keeps its own build from the same source, and both load the same defs.
 [*] [b]Refresh texture pack[/b] — the optional art pack is applied when the game starts, never mid-game. Turning it on or off takes effect on the next start.
 [/list]

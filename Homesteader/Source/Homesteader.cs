@@ -23,7 +23,8 @@ namespace Homesteader
                     RottableDefs.Add(def);
             }
 
-            HomesteaderMod.Settings.ApplyGameplaySettings();
+            HomesteaderGameplayDefs.Apply(HomesteaderMod.Settings.gameplay);
+            HomesteaderMultiplayer.RegisterAll();
         }
     }
 }

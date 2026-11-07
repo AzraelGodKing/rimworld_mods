@@ -7,14 +7,14 @@ using Verse;
 
 namespace Homesteader
 {
-    public class HomesteaderSettings : ModSettings
+    /// <summary>
+    /// Settings that change the simulation. Each save keeps its own copy
+    /// (<see cref="GameComponent_HomesteaderGameplay"/>), so every Multiplayer client
+    /// runs the host's values (AZR-527). Mod settings hold the defaults for new games
+    /// under the same keys as 1.x, so existing settings files keep their values.
+    /// </summary>
+    public sealed class HomesteaderGameplaySettings : IExposable
     {
-        /// <summary>When true, Tastes tab shows allergy names before discovery. Intended for DevMode testing.</summary>
-        public bool revealAllergies = false;
-
-        /// <summary>Optional unique art pack. Off by default; original sprites are never deleted.</summary>
-        public bool useRefreshedTextures = false;
-
         /// <summary>Prefer closest-to-rot stacks when eating and when preserving.</summary>
         public bool spoilageTriage = true;
 
@@ -30,31 +30,16 @@ namespace Homesteader
         /// <summary>When false, Homesteader_KatsEffect never fires (baseChance forced to 0).</summary>
         public bool enableKatsEffect = true;
 
-        /// <summary>When false, root cellar / icehouse / springhouse omit the passive-cooling inspect line.</summary>
-        public bool showCoolingInspect = true;
-
-        private static readonly Dictionary<string, float> OriginalThoughtMood =
-            new Dictionary<string, float>();
-
-        private static IntRange? OriginalCoopEggInterval;
-
-        private static float? OriginalKatsChance;
-
-        public override void ExposeData()
+        public void ExposeData()
         {
-            base.ExposeData();
-            Scribe_Values.Look(ref revealAllergies, "revealAllergies", defaultValue: false);
-            Scribe_Values.Look(ref useRefreshedTextures, "useRefreshedTextures", defaultValue: false);
             Scribe_Values.Look(ref spoilageTriage, "spoilageTriage", defaultValue: true);
             Scribe_Values.Look(ref allergyFlareIntensity, "allergyFlareIntensity", defaultValue: 1f);
             Scribe_Values.Look(ref favoriteFoodMoodFactor, "favoriteFoodMoodFactor", defaultValue: 1f);
             Scribe_Values.Look(ref coopEggIntervalFactor, "coopEggIntervalFactor", defaultValue: 1f);
             Scribe_Values.Look(ref enableKatsEffect, "enableKatsEffect", defaultValue: true);
-            Scribe_Values.Look(ref showCoolingInspect, "showCoolingInspect", defaultValue: true);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 Clamp();
-                ApplyGameplaySettings();
             }
         }
 
@@ -65,96 +50,43 @@ namespace Homesteader
             coopEggIntervalFactor = Mathf.Clamp(coopEggIntervalFactor, 0.5f, 2f);
         }
 
-        /// <summary>
-        /// Push tunable values into defs that Homesteader owns (thoughts, coop spawner, Kats incident).
-        /// Safe to call before defs exist — no-ops until the database is ready.
-        /// </summary>
-        public void ApplyGameplaySettings()
+        public HomesteaderGameplaySettings Copy()
         {
-            Clamp();
-            ApplyThoughtMood("Homesteader_AteFavoriteFood", favoriteFoodMoodFactor);
-            ApplyThoughtMood("Homesteader_AteAllergen", allergyFlareIntensity);
-            ApplyCoopEggInterval();
-            ApplyKatsChance();
+            return (HomesteaderGameplaySettings)MemberwiseClone();
         }
 
-        private static void RememberThoughtMood(string defName)
+        public bool SameAs(HomesteaderGameplaySettings o)
         {
-            if (OriginalThoughtMood.ContainsKey(defName))
-            {
-                return;
-            }
-
-            ThoughtDef? def = DefDatabase<ThoughtDef>.GetNamedSilentFail(defName);
-            if (def?.stages == null || def.stages.Count == 0)
-            {
-                return;
-            }
-
-            OriginalThoughtMood[defName] = def.stages[0].baseMoodEffect;
+            return spoilageTriage == o.spoilageTriage
+                && allergyFlareIntensity == o.allergyFlareIntensity
+                && favoriteFoodMoodFactor == o.favoriteFoodMoodFactor
+                && coopEggIntervalFactor == o.coopEggIntervalFactor
+                && enableKatsEffect == o.enableKatsEffect;
         }
+    }
 
-        private static void ApplyThoughtMood(string defName, float factor)
+    public class HomesteaderSettings : ModSettings
+    {
+        /// <summary>When true, Tastes tab shows allergy names before discovery. Intended for DevMode testing.</summary>
+        public bool revealAllergies = false;
+
+        /// <summary>Optional unique art pack. Off by default; original sprites are never deleted.</summary>
+        public bool useRefreshedTextures = false;
+
+        /// <summary>When false, root cellar / icehouse / springhouse omit the passive-cooling inspect line.</summary>
+        public bool showCoolingInspect = true;
+
+        /// <summary>Defaults for new games and for a pre-2.0 save's first load.</summary>
+        public HomesteaderGameplaySettings gameplay = new HomesteaderGameplaySettings();
+
+        public override void ExposeData()
         {
-            ThoughtDef? def = DefDatabase<ThoughtDef>.GetNamedSilentFail(defName);
-            if (def?.stages == null || def.stages.Count == 0)
-            {
-                return;
-            }
-
-            RememberThoughtMood(defName);
-            if (!OriginalThoughtMood.TryGetValue(defName, out float original))
-            {
-                return;
-            }
-
-            def.stages[0].baseMoodEffect = original * factor;
-        }
-
-        private static void ApplyCoopEggInterval()
-        {
-            ThingDef? coop = DefDatabase<ThingDef>.GetNamedSilentFail("Homesteader_ChickenCoop");
-            if (coop?.comps == null)
-            {
-                return;
-            }
-
-            for (int i = 0; i < coop.comps.Count; i++)
-            {
-                if (!(coop.comps[i] is CompProperties_Spawner spawner) || spawner.saveKeysPrefix != "eggs")
-                {
-                    continue;
-                }
-
-                if (OriginalCoopEggInterval == null)
-                {
-                    OriginalCoopEggInterval = spawner.spawnIntervalRange;
-                }
-
-                IntRange original = OriginalCoopEggInterval.Value;
-                float factor = HomesteaderMod.Settings.coopEggIntervalFactor;
-                spawner.spawnIntervalRange = new IntRange(
-                    Mathf.Max(1, Mathf.RoundToInt(original.min * factor)),
-                    Mathf.Max(1, Mathf.RoundToInt(original.max * factor)));
-                return;
-            }
-        }
-
-        private static void ApplyKatsChance()
-        {
-            IncidentDef? def = DefDatabase<IncidentDef>.GetNamedSilentFail("Homesteader_KatsEffect");
-            if (def == null)
-            {
-                return;
-            }
-
-            if (OriginalKatsChance == null)
-            {
-                OriginalKatsChance = def.baseChance;
-            }
-
-            bool enabled = HomesteaderMod.Settings.enableKatsEffect;
-            def.baseChance = enabled ? OriginalKatsChance.Value : 0f;
+            base.ExposeData();
+            Scribe_Values.Look(ref revealAllergies, "revealAllergies", defaultValue: false);
+            Scribe_Values.Look(ref useRefreshedTextures, "useRefreshedTextures", defaultValue: false);
+            Scribe_Values.Look(ref showCoolingInspect, "showCoolingInspect", defaultValue: true);
+            // Same node and keys as 1.x, which kept these flat in the settings file.
+            gameplay.ExposeData();
         }
     }
 
@@ -164,10 +96,14 @@ namespace Homesteader
         public static HomesteaderSettings Settings = new HomesteaderSettings();
         public static ModContentPack? ContentPack;
 
+        // Edited by the window while a game runs; committed to the save when it closes.
+        private HomesteaderGameplaySettings? pendingSave;
+
         public HomesteaderMod(ModContentPack content) : base(content)
         {
             ContentPack = content;
             Settings = GetSettings<HomesteaderSettings>();
+            Settings.gameplay.Clamp();
             ModVersionLog.Write("[Homesteader]", content, "homesteader-2-v1");
         }
 
@@ -178,41 +114,50 @@ namespace Homesteader
             Listing_Standard listing = new Listing_Standard();
             listing.Begin(inRect);
 
-            float prevAllergy = Settings.allergyFlareIntensity;
-            float prevFavorite = Settings.favoriteFoodMoodFactor;
-            float prevCoop = Settings.coopEggIntervalFactor;
-            bool prevKats = Settings.enableKatsEffect;
+            GameComponent_HomesteaderGameplay? save = GameComponent_HomesteaderGameplay.Instance;
+            HomesteaderGameplaySettings edit;
+            if (save != null)
+            {
+                pendingSave ??= save.Values.Copy();
+                edit = pendingSave;
+                listing.Label("Homesteader_SettingsGameplayHeaderSave".Translate());
+            }
+            else
+            {
+                pendingSave = null;
+                edit = Settings.gameplay;
+                listing.Label("Homesteader_SettingsGameplayHeaderNewGames".Translate());
+            }
 
             listing.CheckboxLabeled(
                 "Homesteader_SettingsSpoilageTriage".Translate(),
-                ref Settings.spoilageTriage,
+                ref edit.spoilageTriage,
                 "Homesteader_SettingsSpoilageTriageTip".Translate());
             if (!PatchHealth.SpoilageBillSortHooked)
             {
                 listing.Label("Homesteader_SettingsSpoilageTriageBillsInactive".Translate());
             }
 
-            listing.GapLine();
-
-            listing.Label("Homesteader_SettingsGameplayHeader".Translate());
             listing.Label("Homesteader_SettingsAllergyFlare".Translate() + ": " +
-                          Settings.allergyFlareIntensity.ToString("F1"));
-            Settings.allergyFlareIntensity = listing.Slider(Settings.allergyFlareIntensity, 0f, 2f);
+                          edit.allergyFlareIntensity.ToString("F1"));
+            edit.allergyFlareIntensity = listing.Slider(edit.allergyFlareIntensity, 0f, 2f);
             listing.Label("Homesteader_SettingsFavoriteMood".Translate() + ": " +
-                          Settings.favoriteFoodMoodFactor.ToString("F1"));
-            Settings.favoriteFoodMoodFactor = listing.Slider(Settings.favoriteFoodMoodFactor, 0f, 2f);
+                          edit.favoriteFoodMoodFactor.ToString("F1"));
+            edit.favoriteFoodMoodFactor = listing.Slider(edit.favoriteFoodMoodFactor, 0f, 2f);
             listing.Label("Homesteader_SettingsCoopEggInterval".Translate() + ": " +
-                          Settings.coopEggIntervalFactor.ToString("F1"));
-            Settings.coopEggIntervalFactor = listing.Slider(Settings.coopEggIntervalFactor, 0.5f, 2f);
+                          edit.coopEggIntervalFactor.ToString("F1"));
+            edit.coopEggIntervalFactor = listing.Slider(edit.coopEggIntervalFactor, 0.5f, 2f);
             listing.CheckboxLabeled(
                 "Homesteader_SettingsEnableKats".Translate(),
-                ref Settings.enableKatsEffect,
+                ref edit.enableKatsEffect,
                 "Homesteader_SettingsEnableKatsTip".Translate());
+            listing.GapLine();
+
+            listing.Label("Homesteader_SettingsDisplayHeader".Translate());
             listing.CheckboxLabeled(
                 "Homesteader_SettingsShowCoolingInspect".Translate(),
                 ref Settings.showCoolingInspect,
                 "Homesteader_SettingsShowCoolingInspectTip".Translate());
-            listing.GapLine();
 
             if (!TextureRefresh.PackPresent())
             {
@@ -244,15 +189,36 @@ namespace Homesteader
             }
 
             listing.End();
-            if (prevAllergy != Settings.allergyFlareIntensity
-                || prevFavorite != Settings.favoriteFoodMoodFactor
-                || prevCoop != Settings.coopEggIntervalFactor
-                || prevKats != Settings.enableKatsEffect)
+            base.DoSettingsWindowContents(inRect);
+        }
+
+        /// <summary>Called when the settings window closes.</summary>
+        public override void WriteSettings()
+        {
+            Settings.gameplay.Clamp();
+            GameComponent_HomesteaderGameplay? save = GameComponent_HomesteaderGameplay.Instance;
+            if (save != null && pendingSave != null)
             {
-                Settings.ApplyGameplaySettings();
+                pendingSave.Clamp();
+                if (!pendingSave.SameAs(save.Values))
+                {
+                    // Your latest in-game choice also becomes the default for new games.
+                    Settings.gameplay = pendingSave.Copy();
+                    HomesteaderSync.SetGameplay(
+                        pendingSave.spoilageTriage,
+                        pendingSave.allergyFlareIntensity,
+                        pendingSave.favoriteFoodMoodFactor,
+                        pendingSave.coopEggIntervalFactor,
+                        pendingSave.enableKatsEffect);
+                }
+            }
+            else
+            {
+                HomesteaderGameplayDefs.Apply(HomesteaderGameplay.Active);
             }
 
-            base.DoSettingsWindowContents(inRect);
+            pendingSave = null;
+            base.WriteSettings();
         }
     }
 }

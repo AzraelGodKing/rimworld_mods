@@ -28,12 +28,23 @@ namespace Homesteader
         private readonly Dictionary<int, HashSet<string>> discoveredAllergySets = new Dictionary<int, HashSet<string>>();
         private readonly HashSet<int> tastesReady = new HashSet<int>();
 
+        // False on a pre-2.0 save: LoadedGame prunes tastes rolled for raiders,
+        // visitors and traders once (AZR-527).
+        private bool tastesPruned;
+        private bool pruneNonColonyOnLoad;
+
         public GameComponent_HomesteaderFavorites(Game game)
         {
+            tastesPruned = true;
         }
 
         public override void ExposeData()
         {
+            if (Scribe.mode == LoadSaveMode.Saving)
+            {
+                PruneTastes(nonColonyToo: false);
+            }
+
             Scribe_Collections.Look(ref favoritesByPawnId, "favoritesByPawnId", LookMode.Value, LookMode.Value);
             Scribe_Collections.Look(ref favoriteListsPacked, "favoriteListsPacked", LookMode.Value, LookMode.Value);
             Scribe_Collections.Look(ref allergiesPacked, "allergiesPacked", LookMode.Value, LookMode.Value);
@@ -42,6 +53,7 @@ namespace Homesteader
                 "discoveredAllergiesPacked",
                 LookMode.Value,
                 LookMode.Value);
+            Scribe_Values.Look(ref tastesPruned, "hsTastesPruned", defaultValue: false);
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
@@ -49,7 +61,128 @@ namespace Homesteader
                 allergiesPacked ??= new Dictionary<int, string>();
                 discoveredAllergiesPacked ??= new Dictionary<int, string>();
                 MigrateLegacyFavorites();
+                pruneNonColonyOnLoad = !tastesPruned;
+                tastesPruned = true;
             }
+        }
+
+        public override void LoadedGame()
+        {
+            if (pruneNonColonyOnLoad)
+            {
+                pruneNonColonyOnLoad = false;
+                PruneTastes(nonColonyToo: true);
+            }
+        }
+
+        /// <summary>
+        /// Only pawns the colony feeds get tastes: colonists, prisoners, slaves and
+        /// guests the colony hosts. Raiders, visitors and traders are never rolled.
+        /// </summary>
+        public static bool IsTasteEligible(Pawn? pawn)
+        {
+            if (pawn?.RaceProps?.Humanlike != true || pawn.needs?.mood == null)
+            {
+                return false;
+            }
+
+            Faction? player = Faction.OfPlayerSilentFail;
+            return player != null
+                && (pawn.Faction == player || pawn.HostFaction == player || pawn.IsSlaveOfColony);
+        }
+
+        /// <summary>
+        /// Drops tastes for pawns that no longer exist. With nonColonyToo, also for
+        /// living pawns that are not eligible (the one-off cleanup of a pre-2.0 save).
+        /// Kidnapped colonists keep theirs.
+        /// </summary>
+        private void PruneTastes(bool nonColonyToo)
+        {
+            List<Pawn> all = PawnsFinder.All_AliveOrDead;
+            if (all == null || all.Count == 0)
+            {
+                return;
+            }
+
+            var keep = new HashSet<int>();
+            for (int i = 0; i < all.Count; i++)
+            {
+                Pawn pawn = all[i];
+                if (pawn != null && (!nonColonyToo || IsTasteEligible(pawn) || IsKidnappedColonist(pawn)))
+                {
+                    keep.Add(pawn.thingIDNumber);
+                }
+            }
+
+            int removed = PruneKeys(favoriteListsPacked, keep)
+                + PruneKeys(allergiesPacked, keep)
+                + PruneKeys(discoveredAllergiesPacked, keep);
+            if (removed > 0)
+            {
+                favoriteNameSets.Clear();
+                allergyIdSets.Clear();
+                discoveredAllergySets.Clear();
+                tastesReady.Clear();
+            }
+        }
+
+        private static bool IsKidnappedColonist(Pawn pawn)
+        {
+            List<Faction> factions = Find.FactionManager?.AllFactionsListForReading ?? new List<Faction>();
+            for (int i = 0; i < factions.Count; i++)
+            {
+                if (factions[i].kidnapped?.KidnappedPawnsListForReading?.Contains(pawn) == true)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static int PruneKeys(Dictionary<int, string> dict, HashSet<int> keep)
+        {
+            List<int>? drop = null;
+            foreach (int id in dict.Keys)
+            {
+                if (!keep.Contains(id))
+                {
+                    (drop ??= new List<int>()).Add(id);
+                }
+            }
+
+            if (drop == null)
+            {
+                return 0;
+            }
+
+            for (int i = 0; i < drop.Count; i++)
+            {
+                dict.Remove(drop[i]);
+            }
+
+            return drop.Count;
+        }
+
+        /// <summary>
+        /// Read-only view for UI (AZR-527): never rolls, so opening the Tastes tab
+        /// cannot advance Rand. False when this pawn has no tastes yet.
+        /// </summary>
+        public bool TryPeekTastes(Pawn pawn, out List<ThingDef> favorites, out List<string> allergies, out List<string> discovered)
+        {
+            int id = pawn.thingIDNumber;
+            favorites = new List<ThingDef>();
+            allergies = new List<string>();
+            discovered = new List<string>();
+            if (!allergiesPacked.ContainsKey(id) && !favoriteListsPacked.ContainsKey(id))
+            {
+                return false;
+            }
+
+            favorites = ResolveDefs(GetFavoriteNames(id));
+            allergies = GetAllergyNames(id);
+            discovered = GetDiscoveredNames(id);
+            return true;
         }
 
         public override void GameComponentTick()
@@ -242,19 +375,19 @@ namespace Homesteader
             return set;
         }
 
-        public List<ThingDef> GetFavorites(Pawn pawn)
+        public List<ThingDef> GetFavorites(Pawn? pawn)
         {
             EnsureTastes(pawn);
             return pawn == null ? new List<ThingDef>() : ResolveDefs(GetFavoriteNames(pawn.thingIDNumber));
         }
 
-        public List<string> GetAllergyIds(Pawn pawn)
+        public List<string> GetAllergyIds(Pawn? pawn)
         {
             EnsureTastes(pawn);
             return pawn == null ? new List<string>() : new List<string>(GetAllergyNames(pawn.thingIDNumber));
         }
 
-        public List<string> GetDiscoveredAllergyIds(Pawn pawn)
+        public List<string> GetDiscoveredAllergyIds(Pawn? pawn)
         {
             return pawn == null ? new List<string>() : GetDiscoveredNames(pawn.thingIDNumber);
         }
@@ -330,7 +463,7 @@ namespace Homesteader
             }
         }
 
-        public void EnsureTastes(Pawn pawn)
+        public void EnsureTastes(Pawn? pawn)
         {
             if (pawn?.RaceProps?.Humanlike != true || pawn.needs?.mood == null)
             {
@@ -339,6 +472,13 @@ namespace Homesteader
 
             int id = pawn.thingIDNumber;
             if (tastesReady.Contains(id))
+            {
+                return;
+            }
+
+            // Rolled once the colony feeds them (a captured raider rolls on capture);
+            // a pawn that already has tastes keeps them if it leaves.
+            if (!IsTasteEligible(pawn) && !allergiesPacked.ContainsKey(id))
             {
                 return;
             }
@@ -392,7 +532,7 @@ namespace Homesteader
             }
         }
 
-        public void RerollTastes(Pawn pawn)
+        public void RerollTastes(Pawn? pawn)
         {
             if (pawn == null)
             {
@@ -592,7 +732,7 @@ namespace Homesteader
                 return;
             }
 
-            float flareIntensity = HomesteaderMod.Settings.allergyFlareIntensity;
+            float flareIntensity = HomesteaderGameplay.Active.allergyFlareIntensity;
 
             bool firstDiscovery = !Comp.IsDiscoveredAllergyId(pawn, allergyId);
             // Intensity 0: discover only — no hediff / mood flare.
@@ -673,18 +813,15 @@ namespace Homesteader
         protected override void FillTab()
         {
             Pawn? pawn = SelPawnForTastes;
-            if (pawn == null)
+            GameComponent_HomesteaderFavorites? comp = FavoriteFoodUtility.Comp;
+            if (pawn == null || comp == null)
             {
                 return;
             }
 
-            FavoriteFoodUtility.Comp?.EnsureTastes(pawn);
+            bool known = comp.TryPeekTastes(pawn, out List<ThingDef> favorites, out List<string> allergies, out List<string> discovered);
             Rect outRect = new Rect(0f, 0f, size.x, size.y).ContractedBy(10f);
-            List<ThingDef> favorites = FavoriteFoodUtility.GetFavorites(pawn);
-            List<string> allergies = FavoriteFoodUtility.Comp?.GetAllergyIds(pawn) ?? new List<string>();
-            List<string> discovered = FavoriteFoodUtility.Comp?.GetDiscoveredAllergyIds(pawn) ?? new List<string>();
-
-            float viewHeight = 80f + favorites.Count * 28f + 40f + Math.Max(allergies.Count, 1) * 28f + 50f;
+            float viewHeight = 80f + Math.Max(favorites.Count, 1) * 28f + 40f + Math.Max(allergies.Count, 1) * 28f + 50f;
             Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, viewHeight);
             Widgets.BeginScrollView(outRect, ref scrollPos, viewRect);
             Listing_Standard listing = new Listing_Standard();
@@ -694,7 +831,11 @@ namespace Homesteader
             listing.Label("Homesteader_TastesFavoritesHeader".Translate());
             Text.Font = GameFont.Small;
             listing.GapLine();
-            if (favorites.Count == 0)
+            if (!known)
+            {
+                listing.Label("Homesteader_TastesNotYetKnown".Translate());
+            }
+            else if (favorites.Count == 0)
             {
                 listing.Label("Homesteader_TastesNone".Translate());
             }
@@ -712,7 +853,11 @@ namespace Homesteader
             Text.Font = GameFont.Small;
             listing.GapLine();
             bool revealHidden = HomesteaderMod.Settings.revealAllergies;
-            if (allergies.Count == 0)
+            if (!known)
+            {
+                listing.Label("Homesteader_TastesNotYetKnown".Translate());
+            }
+            else if (allergies.Count == 0)
             {
                 // "None" stays hidden too — otherwise empty list spoils that they have no allergy.
                 listing.Label(revealHidden
@@ -724,8 +869,8 @@ namespace Homesteader
                 for (int i = 0; i < allergies.Count; i++)
                 {
                     string allergyId = allergies[i];
-                    bool known = discovered.Contains(allergyId) || revealHidden;
-                    string line = known
+                    bool shown = discovered.Contains(allergyId) || revealHidden;
+                    string line = shown
                         ? "  • " + AllergyCatalog.LabelFor(allergyId)
                         : "  • " + "Homesteader_TastesAllergyHidden".Translate();
                     listing.Label(line);
@@ -733,12 +878,13 @@ namespace Homesteader
             }
 
             // Reroll is a cheat — only when God mode is on (DevMode alone is not enough).
-            if (Prefs.DevMode && DebugSettings.godMode)
+            // Synced in Multiplayer: the reroll uses Rand.
+            if (Prefs.DevMode && DebugSettings.godMode && GameComponent_HomesteaderFavorites.IsTasteEligible(pawn))
             {
                 listing.Gap(12f);
                 if (listing.ButtonText("Homesteader_TastesRerollDev".Translate()))
                 {
-                    FavoriteFoodUtility.Comp?.RerollTastes(pawn);
+                    HomesteaderSync.RerollTastes(pawn);
                 }
             }
 
@@ -804,7 +950,7 @@ namespace Homesteader
                 return;
             }
 
-            if (HomesteaderMod.Settings.favoriteFoodMoodFactor <= 0.01f)
+            if (HomesteaderGameplay.Active.favoriteFoodMoodFactor <= 0.01f)
             {
                 return;
             }
