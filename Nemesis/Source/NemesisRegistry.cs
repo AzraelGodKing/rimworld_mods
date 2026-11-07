@@ -24,22 +24,36 @@ namespace Nemesis
                 hunts[i].ClearCaches();
         }
 
+        private const int DeferHostiles = 12;
+
         /// <summary>
-        /// Skip expensive harassment while a large hostile force is already on the player map.
+        /// Skip harassment while a large hostile force is already on the player map, counting
+        /// every Strata level linked to it, so deep raids in the cellars count too (AZR-556).
         /// </summary>
         public static bool ShouldDeferActions(Map map)
         {
             if (map?.mapPawns == null) return false;
+            int hostiles = CountHostiles(map, 0);
+            if (hostiles >= DeferHostiles) return true;
+            List<Map> levels = SoftCompat.StrataReachableMaps(map);
+            for (int i = 0; i < levels.Count && hostiles < DeferHostiles; i++)
+            {
+                if (levels[i] != map && levels[i]?.mapPawns != null)
+                    hostiles = CountHostiles(levels[i], hostiles);
+            }
+            return hostiles >= DeferHostiles;
+        }
+
+        private static int CountHostiles(Map map, int hostiles)
+        {
             IReadOnlyList<Pawn> spawned = map.mapPawns.AllPawnsSpawned;
-            int hostiles = 0;
-            for (int i = 0; i < spawned.Count; i++)
+            for (int i = 0; i < spawned.Count && hostiles < DeferHostiles; i++)
             {
                 Pawn p = spawned[i];
-                if (p == null || p.Dead || !p.HostileTo(Faction.OfPlayer)) continue;
-                hostiles++;
-                if (hostiles >= 12) return true;
+                if (p != null && !p.Dead && p.HostileTo(Faction.OfPlayer))
+                    hostiles++;
             }
-            return false;
+            return hostiles;
         }
     }
 }

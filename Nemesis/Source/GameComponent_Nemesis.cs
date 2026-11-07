@@ -178,7 +178,10 @@ namespace Nemesis
             if (!h.active) return;
 
             if (t % 250 == 0)
+            {
                 NemesisHuntSites.Tick(h);
+                TryBaitIonStorm(h, tick);
+            }
 
             if (t % 2500 == 0)
             {
@@ -874,6 +877,26 @@ namespace Nemesis
             h.nextActionTick = now + wait;
         }
 
+        private static bool IonBaitingOn => NemesisMod.Settings?.enableIonStormBaiting ?? true;
+
+        /// <summary>
+        /// An ion storm on the home map pulls an aggressive nemesis's next move forward to within
+        /// a few hours, once per storm (AZR-556). The move itself is weighted toward force.
+        /// </summary>
+        private void TryBaitIonStorm(NemesisData h, int now)
+        {
+            if (!IonBaitingOn || h.EffectiveAggression < 3f || now - h.lastIonBaitTick < GenDate.TicksPerDay) return;
+            Map? map = SoftCompat.PreferHarassmentMap(Find.AnyPlayerHomeMap);
+            if (!SoftCompat.IonStormActive(map)) return;
+            h.lastIonBaitTick = now;
+            int soon = now + 2500 + h.huntId * 600;
+            if (h.nextActionTick > soon)
+            {
+                h.nextActionTick = soon;
+                NemesisTells.RecordNote(h, "Nemesis_Note_IonBait");
+            }
+        }
+
         private static bool IsThreat(NemesisAction a) =>
             a == NemesisAction.DirectRaid || a == NemesisAction.NemesisAssault
             || a == NemesisAction.KidnapAttempt || a == NemesisAction.AnomalyBait;
@@ -917,6 +940,17 @@ namespace Nemesis
                 sabotage *= pettyMul;
                 food *= pettyMul;
                 caravan *= Mathf.Lerp(1f, pettyMul, 0.5f);
+            }
+
+            // Ion-storm baiting (AZR-556): while Stormproof's ion storm has your turrets and
+            // power down, the nemesis goes for force, not petty sabotage.
+            if (IonBaitingOn && SoftCompat.IonStormActive(map))
+            {
+                assault *= 2.5f;
+                raid *= 1.6f;
+                kidnap *= 1.5f;
+                sabotage = 0f;
+                idle *= 0.4f;
             }
 
             // Soft Strata: slight bias toward food raids when harassing multi-level bases.
