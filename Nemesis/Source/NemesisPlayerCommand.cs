@@ -1,135 +1,61 @@
-using System.Collections.Generic;
 using RimWorld;
 using Verse;
 
 namespace Nemesis
 {
+    public enum NemesisReply
+    {
+        TauntBack,
+        OfferTruce,
+        DemandSurrender,
+    }
+
     /// <summary>
-    /// Enqueue informant / comms / resolution UI mutations; drain on GameComponentTick
-    /// (MP-safer, same pattern as DeepColonyPlayerCommand; no Multiplayer.API).
+    /// Every player action that changes hunt state goes through one of these methods: the
+    /// dossier buttons, the capture dialog, and the comms console job. They take only
+    /// synced values (hunt ID, map, numbers, enums), so <see cref="NemesisMultiplayer"/>
+    /// can register them as Multiplayer sync methods. Without Multiplayer they run directly.
     /// </summary>
     public static class NemesisPlayerCommand
     {
-        private enum Kind : byte
+        public static void BuyLead(int huntId, Map map)
         {
-            BuyLead = 0,
-            PostBounty = 1,
-            ReplyTaunt = 2,
-            ReplyTruce = 3,
-            ReplySurrender = 4,
-            Resolve = 5,
+            NemesisData h = GameComponent_Nemesis.Instance?.HuntById(huntId);
+            if (h != null)
+                NemesisInformants.TryBuyLead(h, map);
         }
 
-        private struct Entry
+        public static void PostBounty(int huntId, Map map, int silver)
         {
-            public Kind kind;
-            public int mapId;
-            public int silver;
-            public NemesisOutcome outcome;
-            public int pawnId;
+            NemesisData h = GameComponent_Nemesis.Instance?.HuntById(huntId);
+            if (h != null)
+                NemesisInformants.TryPostBounty(h, map, silver);
         }
 
-        private static readonly List<Entry> queue = new List<Entry>();
-
-        public static bool HasQueuedResolution
+        public static void Reply(int huntId, NemesisReply reply)
         {
-            get
+            NemesisData h = GameComponent_Nemesis.Instance?.HuntById(huntId);
+            if (h == null || !h.active) return;
+            switch (reply)
             {
-                for (int i = 0; i < queue.Count; i++)
-                {
-                    if (queue[i].kind == Kind.Resolve)
-                        return true;
-                }
-                return false;
+                case NemesisReply.TauntBack:
+                    NemesisCommsReplies.DoTauntBack(h);
+                    break;
+                case NemesisReply.OfferTruce:
+                    NemesisCommsReplies.DoOfferTruce(h);
+                    break;
+                case NemesisReply.DemandSurrender:
+                    NemesisCommsReplies.DoDemandSurrender(h);
+                    break;
             }
-        }
-
-        public static void EnqueueBuyLead(Map map)
-        {
-            queue.Add(new Entry { kind = Kind.BuyLead, mapId = map?.uniqueID ?? -1 });
-        }
-
-        public static void EnqueuePostBounty(Map map, int silver)
-        {
-            queue.Add(new Entry
-            {
-                kind = Kind.PostBounty,
-                mapId = map?.uniqueID ?? -1,
-                silver = silver,
-            });
-        }
-
-        public static void EnqueueReplyTaunt()
-        {
-            queue.Add(new Entry { kind = Kind.ReplyTaunt });
-        }
-
-        public static void EnqueueReplyTruce()
-        {
-            queue.Add(new Entry { kind = Kind.ReplyTruce });
-        }
-
-        public static void EnqueueReplySurrender()
-        {
-            queue.Add(new Entry { kind = Kind.ReplySurrender });
         }
 
         /// <summary>Capture resolution choice (execute / release / keep / truce).</summary>
-        public static void EnqueueResolution(NemesisOutcome outcome, Pawn nemesis)
+        public static void Resolve(int huntId, NemesisOutcome outcome)
         {
-            if (HasQueuedResolution) return;
-            queue.Add(new Entry
-            {
-                kind = Kind.Resolve,
-                outcome = outcome,
-                pawnId = nemesis?.thingIDNumber ?? -1,
-            });
-        }
-
-        public static void Drain()
-        {
-            if (queue.Count == 0) return;
-            List<Entry> batch = new List<Entry>(queue);
-            queue.Clear();
-            for (int i = 0; i < batch.Count; i++)
-                Apply(batch[i]);
-        }
-
-        private static void Apply(Entry e)
-        {
-            switch (e.kind)
-            {
-                case Kind.BuyLead:
-                    NemesisInformants.TryBuyLead(FindMap(e.mapId), out _);
-                    break;
-                case Kind.PostBounty:
-                    NemesisInformants.TryPostBounty(FindMap(e.mapId), e.silver, out _);
-                    break;
-                case Kind.ReplyTaunt:
-                    NemesisCommsReplies.DoTauntBack();
-                    break;
-                case Kind.ReplyTruce:
-                    NemesisCommsReplies.DoOfferTruce();
-                    break;
-                case Kind.ReplySurrender:
-                    NemesisCommsReplies.DoDemandSurrender();
-                    break;
-                case Kind.Resolve:
-                    Dialog_NemesisResolution.ApplyQueuedOutcome(e.outcome, e.pawnId);
-                    break;
-            }
-        }
-
-        private static Map FindMap(int uniqueId)
-        {
-            if (uniqueId < 0) return Find.CurrentMap ?? Find.AnyPlayerHomeMap;
-            List<Map> maps = Find.Maps;
-            for (int i = 0; i < maps.Count; i++)
-            {
-                if (maps[i] != null && maps[i].uniqueID == uniqueId)
-                    return maps[i];
-            }
-            return Find.CurrentMap ?? Find.AnyPlayerHomeMap;
+            NemesisData h = GameComponent_Nemesis.Instance?.HuntById(huntId);
+            if (h != null)
+                Dialog_NemesisResolution.ApplyOutcome(h, outcome);
         }
     }
 }

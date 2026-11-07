@@ -14,25 +14,25 @@ namespace Nemesis
             return Mathf.Max(50, baseCost + bump);
         }
 
-        public static bool TryBuyLead(Map map, out string message)
+        public static bool TryBuyLead(NemesisData data, Map map)
         {
+            string message;
             GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
-            NemesisData data = comp?.Data;
             if (!(NemesisMod.Settings?.enableInformants ?? true))
             {
-                message = "Nemesis_Intel_Disabled".Translate();
+                Messages.Message("Nemesis_Intel_Disabled".Translate(), MessageTypeDefOf.RejectInput, historical: false);
                 return false;
             }
             if (comp == null || data == null || !data.active)
             {
-                message = "Nemesis_Intel_NoHunt".Translate();
+                Messages.Message("Nemesis_Intel_NoHunt".Translate(), MessageTypeDefOf.RejectInput, historical: false);
                 return false;
             }
 
             int cost = LeadCost(data);
             if (!TryChargeSilver(map, cost))
             {
-                message = "Nemesis_Intel_NoSilver".Translate(cost);
+                Messages.Message("Nemesis_Intel_NoSilver".Translate(cost), MessageTypeDefOf.RejectInput, historical: false);
                 return false;
             }
 
@@ -46,7 +46,7 @@ namespace Nemesis
             }
             else if (roll == 1)
             {
-                Pawn pawn = comp.FindNemesisPawn();
+                Pawn pawn = comp.FindNemesisPawnFor(data);
                 NemesisTells.RecordGear(data, pawn);
                 message = "Nemesis_Intel_Gear".Translate(
                     data.lastGearSeen ?? NemesisTells.WeaponLabel(data), cost);
@@ -69,37 +69,20 @@ namespace Nemesis
             return true;
         }
 
-        public static void SetBounty(int silver)
+        public static bool TryPostBounty(NemesisData data, Map map, int silver)
         {
-            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
-            if (comp == null)
-                return;
-            comp.bountySilver = Mathf.Max(0, silver);
-        }
-
-        public static bool TryPostBounty(Map map, int silver, out string message)
-        {
-            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
-            if (comp?.Data == null || !comp.Data.active)
+            if (data == null || !data.active || silver <= 0)
             {
-                message = "Nemesis_Intel_NoHunt".Translate();
+                Messages.Message("Nemesis_Intel_NoHunt".Translate(), MessageTypeDefOf.RejectInput, historical: false);
                 return false;
-            }
-            if (silver <= 0)
-            {
-                SetBounty(0);
-                message = "Nemesis_Bounty_Cleared".Translate();
-                Messages.Message(message, MessageTypeDefOf.NeutralEvent);
-                return true;
             }
             if (!TryChargeSilver(map, silver))
             {
-                message = "Nemesis_Intel_NoSilver".Translate(silver);
+                Messages.Message("Nemesis_Intel_NoSilver".Translate(silver), MessageTypeDefOf.RejectInput, historical: false);
                 return false;
             }
-            SetBounty(comp.bountySilver + silver);
-            message = "Nemesis_Bounty_Posted".Translate(comp.bountySilver);
-            Messages.Message(message, MessageTypeDefOf.PositiveEvent);
+            data.bountySilver += silver;
+            Messages.Message("Nemesis_Bounty_Posted".Translate(data.bountySilver), MessageTypeDefOf.PositiveEvent);
             return true;
         }
 

@@ -4,6 +4,7 @@ using System.Reflection;
 using HarmonyLib;
 using RimWorld;
 using Verse;
+using Verse.AI;
 
 namespace Nemesis
 {
@@ -84,12 +85,15 @@ namespace Nemesis
         static MethodBase TargetMethod() => NemesisPatchTargets.PawnKill;
 
         [HarmonyPostfix]
-        static void Postfix(Pawn __instance, DamageInfo? dinfo)
+        // Arguments bind by position (__0 = dinfo) so a 1.7 parameter rename cannot break the patch.
+        static void Postfix(Pawn __instance, DamageInfo? __0)
         {
+            DamageInfo? dinfo = __0;
             GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
-            if (comp == null || comp.IsEngaged) return;
+            if (comp == null) return;
             if (__instance.Faction == null || __instance.Faction.IsPlayer || __instance.Faction.def.hidden) return;
             if (!__instance.RaceProps.Humanlike) return;
+            if (!comp.CanStartHunt(__instance.Faction)) return;
 
             if (NemesisTriggers.IsColonyInternedOrExecution(__instance, dinfo)) return;
 
@@ -111,15 +115,16 @@ namespace Nemesis
         static MethodBase TargetMethod() => NemesisPatchTargets.PawnKill;
 
         [HarmonyPostfix]
-        static void Postfix(Pawn __instance, DamageInfo? dinfo)
+        static void Postfix(Pawn __instance, DamageInfo? __0)
         {
             GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
-            if (comp == null || comp.IsEngaged) return;
+            if (comp == null) return;
             if (!__instance.IsColonist) return;
 
-            Pawn killer = dinfo?.Instigator as Pawn;
+            Pawn killer = __0?.Instigator as Pawn;
             if (killer?.Faction == null || killer.Faction.IsPlayer || killer.Faction.def.hidden) return;
             if (!killer.RaceProps.Humanlike) return;
+            if (!comp.CanStartHunt(killer.Faction)) return;
 
             if (!Rand.Chance(NemesisMod.Settings?.fixationChance ?? 0.10f)) return;
 
@@ -155,13 +160,15 @@ namespace Nemesis
 
         [HarmonyPrefix]
         [HarmonyPriority(Priority.High)]
-        static bool Prefix(Pawn __instance, DamageInfo? dinfo)
+        static bool Prefix(Pawn __instance, DamageInfo? __0)
         {
+            DamageInfo? dinfo = __0;
             GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
-            if (comp == null || comp.IsEngaged) return true;
+            if (comp == null) return true;
             if (__instance.Faction == null || __instance.Faction.IsPlayer || __instance.Faction.def.hidden) return true;
             if (!__instance.RaceProps.Humanlike) return true;
-            if (comp.IsNemesisPawn(__instance)) return true;
+            if (comp.EngagedHuntForNemesis(__instance) != null) return true;
+            if (!comp.CanStartHunt(__instance.Faction)) return true;
             // Executions, prisoners, and slaves are already a death — don't park them
             // as a world-map hunt (Steam: executing a prisoner started a nemesis).
             if (NemesisTriggers.IsColonyInternedOrExecution(__instance, dinfo)) return true;
@@ -177,7 +184,7 @@ namespace Nemesis
             comp.CreateNemesis(__instance, NemesisTargetMode.Pawn, NemesisTrigger.WoundedAndEscaped,
                 attacker, useAsNemesis: __instance);
             // Foreign-antagonist / failed create must not cancel vanilla death.
-            return !comp.IsEngaged;
+            return comp.HuntForNemesis(__instance) == null;
         }
     }
 
@@ -195,13 +202,16 @@ namespace Nemesis
                 typeof(List<Pawn>).MakeByRefType(),
             });
 
+        // __0 = initiator, __4 = out escapingPrisoners.
         [HarmonyPostfix]
-        static void Postfix(Pawn initiator, List<Pawn> escapingPrisoners)
+        static void Postfix(Pawn __0, List<Pawn> __4)
         {
+            Pawn initiator = __0;
             GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
-            if (comp == null || comp.IsEngaged) return;
-            if (escapingPrisoners == null || escapingPrisoners.Count == 0) return;
+            if (comp == null) return;
+            if (__4 == null || __4.Count == 0) return;
             if (initiator?.Faction == null || initiator.Faction.IsPlayer || initiator.Faction.def.hidden) return;
+            if (!comp.CanStartHunt(initiator.Faction)) return;
 
             if (!Rand.Chance(NemesisMod.Settings?.prisonerEscapedChance ?? 0.10f)) return;
 
@@ -209,33 +219,40 @@ namespace Nemesis
         }
     }
 
-    /// <summary>Ideology slave rebellion — patched only when the method exists.</summary>
+    /// <summary>
+    /// Ideology slave rebellion. Patches the overload that builds the letter, which the
+    /// two-argument one calls, and only counts a rebellion that started.
+    /// </summary>
     [HarmonyPatch]
     public static class Patch_SlaveRebellion_TriggerNemesis
     {
-        static bool Prepare()
-        {
-            return AccessTools.Method(
-                typeof(SlaveRebellionUtility),
-                "StartSlaveRebellion",
-                new[] { typeof(Pawn), typeof(bool) }) != null;
-        }
+        static MethodBase Target() => AccessTools.Method(
+            typeof(SlaveRebellionUtility),
+            "StartSlaveRebellion",
+            new[]
+            {
+                typeof(Pawn),
+                typeof(string).MakeByRefType(),
+                typeof(string).MakeByRefType(),
+                typeof(LetterDef).MakeByRefType(),
+                typeof(LookTargets).MakeByRefType(),
+                typeof(bool),
+            });
+
+        static bool Prepare() => Target() != null;
 
         [HarmonyTargetMethod]
-        static MethodBase TargetMethod()
-        {
-            return AccessTools.Method(
-                typeof(SlaveRebellionUtility),
-                "StartSlaveRebellion",
-                new[] { typeof(Pawn), typeof(bool) });
-        }
+        static MethodBase TargetMethod() => Target();
 
         [HarmonyPostfix]
-        static void Postfix(Pawn initiator)
+        static void Postfix(Pawn __0, bool __result)
         {
+            Pawn initiator = __0;
+            if (!__result) return;
             GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
-            if (comp == null || comp.IsEngaged) return;
+            if (comp == null) return;
             if (initiator?.Faction == null || initiator.Faction.IsPlayer || initiator.Faction.def.hidden) return;
+            if (!comp.CanStartHunt(initiator.Faction)) return;
             if (!Rand.Chance(NemesisMod.Settings?.slaveEscapedChance ?? 0.12f)) return;
 
             comp.CreateNemesis(initiator, NemesisTargetMode.Colony, NemesisTrigger.SlaveEscaped);
@@ -266,8 +283,9 @@ namespace Nemesis
     public static class Patch_Pawn_SetFaction_HandOver
     {
         [HarmonyPostfix]
-        static void Postfix(Pawn __instance, Faction newFaction)
+        static void Postfix(Pawn __instance, Faction __0)
         {
+            Faction newFaction = __0;
             GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
             if (comp == null || !comp.IsEngaged) return;
             if (!comp.IsTargetPawn(__instance)) return;
@@ -297,61 +315,80 @@ namespace Nemesis
     {
         static bool Prepare() =>
             AccessTools.Method(typeof(Pawn_InteractionsTracker), "SocialFightChance",
-                new[] { typeof(InteractionDef), typeof(Pawn) }) != null;
+                new[] { typeof(InteractionDef), typeof(Pawn) }) != null
+            && AccessTools.Field(typeof(Pawn_InteractionsTracker), "pawn") != null;
 
         [HarmonyTargetMethod]
         static MethodBase TargetMethod() =>
             AccessTools.Method(typeof(Pawn_InteractionsTracker), "SocialFightChance",
                 new[] { typeof(InteractionDef), typeof(Pawn) });
 
-        // RimWorld 1.6 renamed the second arg from otherPawn → initiator.
+        // __1 = the other pawn; 1.6 renamed it from otherPawn to initiator, so bind by position.
         [HarmonyPostfix]
-        static void Postfix(Pawn ___pawn, Pawn initiator, ref float __result)
+        static void Postfix(Pawn ___pawn, Pawn __1, ref float __result)
         {
+            Pawn initiator = __1;
             if (__result <= 0f || ___pawn == null || initiator == null) return;
             __result *= NemesisSocial.SocialFightMultiplier(___pawn, initiator);
         }
     }
 
+    /// <summary>
+    /// Nemesis replies and informant purchases on a colony comms console. Shown only where
+    /// vanilla's own options are usable (power, path, talking); picking one sends the pawn to
+    /// the console first (<see cref="JobDriver_NemesisComms"/>), like a vanilla call.
+    /// </summary>
     [HarmonyPatch(typeof(Building_CommsConsole), nameof(Building_CommsConsole.GetFloatMenuOptions))]
     public static class Patch_Comms_Informants
     {
-        static void Postfix(Building_CommsConsole __instance, Pawn myPawn, ref IEnumerable<FloatMenuOption> __result)
+        static void Postfix(Building_CommsConsole __instance, Pawn __0, ref IEnumerable<FloatMenuOption> __result)
         {
-            if (__instance == null || !__instance.CanUseCommsNow)
+            Pawn myPawn = __0;
+            if (__instance == null || myPawn == null || !__instance.CanUseCommsNow)
+                return;
+            if (!myPawn.CanReach(__instance, PathEndMode.InteractionCell, Danger.Some))
+                return;
+            if (!myPawn.health.capacities.CapableOf(PawnCapacityDefOf.Talking))
                 return;
 
             GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
-            if (comp?.Data == null || !comp.Data.active)
+            if (comp == null || comp.Hunts.Count == 0)
                 return;
 
             var extras = new List<FloatMenuOption>();
-
-            // Reply options (taunt / truce / demand surrender).
-            extras.Add(new FloatMenuOption(
-                "Nemesis_Comms_TauntBack".Translate(comp.Data.nemesisName),
-                () => NemesisPlayerCommand.EnqueueReplyTaunt()));
-            extras.Add(new FloatMenuOption(
-                "Nemesis_Comms_OfferTruce".Translate(comp.Data.nemesisName),
-                () => NemesisPlayerCommand.EnqueueReplyTruce()));
-            extras.Add(new FloatMenuOption(
-                "Nemesis_Comms_DemandSurrender".Translate(comp.Data.nemesisName),
-                () => NemesisPlayerCommand.EnqueueReplySurrender()));
-
-            // Informant purchases go through the tick-drain queue.
-            if (NemesisMod.Settings?.enableInformants ?? true)
+            bool informants = NemesisMod.Settings?.enableInformants ?? true;
+            IReadOnlyList<NemesisData> hunts = comp.Hunts;
+            for (int i = 0; i < hunts.Count; i++)
             {
-                int cost = NemesisInformants.LeadCost(comp.Data);
-                Map map = __instance.Map;
-                extras.Add(new FloatMenuOption(
-                    "Nemesis_Comms_BuyLead".Translate(cost),
-                    () => NemesisPlayerCommand.EnqueueBuyLead(map)));
-                extras.Add(new FloatMenuOption(
-                    "Nemesis_Comms_PostBounty".Translate(cost),
-                    () => NemesisPlayerCommand.EnqueuePostBounty(map, cost)));
+                NemesisData h = hunts[i];
+                if (!h.active) continue;
+                string name = h.nemesisName;
+                extras.Add(Option("Nemesis_Comms_TauntBack".Translate(name), myPawn, __instance, h, NemesisCommsKind.TauntBack));
+                extras.Add(Option("Nemesis_Comms_OfferTruce".Translate(name), myPawn, __instance, h, NemesisCommsKind.OfferTruce));
+                extras.Add(Option("Nemesis_Comms_DemandSurrender".Translate(name), myPawn, __instance, h, NemesisCommsKind.DemandSurrender));
+                if (informants)
+                {
+                    int cost = NemesisInformants.LeadCost(h);
+                    extras.Add(Option("Nemesis_Comms_BuyLeadNamed".Translate(cost, name), myPawn, __instance, h, NemesisCommsKind.BuyLead));
+                    extras.Add(Option("Nemesis_Comms_PostBountyNamed".Translate(cost, name), myPawn, __instance, h, NemesisCommsKind.PostBounty));
+                }
             }
+            if (extras.Count == 0)
+                return;
 
             __result = __result == null ? extras : __result.Concat(extras);
+        }
+
+        private static FloatMenuOption Option(string label, Pawn pawn, Building_CommsConsole console,
+            NemesisData h, NemesisCommsKind kind)
+        {
+            int huntId = h.huntId;
+            return FloatMenuUtility.DecoratePrioritizedTask(new FloatMenuOption(label, () =>
+            {
+                Job job = JobMaker.MakeJob(NemesisDefOf.Nemesis_UseCommsConsole, console);
+                job.count = JobDriver_NemesisComms.Encode(huntId, kind);
+                pawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
+            }), pawn, console);
         }
     }
 }

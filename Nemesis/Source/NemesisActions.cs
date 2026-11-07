@@ -131,7 +131,7 @@ namespace Nemesis
             }
 
             GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
-            Pawn nemesis = comp?.FindNemesisPawn();
+            Pawn nemesis = comp?.FindNemesisPawnFor(data);
             bool armyReturn = data.escapeCount > 0;
             bool canInject = nemesis != null
                 && !nemesis.Dead
@@ -159,7 +159,7 @@ namespace Nemesis
             }
             else
             {
-                parms.customLetterLabel = "Nemesis_Letter_RaidTitle".Translate(data.nemesisName);
+                parms.customLetterLabel = "Nemesis_Letter_RaidTitle".Translate(data.ColoredName);
                 parms.customLetterText = "Nemesis_Letter_RaidBody".Translate(data.nemesisName, NemesisTaunts.TargetPhrase(data));
             }
 
@@ -208,7 +208,7 @@ namespace Nemesis
         public static bool CanKidnap(NemesisData data, Map map)
         {
             if (data == null || map == null || data.targetMode != NemesisTargetMode.Pawn) return false;
-            Pawn target = GameComponent_Nemesis.Instance?.FindTargetPawn();
+            Pawn target = GameComponent_Nemesis.Instance?.FindTargetPawn(data);
             return target != null && target.Spawned && !target.Dead && target.Map == map;
         }
 
@@ -225,7 +225,7 @@ namespace Nemesis
         private static void NemesisAssault(NemesisData data, Map map, bool kidnap = false)
         {
             GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
-            Pawn nemesis = comp?.FindNemesisPawn();
+            Pawn nemesis = comp?.FindNemesisPawnFor(data);
 
             if (nemesis == null || nemesis.Dead || nemesis.Destroyed)
             {
@@ -250,8 +250,7 @@ namespace Nemesis
                 return;
             }
 
-            NemesisRegistry.CachedNemesis = nemesis;
-            NemesisRegistry.CachedNemesisId = nemesis.thingIDNumber;
+            data.cachedNemesis = nemesis;
             NemesisProgression.TrySpawnMechEscort(map, FindFaction(data), data, nemesis);
             NemesisProgression.TrySpawnMountEscort(map, FindFaction(data), data, nemesis);
 
@@ -280,8 +279,8 @@ namespace Nemesis
 
             string targetName = data.targetPawnName ?? "Nemesis_Phrase_Someone".Translate();
             string title = kidnap
-                ? "Nemesis_Letter_KidnapTitle".Translate(data.nemesisName, targetName)
-                : "Nemesis_Letter_AssaultTitle".Translate(data.nemesisName);
+                ? "Nemesis_Letter_KidnapTitle".Translate(data.ColoredName, targetName)
+                : "Nemesis_Letter_AssaultTitle".Translate(data.ColoredName);
             string body = kidnap
                 ? "Nemesis_Letter_KidnapBody".Translate(data.nemesisName, targetName)
                 : data.targetMode == NemesisTargetMode.Pawn && data.targetPawnName != null
@@ -314,7 +313,7 @@ namespace Nemesis
             }
 
             Find.LetterStack.ReceiveLetter(
-                "Nemesis_Letter_WasteTitle".Translate(data.nemesisName),
+                "Nemesis_Letter_WasteTitle".Translate(data.ColoredName),
                 "Nemesis_Letter_WasteBody".Translate(data.nemesisName),
                 LetterDefOf.NegativeEvent,
                 new GlobalTargetInfo(center, map));
@@ -352,7 +351,7 @@ namespace Nemesis
             IncidentParms parms = StorytellerUtility.DefaultParmsNow(IncidentCategoryDefOf.ThreatBig, map);
             parms.faction = faction;
             parms.points = Mathf.Max(300f, parms.points * AggressionRaidFactor(data.EffectiveAggression) * 0.85f);
-            parms.customLetterLabel = "Nemesis_Letter_AmbushTitle".Translate(data.nemesisName);
+            parms.customLetterLabel = "Nemesis_Letter_AmbushTitle".Translate(data.ColoredName);
             parms.customLetterText = "Nemesis_Letter_AmbushBody".Translate(data.nemesisName);
 
             if (!raidDef.Worker.TryExecute(parms))
@@ -381,7 +380,7 @@ namespace Nemesis
                 else
                 {
                     Find.LetterStack.ReceiveLetter(
-                        "Nemesis_Letter_CaravanWatchTitle".Translate(data.nemesisName),
+                        "Nemesis_Letter_CaravanWatchTitle".Translate(data.ColoredName),
                         "Nemesis_Letter_CaravanWatchBody".Translate(data.nemesisName),
                         LetterDefOf.ThreatSmall);
                 }
@@ -408,7 +407,7 @@ namespace Nemesis
             }
 
             Find.LetterStack.ReceiveLetter(
-                "Nemesis_Letter_CaravanHitTitle".Translate(data.nemesisName),
+                "Nemesis_Letter_CaravanHitTitle".Translate(data.ColoredName),
                 "Nemesis_Letter_CaravanHitBody".Translate(data.nemesisName, target.LabelCap),
                 LetterDefOf.NegativeEvent,
                 target);
@@ -435,7 +434,7 @@ namespace Nemesis
                     : null;
                 if (dampenNote != null)
                     Find.LetterStack.ReceiveLetter(
-                        "Nemesis_Letter_SabotageTitle".Translate(data.nemesisName),
+                        "Nemesis_Letter_SabotageTitle".Translate(data.ColoredName),
                         dampenNote,
                         LetterDefOf.NeutralEvent);
                 else
@@ -467,7 +466,7 @@ namespace Nemesis
                 : "Nemesis_Letter_SabotageBody".Translate(data.nemesisName, applied);
 
             Find.LetterStack.ReceiveLetter(
-                "Nemesis_Letter_SabotageTitle".Translate(data.nemesisName),
+                "Nemesis_Letter_SabotageTitle".Translate(data.ColoredName),
                 body,
                 LetterDefOf.ThreatSmall);
             NemesisTells.MaybeLeaveMark(data, map, map.Center);
@@ -519,13 +518,13 @@ namespace Nemesis
                     ? "Nemesis_Letter_FoodCellar".Translate(data.nemesisName, ruined)
                     : "Nemesis_Letter_FoodBody".Translate(data.nemesisName, ruined);
 
-            Pawn victim = GameComponent_Nemesis.Instance?.FindTargetPawn();
+            Pawn victim = GameComponent_Nemesis.Instance?.FindTargetPawn(data);
             string fav = SoftCompat.TryFavoriteFoodLabel(victim);
             if (fav != null)
                 body += "\n\n" + "Nemesis_Letter_FoodFavoriteNote".Translate(data.nemesisName, victim.LabelShort, fav);
 
             Find.LetterStack.ReceiveLetter(
-                "Nemesis_Letter_FoodTitle".Translate(data.nemesisName),
+                "Nemesis_Letter_FoodTitle".Translate(data.ColoredName),
                 body,
                 LetterDefOf.NegativeEvent);
         }
@@ -557,7 +556,7 @@ namespace Nemesis
                 if (def.Worker.CanFireNow(parms) && def.Worker.TryExecute(parms))
                 {
                     Find.LetterStack.ReceiveLetter(
-                        "Nemesis_Letter_AnomalyTitle".Translate(data.nemesisName),
+                        "Nemesis_Letter_AnomalyTitle".Translate(data.ColoredName),
                         "Nemesis_Letter_AnomalyBody".Translate(data.nemesisName),
                         LetterDefOf.ThreatBig);
                     return;

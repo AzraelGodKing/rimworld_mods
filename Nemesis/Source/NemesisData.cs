@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using RimWorld;
+using RimWorld.Planet;
 using UnityEngine;
 using Verse;
 
@@ -71,8 +72,13 @@ namespace Nemesis
     /// </summary>
     public class NemesisData : IExposable
     {
+        /// <summary>Unique per save; commands, the dossier and the raid inject address hunts by it.</summary>
+        public int huntId = -1;
         public bool active;
         public int nemesisPawnId = -1;
+        /// <summary>Saved reference next to the ID; the ID stays the source of truth.</summary>
+        public Pawn nemesisPawn;
+        public Pawn targetPawn;
         public string nemesisName;
         public string factionName;
         public Faction faction;
@@ -108,10 +114,35 @@ namespace Nemesis
         public NemesisHabit habit = NemesisHabit.PowerFirst;
         public string weaponDefName;
         public int huntStartTick;
-        public int lastKnownTile = -1;
+        public PlanetTile lastKnownTile = PlanetTile.Invalid;
         public string lastKnownTileLabel;
+        /// <summary>Silver the player posted against this hunt (AZR-657).</summary>
+        public int bountySilver;
         public string lastGearSeen;
         public List<NemesisNote> notes = new List<NemesisNote>();
+
+        // Lookup caches; not saved.
+        [Unsaved] public Pawn cachedNemesis;
+        [Unsaved] public Pawn cachedTarget;
+
+        /// <summary>Active, in truce, or waiting on the capture dialog.</summary>
+        public bool Engaged => active || truceUntilTick > 0 || pendingResolution;
+
+        public void ClearCaches()
+        {
+            cachedNemesis = null;
+            cachedTarget = null;
+        }
+
+        /// <summary>Name in the hunt faction's colour, for letter titles.</summary>
+        public string ColoredName
+        {
+            get
+            {
+                string n = nemesisName ?? "Nemesis_Phrase_Someone".Translate();
+                return faction != null ? n.Colorize(faction.Color) : n;
+            }
+        }
 
         public float EffectiveAggression
         {
@@ -125,8 +156,11 @@ namespace Nemesis
 
         public void ExposeData()
         {
+            Scribe_Values.Look(ref huntId, "huntId", -1);
             Scribe_Values.Look(ref active, "active", false);
             Scribe_Values.Look(ref nemesisPawnId, "nemesisPawnId", -1);
+            Scribe_References.Look(ref nemesisPawn, "nemesisPawn");
+            Scribe_References.Look(ref targetPawn, "targetPawn");
             Scribe_Values.Look(ref nemesisName, "nemesisName", null);
             Scribe_Values.Look(ref factionName, "factionName", null);
             Scribe_References.Look(ref faction, "nemesisFaction");
@@ -156,9 +190,18 @@ namespace Nemesis
             Scribe_Values.Look(ref habit, "habit", NemesisHabit.PowerFirst);
             Scribe_Values.Look(ref weaponDefName, "weaponDefName", null);
             Scribe_Values.Look(ref huntStartTick, "huntStartTick", 0);
-            Scribe_Values.Look(ref lastKnownTile, "lastKnownTile", -1);
+            Scribe_Values.Look(ref lastKnownTile, "lastKnownPlanetTile", PlanetTile.Invalid);
+            if (Scribe.mode == LoadSaveMode.LoadingVars)
+            {
+                // 1.x saved a bare int, which drops the planet layer; it was always the surface.
+                int legacyTile = -1;
+                Scribe_Values.Look(ref legacyTile, "lastKnownTile", -1);
+                if (!lastKnownTile.Valid && legacyTile >= 0)
+                    lastKnownTile = new PlanetTile(legacyTile);
+            }
             Scribe_Values.Look(ref lastKnownTileLabel, "lastKnownTileLabel", null);
             Scribe_Values.Look(ref lastGearSeen, "lastGearSeen", null);
+            Scribe_Values.Look(ref bountySilver, "bountySilver", 0);
             Scribe_Collections.Look(ref notes, "notes", LookMode.Deep);
             if (notes == null)
                 notes = new List<NemesisNote>();
