@@ -36,7 +36,7 @@ namespace Nemesis
                 return false;
             }
 
-            int roll = Rand.RangeInclusive(0, 3);
+            int roll = RollLead(data);
             if (roll == 0)
             {
                 Map home = SoftCompat.PreferHarassmentMap(map ?? Find.AnyPlayerHomeMap);
@@ -84,6 +84,59 @@ namespace Nemesis
             data.bountySilver += silver;
             Messages.Message("Nemesis_Bounty_Posted".Translate(data.bountySilver), MessageTypeDefOf.PositiveEvent);
             return true;
+        }
+
+        /// <summary>
+        /// 0 tile, 1 gear, 2 raid warning, 3 false lead. A posted bounty buys better informants:
+        /// a 600-silver bounty cuts the false-lead weight from 1 to 0.2 and doubles the tile
+        /// weight (AZR-662).
+        /// </summary>
+        private static int RollLead(NemesisData data)
+        {
+            float b = Mathf.Clamp01(data.bountySilver / 600f);
+            float tile = 1f + b;
+            float gear = 1f;
+            float warning = 1f;
+            float falseLead = Mathf.Lerp(1f, 0.2f, b);
+            float roll = Rand.Value * (tile + gear + warning + falseLead);
+            if ((roll -= tile) < 0f) return 0;
+            if ((roll -= gear) < 0f) return 1;
+            if ((roll -= warning) < 0f) return 2;
+            return 3;
+        }
+
+        /// <summary>
+        /// A hunt that ends in the colony's favour pays the bounty out to the informants who
+        /// helped; any other end returns it by drop pod (AZR-657). Called before the hunt's
+        /// bounty is cleared.
+        /// </summary>
+        public static void SettleBounty(NemesisData data, bool won)
+        {
+            int silver = data?.bountySilver ?? 0;
+            if (silver <= 0) return;
+            data.bountySilver = 0;
+            string name = data.nemesisName ?? "Nemesis_Phrase_Someone".Translate();
+            if (won)
+            {
+                Messages.Message("Nemesis_Bounty_PaidOut".Translate(silver, name), MessageTypeDefOf.PositiveEvent);
+                return;
+            }
+
+            Map map = SoftCompat.PreferHarassmentMap(Find.AnyPlayerHomeMap);
+            if (map == null) return;
+            var stacks = new List<Thing>();
+            int left = silver;
+            while (left > 0)
+            {
+                Thing stack = ThingMaker.MakeThing(ThingDefOf.Silver);
+                stack.stackCount = Mathf.Min(left, ThingDefOf.Silver.stackLimit);
+                left -= stack.stackCount;
+                stacks.Add(stack);
+            }
+            IntVec3 spot = DropCellFinder.TradeDropSpot(map);
+            DropPodUtility.DropThingsNear(spot, map, stacks);
+            Messages.Message("Nemesis_Bounty_Refunded".Translate(silver, name),
+                new TargetInfo(spot, map), MessageTypeDefOf.NeutralEvent);
         }
 
         static bool TryChargeSilver(Map map, int cost)

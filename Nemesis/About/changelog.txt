@@ -5,6 +5,8 @@ Nemesis 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting eve
 [b]Added[/b]
 [list]
 [*] [b]Several nemeses at once[/b] — each hostile faction can send its own nemesis, up to a limit you set (default 2). A cooldown between new hunts stops one bad raid from creating several, and two nemeses never raid you within half a day of each other. The dossier has a button per hunt.
+[*] [b]The bounty matters[/b] — while posted it buys better informants (fewer false leads). It is paid out when you kill or capture the nemesis, and returned by drop pod if the hunt ends any other way.
+[*] [b]Settings[/b] — how much calmer a nemesis returns after a truce, the health at which a cornered nemesis gives up, and how many escapes before colonists get upset.
 [*] [b]Multiplayer[/b] — Nemesis's buttons are synced when the Multiplayer mod is on. All players need the host's Nemesis settings. Not tested yet.
 [/list]
 [b]Changed[/b]
@@ -17,6 +19,8 @@ Nemesis 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting eve
 [/list]
 [b]Fixed[/b]
 [list]
+[*] [b]Raid fallback[/b] — a nemesis walked in by hand when the raid missed them now attacks instead of standing idle.
+[*] [b]Freed captive[/b] — a captive freed off the map, or a nemesis who walks off the edge, stays tracked instead of being cleaned up and ending the hunt.
 [*] [b]Hunt lifecycle[/b] — a nemesis off the home map can still slip away or be killed for real, a missing captain ends the hunt, ending a hunt frees the world pawn, and a rogue captain only joins a hostile human faction.
 [/list]
 

@@ -13,7 +13,13 @@
   <Nemesis_Settings_Fixation>Шанс одержимости: {0}%</Nemesis_Settings_Fixation>
   <Nemesis_Settings_WoundedEscape>Шанс при ранении и побеге: {0}%</Nemesis_Settings_WoundedEscape>
   <Nemesis_Settings_TruceDays>Длительность перемирия: {0} дн.</Nemesis_Settings_TruceDays>
+  <Nemesis_Settings_TruceDiscount>Снижение агрессии после перемирия: {0}</Nemesis_Settings_TruceDiscount>
+  <Nemesis_Settings_TruceDiscountTip>Когда перемирие заканчивается, немезис возвращается настолько спокойнее (не ниже 1), так что перемирие — настоящая передышка.</Nemesis_Settings_TruceDiscountTip>
   <Nemesis_Settings_MaxEscapes>Побегов до загона: {0}</Nemesis_Settings_MaxEscapes>
+  <Nemesis_Settings_SubdueHealth>Загнанный немезис сдаётся ниже {0}% здоровья</Nemesis_Settings_SubdueHealth>
+  <Nemesis_Settings_SubdueHealthTip>Когда немезис исчерпал все побеги, при таком здоровье его усмиряют (кровотечение остановлено, сон), чтобы его можно было взять в плен.</Nemesis_Settings_SubdueHealthTip>
+  <Nemesis_Settings_EscapeMood>Побегов до того, как колонисты расстроятся: {0}</Nemesis_Settings_EscapeMood>
+  <Nemesis_Settings_EscapeMoodTip>Начиная с этого побега каждый побег портит колонистам настроение, а сильнее всего — цели немезиса.</Nemesis_Settings_EscapeMoodTip>
   <Nemesis_Settings_MaxHunts>Одновременных охот: {0}</Nemesis_Settings_MaxHunts>
   <Nemesis_Settings_MaxHuntsTip>Сколько немезисов могут охотиться на вас одновременно. У каждой враждебной фракции не больше одного.</Nemesis_Settings_MaxHuntsTip>
   <Nemesis_Settings_HuntCooldown>Дней между новыми охотами: {0}</Nemesis_Settings_HuntCooldown>
@@ -150,6 +156,8 @@
   <Nemesis_Letter_RogueBodyAlone>Вы заключили мир с {1}. {0} — нет.\n\nТеперь они охотятся на вас в одиночку. Договор не кончает вендетту.</Nemesis_Letter_RogueBodyAlone>
   <Nemesis_Letter_EndedKilledTitle>{0}: охота окончена</Nemesis_Letter_EndedKilledTitle>
   <Nemesis_Letter_EndedKilledBody>{0} мёртв. Канал замолкает.</Nemesis_Letter_EndedKilledBody>
+  <Nemesis_Letter_EndedCapturedTitle>{0}: схвачен</Nemesis_Letter_EndedCapturedTitle>
+  <Nemesis_Letter_EndedCapturedBody>{0} под стражей. Охота окончена.</Nemesis_Letter_EndedCapturedBody>
   <Nemesis_Letter_EndedTargetDiedTitle>{0}: теряет интерес</Nemesis_Letter_EndedTargetDiedTitle>
   <Nemesis_Letter_EndedTargetDiedBody>{1} мёртв. {0} получил то, за чем пришёл — в каком-то смысле.\n\nОхота кончается. Они не празднуют. Они просто останавливаются.</Nemesis_Letter_EndedTargetDiedBody>
   <Nemesis_Letter_EndedHandedTitle>{0}: забрал добычу</Nemesis_Letter_EndedHandedTitle>
@@ -234,6 +242,8 @@
   <Nemesis_Intel_False>Наводка была ложью. Стоимость {0} серебра.</Nemesis_Intel_False>
   <Nemesis_Intel_FalseTile>там, где их никогда не было</Nemesis_Intel_FalseTile>
   <Nemesis_Bounty_Posted>Награда теперь {0} серебра.</Nemesis_Bounty_Posted>
+  <Nemesis_Bounty_PaidOut>Награда в {0} серебра за {1} выплачена осведомителям, которые помогли.</Nemesis_Bounty_PaidOut>
+  <Nemesis_Bounty_Refunded>Никто не получил награду в {0} серебра за {1}. Её вернули.</Nemesis_Bounty_Refunded>
   <Nemesis_Comms_TauntBack>Ответить насмешкой {0}</Nemesis_Comms_TauntBack>
   <Nemesis_Comms_OfferTruce>Предложить перемирие {0}</Nemesis_Comms_OfferTruce>
   <Nemesis_Comms_DemandSurrender>Потребовать сдачи у {0}</Nemesis_Comms_DemandSurrender>

@@ -50,7 +50,6 @@ namespace Nemesis
         public int LastThreatTick => lastThreatTick;
 
         private static int MaxEscapes => NemesisMod.Settings?.maxEscapes ?? 4;
-        private const int EscapeMoodThreshold = 2;
         private const int HealthCheckInterval = 120;
         private const int ThreatSpacingTicks = 30000;
 
@@ -283,6 +282,9 @@ namespace Nemesis
             h.active = true;
             h.truceUntilTick = -1;
             h.nextActionTick = Find.TickManager.TicksGame + 120000;
+            // The truce was a real breather: the captain comes back calmer (AZR-661).
+            float discount = NemesisMod.Settings?.truceAggressionDiscount ?? 2f;
+            h.aggressionLevel = Mathf.Max(1f, h.aggressionLevel - discount);
 
             Find.LetterStack.ReceiveLetter(
                 "Nemesis_Letter_TruceBrokenTitle".Translate(h.ColoredName),
@@ -406,7 +408,7 @@ namespace Nemesis
         /// <summary>Repeat escapes cost colony mood; the fixation target takes it hardest.</summary>
         private static void ApplyEscapeMoodFallout(NemesisData h)
         {
-            if (h.escapeCount < EscapeMoodThreshold) return;
+            if (h.escapeCount < (NemesisMod.Settings?.escapeMoodThreshold ?? 2)) return;
             ThoughtDef def = DefDatabase<ThoughtDef>.GetNamedSilentFail("Nemesis_EscapedAgain");
             if (def == null) return;
 
@@ -473,7 +475,7 @@ namespace Nemesis
 
             if (h.escapeCount >= MaxEscapes)
             {
-                if (hp < 0.45f && !nemesis.Downed)
+                if (hp < (NemesisMod.Settings?.subdueHealth ?? 0.45f) && !nemesis.Downed)
                     SubdueNemesis(h, nemesis, fromLethalDamage: false);
             }
             else if (hp < NemesisTells.FleeHealth(h))
@@ -526,6 +528,23 @@ namespace Nemesis
                 EndHunt(h, NemesisEndReason.Vanished, null);
             else if (nemesis.Dead)
                 EndHunt(h, NemesisEndReason.Killed, nemesis);
+            else
+                KeepPinned(nemesis);
+        }
+
+        /// <summary>
+        /// A living nemesis off every map must stay a KeepForever world pawn. Walking off a map
+        /// edge or another mod moving them passes them to the world as Decide, which world-pawn
+        /// GC may discard, ending the hunt as vanished.
+        /// </summary>
+        private static void KeepPinned(Pawn nemesis)
+        {
+            if (nemesis.Spawned || !nemesis.IsWorldPawn()) return;
+            if (Find.WorldPawns.ForcefullyKeptPawns.Contains(nemesis)) return;
+            if (Find.WorldPawns.GetSituation(nemesis) != WorldPawnSituation.Free) return;
+            NemesisPawnUtil.DetachFromLord(nemesis);
+            Find.WorldPawns.RemovePawn(nemesis);
+            Find.WorldPawns.PassToWorld(nemesis, PawnDiscardDecideMode.KeepForever);
         }
 
         private void CheckResolution(NemesisData h)
@@ -591,6 +610,14 @@ namespace Nemesis
                 h.lastEscapeTick = now;
                 h.nextActionTick = now + 120000;
                 h.ClearCaches();
+                // Freed off-map (traded, another mod): park them like every other escape, so no
+                // stale lord or loose world-pawn state is left (AZR-660). On a map they are mid
+                // escape; KeepPinned catches them once they leave.
+                if (!nemesis.Spawned && nemesis.GetCaravan() == null)
+                {
+                    NemesisPawnUtil.ParkAsWorldNemesis(nemesis);
+                    NemesisPawnUtil.EnsureHuntFaction(nemesis, h.faction);
+                }
                 NemesisTells.RecordNote(h, "Nemesis_Note_CustodyEscaped".Translate());
                 Find.LetterStack.ReceiveLetter(
                     "Nemesis_Letter_CustodyEscapedTitle".Translate(h.ColoredName),
@@ -602,6 +629,7 @@ namespace Nemesis
 
             bool died = nemesis != null && nemesis.Dead;
             RecordEpitaph(h, died ? "Nemesis_End_DiedInCustody" : "Nemesis_End_LostCustody");
+            NemesisInformants.SettleBounty(h, won: died);
             CloseHunt(h);
             Find.LetterStack.ReceiveLetter(
                 "Nemesis_Letter_CustodyLostTitle".Translate(h.ColoredName),
@@ -627,6 +655,7 @@ namespace Nemesis
             string title = h.ColoredName;
             RecordEpitaph(h, reason);
             Pawn nemesis = FindNemesisPawnFor(h);
+            NemesisInformants.SettleBounty(h, won: reason == NemesisEndReason.Killed || reason == NemesisEndReason.Captured);
             CloseHunt(h);
 
             switch (reason)
@@ -659,6 +688,16 @@ namespace Nemesis
                         "Nemesis_Letter_EndedHandedTitle".Translate(title),
                         "Nemesis_Letter_EndedHandedBody".Translate(name, h.targetPawnName ?? "Nemesis_Phrase_Someone".Translate()),
                         LetterDefOf.NeutralEvent,
+                        look);
+                    ReleaseNemesisWorldPawn(nemesis);
+                    break;
+                case NemesisEndReason.Captured:
+                    // Capture normally resolves through the capture dialog; this covers a
+                    // caller (API, another mod) that ends a hunt as captured directly (AZR-705).
+                    Find.LetterStack.ReceiveLetter(
+                        "Nemesis_Letter_EndedCapturedTitle".Translate(title),
+                        "Nemesis_Letter_EndedCapturedBody".Translate(name),
+                        LetterDefOf.PositiveEvent,
                         look);
                     ReleaseNemesisWorldPawn(nemesis);
                     break;
