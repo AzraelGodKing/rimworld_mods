@@ -6,9 +6,8 @@
     <label>calling card</label>
     <description>A scrap left where they wanted you to find it. Not evidence you need — just a signature.</description>
     <graphicData>
-      <texPath>Things/Item/Resource/ComponentIndustrial</texPath>
-      <graphicClass>Graphic_StackCount</graphicClass>
-      <color>(0.42,0.34,0.28)</color>
+      <texPath>Things/Nemesis/CallingCard</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <statBases>
       <MaxHitPoints>20</MaxHitPoints>
@@ -20,6 +19,24 @@
     <thingCategories>
       <li>Manufactured</li>
     </thingCategories>
+  </ThingDef>
+
+  <!-- Nemesis_Scrawl (AZR-536): the Scrawl mark, painted where the nemesis struck. -->
+  <ThingDef ParentName="BaseFilth">
+    <defName>Nemesis_Scrawl</defName>
+    <label>scrawled mark</label>
+    <description>A crossed circle and a few lines, daubed in something dark. Someone wanted you to know who was here.</description>
+    <graphicData>
+      <texPath>Things/Nemesis/Scrawl</texPath>
+      <graphicClass>Graphic_Random</graphicClass>
+      <drawSize>1.4</drawSize>
+    </graphicData>
+    <filth>
+      <disappearsInDays>30~40</disappearsInDays>
+      <cleaningWorkToReduceThickness>200</cleaningWorkToReduceThickness>
+      <canFilthAttach>false</canFilthAttach>
+      <maxThickness>1</maxThickness>
+    </filth>
   </ThingDef>
 
 </Defs>

@@ -152,6 +152,10 @@ namespace Nemesis
                 ref Settings.enableShuttleDrops,
                 "Nemesis_Settings_ShuttleDropsTip".Translate());
             listing.CheckboxLabeled(
+                "Nemesis_Settings_Visuals".Translate(),
+                ref Settings.enableNemesisVisuals,
+                "Nemesis_Settings_VisualsTip".Translate());
+            listing.CheckboxLabeled(
                 "Nemesis_Settings_IonBaiting".Translate(),
                 ref Settings.enableIonStormBaiting,
                 "Nemesis_Settings_IonBaitingTip".Translate());

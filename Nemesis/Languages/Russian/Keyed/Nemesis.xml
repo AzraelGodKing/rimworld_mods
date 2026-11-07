@@ -39,6 +39,8 @@
   <Nemesis_Settings_SoftMechsTip>Капитаны-механиторы приводят 1–3 меха Biotech в рейдах возвращения армии, если загружен Biotech. С 5 уровня капитаны-разрушители и выживальщики приводят бойца в боевой капсуле, если загружен Vanilla Factions Expanded - Pirates.</Nemesis_Settings_SoftMechsTip>
   <Nemesis_Settings_ShuttleDrops>Высадка шаттлом (Odyssey)</Nemesis_Settings_ShuttleDrops>
   <Nemesis_Settings_ShuttleDropsTip>С Odyssey капитан фракции индустриального уровня и выше иногда прилетает на шаттле. Шаттл ждёт, и капитан улетает на нём, когда рейд разваливается.</Nemesis_Settings_ShuttleDropsTip>
+  <Nemesis_Settings_Visuals>Визуал немезиды (аура, цвет снаряжения)</Nemesis_Settings_Visuals>
+  <Nemesis_Settings_VisualsTip>Красная аура за немезидой растёт с уровнем, а с 3 уровня улучшенное снаряжение окрашивается в цвет боевого стиля. Выкл. скрывает ауру и прекращает новое окрашивание.</Nemesis_Settings_VisualsTip>
   <Nemesis_Settings_ActionMix>Набор действий</Nemesis_Settings_ActionMix>
   <Nemesis_Settings_WeightTaunt>Насмешка по связи: {0}</Nemesis_Settings_WeightTaunt>
   <Nemesis_Settings_WeightIdle>Ничего не делать: {0}</Nemesis_Settings_WeightIdle>

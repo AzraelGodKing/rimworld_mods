@@ -3,5 +3,7 @@
 
   <Nemesis_CallingCard.label>визитка</Nemesis_CallingCard.label>
   <Nemesis_CallingCard.description>Обрывок, оставленный там, где вас должны были найти. Не доказательство — подпись.</Nemesis_CallingCard.description>
+  <Nemesis_Scrawl.label>нарисованный знак</Nemesis_Scrawl.label>
+  <Nemesis_Scrawl.description>Перечёркнутый круг и несколько линий, намазанных чем-то тёмным. Кто-то хотел, чтобы вы знали, кто здесь был.</Nemesis_Scrawl.description>
 
 </LanguageData>

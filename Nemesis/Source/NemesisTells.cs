@@ -222,17 +222,32 @@ namespace Nemesis
 
             RecordNote(data, "Nemesis_Note_Mark", NemesisNote.Key(MarkKey(data.mark)));
 
-            if (data.mark != NemesisMark.CallingCard && data.mark != NemesisMark.SabotageToken)
-                return;
-
-            ThingDef card = NemesisDefOf.Nemesis_CallingCard;
             IntVec3 cell = near ?? map.Center;
             if (!cell.InBounds(map) || !cell.Standable(map))
                 cell = CellFinderLoose.RandomCellWith(c => c.Standable(map), map, 40);
             if (!cell.IsValid)
                 return;
-            Thing thing = ThingMaker.MakeThing(card);
-            GenPlace.TryPlaceThing(thing, cell, map, ThingPlaceMode.Near);
+
+            switch (data.mark)
+            {
+                case NemesisMark.CallingCard:
+                case NemesisMark.SabotageToken:
+                    GenPlace.TryPlaceThing(ThingMaker.MakeThing(NemesisDefOf.Nemesis_CallingCard), cell, map, ThingPlaceMode.Near);
+                    break;
+                case NemesisMark.Scrawl:
+                    // Their own art now, not just a note (AZR-536).
+                    FilthMaker.TryMakeFilth(cell, map, NemesisDefOf.Nemesis_Scrawl, 1);
+                    break;
+                case NemesisMark.ArrangedCorpse:
+                    // A ring of blood around their sign.
+                    FilthMaker.TryMakeFilth(cell, map, NemesisDefOf.Nemesis_Scrawl, 1);
+                    foreach (IntVec3 c in GenRadial.RadialCellsAround(cell, 1.9f, false))
+                    {
+                        if (c.InBounds(map) && c.Standable(map))
+                            FilthMaker.TryMakeFilth(c, map, ThingDefOf.Filth_Blood, 1);
+                    }
+                    break;
+            }
         }
 
         public static float FleeHealth(NemesisData data)
