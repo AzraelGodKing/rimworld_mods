@@ -13,7 +13,13 @@
   <Nemesis_Settings_Fixation>Fixation chance: {0}%</Nemesis_Settings_Fixation>
   <Nemesis_Settings_WoundedEscape>Wounded-and-escaped chance: {0}%</Nemesis_Settings_WoundedEscape>
   <Nemesis_Settings_TruceDays>Truce duration: {0} days</Nemesis_Settings_TruceDays>
+  <Nemesis_Settings_TruceDiscount>Aggression lost after a truce: {0}</Nemesis_Settings_TruceDiscount>
+  <Nemesis_Settings_TruceDiscountTip>When a truce ends, the nemesis comes back this much calmer (never below 1), so a truce is a real breather.</Nemesis_Settings_TruceDiscountTip>
   <Nemesis_Settings_MaxEscapes>Escapes before cornered: {0}</Nemesis_Settings_MaxEscapes>
+  <Nemesis_Settings_SubdueHealth>Cornered nemesis gives up below {0}% health</Nemesis_Settings_SubdueHealth>
+  <Nemesis_Settings_SubdueHealthTip>Once a nemesis has used up every escape, they are subdued (bleeding stopped, sedated) at this health so you can capture them.</Nemesis_Settings_SubdueHealthTip>
+  <Nemesis_Settings_EscapeMood>Escapes before colonists get upset: {0}</Nemesis_Settings_EscapeMood>
+  <Nemesis_Settings_EscapeMoodTip>From this escape on, every escape gives colonists a bad mood, and the fixation target the worst.</Nemesis_Settings_EscapeMoodTip>
   <Nemesis_Settings_MaxHunts>Hunts at once: {0}</Nemesis_Settings_MaxHunts>
   <Nemesis_Settings_MaxHuntsTip>How many nemeses can hunt you at the same time. Each hostile faction can have at most one.</Nemesis_Settings_MaxHuntsTip>
   <Nemesis_Settings_HuntCooldown>Days between new hunts: {0}</Nemesis_Settings_HuntCooldown>
@@ -150,6 +156,8 @@
   <Nemesis_Letter_RogueBodyAlone>You made peace with {1}. {0} did not.\n\nThey hunt you alone now. A treaty does not end a vendetta.</Nemesis_Letter_RogueBodyAlone>
   <Nemesis_Letter_EndedKilledTitle>{0}: Hunt Over</Nemesis_Letter_EndedKilledTitle>
   <Nemesis_Letter_EndedKilledBody>{0} is dead. The channel goes quiet.</Nemesis_Letter_EndedKilledBody>
+  <Nemesis_Letter_EndedCapturedTitle>{0}: Captured</Nemesis_Letter_EndedCapturedTitle>
+  <Nemesis_Letter_EndedCapturedBody>{0} is in custody. The hunt is over.</Nemesis_Letter_EndedCapturedBody>
   <Nemesis_Letter_EndedTargetDiedTitle>{0}: Loses Interest</Nemesis_Letter_EndedTargetDiedTitle>
   <Nemesis_Letter_EndedTargetDiedBody>{1} is dead. {0} got what they came for — in a way.\n\nThe hunt ends. They do not celebrate. They simply stop.</Nemesis_Letter_EndedTargetDiedBody>
   <Nemesis_Letter_EndedHandedTitle>{0}: Claimed Their Prize</Nemesis_Letter_EndedHandedTitle>
@@ -235,6 +243,8 @@
   <Nemesis_Intel_False>The lead was a lie. Cost {0} silver.</Nemesis_Intel_False>
   <Nemesis_Intel_FalseTile>somewhere that was never them</Nemesis_Intel_FalseTile>
   <Nemesis_Bounty_Posted>Bounty is now {0} silver.</Nemesis_Bounty_Posted>
+  <Nemesis_Bounty_PaidOut>The {0} silver bounty on {1} is paid out to the informants who helped.</Nemesis_Bounty_PaidOut>
+  <Nemesis_Bounty_Refunded>Nobody claimed the {0} silver bounty on {1}. It has been sent back.</Nemesis_Bounty_Refunded>
   <Nemesis_Comms_TauntBack>Broadcast a taunt back at {0}</Nemesis_Comms_TauntBack>
   <Nemesis_Comms_OfferTruce>Offer {0} a truce</Nemesis_Comms_OfferTruce>
   <Nemesis_Comms_DemandSurrender>Demand {0} surrender</Nemesis_Comms_DemandSurrender>

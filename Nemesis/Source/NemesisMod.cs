@@ -55,8 +55,23 @@ namespace Nemesis
             Settings.truceDurationDays = (int)listing.Slider(Settings.truceDurationDays, 1f, 120f);
             listing.Gap(6f);
 
+            listing.Label("Nemesis_Settings_TruceDiscount".Translate(Settings.truceAggressionDiscount.ToString("F1")),
+                tooltip: "Nemesis_Settings_TruceDiscountTip".Translate());
+            Settings.truceAggressionDiscount = Mathf.Round(listing.Slider(Settings.truceAggressionDiscount, 0f, 5f) * 2f) / 2f;
+            listing.Gap(6f);
+
             listing.Label("Nemesis_Settings_MaxEscapes".Translate(Settings.maxEscapes));
             Settings.maxEscapes = (int)listing.Slider(Settings.maxEscapes, 1f, 12f);
+            listing.Gap(6f);
+
+            listing.Label("Nemesis_Settings_SubdueHealth".Translate((int)(Settings.subdueHealth * 100f)),
+                tooltip: "Nemesis_Settings_SubdueHealthTip".Translate());
+            Settings.subdueHealth = Mathf.Round(listing.Slider(Settings.subdueHealth, 0.1f, 0.9f) * 20f) / 20f;
+            listing.Gap(6f);
+
+            listing.Label("Nemesis_Settings_EscapeMood".Translate(Settings.escapeMoodThreshold),
+                tooltip: "Nemesis_Settings_EscapeMoodTip".Translate());
+            Settings.escapeMoodThreshold = (int)listing.Slider(Settings.escapeMoodThreshold, 1f, 10f);
             listing.Gap(6f);
 
             listing.Label("Nemesis_Settings_MaxHunts".Translate(Settings.maxConcurrentHunts),

@@ -13,6 +13,12 @@ namespace Nemesis
         public int maxEscapes = 4;
         /// <summary>Hunts that may run at once, at most one per hostile faction (AZR-537).</summary>
         public int maxConcurrentHunts = 2;
+        /// <summary>Escapes before each further escape costs colony mood (AZR-707).</summary>
+        public int escapeMoodThreshold = 2;
+        /// <summary>Health fraction at which a cornered nemesis is subdued instead of fleeing (AZR-707).</summary>
+        public float subdueHealth = 0.45f;
+        /// <summary>Aggression taken off when a truce ends (AZR-661).</summary>
+        public float truceAggressionDiscount = 2f;
         /// <summary>Days after a hunt starts before another may start (AZR-572).</summary>
         public float huntCooldownDays = 3f;
 
@@ -53,6 +59,9 @@ namespace Nemesis
             Scribe_Values.Look(ref truceDurationDays, "truceDurationDays", 30);
             Scribe_Values.Look(ref maxEscapes, "maxEscapes", 4);
             Scribe_Values.Look(ref maxConcurrentHunts, "maxConcurrentHunts", 2);
+            Scribe_Values.Look(ref escapeMoodThreshold, "escapeMoodThreshold", 2);
+            Scribe_Values.Look(ref subdueHealth, "subdueHealth", 0.45f);
+            Scribe_Values.Look(ref truceAggressionDiscount, "truceAggressionDiscount", 2f);
             Scribe_Values.Look(ref huntCooldownDays, "huntCooldownDays", 3f);
             Scribe_Values.Look(ref maxAggressionCap, "maxAggressionCap", 0.6f);
             Scribe_Values.Look(ref escalationRatePerDay, "escalationRatePerDay", 0.06f);
@@ -87,6 +96,9 @@ namespace Nemesis
             truceDurationDays = 30;
             maxEscapes = 4;
             maxConcurrentHunts = 2;
+            escapeMoodThreshold = 2;
+            subdueHealth = 0.45f;
+            truceAggressionDiscount = 2f;
             huntCooldownDays = 3f;
             maxAggressionCap = 0.6f;
             escalationRatePerDay = 0.06f;

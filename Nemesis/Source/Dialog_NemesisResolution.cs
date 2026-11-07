@@ -136,7 +136,10 @@ namespace Nemesis
                 _ => "Nemesis_End_Captured",
             };
             if (outcome != NemesisOutcome.Truce)
+            {
                 comp.RecordEpitaph(data, endKey);
+                NemesisInformants.SettleBounty(data, won: true);
+            }
 
             data.pendingResolution = false;
             data.ClearCaches();
