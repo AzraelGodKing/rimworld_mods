@@ -1,5 +1,5 @@
+#nullable enable
 using System.Collections.Generic;
-using System.Reflection;
 using HarmonyLib;
 using RimWorld;
 using UnityEngine;
@@ -36,9 +36,9 @@ namespace Homesteader
                 CoolingLookup.For(map)?.MarkDirty();
         }
 
-        public override string CompInspectStringExtra()
+        public override string? CompInspectStringExtra()
         {
-            if (HomesteaderMod.Settings != null && !HomesteaderMod.Settings.showCoolingInspect)
+            if (!HomesteaderMod.Settings.showCoolingInspect)
             {
                 return null;
             }
@@ -104,14 +104,14 @@ namespace Homesteader
             for (int i = 0; i < buildings.Count; i++)
             {
                 Thing t = buildings[i];
-                CompRootCellarCooling comp = t.TryGetComp<CompRootCellarCooling>();
+                CompRootCellarCooling? comp = t.TryGetComp<CompRootCellarCooling>();
                 if (comp == null)
                 {
                     continue;
                 }
 
                 float ceiling = comp.Props.maxTemperature;
-                Room room = t.GetRoom();
+                Room? room = t.GetRoom();
                 bool indoor = room != null && !room.PsychologicallyOutdoors;
 
                 foreach (IntVec3 cell in t.OccupiedRect())
@@ -129,7 +129,7 @@ namespace Homesteader
                             continue;
                         }
 
-                        Room adjRoom = adj.GetRoom(map);
+                        Room? adjRoom = adj.GetRoom(map);
                         if (adjRoom == room)
                         {
                             AddCell(adj, ceiling);
@@ -157,7 +157,7 @@ namespace Homesteader
         private static readonly Dictionary<int, RootCellarCoolingMapComponent> byMapId =
             new Dictionary<int, RootCellarCoolingMapComponent>();
 
-        internal static void Register(RootCellarCoolingMapComponent comp)
+        internal static void Register(RootCellarCoolingMapComponent? comp)
         {
             if (comp?.map == null)
             {
@@ -167,7 +167,7 @@ namespace Homesteader
             byMapId[comp.map.uniqueID] = comp;
         }
 
-        internal static void Unregister(Map map)
+        internal static void Unregister(Map? map)
         {
             if (map == null)
             {
@@ -177,19 +177,19 @@ namespace Homesteader
             byMapId.Remove(map.uniqueID);
         }
 
-        internal static RootCellarCoolingMapComponent For(Map map)
+        internal static RootCellarCoolingMapComponent? For(Map? map)
         {
             if (map == null)
             {
                 return null;
             }
 
-            if (byMapId.TryGetValue(map.uniqueID, out RootCellarCoolingMapComponent cached))
+            if (byMapId.TryGetValue(map.uniqueID, out RootCellarCoolingMapComponent? cached))
             {
                 return cached;
             }
 
-            RootCellarCoolingMapComponent found = map.GetComponent<RootCellarCoolingMapComponent>();
+            RootCellarCoolingMapComponent? found = map.GetComponent<RootCellarCoolingMapComponent>();
             if (found != null)
             {
                 byMapId[map.uniqueID] = found;
@@ -201,7 +201,7 @@ namespace Homesteader
 
     public static class RootCellarUtility
     {
-        public static bool TryGetCoolingCeiling(Thing thing, out float maxTemperature)
+        public static bool TryGetCoolingCeiling(Thing? thing, out float maxTemperature)
         {
             maxTemperature = 0f;
             if (thing?.Map == null || !thing.Spawned)
@@ -209,7 +209,7 @@ namespace Homesteader
                 return false;
             }
 
-            RootCellarCoolingMapComponent comp = CoolingLookup.For(thing.Map);
+            RootCellarCoolingMapComponent? comp = CoolingLookup.For(thing.Map);
             if (comp == null || !comp.HasAnyCooling)
             {
                 return false;
@@ -230,7 +230,7 @@ namespace Homesteader
                 return;
             }
 
-            RootCellarCoolingMapComponent cooling = CoolingLookup.For(map);
+            RootCellarCoolingMapComponent? cooling = CoolingLookup.For(map);
             if (cooling == null || !cooling.HasAnyCooling)
             {
                 return;
@@ -257,23 +257,14 @@ namespace Homesteader
     [HarmonyPatch(typeof(RegionAndRoomUpdater), nameof(RegionAndRoomUpdater.RebuildAllRegionsAndRooms))]
     public static class Patch_PassiveCooling_RebuildAllRegions
     {
-        internal static readonly FieldInfo MapField =
-            AccessTools.Field(typeof(RegionAndRoomUpdater), "map");
-
         public static void Postfix(RegionAndRoomUpdater __instance)
         {
             MarkCoolingDirty(__instance);
         }
 
-        internal static void MarkCoolingDirty(RegionAndRoomUpdater updater)
+        internal static void MarkCoolingDirty(RegionAndRoomUpdater? updater)
         {
-            if (updater == null || MapField == null)
-            {
-                return;
-            }
-
-            Map map = MapField.GetValue(updater) as Map;
-            CoolingLookup.For(map)?.MarkDirty();
+            CoolingLookup.For(PrivateAccess.MapOf(updater))?.MarkDirty();
         }
     }
 
@@ -282,14 +273,7 @@ namespace Homesteader
     {
         public static void Prefix(RegionAndRoomUpdater __instance, ref bool __state)
         {
-            __state = false;
-            FieldInfo mapField = Patch_PassiveCooling_RebuildAllRegions.MapField;
-            if (mapField == null)
-            {
-                return;
-            }
-
-            Map map = mapField.GetValue(__instance) as Map;
+            Map? map = PrivateAccess.MapOf(__instance);
             __state = map?.regionDirtyer != null && map.regionDirtyer.AnyDirty;
         }
 

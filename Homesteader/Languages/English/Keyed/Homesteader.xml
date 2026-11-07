@@ -39,7 +39,7 @@
   <Homesteader_SettingsCategory>Homesteader</Homesteader_SettingsCategory>
   <Homesteader_SettingsUseRefreshedTextures>Use refreshed textures</Homesteader_SettingsUseRefreshedTextures>
   <Homesteader_SettingsUseRefreshedTexturesTip>Swap Homesteader buildings, items, plants, and floors to the optional unique art pack. That pack is not in the Workshop download — copy Textures/HomesteaderRefresh from the GitHub repo into this mod folder. Original sprites always stay; this is off by default.</Homesteader_SettingsUseRefreshedTexturesTip>
-  <Homesteader_SettingsUseRefreshedTexturesRestart>Restart RimWorld after changing this if any sprites look stale.</Homesteader_SettingsUseRefreshedTexturesRestart>
+  <Homesteader_SettingsUseRefreshedTexturesRestart>Takes effect the next time RimWorld starts.</Homesteader_SettingsUseRefreshedTexturesRestart>
   <Homesteader_SettingsRefreshPackMissing>The optional unique art pack is not installed. Workshop and site zips ship original sprites only. To enable Use refreshed textures, copy Textures/HomesteaderRefresh from the GitHub repo into this mod folder and restart.</Homesteader_SettingsRefreshPackMissing>
   <Homesteader_SettingsDevHeader>Developer</Homesteader_SettingsDevHeader>
   <Homesteader_SettingsRevealAllergies>Reveal allergies</Homesteader_SettingsRevealAllergies>

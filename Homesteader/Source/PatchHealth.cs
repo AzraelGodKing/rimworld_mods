@@ -1,3 +1,4 @@
+#nullable enable
 using System.Reflection;
 using HarmonyLib;
 using RimWorld;
@@ -26,7 +27,7 @@ namespace Homesteader
             RoomRebuildHooked =
                 IsPatched(AccessTools.Method(typeof(RegionAndRoomUpdater),
                     nameof(RegionAndRoomUpdater.TryRebuildDirtyRegionsAndRooms)))
-                && Patch_PassiveCooling_RebuildAllRegions.MapField != null;
+                && PrivateAccess.UpdaterMapAvailable;
             LandraceFrostHooked = IsPatched(AccessTools.PropertyGetter(typeof(Plant),
                 nameof(Plant.GrowthRateFactor_Temperature)));
             LandraceDroughtHooked = IsPatched(AccessTools.PropertyGetter(typeof(Plant),
@@ -51,14 +52,14 @@ namespace Homesteader
             }
         }
 
-        private static bool IsPatched(MethodBase target)
+        private static bool IsPatched(MethodBase? target)
         {
             if (target == null)
             {
                 return false;
             }
 
-            Patches info = Harmony.GetPatchInfo(target);
+            Patches? info = Harmony.GetPatchInfo(target);
             return info != null && info.Owners.Contains(HarmonyId);
         }
     }

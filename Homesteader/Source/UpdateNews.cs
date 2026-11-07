@@ -1,10 +1,11 @@
+#nullable enable
 using Verse;
 
 namespace Homesteader
 {
     public class GameComponent_HomesteaderNews : GameComponent
     {
-        private string lastNewsVersion;
+        private string? lastNewsVersion;
 
         public GameComponent_HomesteaderNews(Game game)
         {
@@ -23,7 +24,7 @@ namespace Homesteader
 
     internal static class UpdateNewsLetter
     {
-        internal static void TrySend(ref string lastAnnouncedVersion)
+        internal static void TrySend(ref string? lastAnnouncedVersion)
         {
             AzraelCommon.UpdateNews.TrySend(
                 ref lastAnnouncedVersion,
