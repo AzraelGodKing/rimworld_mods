@@ -14,15 +14,17 @@
   </loadAfter>
   <description>A RimWorld 1.6 and 1.7 rebuild of Wave Survival [Game Mode] by Justin C.
 
-The Wave Survival storyteller is a combat run. Random events are off. Raids arrive on a timer, and each wave is a little stronger than the last. Every fourth wave is a siege, sappers, or maddened animals. A supply pod lands at your orbital trade beacon every day.
+The Wave Survival storyteller is a combat run. Random events are off. Raids arrive on a timer, and each wave is stronger than the last. Every fourth wave is special: a siege, sappers, breachers, mechanoids or maddened animals. Every tenth is a boss wave. A supply pod lands at your orbital trade beacon every day.
 
-- First raid after 5 days, then one every 2 days.
-- Daily steel, wood, stone blocks, silver, components, and medicine. Survival meals when food is low, and the occasional weapon.
-- Orbital traders still visit. Wanderers can join a small colony.
+- The next wave is decided ahead of time: the alert and a small HUD tell you what is coming and from whom.
+- Casual, Standard, Brutal or Custom presets, saved with each run.
+- Daily steel, wood, stone blocks, silver, components and medicine. Survival meals when food is low, and the occasional weapon.
+- Royalty and Anomaly add their own waves. Add your own in Defs/WaveTypes.xml.
+- Run stats and a best-runs list.
+- On RimWorld 1.7, the screen edges glow as a wave gets close.
 - Wave Survival scenario: 4 colonists, starting weapons, turret research finished.
-- An alert counts down to the next wave.
 
-Tune every number in Defs/WaveSurvivalConfig.xml. No other mods required.
+No other mods required. Multiplayer is not supported.
 
 Original mod by Justin C. Storyteller art by Philbro: http://philbro.deviantart.com/
 Discord: https://discord.gg/Vwh2y7qMXv</description>
