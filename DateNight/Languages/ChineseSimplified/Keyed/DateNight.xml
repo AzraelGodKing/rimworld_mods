@@ -111,4 +111,6 @@
   <DateNight_Report_Fishing>正在和{0}钓鱼。</DateNight_Report_Fishing>
   <DateNight_Gizmo_Baby>备孕</DateNight_Gizmo_Baby>
   <DateNight_Gizmo_BabyDesc>此殖民者和{0}正在备孕。爱爱频率约为两倍，在爱爱时段使用短冷却。她怀孕后自动关闭。</DateNight_Gizmo_BabyDesc>
+  <DateNight_Settings_Visuals>约会特效</DateNight_Settings_Visuals>
+  <DateNight_Settings_VisualsTip>约会之夜自己的特效：送礼时的玫瑰心、美好约会后的闪光、看星星时的星星、重要纪念日的彩纸、晚餐的烛光、看星星时的微光、舞池的光晕，以及选中情侣最爱的地方和爱爱床上的圆环。关闭：只有原版爱心。</DateNight_Settings_VisualsTip>
 </LanguageData>

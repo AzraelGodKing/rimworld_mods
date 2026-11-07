@@ -92,6 +92,12 @@ namespace DateNight
         /// </summary>
         public int scheduleColumnOffset;
 
+        /// <summary>
+        /// Date Night's own flecks, venue glows and the "our spot" ring. Off: the
+        /// vanilla heart only, nothing drawn.
+        /// </summary>
+        public bool dateVisuals = true;
+
         public override void ExposeData()
         {
             Scribe_Values.Look(ref pregnancySafeCooldown, "pregnancySafeCooldown", true);
@@ -110,6 +116,7 @@ namespace DateNight
             Scribe_Values.Look(ref enableGradualRomance, "enableGradualRomance", true);
             Scribe_Values.Look(ref showRomanceGizmos, "showRomanceGizmos", true);
             Scribe_Values.Look(ref scheduleColumnOffset, "scheduleColumnOffset", 0);
+            Scribe_Values.Look(ref dateVisuals, "dateVisuals", true);
             if (Scribe.mode == LoadSaveMode.PostLoadInit && giftDefNames == null)
             {
                 giftDefNames = new List<string>();
@@ -134,6 +141,7 @@ namespace DateNight
             enableGradualRomance = true;
             showRomanceGizmos = true;
             scheduleColumnOffset = 0;
+            dateVisuals = true;
             DateNightActivities.InvalidateGiftCache();
         }
     }

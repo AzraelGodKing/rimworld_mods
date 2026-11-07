@@ -35,6 +35,10 @@ namespace DateNight
         public static ThoughtDef DateNight_BecameSweethearts = null!;
         public static ThoughtDef DateNight_BecamePartners = null!;
         public static ThoughtDef DateNight_BecameLovers = null!;
+        public static FleckDef DateNight_RoseHeart = null!;
+        public static FleckDef DateNight_Sparkle = null!;
+        public static FleckDef DateNight_Star = null!;
+        public static FleckDef DateNight_Confetti = null!;
 
         static DateNightDefOf()
         {

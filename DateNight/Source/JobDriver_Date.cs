@@ -41,6 +41,9 @@ namespace DateNight
         private Pawn Partner => job.GetTarget(PartnerInd).Pawn;
 
         public DateActivity Activity => activity;
+
+        /// <summary>Parked at the venue in the main date toil (for the glows).</summary>
+        public bool AtVenue => ticksLeft > 0 && totalTicks > 0 && pawn.pather != null && !pawn.pather.MovingNow;
         public DateActivity CoupleActivity =>
             coupleActivity != DateActivity.Unresolved ? coupleActivity : activity;
 
@@ -212,7 +215,10 @@ namespace DateNight
                 if (pawn.IsHashIntervalTick(TicksBetweenHeartMotes) && pawn.Map != null
                     && CloseEnough(partner))
                 {
-                    FleckMaker.ThrowMetaIcon(pawn.Position, pawn.Map, FleckDefOf.Heart);
+                    FleckDef heart = activity == DateActivity.Stargaze
+                        ? DateNightVisuals.Fleck(DateNightDefOf.DateNight_Star)
+                        : FleckDefOf.Heart;
+                    FleckMaker.ThrowMetaIcon(pawn.Position, pawn.Map, heart);
                 }
             };
             hang.AddFinishAction(() =>
@@ -512,7 +518,8 @@ namespace DateNight
                 DateNightDateUtility.NotifyGiftGiven(pawn, partner);
                 if (pawn.Map != null)
                 {
-                    FleckMaker.ThrowMetaIcon(partner.Position, pawn.Map, FleckDefOf.Heart, 1.2f);
+                    FleckMaker.ThrowMetaIcon(partner.Position, pawn.Map,
+                        DateNightVisuals.Fleck(DateNightDefOf.DateNight_RoseHeart), 1.2f);
                 }
             }
             else if (carry.TryDropCarriedThing(
@@ -524,7 +531,8 @@ namespace DateNight
                 DateNightDateUtility.NotifyGiftGiven(pawn, partner);
                 if (pawn.Map != null)
                 {
-                    FleckMaker.ThrowMetaIcon(partner.Position, pawn.Map, FleckDefOf.Heart, 1.2f);
+                    FleckMaker.ThrowMetaIcon(partner.Position, pawn.Map,
+                        DateNightVisuals.Fleck(DateNightDefOf.DateNight_RoseHeart), 1.2f);
                 }
             }
             // else leave giftDelivered false and retry next tick

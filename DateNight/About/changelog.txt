@@ -11,6 +11,7 @@ Date Night 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting 
 [*] [b]Both partners give gifts[/b] — the giver alternates by day.
 [*] [b]Fishing dates[/b] (Odyssey) — by one of your fishing zones.
 [*] [b]Trying for a baby[/b] (Biotech) — a toggle on a lover pair who can conceive. Lovin comes more often until she is pregnant. Pregnant partners skip dancing and long walks.
+[*] [b]Date effects[/b] — a rose heart for gifts, sparkles after a wonderful date, stars while stargazing, confetti on milestone anniversaries, a candle glow at dinner, a shimmer when stargazing and a glow on the dance floor. Select a colonist to see a ring on the couple's favourite spot and Lovin bed. You can turn this off in settings.
 [*] [b]Proposals[/b] — a run of wonderful dates makes a proposal more likely.
 [*] [b]Multiplayer[/b] — Date Night's buttons are synced when the Multiplayer mod is on. All players need the host's Date Night settings. Not tested yet.
 [/list]
