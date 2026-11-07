@@ -6,9 +6,18 @@ Detailed notes for **Stormproof** only.
 
 ## [2.0.0]
 
-Player-facing version **2.0.0** (`About.xml` `modVersion`). Stamp `stormproof2-hotpaths`. Ships for RimWorld **1.6** and **1.7** from the same source; 1.6 is not frozen.
+Player-facing version **2.0.0** (`About.xml` `modVersion`). Stamp `stormproof2-gridtools`. Ships for RimWorld **1.6** and **1.7** from the same source; 1.6 is not frozen.
 
-AZR-492 AZR-493 AZR-494 AZR-495 AZR-497 AZR-498 AZR-500 AZR-501 AZR-667 AZR-668 AZR-713
+AZR-492 AZR-493 AZR-494 AZR-495 AZR-497 AZR-498 AZR-500 AZR-501 AZR-667 AZR-668 AZR-669 AZR-670 AZR-671 AZR-672 AZR-713 AZR-716 AZR-717 AZR-718
+
+### Added
+- **Smart hold on the load shedder** (AZR-671) — a fourth hold mode after Auto. It works like Auto, but when the charge is back above the reconnect level it runs the grid forecast as if the sub-grid came back now, and stays shed if the supply would fall to the cutoff again within 8 hours. Needs a weather forecaster on the supply grid; without one it acts like Auto. The inspect pane says when and why it is holding. The hold gizmo is tinted per mode.
+- **Almanac on the grid monitor** (AZR-716) — the grid monitor has its own Open almanac gizmo. The charge sparkline shows when a weather forecaster shares its grid.
+- **Pylon zaps and EMP bursts in the almanac** (AZR-670) — each entry and the lifetime totals count static pylon shocks and ion storm EMP bursts.
+- **Undefended grid warning** (AZR-672) — once per map, the first thunderstorm or dry lightning over a powered colony with no storm spire and no surge protector shows a reminder (which research to do, or what to build). Setting, on by default.
+- **Storm caller settings** (AZR-718) — sliders for recharge (1 to 15 days, default 5) and storm length (2 to 24 hours, default 12). The building no longer has `cooldownTicks` / `stormDurationTicks` in its def.
+- **EMP dampener for mechanoids** (AZR-717) — with Biotech, an opt-in setting lets the dampener shield your own mechanoids from EMP stuns. Enemy mechanoids are never shielded.
+- **Gizmo icons** (AZR-507) — the almanac, fulgurite, schedule and hold gizmos use Stormproof's own art instead of vanilla's launch report and temperature icons.
 
 ### Changed
 - **Two builds, one source** (AZR-493) — official 1.6 loads `1.6/Assemblies` (net472, 1.6 refs). 1.7 loads `1.7/Assemblies`, now a .NET 10 build against the 1.7 refs (`Krafs.Rimworld.Ref` 1.7.4998-unstable, Harmony 3.0.0-rc.4).
@@ -21,6 +30,7 @@ AZR-492 AZR-493 AZR-494 AZR-495 AZR-497 AZR-498 AZR-500 AZR-501 AZR-667 AZR-668 
 - **Workbench brownout as a stat part** (AZR-501) — `StatPart_Brownout` is added to `WorkTableWorkSpeedFactor` by `Patches/Stormproof_Brownout.xml` and shows in the stat tooltip. The global `StatExtension.GetStatValue` patch is gone.
 - **Hazard checks** (AZR-501) — the toxic, plant and temperature patches read one cached answer per map per tick instead of rescanning defenders for every cell or plant. Defender hazard lists are built once, not per call.
 - **Ticking** (AZR-501) — surge protector, EMP dampener and storm caller no longer tick; weather forecaster, fallout scrubber and grid monitor tick rarely (every 250 ticks, as they already acted). The scrubber checks for toxic buildup before the room lookup. Load shedders reuse their flood-fill collections, and grid forecasts on one map share one sun curve per 250 ticks.
+- **Load shedder junctions** (AZR-669) — checked the shed-side split for breakers touching three or more sides: every non-supply side drops off together when the breaker opens, and sides joined elsewhere are counted once. No change; the reasoning is now in a code comment.
 - **1.7 patch safety** (AZR-497) — Player.log's load line now says how many patch classes applied. A missing Odyssey or Biotech target logs a warning when that DLC is active.
 
 ### Fixed

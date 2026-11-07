@@ -104,6 +104,7 @@ namespace Stormproof
                 return;
             }
             Building target = empCandidates.RandomElement();
+            MapComponent_Stormproof.For(map)?.NoteEmpBurst();
             GenExplosion.DoExplosion(
                 target.Position, map, EmpBurstRadius, DamageDefOf.EMP, null);
             Messages.Message(

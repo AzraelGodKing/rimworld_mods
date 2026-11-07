@@ -8,7 +8,7 @@
   <Stormproof_SurgeProtector.label>电涌保护器</Stormproof_SurgeProtector.label>
   <Stormproof_SurgeProtector.description>重型断路柜，可吸收一次「Zzzt！」短路事件，保全蓄电池与导管。吸收电涌会轻微损伤它，并使其进入一天充能。每张地图只需一台——但备机总是好事。</Stormproof_SurgeProtector.description>
   <Stormproof_EmpDampener.label>EMP 抑制器</Stormproof_EmpDampener.label>
-  <Stormproof_EmpDampener.description>投射抑制力场，保护范围内殖民地建筑免受 EMP 眩晕。炮塔可在 EMP 迫击炮与手雷攻击中继续开火。不保护角色或机械体——仅保护建筑。</Stormproof_EmpDampener.description>
+  <Stormproof_EmpDampener.description>投射抑制力场，保护范围内殖民地建筑免受 EMP 眩晕。炮塔可在 EMP 迫击炮与手雷攻击中继续开火。不保护角色。拥有 Biotech 时，可在模组设置中扩展到己方机械体。</Stormproof_EmpDampener.description>
   <Stormproof_ArmoredConduit.label>装甲导管</Stormproof_ArmoredConduit.label>
   <Stormproof_ArmoredConduit.description>外包铆接钢板的电力导管。防火且远比标准导管坚固——杀戮走廊与外墙布线的首选。</Stormproof_ArmoredConduit.description>
   <Stormproof_StormCapacitor.label>风暴电容组</Stormproof_StormCapacitor.label>
@@ -20,7 +20,7 @@
   <Stormproof_FalloutScrubber.label>沉降净化器</Stormproof_FalloutScrubber.label>
   <Stormproof_FalloutScrubber.description>工业空气净化器，从封闭房间中剥离空气中的毒素。在房间内躲避的角色与动物会缓慢清除毒素积累——快过严重沉降的增加速度。户外无用；它无法净化开阔天空。</Stormproof_FalloutScrubber.description>
   <Stormproof_StormCaller.label>风暴召唤器</Stormproof_StormCaller.label>
-  <Stormproof_StormCaller.description>向高层大气发射带电粒子的电离层扰动器，可按需将带雨雷暴拖至地图上空。闪电为风暴尖塔供电，雨水扑灭野火。充能需五天——它补充电网，而非取代电网。</Stormproof_StormCaller.description>
+  <Stormproof_StormCaller.description>向高层大气发射带电粒子的电离层扰动器，可按需将带雨雷暴拖至地图上空。闪电为风暴尖塔供电，雨水扑灭野火。默认充能需五天（可在模组设置中调整）——它补充电网，而非取代电网。</Stormproof_StormCaller.description>
   <Stormproof_LoadShedder.label>负荷切除器</Stormproof_LoadShedder.label>
   <Stormproof_LoadShedder.description>自动断路器。将其接在主电网与低优先级子电网（灯具、娱乐、备用冷却器）之间。供电侧蓄电池有电时像导管一样输电；电量低于切断阈值时跳闸并切除子电网，让冷库比电视机撑得更久。蓄电池恢复后自动重连。切断阈值可调。</Stormproof_LoadShedder.description>
   <Stormproof_GridMonitor.label>电网监控台</Stormproof_GridMonitor.label>

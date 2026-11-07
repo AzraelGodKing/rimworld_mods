@@ -35,7 +35,7 @@
 
   <!-- Storm caller -->
   <Stormproof_StormCaller_Label>召唤风暴</Stormproof_StormCaller_Label>
-  <Stormproof_StormCaller_Desc>扰动电离层，在本地图召唤一场带雨雷暴。闪电为风暴尖塔供电，雨水扑灭火灾。若正处于干雷锋面，召唤会先驱散锋面。充能需五天。</Stormproof_StormCaller_Desc>
+  <Stormproof_StormCaller_Desc>扰动电离层，在本地图召唤一场带雨雷暴。闪电为风暴尖塔供电，雨水扑灭火灾。若正处于干雷锋面，召唤会先驱散锋面。充能时间与风暴时长可在模组设置中调整。</Stormproof_StormCaller_Desc>
   <Stormproof_StormCaller_NoPower>没有电力。</Stormproof_StormCaller_NoPower>
   <Stormproof_StormCaller_Discharging>{0} 向天空放电。雷暴正在形成。</Stormproof_StormCaller_Discharging>
   <Stormproof_StormCaller_Charged>已充能：可以召唤风暴。</Stormproof_StormCaller_Charged>
@@ -71,7 +71,7 @@
   <Stormproof_LoadShedder_HoldAuto>保持：自动</Stormproof_LoadShedder_HoldAuto>
   <Stormproof_LoadShedder_HoldRun>保持：接通</Stormproof_LoadShedder_HoldRun>
   <Stormproof_LoadShedder_HoldShed>保持：切除</Stormproof_LoadShedder_HoldShed>
-  <Stormproof_LoadShedder_HoldDesc>一键覆盖。自动跟随时刻表。接通强制子电网供电。切除强制断开。蓄电池切断阈值仍优先。</Stormproof_LoadShedder_HoldDesc>
+  <Stormproof_LoadShedder_HoldDesc>一键覆盖。自动跟随时刻表。智能与自动相同，但只有在供电电网上的天气预报仪预测未来 8 小时电量高于切断阈值时才重新接通。接通强制子电网供电。切除强制断开。蓄电池切断阈值仍优先。</Stormproof_LoadShedder_HoldDesc>
   <Stormproof_LoadShedder_HourShed>切除</Stormproof_LoadShedder_HourShed>
   <Stormproof_LoadShedder_HourRun>运行</Stormproof_LoadShedder_HourRun>
   <Stormproof_LoadShedder_ScheduleStatus>本小时：{0}</Stormproof_LoadShedder_ScheduleStatus>
@@ -180,5 +180,17 @@
   <Stormproof_StormCaller_BrokeFront>{0} 驱散了干雷锋面。雨要来了。</Stormproof_StormCaller_BrokeFront>
   <Stormproof_DisabledInSettings>已在模组设置中禁用：仅待机耗电。</Stormproof_DisabledInSettings>
   <Stormproof_Brownout_StatPart>电网降压（{0}）：x{1}</Stormproof_Brownout_StatPart>
+  <Stormproof_Settings_WarnUndefended>风暴来袭而电网无防护时发出警告</Stormproof_Settings_WarnUndefended>
+  <Stormproof_Settings_WarnUndefendedTip>每张地图一次：首次雷暴来袭时，若殖民地有供电建筑却没有风暴尖塔和电涌保护器，会显示提醒。</Stormproof_Settings_WarnUndefendedTip>
+  <Stormproof_Settings_StormCallerCooldown>风暴召唤器充能：{0} 天</Stormproof_Settings_StormCallerCooldown>
+  <Stormproof_Settings_StormCallerHours>召唤的风暴持续：{0} 小时</Stormproof_Settings_StormCallerHours>
+  <Stormproof_Settings_DampenerMechs>EMP 抑制器也保护殖民地机械体</Stormproof_Settings_DampenerMechs>
+  <Stormproof_Settings_DampenerMechsTip>处于通电抑制器力场内的己方机械体不会被 EMP 眩晕。敌方机械体永远不受保护。</Stormproof_Settings_DampenerMechsTip>
+  <Stormproof_UndefendedGrid_Research>{0} 上空雷暴来袭，电网却没有防雷措施。研究风暴防护以建造风暴尖塔与电涌保护器。</Stormproof_UndefendedGrid_Research>
+  <Stormproof_UndefendedGrid_Build>{0} 上空雷暴来袭，电网却没有防雷措施。风暴尖塔可捕获附近雷击；电涌保护器可吸收短路。</Stormproof_UndefendedGrid_Build>
+  <Stormproof_Almanac_LedgerDefence>静电放电塔电击 {0}。EMP 爆发 {1}。</Stormproof_Almanac_LedgerDefence>
+  <Stormproof_Almanac_LifetimeDefence>累计：静电放电塔电击 {0}。EMP 爆发 {1}。</Stormproof_Almanac_LifetimeDefence>
+  <Stormproof_LoadShedder_HoldSmart>保持：智能</Stormproof_LoadShedder_HoldSmart>
+  <Stormproof_LoadShedder_SmartHolding>智能保持：现在重新接通将在 {0} 后触及切断阈值。保持切除。</Stormproof_LoadShedder_SmartHolding>
 
 </LanguageData>

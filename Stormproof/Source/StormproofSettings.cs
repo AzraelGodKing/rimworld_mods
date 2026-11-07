@@ -27,6 +27,16 @@ namespace Stormproof
 
         public float zzztChanceFactor = 1f;
 
+        // Storm caller tuning (AZR-718); defaults match the building's 5 days / 12 hours.
+        public float stormCallerCooldownDays = 5f;
+        public float stormCallerHours = 12f;
+
+        // A one-time nudge when a thunderstorm hits a grid with no spire or surge protector.
+        public bool warnUndefendedGrid = true;
+
+        // Off by default: the dampener's fantasy is buildings only.
+        public bool dampenerCoversMechs = false;
+
         // Def baseChance as loaded from XML, before any setting scaled it.
         private static readonly Dictionary<IncidentDef, float> OriginalIncidentChance =
             new Dictionary<IncidentDef, float>();
@@ -50,6 +60,10 @@ namespace Stormproof
             Scribe_Values.Look(ref allowFireSuppressor, "allowFireSuppressor", true);
             Scribe_Values.Look(ref allowDroughtCondenser, "allowDroughtCondenser", true);
             Scribe_Values.Look(ref zzztChanceFactor, "zzztChanceFactor", 1f);
+            Scribe_Values.Look(ref stormCallerCooldownDays, "stormCallerCooldownDays", 5f);
+            Scribe_Values.Look(ref stormCallerHours, "stormCallerHours", 12f);
+            Scribe_Values.Look(ref warnUndefendedGrid, "warnUndefendedGrid", true);
+            Scribe_Values.Look(ref dampenerCoversMechs, "dampenerCoversMechs", false);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 // Incident chances are applied by StormproofInit once defs exist.
@@ -76,6 +90,10 @@ namespace Stormproof
             allowFireSuppressor = true;
             allowDroughtCondenser = true;
             zzztChanceFactor = 1f;
+            stormCallerCooldownDays = 5f;
+            stormCallerHours = 12f;
+            warnUndefendedGrid = true;
+            dampenerCoversMechs = false;
             ApplyIncidentChances();
         }
 
@@ -103,6 +121,8 @@ namespace Stormproof
             brownoutSeverity = brownoutSeverity < 0.25f ? 0.25f : (brownoutSeverity > 2f ? 2f : brownoutSeverity);
             incidentFrequency = incidentFrequency < 0f ? 0f : (incidentFrequency > 2.5f ? 2.5f : incidentFrequency);
             zzztChanceFactor = zzztChanceFactor < 0f ? 0f : (zzztChanceFactor > 3f ? 3f : zzztChanceFactor);
+            stormCallerCooldownDays = stormCallerCooldownDays < 1f ? 1f : (stormCallerCooldownDays > 15f ? 15f : stormCallerCooldownDays);
+            stormCallerHours = stormCallerHours < 2f ? 2f : (stormCallerHours > 24f ? 24f : stormCallerHours);
         }
 
         // Cheap dirty check so the settings window only Write()s when values change.
@@ -127,9 +147,17 @@ namespace Stormproof
                 h = (h * 397) ^ (allowFireSuppressor ? 1 : 0);
                 h = (h * 397) ^ (allowDroughtCondenser ? 1 : 0);
                 h = (h * 397) ^ zzztChanceFactor.GetHashCode();
+                h = (h * 397) ^ stormCallerCooldownDays.GetHashCode();
+                h = (h * 397) ^ stormCallerHours.GetHashCode();
+                h = (h * 397) ^ (warnUndefendedGrid ? 1 : 0);
+                h = (h * 397) ^ (dampenerCoversMechs ? 1 : 0);
                 return h;
             }
         }
+
+        public int StormCallerCooldownTicks => (int)(stormCallerCooldownDays * GenDate.TicksPerDay);
+
+        public int StormCallerDurationTicks => (int)(stormCallerHours * GenDate.TicksPerHour);
 
         public static void CaptureOriginalChances()
         {

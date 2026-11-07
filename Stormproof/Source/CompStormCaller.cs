@@ -7,8 +7,7 @@ namespace Stormproof
 {
     public class CompProperties_StormCaller : CompProperties
     {
-        public int cooldownTicks = 300000;     // five in-game days
-        public int stormDurationTicks = 30000; // half an in-game day
+        // Recharge and storm length come from mod settings (default 5 days / 12 hours).
 
         public CompProperties_StormCaller()
         {
@@ -26,7 +25,7 @@ namespace Stormproof
         public bool Powered => powerComp != null && powerComp.PowerOn;
 
         public int CooldownRemaining =>
-            Mathf.Max(0, lastCallTick + Props.cooldownTicks - Find.TickManager.TicksGame);
+            Mathf.Max(0, lastCallTick + StormproofMod.Settings.StormCallerCooldownTicks - Find.TickManager.TicksGame);
 
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
@@ -40,7 +39,7 @@ namespace Stormproof
             {
                 defaultLabel = "Stormproof_StormCaller_Label".Translate(),
                 defaultDesc = "Stormproof_StormCaller_Desc".Translate(),
-                icon = ContentFinder<Texture2D>.Get("Stormproof/Buildings/StormCaller"),
+                icon = StormproofTex.StormCaller,
                 action = CallStorm,
             };
             if (!Powered)
@@ -68,7 +67,7 @@ namespace Stormproof
                     "Stormproof_StormCaller_BrokeFront".Translate(parent.LabelShort),
                     parent, MessageTypeDefOf.PositiveEvent);
             }
-            MapComponent_Stormproof.For(map)?.QueueStormCall(Props.stormDurationTicks);
+            MapComponent_Stormproof.For(map)?.QueueStormCall(StormproofMod.Settings.StormCallerDurationTicks);
             FleckMaker.ThrowLightningGlow(parent.DrawPos, map, 3f);
             Messages.Message(
                 "Stormproof_StormCaller_Discharging".Translate(parent.LabelShort),

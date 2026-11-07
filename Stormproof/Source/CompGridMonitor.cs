@@ -179,6 +179,19 @@ namespace Stormproof
             return ticks >= GenDate.TicksPerYear ? GenDate.TicksPerYear : (int)ticks;
         }
 
+        public override System.Collections.Generic.IEnumerable<Gizmo> CompGetGizmosExtra()
+        {
+            foreach (Gizmo gizmo in base.CompGetGizmosExtra())
+            {
+                yield return gizmo;
+            }
+            if (!Active || !StormproofMod.Settings.enableAlmanac)
+            {
+                yield break;
+            }
+            yield return Dialog_Almanac.OpenGizmo(parent.Map, GridForecastUtility.ForecasterOn(powerComp.PowerNet));
+        }
+
         public override void PostExposeData()
         {
             base.PostExposeData();

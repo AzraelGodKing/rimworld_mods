@@ -5,6 +5,7 @@ using Verse;
 namespace Stormproof
 {
     // Player buildings inside a powered EMP dampener's field shrug off EMP stuns.
+    // With the setting on, so do the colony's own mechanoids (AZR-717).
     [HarmonyPatch(typeof(StunHandler), nameof(StunHandler.Notify_DamageApplied))]
     public static class Patch_EmpStun
     {
@@ -14,18 +15,29 @@ namespace Stormproof
             {
                 return true;
             }
-            if (!(__instance.parent is Building building) ||
-                building.Faction != Faction.OfPlayer ||
-                !building.Spawned)
+            Thing thing = __instance.parent;
+            if (thing == null || !thing.Spawned || thing.Faction != Faction.OfPlayer || !Covered(thing))
             {
                 return true;
             }
-            if (CompEmpDampener.Shielded(building))
+            if (!CompEmpDampener.Shielded(thing))
             {
-                FleckMaker.ThrowMicroSparks(building.DrawPos, building.Map);
-                return false;
+                return true;
             }
-            return true;
+            FleckMaker.ThrowMicroSparks(thing.DrawPos, thing.Map);
+            return false;
+        }
+
+        private static bool Covered(Thing thing)
+        {
+            if (thing is Building)
+            {
+                return true;
+            }
+            return StormproofMod.Settings.dampenerCoversMechs
+                && thing is Pawn pawn
+                && pawn.RaceProps != null
+                && pawn.RaceProps.IsMechanoid;
         }
     }
 }

@@ -30,6 +30,7 @@ namespace Stormproof
         [MayRequire("Ludeon.RimWorld.Odyssey")]
         public static GameConditionDef DeepFreeze;
 
+        public static ResearchProjectDef Stormproof_StormProtection;
         public static ResearchProjectDef Stormproof_PerfectGrounding;
         public static ThingDef Stormproof_Fulgurite;
         public static ThingDef Stormproof_ArmoredConduit;
@@ -76,7 +77,7 @@ namespace Stormproof
             StormproofMod.Settings.ApplyIncidentChances();
             // The count makes a 1.7 smoke test a one-line check against the previous build.
             LongEventHandler.ExecuteWhenFinished(() => ModVersionLog.Write("[Stormproof]",
-                extra: "stormproof2-hotpaths, " + patched + " patch classes applied"));
+                extra: "stormproof2-gridtools, " + patched + " patch classes applied"));
         }
     }
 
