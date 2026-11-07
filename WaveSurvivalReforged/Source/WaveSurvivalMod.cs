@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -9,6 +11,8 @@ namespace WaveSurvivalReforged
         public bool showHud = true;
         public WavePreset preset = WavePreset.Standard;
         public RunSettings custom;
+        // Local best runs, most waves first. Never read by gameplay.
+        public List<RunRecord> bestRuns = new List<RunRecord>();
 
         // What a new run will use.
         public RunSettings ForNewRun()
@@ -26,17 +30,34 @@ namespace WaveSurvivalReforged
             Scribe_Values.Look(ref showHud, "showHud", true);
             Scribe_Values.Look(ref preset, "preset", WavePreset.Standard);
             Scribe_Deep.Look(ref custom, "custom");
+            Scribe_Collections.Look(ref bestRuns, "bestRuns", LookMode.Deep);
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+                bestRuns ??= new List<RunRecord>();
         }
     }
 
     public class WaveSurvivalMod : Mod
     {
+        public const int BestRunsKept = 10;
+
+        private static WaveSurvivalMod instance;
         private Vector2 scroll;
         private float viewHeight = 600f;
 
         public WaveSurvivalMod(ModContentPack content) : base(content)
         {
+            instance = this;
             Settings = GetSettings<WaveSurvivalSettings>();
+        }
+
+        public static void RecordRun(RunRecord record)
+        {
+            List<RunRecord> runs = Settings.bestRuns;
+            runs.Add(record);
+            runs.SortByDescending(r => r.waves, r => r.days);
+            while (runs.Count > BestRunsKept)
+                runs.RemoveAt(runs.Count - 1);
+            instance.WriteSettings();
         }
 
         public static WaveSurvivalSettings Settings { get; private set; }
@@ -96,7 +117,31 @@ namespace WaveSurvivalReforged
                 list.Label("WSR_SettingsCurrentRun".Translate(("WSR_Preset_" + waves.Run.preset).Translate()));
             else
                 list.Label("WSR_SettingsNewRunsOnly".Translate());
+            RunStats stats = waves?.Stats;
+            if (stats != null)
+            {
+                list.Label("WSR_SettingsRunStats".Translate(stats.highestWave, stats.wavesCleared, stats.TotalKills,
+                    stats.ColonistsLost, stats.dropsReceived, (stats.TicksSurvived / (float)GenDate.TicksPerDay).ToString("0.#")));
+            }
             list.Label("WSR_SettingsMultiplayer".Translate());
+
+            list.GapLine();
+            list.Label("WSR_SettingsBestRuns".Translate());
+            if (s.bestRuns.Count == 0)
+            {
+                list.Label("WSR_SettingsBestRunsEmpty".Translate());
+            }
+            else
+            {
+                for (int i = 0; i < s.bestRuns.Count; i++)
+                {
+                    RunRecord r = s.bestRuns[i];
+                    list.Label("WSR_SettingsBestRunRow".Translate(i + 1, r.waves, r.colony, r.days.ToString("0.#"), r.kills,
+                        r.colonistsLost, ("WSR_Preset_" + r.preset).Translate(), r.difficulty, r.date));
+                }
+                if (list.ButtonText("WSR_SettingsBestRunsClear".Translate()))
+                    s.bestRuns.Clear();
+            }
 
             viewHeight = list.CurHeight + 12f;
             list.End();
