@@ -4,20 +4,9 @@ using Verse;
 
 namespace DateNight
 {
-    /// <summary>
-    /// What a couple likes, as either partner having a trait or passion (AZR-559).
-    /// A plain struct so the weights and the quality score can be unit tested.
-    /// </summary>
-    public struct CoupleTaste
+    /// <summary>Reads a couple's tastes from the game (fields are in Pure/DateNightPure.cs).</summary>
+    public partial struct CoupleTaste
     {
-        public bool gourmand;
-        public bool ascetic;
-        public bool nightOwl;
-        public bool artistic;
-        public bool animals;
-        public bool kind;
-        public bool abrasive;
-
         public static CoupleTaste Of(Pawn a, Pawn b)
         {
             CoupleTaste t = default;

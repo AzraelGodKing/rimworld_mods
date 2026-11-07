@@ -13,8 +13,6 @@ namespace DateNight
     public static class DateNightDoubleDates
     {
         private const int GuestWaitTicks = 2500;
-        private const int MinRapport = -5;
-        private const int MaxRapport = 5;
         private const int AvoidRapport = -3;
         private const int FriendlyRapport = 3;
 
@@ -159,7 +157,7 @@ namespace DateNight
                 };
                 rapport.Add(r);
             }
-            r.score = Mathf.Clamp(r.score + delta, MinRapport, MaxRapport);
+            r.score = DateNightPure.ClampRapport(r.score + delta);
         }
 
         public static bool Allowed
@@ -466,7 +464,7 @@ namespace DateNight
         public static DoubleDateSession Create(Pawn hostA, Pawn hostB, Pawn guestA, Pawn guestB)
         {
             DateActivity activity = DateNightActivities.Resolve(hostA, hostB);
-            activity = CoerceForGroup(activity);
+            activity = DateNightPure.CoerceForGroup(activity);
             if (activity == DateActivity.Dance
                 && (DateNightBaby.IsPregnant(guestA) || DateNightBaby.IsPregnant(guestB)))
             {
@@ -621,15 +619,6 @@ namespace DateNight
             }
             thingId = 0;
             cell = venue.IsValid ? venue.Cell : IntVec3.Invalid;
-        }
-
-        private static DateActivity CoerceForGroup(DateActivity activity)
-        {
-            if (activity == DateActivity.Walk || activity == DateActivity.Gift)
-            {
-                return DateActivity.Hangout;
-            }
-            return activity;
         }
 
         private static bool IsDating(int id)

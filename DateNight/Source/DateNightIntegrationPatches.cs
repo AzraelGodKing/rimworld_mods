@@ -12,9 +12,6 @@ namespace DateNight
     [HarmonyPatch(typeof(InteractionWorker_MarriageProposal), nameof(InteractionWorker_MarriageProposal.RandomSelectionWeight))]
     public static class Patch_MarriageProposal_Weight
     {
-        public const int MaxStreak = 4;
-        public const float PerWonderfulDate = 0.25f;
-
         public static void Postfix(Pawn initiator, Pawn recipient, ref float __result)
         {
             if (__result <= 0f || initiator == null || recipient == null)
@@ -24,14 +21,8 @@ namespace DateNight
             CoupleHistory? h = DateNightHistory.Get(initiator, recipient);
             if (h != null && h.wonderfulStreak > 0)
             {
-                __result *= Multiplier(h.wonderfulStreak);
+                __result *= DateNightPure.ProposalMultiplier(h.wonderfulStreak);
             }
-        }
-
-        public static float Multiplier(int wonderfulStreak)
-        {
-            int n = wonderfulStreak < MaxStreak ? wonderfulStreak : MaxStreak;
-            return 1f + PerWonderfulDate * (n < 0 ? 0 : n);
         }
     }
 }

@@ -337,7 +337,7 @@ namespace DateNight
 
         /// <summary>
         /// Wonderful / nice / awkward. Inputs are gathered here and scored by the
-        /// pure <see cref="QualityScore"/>; the roll is seeded per couple and day so
+        /// pure <see cref="DateNightPure.QualityScore"/>; the roll is seeded per couple and day so
         /// both partners agree on luck.
         /// </summary>
         private static ThoughtDef? PickQualityThought(Pawn pawn, Pawn partner, DateActivity activity,
@@ -381,7 +381,7 @@ namespace DateNight
             q.roll = Rand.RangeInclusive(-1, 1);
             Rand.PopState();
 
-            int score = QualityScore(q);
+            int score = DateNightPure.QualityScore(q);
             if (score >= 2 && DateNightDefOf.DateNight_DateWonderful != null)
             {
                 return DateNightDefOf.DateNight_DateWonderful;
@@ -391,28 +391,6 @@ namespace DateNight
                 return DateNightDefOf.DateNight_DateAwkward;
             }
             return DateNightDefOf.DateNight_HadADate;
-        }
-
-        /// <summary>
-        /// 2+ is wonderful, -1 or less awkward. Opinion, traits, a fine meal and an
-        /// impressive room joined beauty, weather and luck in 2.0.0 (AZR-559).
-        /// </summary>
-        public static int QualityScore(in DateQualityInputs q)
-        {
-            int score = q.roll;
-            if (q.special) score++;
-            if (q.beauty >= 4f) score++;
-            else if (q.beauty < 0f) score--;
-            if (q.rainedOn) score--;
-            if (q.anniversary) score += 2;
-            if (q.favorite) score++;
-            if (q.mutualOpinion >= 60) score++;
-            else if (q.mutualOpinion < 0) score--;
-            if (q.kind) score++;
-            if (q.abrasive) score--;
-            if (q.fineMeal) score++;
-            if (q.impressiveness >= 65f) score++;
-            return score;
         }
 
         /// <summary>Date cut short by a draft, mental break, or an active threat.</summary>
@@ -510,22 +488,5 @@ namespace DateNight
             }
             pawn.needs.mood.thoughts.memories.TryGainMemory(def, other);
         }
-    }
-
-    /// <summary>Everything the date quality score looks at (AZR-559).</summary>
-    public struct DateQualityInputs
-    {
-        public bool special;
-        public float beauty;
-        public bool rainedOn;
-        public int roll;
-        public bool anniversary;
-        public bool favorite;
-        public int mutualOpinion;
-        public bool kind;
-        public bool abrasive;
-        public bool fineMeal;
-        /// <summary>Room impressiveness, or -1 outdoors.</summary>
-        public float impressiveness;
     }
 }

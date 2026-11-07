@@ -8,7 +8,7 @@ Detailed notes for **Date Night** only.
 
 Player-facing version **2.0.0** (`About.xml` `modVersion`). Stamp `datenight2-net10`. Ships for RimWorld **1.6** and **1.7** from the same source; 1.6 is not frozen.
 
-AZR-511 AZR-521 AZR-524 AZR-538 AZR-539 AZR-542 AZR-557 AZR-558 AZR-559 AZR-560 AZR-574
+AZR-511 AZR-521 AZR-524 AZR-538 AZR-539 AZR-542 AZR-557 AZR-558 AZR-559 AZR-560 AZR-574 AZR-575
 
 ### Added
 - **Ask out tonight** (AZR-524) — pawn gizmo on an adult colonist with a lover or ladder partner. Plans one date at the first hour from 18:00 to 23:00 that neither partner painted Sleep or Work (falls back to 18:00), saved as `dateNightPlannedDates`. Starts both pawns when the hour comes unless drafted, in a ritual or on a need job; after a 2-hour grace a "missed" message clears it. Cancel gizmo while planned. Schedules are not touched.
@@ -41,6 +41,11 @@ AZR-511 AZR-521 AZR-524 AZR-538 AZR-539 AZR-542 AZR-557 AZR-558 AZR-559 AZR-560 
 - **Gradual romance demotion** — `TickBreakups` treated any couple without a love relation as broken up. Ladder couples (friends, sweethearts, boyfriend/girlfriend) were never lovers, so after every date the pair was "broken up": boyfriend/girlfriend dropped to sweethearts and progress reset, and lovers only happened on a lucky wonderful date. A breakup now needs `wereLovers`.
 - **Joy-giver dates** — dates started by `JobGiver_GetJoy` skipped `EnsureBondStarted` and `BindIfPossible`. Both paths now use `DateNightDateUtility.MakeDateJob`.
 - **Mismatch alert** — used `FindDatePartner`, which also returns a speculative new friend, so it flagged pairs who were not dating. It now uses `FindCommittedPartner` (lover or ladder bond), as does the inspect line. New-friend search only runs for a pawn who painted Date or Lovin.
+
+### Internal
+- **Logic tests** (AZR-575) — the game-free rules moved to `Source/Pure/DateNightPure.cs`: couple key, gift giver, milestone year, quality score, activity weight, group coercion, rapport clamp, proposal multiplier and gift-name order. The `DateActivity` enum and the input structs moved there too. `Tests/DateNight.Tests` (xunit, net8.0) compiles only that folder and runs in CI after the Strata tests. There are 47 tests, including that `DateActivity` numbers stay append-only and that gift order does not depend on input or `HashSet` order (AZR-540).
+- **Translations** (AZR-575) — all 111 keyed strings in English, Chinese Simplified and Russian, with parity enforced by `validate_mods.py`. `Languages/README.md` lists what 2.0.0 added.
+- **Copy** — the Workshop description and `mod.json` describe 2.0. A new preview image and screenshots of the effects and Romance panel are still to do.
 
 ## [1.8.0]
 

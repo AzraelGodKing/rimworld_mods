@@ -26,6 +26,17 @@
 - Schedule sync (click the mismatch alert to copy a partner's painted hours)
 - Gradual romance (friends → sweethearts → boyfriend/girlfriend → lovers)
 - Romance on the Rim fail-open soft-compat (yield on RotR romance jobs; dates fill the romance need)
+- 2.0.0: one source for 1.6 and 1.7 (.NET 10 build for 1.7)
+- 2.0.0: Ask out tonight, Romance panel, gift picker, sectioned settings, Date button column offset
+- 2.0.0: smarter quality (opinion, traits, meal, room), trait-weighted activities, alternating gift giver
+- 2.0.0: Odyssey fishing date, Biotech Trying for a baby, Ideology lovin moods, proposal weight, Homesteader maypole, Niceties shared rooms
+- 2.0.0: `DateNightApi` for sister mods, soft Multiplayer sync, `COMPATIBILITY.md`
+- 2.0.0: date flecks, venue glows, our-spot ring
+- 2.0.0: headless logic tests (`Tests/DateNight.Tests`)
 
 ## Later
 - Better Pawn Control smoke tests
+- Deep Colony calls `DateNightApi.NotifyBreakup` instead of relying on Date Night's poll
+- Date Night ritual pattern (Ideology)
+- Custom 1.7 GLSL glow (vanilla shaders for now)
+- 2.0 Workshop preview image and screenshots of the effects and Romance panel
