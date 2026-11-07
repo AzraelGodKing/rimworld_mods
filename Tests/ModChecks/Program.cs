@@ -527,7 +527,13 @@ namespace Azrael.ModChecks
             var names = new HashSet<string>(StringComparer.Ordinal);
             foreach (string folder in ModFolders)
             {
-                foreach (string defs in DefFolders(repo, folder))
+                // 1.7-only defs (e.g. ShaderDefs) count as existing names, but are not field-checked
+                // by DefXml, which reads the 1.6 ref pack.
+                string defs17 = Path.Combine(repo, folder, "1.7", "Defs");
+                IEnumerable<string> folders = Directory.Exists(defs17)
+                    ? DefFolders(repo, folder).Append(defs17)
+                    : DefFolders(repo, folder);
+                foreach (string defs in folders)
                 {
                     foreach (string file in Directory.GetFiles(defs, "*.xml", SearchOption.AllDirectories))
                     {
