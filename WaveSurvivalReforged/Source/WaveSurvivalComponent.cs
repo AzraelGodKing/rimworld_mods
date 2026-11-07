@@ -11,8 +11,13 @@ namespace WaveSurvivalReforged
     {
         private const int CheckInterval = 250;
         private const int BeaconRescanTicks = GenDate.TicksPerHour;
+        // 1: Wave Survival Reforged 1.0. 2: 2.0 (run settings, pre-rolled wave, wave tracker).
+        private const int CurrentSaveVersion = 2;
 
+        private int saveVersion = CurrentSaveVersion;
         private bool started;
+        // The tuning this run plays with, copied from the mod settings at its start.
+        private RunSettings run;
         private int waveNum = 1;
         private int ticksNextWave = -1;
         private int ticksNextDay = -1;
@@ -42,6 +47,8 @@ namespace WaveSurvivalReforged
         public int WaveNum => waveNum;
 
         public int TicksUntilNextWave => ticksNextWave - Find.TickManager.TicksGame;
+
+        public RunSettings Run => run;
 
         public WavePlan NextPlan => nextPlan;
 
@@ -99,8 +106,9 @@ namespace WaveSurvivalReforged
         private void Start(int now)
         {
             WaveSurvivalConfigDef cfg = Config;
+            run = WaveSurvivalMod.Settings.ForNewRun();
             int hourOffset = cfg.raidHourOffset * GenDate.TicksPerHour;
-            ticksNextWave = now + Mathf.RoundToInt(cfg.daysBeforeFirstWave * GenDate.TicksPerDay) + hourOffset;
+            ticksNextWave = now + Mathf.RoundToInt(run.daysBeforeFirstWave * GenDate.TicksPerDay) + hourOffset;
             ticksNextDay = now + GenDate.TicksPerHour;
             waveNum = 1;
             started = true;
@@ -165,6 +173,10 @@ namespace WaveSurvivalReforged
 
         public override void ExposeData()
         {
+            if (Scribe.mode == LoadSaveMode.Saving)
+                saveVersion = CurrentSaveVersion;
+            // A save without this field is from 1.0.
+            Scribe_Values.Look(ref saveVersion, "saveVersion", 1);
             Scribe_Values.Look(ref started, "started");
             Scribe_Values.Look(ref waveNum, "waveNum", 1);
             Scribe_Values.Look(ref ticksNextWave, "ticksNextWave", -1);
@@ -173,9 +185,15 @@ namespace WaveSurvivalReforged
             Scribe_Values.Look(ref missedDropDays, "missedDropDays");
             Scribe_Deep.Look(ref nextPlan, "nextPlan");
             Scribe_Deep.Look(ref tracker, "tracker");
+            Scribe_Deep.Look(ref run, "run");
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 tracker ??= new WaveTracker();
+                // A 1.0 run (or one started before presets) plays on as Standard, which is the
+                // XML config it already used. Its wave number and countdown are kept, and the
+                // next wave is pre-rolled on the first check without moving the countdown.
+                if (started && run == null)
+                    run = RunSettings.For(WavePreset.Standard);
                 if (nextPlan != null && !nextPlan.IsUsable)
                     nextPlan = null;
             }

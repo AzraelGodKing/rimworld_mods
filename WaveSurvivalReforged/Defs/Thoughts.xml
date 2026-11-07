@@ -3,11 +3,13 @@
 
   <ThoughtDef>
     <defName>WSR_StillAlive</defName>
+    <thoughtClass>WaveSurvivalReforged.Thought_StillAlive</thoughtClass>
     <workerClass>WaveSurvivalReforged.ThoughtWorker_StillAlive</workerClass>
     <stages>
       <li>
         <label>still alive</label>
         <description>Every day above ground is a good one!</description>
+        <!-- Standard preset value; the run's mood setting replaces it in game. -->
         <baseMoodEffect>35</baseMoodEffect>
       </li>
     </stages>

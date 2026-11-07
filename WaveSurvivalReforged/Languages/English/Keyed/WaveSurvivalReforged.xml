@@ -42,4 +42,27 @@ Fled: {4}</WSR_WaveSummaryText>
   <WSR_HudActive>Wave {0}: {1} enemies standing</WSR_HudActive>
   <WSR_HudLast>Wave {0}: {1} killed, {2} downed, {3} fled</WSR_HudLast>
 
+  <WSR_ScenPartForcedSummary>Storyteller locked to {0}.</WSR_ScenPartForcedSummary>
+  <WSR_SettingsPreset>Preset for new runs</WSR_SettingsPreset>
+  <WSR_SettingsPresetTip>Copied into the save when a run starts. Changing it later does not change a run in progress.</WSR_SettingsPresetTip>
+  <WSR_Preset_Casual>Casual</WSR_Preset_Casual>
+  <WSR_Preset_CasualTip>Smaller, rarer waves and more supplies.</WSR_Preset_CasualTip>
+  <WSR_Preset_Standard>Standard</WSR_Preset_Standard>
+  <WSR_Preset_StandardTip>The original Wave Survival tuning, from Defs/WaveSurvivalConfig.xml.</WSR_Preset_StandardTip>
+  <WSR_Preset_Brutal>Brutal</WSR_Preset_Brutal>
+  <WSR_Preset_BrutalTip>Bigger, faster waves, fewer supplies and a smaller mood buff.</WSR_Preset_BrutalTip>
+  <WSR_Preset_Custom>Custom</WSR_Preset_Custom>
+  <WSR_Preset_CustomTip>Set every value yourself.</WSR_Preset_CustomTip>
+  <WSR_SettingsPoints>Wave strength: {0}</WSR_SettingsPoints>
+  <WSR_SettingsFirstWave>Days before the first wave: {0}</WSR_SettingsFirstWave>
+  <WSR_SettingsBetween>Days between waves: {0}</WSR_SettingsBetween>
+  <WSR_SettingsSpecial>Special wave every {0} waves</WSR_SettingsSpecial>
+  <WSR_SettingsSupply>Supply drop chances: {0}</WSR_SettingsSupply>
+  <WSR_SettingsMood>"Still alive" mood: +{0}</WSR_SettingsMood>
+  <WSR_SettingsWanderer>Wanderer chances: {0}</WSR_SettingsWanderer>
+  <WSR_SettingsSummary>Wave strength {0}. First wave after {1} days, then every {2} days. A special wave every {3}. Supply chances {4}. Mood +{5}. Wanderers {6}.</WSR_SettingsSummary>
+  <WSR_SettingsCurrentRun>This game's run uses the {0} preset it started with.</WSR_SettingsCurrentRun>
+  <WSR_SettingsNewRunsOnly>Presets apply when a Wave Survival run starts.</WSR_SettingsNewRunsOnly>
+  <WSR_SettingsMultiplayer>Multiplayer is not supported.</WSR_SettingsMultiplayer>
+
 </LanguageData>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <ScenPartDef>
+    <defName>WSR_ForcedStoryteller</defName>
+    <label>wave survival storyteller</label>
+    <description>Runs the Wave Survival storyteller whatever storyteller was picked, keeping the chosen difficulty.</description>
+    <scenPartClass>WaveSurvivalReforged.ScenPart_WaveSurvivalStoryteller</scenPartClass>
+    <category>Misc</category>
+    <selectionWeight>0</selectionWeight>
+    <summaryPriority>405</summaryPriority>
+    <maxUses>1</maxUses>
+  </ScenPartDef>
+
+</Defs>

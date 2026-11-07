@@ -10,12 +10,13 @@ namespace WaveSurvivalReforged
     {
         private const float MinRaidPoints = 35f;
 
-        private static WavePool PoolFor(int wave)
+        private WavePool PoolFor(int wave)
         {
             WaveSurvivalConfigDef cfg = Config;
+            int specialInterval = run?.specialWaveInterval ?? cfg.specialWaveInterval;
             if (cfg.bossWaveInterval > 0 && wave % cfg.bossWaveInterval == 0)
                 return WavePool.Boss;
-            if (wave % cfg.specialWaveInterval == 0 && wave >= cfg.specialWaveMinWave)
+            if (wave % specialInterval == 0 && wave >= cfg.specialWaveMinWave)
                 return WavePool.Special;
             return WavePool.Normal;
         }
@@ -63,7 +64,7 @@ namespace WaveSurvivalReforged
 
             tracker.Started(plan, now);
             Messages.Message(ArrivedKey(plan.type.pool).Translate(waveNum, plan.Describe()), MessageTypeDefOf.ThreatBig);
-            float days = cfg.daysBetweenWaves + (plan.type.pool != WavePool.Normal ? cfg.breatherDays : 0f);
+            float days = run.daysBetweenWaves + (plan.type.pool != WavePool.Normal ? cfg.breatherDays : 0f);
             ticksNextWave = now + Mathf.RoundToInt(days * GenDate.TicksPerDay);
             postponedWave = 0;
             waveNum++;
@@ -121,7 +122,7 @@ namespace WaveSurvivalReforged
 
         private float PointsFor(WaveTypeDef type, Map map, int wave)
         {
-            float points = BasePoints(map, wave) * type.pointsFactor + type.bonusPoints * ThreatScale;
+            float points = (BasePoints(map, wave) * type.pointsFactor + type.bonusPoints * ThreatScale) * run.pointsFactor;
             return Mathf.Max(points, MinRaidPoints);
         }
 

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <WSR_ForcedStoryteller.label>рассказчик «Выживание волнами»</WSR_ForcedStoryteller.label>
+  <WSR_ForcedStoryteller.description>Запускает рассказчика «Выживание волнами» вместо выбранного, сохраняя выбранную сложность.</WSR_ForcedStoryteller.description>
+</LanguageData>

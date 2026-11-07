@@ -83,7 +83,7 @@ namespace WaveSurvivalReforged
 
             foreach (SupplyDrop drop in Config.supplyDrops)
             {
-                if (drop.thing == null || !Rand.Chance(drop.chance))
+                if (drop.thing == null || !Rand.Chance(Mathf.Min(1f, drop.chance * run.supplyFactor)))
                     continue;
                 if (map.resourceCounter.GetCount(drop.thing) + LooseNear(map, pos, drop.thing) >= drop.maxStockpile)
                     continue;
@@ -156,7 +156,7 @@ namespace WaveSurvivalReforged
                 && !td.HasComp<CompBladelinkWeapon>()
                 && !td.HasComp<CompUniqueWeapon>());
 
-        private static void MaybeWanderer(Map map)
+        private void MaybeWanderer(Map map)
         {
             int colonists = map.mapPawns.FreeColonistsSpawnedCount;
             float chance = colonists <= 0 ? 0f
@@ -164,7 +164,7 @@ namespace WaveSurvivalReforged
                 : colonists <= 3 ? 0.10f
                 : colonists <= 9 ? 0.01f
                 : 0f;
-            if (Rand.Chance(chance))
+            if (Rand.Chance(Mathf.Min(1f, chance * run.wandererFactor)))
                 Fire(map, IncidentDefOf.WandererJoin, 0f);
         }
     }

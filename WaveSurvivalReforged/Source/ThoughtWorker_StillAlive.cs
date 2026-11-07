@@ -7,7 +7,10 @@ namespace WaveSurvivalReforged
     {
         protected override ThoughtState CurrentStateInternal(Pawn p)
         {
-            return WaveSurvivalComponent.ModeActive && p.IsColonist;
+            if (!WaveSurvivalComponent.ModeActive || !p.IsColonist)
+                return false;
+            RunSettings run = WaveSurvivalComponent.Instance?.Run;
+            return run == null || run.moodBuff > 0f;
         }
     }
 }

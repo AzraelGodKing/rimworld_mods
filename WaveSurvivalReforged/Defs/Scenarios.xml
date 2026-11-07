@@ -4,10 +4,14 @@
   <ScenarioDef ParentName="ScenarioBase">
     <defName>WSR_WaveSurvivalScenario</defName>
     <label>Wave Survival</label>
-    <description>Pick the Wave Survival storyteller with this scenario.\n\n- Start with 4 colonists.\n- Start with a bolt-action rifle, 2 revolvers and a plasteel knife.\n- Microelectronics and gun turrets are already researched.\n- Colonists do not start with cryptosleep sickness.</description>
+    <description>Always runs the Wave Survival storyteller, at the difficulty you pick.\n\n- Start with 4 colonists.\n- Start with a bolt-action rifle, 2 revolvers and a plasteel knife.\n- Microelectronics and gun turrets are already researched.\n- Colonists do not start with cryptosleep sickness.</description>
     <scenario>
       <summary>Four colonists, a head start on turrets, and a beacon to build. The default scenario for Wave Survival.</summary>
       <parts>
+
+        <li Class="WaveSurvivalReforged.ScenPart_WaveSurvivalStoryteller">
+          <def>WSR_ForcedStoryteller</def>
+        </li>
 
         <li Class="ScenPart_ConfigPage_ConfigureStartingPawns">
           <def>ConfigPage_ConfigureStartingPawns</def>

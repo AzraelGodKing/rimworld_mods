@@ -42,4 +42,27 @@
   <WSR_HudActive>第 {0} 波：还有 {1} 名敌人站着</WSR_HudActive>
   <WSR_HudLast>第 {0} 波：击杀 {1}，击倒 {2}，逃离 {3}</WSR_HudLast>
 
+  <WSR_ScenPartForcedSummary>叙事者锁定为 {0}。</WSR_ScenPartForcedSummary>
+  <WSR_SettingsPreset>新游戏使用的预设</WSR_SettingsPreset>
+  <WSR_SettingsPresetTip>开局时复制进存档。之后修改不会影响进行中的游戏。</WSR_SettingsPresetTip>
+  <WSR_Preset_Casual>休闲</WSR_Preset_Casual>
+  <WSR_Preset_CasualTip>波次更小、间隔更长，补给更多。</WSR_Preset_CasualTip>
+  <WSR_Preset_Standard>标准</WSR_Preset_Standard>
+  <WSR_Preset_StandardTip>原版波次生存的数值，来自 Defs/WaveSurvivalConfig.xml。</WSR_Preset_StandardTip>
+  <WSR_Preset_Brutal>残酷</WSR_Preset_Brutal>
+  <WSR_Preset_BrutalTip>波次更大、更频繁，补给更少，心情加成更小。</WSR_Preset_BrutalTip>
+  <WSR_Preset_Custom>自定义</WSR_Preset_Custom>
+  <WSR_Preset_CustomTip>自己设置每一项数值。</WSR_Preset_CustomTip>
+  <WSR_SettingsPoints>波次强度：{0}</WSR_SettingsPoints>
+  <WSR_SettingsFirstWave>第一波前的天数：{0}</WSR_SettingsFirstWave>
+  <WSR_SettingsBetween>波次间隔天数：{0}</WSR_SettingsBetween>
+  <WSR_SettingsSpecial>每 {0} 波一次特殊波次</WSR_SettingsSpecial>
+  <WSR_SettingsSupply>补给空投几率：{0}</WSR_SettingsSupply>
+  <WSR_SettingsMood>“还活着”心情：+{0}</WSR_SettingsMood>
+  <WSR_SettingsWanderer>流浪者加入几率：{0}</WSR_SettingsWanderer>
+  <WSR_SettingsSummary>波次强度 {0}。第一波在 {1} 天后，之后每 {2} 天一波。每 {3} 波一次特殊波次。补给几率 {4}。心情 +{5}。流浪者 {6}。</WSR_SettingsSummary>
+  <WSR_SettingsCurrentRun>本局游戏使用开局时的“{0}”预设。</WSR_SettingsCurrentRun>
+  <WSR_SettingsNewRunsOnly>预设会在波次生存开局时生效。</WSR_SettingsNewRunsOnly>
+  <WSR_SettingsMultiplayer>不支持多人游戏。</WSR_SettingsMultiplayer>
+
 </LanguageData>
