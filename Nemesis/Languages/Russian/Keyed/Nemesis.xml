@@ -210,7 +210,6 @@
   <Nemesis_Weapon_Unknown>неизвестное оружие</Nemesis_Weapon_Unknown>
 
   <Nemesis_Note_TellsRolled>Приметы: голос {0}, {1}, {2}, {3}.</Nemesis_Note_TellsRolled>
-  <Nemesis_Note_Sighting>Видели около {0}.</Nemesis_Note_Sighting>
   <Nemesis_Note_Gear>Видели с {0}.</Nemesis_Note_Gear>
   <Nemesis_Note_Mark>Оставили {0}.</Nemesis_Note_Mark>
   <Nemesis_Note_RaidWarning>Кто-то продал предупреждение: они собирают ещё один рейд.</Nemesis_Note_RaidWarning>
@@ -239,10 +238,10 @@
   <Nemesis_Intel_Disabled>Осведомители выключены в настройках мода.</Nemesis_Intel_Disabled>
   <Nemesis_Intel_NoSilver>Нужно {0} серебра на складе этой карты.</Nemesis_Intel_NoSilver>
   <Nemesis_Intel_Tile>Их видели около {0}. Стоимость {1} серебра.</Nemesis_Intel_Tile>
+  <Nemesis_Intel_Camp>Осведомитель говорит, что они встали лагерем в {0}. Лагерь отмечен на карте мира. Стоимость {1} серебра.</Nemesis_Intel_Camp>
   <Nemesis_Intel_Gear>Они всё ещё носят {0}. Стоимость {1} серебра.</Nemesis_Intel_Gear>
   <Nemesis_Intel_Warning>Предупреждение: скоро ещё один рейд. Стоимость {0} серебра.</Nemesis_Intel_Warning>
   <Nemesis_Intel_False>Наводка была ложью. Стоимость {0} серебра.</Nemesis_Intel_False>
-  <Nemesis_Intel_FalseTile>там, где их никогда не было</Nemesis_Intel_FalseTile>
   <Nemesis_Bounty_Posted>Награда теперь {0} серебра.</Nemesis_Bounty_Posted>
   <Nemesis_Bounty_PaidOut>Награда в {0} серебра за {1} выплачена осведомителям, которые помогли.</Nemesis_Bounty_PaidOut>
   <Nemesis_Bounty_Refunded>Никто не получил награду в {0} серебра за {1}. Её вернули.</Nemesis_Bounty_Refunded>
@@ -298,4 +297,16 @@
   <Nemesis_Tactic_Desc_Breach>Налётчики {0} пробьют ваши стены, и {0} войдёт следом.</Nemesis_Tactic_Desc_Breach>
   <Nemesis_Tactic_Desc_Siege>Налётчики {0} готовятся к осаде, а {0} охотится с фланга.</Nemesis_Tactic_Desc_Siege>
   <Nemesis_Tactic_Desc_Commander>{0} держится позади и пускает рейд первым. Вступит в бой, когда ваши защитники выдохнутся.</Nemesis_Tactic_Desc_Commander>
+  <Nemesis_Note_Camp>Осведомитель указал их лагерь в {0}.</Nemesis_Note_Camp>
+  <Nemesis_Note_Heading>В последний раз видели, как направлялся(ась) к {0}.</Nemesis_Note_Heading>
+  <Nemesis_Note_HeadingUnknown>Ускользнул(а). Никто не видел, куда.</Nemesis_Note_HeadingUnknown>
+  <Nemesis_Note_CampGone>Лагерь свернули до того, как кто-то туда добрался.</Nemesis_Note_CampGone>
+  <Nemesis_Note_CampFound>Найден(а) в своём лагере.</Nemesis_Note_CampFound>
+  <Nemesis_Note_CampMissed>Лагерь настоящий, но они были на охоте.</Nemesis_Note_CampMissed>
+  <Nemesis_Note_CampFalse>Лагерь оказался приманкой. Их там никогда не было.</Nemesis_Note_CampFalse>
+  <Nemesis_Letter_CampFoundTitle>{0} здесь</Nemesis_Letter_CampFoundTitle>
+  <Nemesis_Letter_CampFoundBody>Наводка верная. {0} в лагере со своими людьми. Убейте или возьмите живым.</Nemesis_Letter_CampFoundBody>
+  <Nemesis_Letter_CampEmptyTitle>{0} здесь нет</Nemesis_Letter_CampEmptyTitle>
+  <Nemesis_Letter_CampMissedBody>Это лагерь {0}, но их самих нет. Их люди всё ещё здесь.</Nemesis_Letter_CampMissedBody>
+  <Nemesis_Letter_CampFalseBody>{0} здесь никогда не было. Осведомитель продал вам приманку, а кто-то оставил для вас знак.</Nemesis_Letter_CampFalseBody>
 </LanguageData>

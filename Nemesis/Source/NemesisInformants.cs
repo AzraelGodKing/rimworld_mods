@@ -38,12 +38,17 @@ namespace Nemesis
             }
 
             int roll = RollLead(data);
+            Map? home = SoftCompat.PreferHarassmentMap(map ?? Find.AnyPlayerHomeMap);
             if (roll == 0)
             {
-                Map? home = SoftCompat.PreferHarassmentMap(map ?? Find.AnyPlayerHomeMap);
-                NemesisTells.RecordSighting(data, home);
-                message = "Nemesis_Intel_Tile".Translate(
-                    data.lastKnownTileLabel ?? "—", cost);
+                // A real lead: a camp where the nemesis waits (AZR-555).
+                if (NemesisHuntSites.TryCreateCamp(data, real: true, home))
+                    message = "Nemesis_Intel_Camp".Translate(data.lastKnownTileLabel ?? "—", cost);
+                else
+                {
+                    NemesisHuntSites.RecordHeading(data, home);
+                    message = "Nemesis_Intel_Tile".Translate(data.lastKnownTileLabel ?? "—", cost);
+                }
             }
             else if (roll == 1)
             {
@@ -54,14 +59,18 @@ namespace Nemesis
             }
             else if (roll == 2)
             {
-                NemesisTells.RecordNote(data, "Nemesis_Note_RaidWarning".Translate());
+                NemesisTells.RecordNote(data, "Nemesis_Note_RaidWarning");
                 message = "Nemesis_Intel_Warning".Translate(cost);
                 data.aggressionLevel = Mathf.Min(data.aggressionLevel + 0.15f, 10f);
             }
+            else if (NemesisHuntSites.TryCreateCamp(data, real: false, home))
+            {
+                // A false lead looks exactly like a real one until a caravan gets there.
+                message = "Nemesis_Intel_Camp".Translate(data.lastKnownTileLabel ?? "—", cost);
+            }
             else
             {
-                data.lastKnownTileLabel = "Nemesis_Intel_FalseTile".Translate();
-                NemesisTells.RecordNote(data, "Nemesis_Note_FalseLead".Translate());
+                NemesisTells.RecordNote(data, "Nemesis_Note_FalseLead");
                 data.aggressionLevel = Mathf.Min(data.aggressionLevel + 0.25f, 10f);
                 message = "Nemesis_Intel_False".Translate(cost);
             }
@@ -88,7 +97,7 @@ namespace Nemesis
         }
 
         /// <summary>
-        /// 0 tile, 1 gear, 2 raid warning, 3 false lead. A posted bounty buys better informants:
+        /// 0 real camp, 1 gear, 2 raid warning, 3 false lead (a camp without the nemesis). A posted bounty buys better informants:
         /// a 600-silver bounty cuts the false-lead weight from 1 to 0.2 and doubles the tile
         /// weight (AZR-662).
         /// </summary>
