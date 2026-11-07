@@ -39,7 +39,7 @@ namespace WaveSurvivalReforged
                 return;
             }
 
-            tracker.Finish(map);
+            tracker.Finish(map, stats);
             tracker.BeginGather(map, waveNum);
 
             WavePlan plan = Validated(nextPlan, map) ?? MakePlan(map, waveNum, PoolFor(waveNum));
@@ -63,6 +63,7 @@ namespace WaveSurvivalReforged
             }
 
             tracker.Started(plan, now);
+            stats.Notify_WaveStarted(waveNum);
             Messages.Message(ArrivedKey(plan.type.pool).Translate(waveNum, plan.Describe()), MessageTypeDefOf.ThreatBig);
             float days = run.daysBetweenWaves + (plan.type.pool != WavePool.Normal ? cfg.breatherDays : 0f);
             ticksNextWave = now + Mathf.RoundToInt(days * GenDate.TicksPerDay);

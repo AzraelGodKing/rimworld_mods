@@ -99,6 +99,7 @@ namespace WaveSurvivalReforged
                 DropPodUtility.DropThingsNear(pos, map, things, forbid: false);
                 Messages.Message((fallback ? "WSR_SupplyDropFallback" : "WSR_SupplyDropArrived").Translate(),
                     new TargetInfo(pos, map), MessageTypeDefOf.PositiveEvent);
+                stats.dropsReceived++;
             }
             return true;
         }

@@ -65,4 +65,21 @@
   <WSR_SettingsNewRunsOnly>Пресеты применяются при старте забега «Выживания волнами».</WSR_SettingsNewRunsOnly>
   <WSR_SettingsMultiplayer>Мультиплеер не поддерживается.</WSR_SettingsMultiplayer>
 
+  <WSR_RunOverLabel>Забег «Выживания волнами» окончен</WSR_RunOverLabel>
+  <WSR_RunOverText>Ваша колония пала.
+
+Достигнута волна: {0}
+Волн отбито: {1}
+Врагов убито: {2}
+Колонистов потеряно: {3}
+Посылок получено: {4}
+Дней прожито: {5}
+
+Забег записан в список лучших в настройках мода.</WSR_RunOverText>
+  <WSR_SettingsRunStats>Этот забег: волна {0}, отбито {1}, убито {2}, потеряно колонистов {3}, посылок {4}, дней {5}.</WSR_SettingsRunStats>
+  <WSR_SettingsBestRuns>Лучшие забеги на этом компьютере</WSR_SettingsBestRuns>
+  <WSR_SettingsBestRunsEmpty>Пока нет. Забег записывается, когда колония падёт.</WSR_SettingsBestRunsEmpty>
+  <WSR_SettingsBestRunRow>{0}. Волна {1}: {2}, {3} дн., убито {4}, потеряно {5} ({6}, {7}, {8})</WSR_SettingsBestRunRow>
+  <WSR_SettingsBestRunsClear>Очистить список</WSR_SettingsBestRunsClear>
+
 </LanguageData>

@@ -99,13 +99,13 @@ namespace WaveSurvivalReforged
             hostileBefore.Clear();
         }
 
-        public void Update(int now)
+        public void Update(int now, RunStats stats)
         {
             if (!Active)
                 return;
             if (map == null || !Find.Maps.Contains(map))
             {
-                Finish(null);
+                Finish(null, stats);
                 return;
             }
             if (now < gatherUntil)
@@ -131,12 +131,12 @@ namespace WaveSurvivalReforged
                 }
             }
             if (now >= gatherUntil && Standing == 0)
-                Finish(map);
+                Finish(map, stats);
         }
 
         // Ends the wave being followed (if any) and sends its summary. Called when the next
         // wave starts with whatever is still standing.
-        public void Finish(Map current)
+        public void Finish(Map current, RunStats stats)
         {
             if (!Active)
                 return;
@@ -156,6 +156,7 @@ namespace WaveSurvivalReforged
             lastDowned = downed;
             lastFled = fled;
             lastLeft = left;
+            stats?.Notify_WaveFinished(wave, killed, left == 0);
             if (total > 0 && label != null)
             {
                 TaggedString text = "WSR_WaveSummaryText".Translate(wave, label, killed, downed, fled);

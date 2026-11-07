@@ -65,4 +65,21 @@
   <WSR_SettingsNewRunsOnly>预设会在波次生存开局时生效。</WSR_SettingsNewRunsOnly>
   <WSR_SettingsMultiplayer>不支持多人游戏。</WSR_SettingsMultiplayer>
 
+  <WSR_RunOverLabel>波次生存结束</WSR_RunOverLabel>
+  <WSR_RunOverText>你的殖民地已经陷落。
+
+到达波次：{0}
+清除波次：{1}
+击杀敌人：{2}
+损失殖民者：{3}
+补给空投：{4}
+存活天数：{5}
+
+本局已记入模组设置中的最佳记录。</WSR_RunOverText>
+  <WSR_SettingsRunStats>本局：到达第 {0} 波，清除 {1} 波，击杀 {2}，损失殖民者 {3}，补给空投 {4} 次，{5} 天。</WSR_SettingsRunStats>
+  <WSR_SettingsBestRuns>本机最佳记录</WSR_SettingsBestRuns>
+  <WSR_SettingsBestRunsEmpty>暂无记录。殖民地陷落时会记录本局。</WSR_SettingsBestRunsEmpty>
+  <WSR_SettingsBestRunRow>{0}. 第 {1} 波：{2}，{3} 天，击杀 {4}，损失 {5}（{6}，{7}，{8}）</WSR_SettingsBestRunRow>
+  <WSR_SettingsBestRunsClear>清空列表</WSR_SettingsBestRunsClear>
+
 </LanguageData>

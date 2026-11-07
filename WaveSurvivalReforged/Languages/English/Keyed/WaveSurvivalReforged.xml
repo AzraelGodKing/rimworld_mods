@@ -65,4 +65,21 @@ Fled: {4}</WSR_WaveSummaryText>
   <WSR_SettingsNewRunsOnly>Presets apply when a Wave Survival run starts.</WSR_SettingsNewRunsOnly>
   <WSR_SettingsMultiplayer>Multiplayer is not supported.</WSR_SettingsMultiplayer>
 
+  <WSR_RunOverLabel>Wave Survival run over</WSR_RunOverLabel>
+  <WSR_RunOverText>Your colony has fallen.
+
+Reached wave: {0}
+Waves cleared: {1}
+Enemies killed: {2}
+Colonists lost: {3}
+Supply drops: {4}
+Days survived: {5}
+
+The run is on the best-runs list in the mod settings.</WSR_RunOverText>
+  <WSR_SettingsRunStats>This run: reached wave {0}, cleared {1}, {2} killed, {3} colonists lost, {4} supply drops, {5} days.</WSR_SettingsRunStats>
+  <WSR_SettingsBestRuns>Best runs on this computer</WSR_SettingsBestRuns>
+  <WSR_SettingsBestRunsEmpty>None yet. A run is recorded when its colony falls.</WSR_SettingsBestRunsEmpty>
+  <WSR_SettingsBestRunRow>{0}. Wave {1}: {2}, {3} days, {4} killed, {5} lost ({6}, {7}, {8})</WSR_SettingsBestRunRow>
+  <WSR_SettingsBestRunsClear>Clear the list</WSR_SettingsBestRunsClear>
+
 </LanguageData>

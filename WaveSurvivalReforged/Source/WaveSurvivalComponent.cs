@@ -25,6 +25,7 @@ namespace WaveSurvivalReforged
         // The next wave, rolled when it is scheduled so the alert can name it.
         private WavePlan nextPlan;
         private WaveTracker tracker = new WaveTracker();
+        private RunStats stats;
 
         // Not saved: only stops the postponed message repeating for the same wave.
         private int postponedWave;
@@ -56,18 +57,22 @@ namespace WaveSurvivalReforged
 
         public WaveTracker Tracker => tracker;
 
+        public RunStats Stats => stats;
+
         private static WaveSurvivalConfigDef Config => WSR_DefOf.WSR_Config;
 
         private static float ThreatScale => Find.Storyteller.difficulty.threatScale;
 
         public override void GameComponentTick()
         {
+            if (started && stats != null && !stats.recorded && Find.GameEnder.gameEnding && ModeActive)
+                RunEnded();
             int now = Find.TickManager.TicksGame;
             if (now % CheckInterval != 0 || !ModeActive)
                 return;
             if (!started)
                 Start(now);
-            tracker.Update(now);
+            tracker.Update(now, stats);
             if (now >= ticksNextWave)
             {
                 DeepProfiler.Start("WaveSurvivalReforged.RunWave");
@@ -107,12 +112,35 @@ namespace WaveSurvivalReforged
         {
             WaveSurvivalConfigDef cfg = Config;
             run = WaveSurvivalMod.Settings.ForNewRun();
+            stats = RunStats.StartingNow();
             int hourOffset = cfg.raidHourOffset * GenDate.TicksPerHour;
             ticksNextWave = now + Mathf.RoundToInt(run.daysBeforeFirstWave * GenDate.TicksPerDay) + hourOffset;
             ticksNextDay = now + GenDate.TicksPerHour;
             waveNum = 1;
             started = true;
             RollNextPlan();
+        }
+
+        // The colony is lost: a letter with the run's result, and an entry on the local best-runs list.
+        private void RunEnded()
+        {
+            stats.recorded = true;
+            float days = stats.TicksSurvived / (float)GenDate.TicksPerDay;
+            Find.LetterStack.ReceiveLetter("WSR_RunOverLabel".Translate(),
+                "WSR_RunOverText".Translate(stats.highestWave, stats.wavesCleared, stats.TotalKills,
+                    stats.ColonistsLost, stats.dropsReceived, days.ToString("0.#")),
+                LetterDefOf.NegativeEvent);
+            WaveSurvivalMod.RecordRun(new RunRecord
+            {
+                waves = stats.highestWave,
+                kills = stats.TotalKills,
+                colonistsLost = stats.ColonistsLost,
+                days = days,
+                preset = run?.preset ?? WavePreset.Standard,
+                difficulty = Find.Storyteller.difficultyDef?.LabelCap ?? "",
+                colony = Faction.OfPlayer.Name,
+                date = System.DateTime.Now.ToString("yyyy-MM-dd"),
+            });
         }
 
         // The home map with a trade beacon, else any home map.
@@ -186,6 +214,7 @@ namespace WaveSurvivalReforged
             Scribe_Deep.Look(ref nextPlan, "nextPlan");
             Scribe_Deep.Look(ref tracker, "tracker");
             Scribe_Deep.Look(ref run, "run");
+            Scribe_Deep.Look(ref stats, "stats");
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 tracker ??= new WaveTracker();
@@ -194,6 +223,8 @@ namespace WaveSurvivalReforged
                 // next wave is pre-rolled on the first check without moving the countdown.
                 if (started && run == null)
                     run = RunSettings.For(WavePreset.Standard);
+                if (started && stats == null)
+                    stats = RunStats.FromOldSave(waveNum);
                 if (nextPlan != null && !nextPlan.IsUsable)
                     nextPlan = null;
             }
