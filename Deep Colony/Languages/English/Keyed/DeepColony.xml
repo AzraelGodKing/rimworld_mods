@@ -55,11 +55,18 @@
 
   <!-- ── Settings ───────────────────────────────────────────────────────────── -->
   <DC_Settings_Presets>Presets</DC_Settings_Presets>
-  <DC_Settings_PresetsTip>Soft / Default / Hard retune the sliders below. System toggles stay on.</DC_Settings_PresetsTip>
+  <DC_Settings_PresetsTip>Soft / Default / Hard set every gameplay option below. Display and Safety are left as they are.</DC_Settings_PresetsTip>
+  <DC_Settings_Section_Perks>Perks</DC_Settings_Section_Perks>
+  <DC_Settings_Section_Trauma>Trauma and therapy</DC_Settings_Section_Trauma>
+  <DC_Settings_Section_Mentoring>Mentoring</DC_Settings_Section_Mentoring>
+  <DC_Settings_Section_Family>Family</DC_Settings_Section_Family>
+  <DC_Settings_Section_Reputation>Faction reputation</DC_Settings_Section_Reputation>
+  <DC_Settings_Section_BodyCodex>Body and Codex</DC_Settings_Section_BodyCodex>
+  <DC_Settings_Section_Safety>Safety</DC_Settings_Section_Safety>
+  <DC_Settings_Section_Display>Display</DC_Settings_Section_Display>
   <DC_Settings_PresetSoft>Soft</DC_Settings_PresetSoft>
   <DC_Settings_PresetDefault>Default</DC_Settings_PresetDefault>
   <DC_Settings_PresetHard>Hard</DC_Settings_PresetHard>
-  <DC_Settings_Systems>Systems</DC_Settings_Systems>
   <DC_Settings_EnablePerks>Enable perk trees</DC_Settings_EnablePerks>
   <DC_Settings_EnablePerksTip>Perks unlock automatically at skill 5 / 10 / 15 / 20 and lapse if the skill falls below that.</DC_Settings_EnablePerksTip>
   <DC_Settings_ShowPerkHediffs>Show perk hediffs on the health tab</DC_Settings_ShowPerkHediffs>
@@ -109,7 +116,6 @@
   <DC_Settings_TraumaPenaltiesTip>Default off. Combat trauma reduces accuracy while drafted; captivity trauma mood penalty on Warden work. Hard preset enables this.</DC_Settings_TraumaPenaltiesTip>
   <DC_Settings_AttitudeConsequences>Attitude consequences</DC_Settings_AttitudeConsequences>
   <DC_Settings_AttitudeConsequencesTip>Default off. Cordial/indebted/wary/vengeful attitudes affect trade prices, trader caravans, and raid strength. Hard preset enables this.</DC_Settings_AttitudeConsequencesTip>
-  <DC_Settings_Phase5>Power systems</DC_Settings_Phase5>
   <DC_Settings_Capstones>Skill-20 capstone perks</DC_Settings_Capstones>
   <DC_Settings_CapstonesTip>Adds a perk node at skill 20. Default on. Perks still auto-grant at that level.</DC_Settings_CapstonesTip>
   <DC_Settings_Branching>Branching L15 perk picks</DC_Settings_Branching>
@@ -123,7 +129,6 @@
   <DC_Settings_HeirloomsTip>Default off. Colonist deaths can mark gear as heirlooms (mood + tiny bonus while carried). Hard preset enables this.</DC_Settings_HeirloomsTip>
   <DC_Settings_ChronicTrauma>Chronic trauma hediff</DC_Settings_ChronicTrauma>
   <DC_Settings_ChronicTraumaTip>Default off. Trauma that expires without therapy can become chronic stress. Counseling eases it. Hard preset enables this.</DC_Settings_ChronicTraumaTip>
-  <DC_Settings_Tuning>Tuning</DC_Settings_Tuning>
   <DC_Settings_CombatShock>Combat shock chance: {0}%</DC_Settings_CombatShock>
   <DC_Settings_MinSkillLead>Mentor minimum skill lead: {0}</DC_Settings_MinSkillLead>
   <DC_Settings_PassiveMentor>Passive mentoring XP multiplier: {0}</DC_Settings_PassiveMentor>
@@ -231,6 +236,8 @@
   <DC_Alert_UntreatedTrauma>Untreated trauma</DC_Alert_UntreatedTrauma>
   <DC_Alert_UntreatedTraumaDesc>These colonists have carried psychological trauma for more than a day without counseling. Doctors can Counsel from the Doctor work type or right-click.</DC_Alert_UntreatedTraumaDesc>
   <DC_InspectCounsel>Counsel: last {0}, {1} sessions (bond {2}/{3})</DC_InspectCounsel>
+  <DC_InspectCounselors>Most sessions with: {0}</DC_InspectCounselors>
+  <DC_InspectMuscleMemory>Muscle memory (double learning): {0}</DC_InspectMuscleMemory>
   <DC_InspectGeneVsBlood>Xenogenes pull against the family {0} tradition</DC_InspectGeneVsBlood>
   <DC_PerkFilter_All>All</DC_PerkFilter_All>
   <DC_PerkFilter_Hard>Hard-only</DC_PerkFilter_Hard>
@@ -250,7 +257,6 @@
   <DC_FuneralBurn>The pyre for {PAWN} eases violent loss.</DC_FuneralBurn>
   <DC_FuneralEaseMote>Laid to rest…</DC_FuneralEaseMote>
   <DC_ChildRaidWitness>{PAWN} saw the fighting and will not forget it soon.</DC_ChildRaidWitness>
-  <DC_Settings_LaterSystems>Later systems</DC_Settings_LaterSystems>
   <DC_Settings_ChildRaid>Child raid-witness chance: {0}%</DC_Settings_ChildRaid>
   <DC_Settings_PrisonerCounsel>Prisoner counseling (recruit path)</DC_Settings_PrisonerCounsel>
   <DC_Settings_PrisonerCounselTip>Default off. Doctors can counsel prisoners as a slow Social-gated recruit. Does not replace Warden chat.</DC_Settings_PrisonerCounselTip>
@@ -293,6 +299,7 @@
   <DC_InspectTeachProgress>Learning {0} ({1}/{2} sessions)</DC_InspectTeachProgress>
   <DC_InspectEnvoy>Envoy to {0}</DC_InspectEnvoy>
   <DC_InspectRival>Rival: {0}</DC_InspectRival>
+  <DC_InspectRivalSkill>Rival: {0} ({1})</DC_InspectRivalSkill>
   <DC_ParentReunion>{CHILD} is home with {PARENT} again.</DC_ParentReunion>
   <DC_SurfaceReturnEase>Solid ground eases {PAWN}'s isolation.</DC_SurfaceReturnEase>
   <DC_TraumaReason_StrataGas>was downed in colony gas</DC_TraumaReason_StrataGas>
@@ -312,6 +319,7 @@
   <DC_FamilyTree_Children>Children</DC_FamilyTree_Children>
   <DC_FamilyTree_Grandchildren>Grandchildren</DC_FamilyTree_Grandchildren>
   <DC_FamilyTree_Teaching>Teaching line</DC_FamilyTree_Teaching>
+  <DC_FamilyTree_PastMentor>Past mentor</DC_FamilyTree_PastMentor>
   <DC_FamilyTree_Self>this pawn</DC_FamilyTree_Self>
   <DC_FamilyTree_Dead>(dead)</DC_FamilyTree_Dead>
   <DC_FamilyTree_Away>not on a map</DC_FamilyTree_Away>
@@ -331,7 +339,6 @@
   <DC_FamilyTree_StyleRows>Rows</DC_FamilyTree_StyleRows>
   <DC_Settings_FamilyTreePedigree>Family tree: pedigree layout</DC_Settings_FamilyTreePedigree>
   <DC_Settings_FamilyTreePedigreeTip>Ancestors above, descendants below, with connecting lines. Off keeps the generation-row layout.</DC_Settings_FamilyTreePedigreeTip>
-  <DC_Settings_FamilyJoin>Family join &amp; reconcile</DC_Settings_FamilyJoin>
   <DC_Settings_EnableFamilyJoin>Kin join / defect on the map</DC_Settings_EnableFamilyJoin>
   <DC_Settings_EnableFamilyJoinTip>Family of colonists may join from visits, or defect from raids. Spouse is the highest chance. Ex-lovers never join this way (0%). Non-hostile family recruit skips the goodwill penalty; hostile kin keep a faction grudge. Unwavering prisoners can be reached by family they like (both ways). Also: in-law welcome, kin homecoming, kin dying or executed, breakup wounds, divorce, grandchild born, kin taken, tended by family, last of the line, step-family, prison visits, releasing kin, family-tradition teaching, kin downed in a fight, and empty nest.</DC_Settings_EnableFamilyJoinTip>
   <DC_Settings_RaidDefect>Raid kin defect chance (spouse): {0}%</DC_Settings_RaidDefect>
@@ -380,7 +387,6 @@
   <DC_FamilyLetter_TraditionBody>{MENTOR} passed the household {SKILL} on to {APPRENTICE}. The Legacy tab keeps the note.</DC_FamilyLetter_TraditionBody>
   <DC_FamilyLetter_EmptyNestLabel>Empty nest: {PAWN}</DC_FamilyLetter_EmptyNestLabel>
   <DC_FamilyLetter_EmptyNestBody>{CHILD} grew up and left the home map. None of {PAWN}'s children remain there. The rooms are quieter. The Legacy tab keeps the note.</DC_FamilyLetter_EmptyNestBody>
-  <DC_Settings_TouchAverse>Touch traits</DC_Settings_TouchAverse>
   <DC_Settings_EnableTouchAverse>Touch-need traits (comfort tiers)</DC_Settings_EnableTouchAverse>
   <DC_Settings_EnableTouchAverseTip>Touch-averse (reserved / averse / intolerant) and touch-starved colonists will not start a lover / fiancé / spouse relation until they reach a named comfort tier with that person. Comfort is earned in touching distance (slowly in the same room). Tactile and cuddly share the meter for mood only. Date Night still owns romance schedules. Off keeps the traits as flavor-only.</DC_Settings_EnableTouchAverseTip>
   <DC_Settings_TouchComfortDays>Days of shared-room time to "fine with touch": {0}</DC_Settings_TouchComfortDays>
@@ -487,4 +493,8 @@
   <DC_RemembranceKilledBy>killed by {0}</DC_RemembranceKilledBy>
   <DC_RemembranceDiedOf>died of {0}</DC_RemembranceDiedOf>
 
+  <DC_HubTab_Perks>Perks</DC_HubTab_Perks>
+  <DC_HubTab_Legacy>Legacy</DC_HubTab_Legacy>
+  <DC_HubTab_Reputation>Reputation</DC_HubTab_Reputation>
+  <DC_HubTab_BodyCodex>Body &amp; Codex</DC_HubTab_BodyCodex>
 </LanguageData>

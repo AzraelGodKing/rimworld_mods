@@ -6,14 +6,8 @@ using Verse;
 
 namespace DeepColony
 {
-    public class MainButtonWorker_DeepColonyBodyCodex : MainButtonWorker_ToggleTab
-    {
-        public override bool Visible =>
-            base.Visible && (DeepColonySettings.Get.enableBody || DeepColonySettings.Get.enableCodex);
-    }
-
-    /// <summary>Colony-wide view of body health and Codex notes, like the Perks/Legacy/Reputation tabs.</summary>
-    public class MainTabWindow_DeepColonyBodyCodex : MainTabWindow
+    /// <summary>Colony-wide view of body health and Codex notes.</summary>
+    public class HubPanel_BodyCodex : DeepColonyHubPanel
     {
         private const float LineH = 22f;
 
@@ -21,7 +15,9 @@ namespace DeepColony
         private float lastViewH = 400f;
         private readonly List<Pawn> atRisk = new List<Pawn>();
 
-        public override Vector2 RequestedTabSize => new Vector2(680f, 560f);
+        public override string LabelKey => "DC_HubTab_BodyCodex";
+        public override bool Visible => DeepColonySettings.Get.enableBody || DeepColonySettings.Get.enableCodex;
+        public override Vector2 Size => new Vector2(680f, 560f);
 
         public override void DoWindowContents(Rect inRect)
         {
@@ -56,7 +52,7 @@ namespace DeepColony
             y += LineH;
         }
 
-        private static void DrawBody(float width, ref float y)
+        private void DrawBody(float width, ref float y)
         {
             Heading(width, ref y, "DC_BodyCodex_Body".Translate());
             if (!DeepColonySettings.Get.enableBody)
@@ -153,12 +149,19 @@ namespace DeepColony
                 Line(width, ref y, "DC_BodyCodex_NoNotebooks".Translate());
         }
 
-        private static IEnumerable<Pawn> ColonyPawns()
+        private readonly List<Pawn> colonyPawns = new List<Pawn>();
+        private UiRefresh pawnsRefresh;
+
+        private List<Pawn> ColonyPawns()
         {
-            var all = new List<Pawn>();
-            foreach (Map map in Find.Maps)
-                all.AddRange(map.mapPawns.FreeColonists);
-            return all.OrderBy(p => p.LabelShort);
+            if (pawnsRefresh.Due())
+            {
+                colonyPawns.Clear();
+                foreach (Map map in Find.Maps)
+                    colonyPawns.AddRange(map.mapPawns.FreeColonists);
+                colonyPawns.SortBy(p => p.LabelShort);
+            }
+            return colonyPawns;
         }
     }
 }
