@@ -22,7 +22,7 @@
   <DateNight_Settings_GiftsTip>One partner may fetch a small luxury (beer, chocolate, ambrosia...) and hand it over for a mood and opinion boost. The item moves to the partner's inventory.</DateNight_Settings_GiftsTip>
   <DateNight_Settings_GiftExtend>Also accept joy luxuries as gifts</DateNight_Settings_GiftExtend>
   <DateNight_Settings_GiftExtendTip>Scans for small joy-giving ingestibles so modded chocolates and drinks can be gifts too.</DateNight_Settings_GiftExtendTip>
-  <DateNight_Settings_GiftList>Gift ThingDef names (comma-separated; empty = Beer, Chocolate, Ambrosia, PsychiteTea, InsectJelly)</DateNight_Settings_GiftList>
+  <DateNight_Settings_GiftList>Extra gift items (empty = Beer, Chocolate, Ambrosia, Psychite tea, Insect jelly):</DateNight_Settings_GiftList>
   <DateNight_Settings_PostDateBoost>Post-date lovin spark</DateNight_Settings_PostDateBoost>
   <DateNight_Settings_PostDateBoostTip>A finished date improves the couple's lovin chance for about one in-game day.</DateNight_Settings_PostDateBoostTip>
   <DateNight_Settings_Anniversaries>Anniversaries</DateNight_Settings_Anniversaries>
@@ -71,4 +71,41 @@
   <DateNight_Alert_SlotDate>Date</DateNight_Alert_SlotDate>
   <DateNight_ScheduleComboTip>Date (click). Lovin is in the ▾ menu. This button stays last on the extra schedule row.</DateNight_ScheduleComboTip>
 
+  <DateNight_Settings_Section_Lovin>Lovin</DateNight_Settings_Section_Lovin>
+  <DateNight_Settings_Section_Dates>Dates</DateNight_Settings_Section_Dates>
+  <DateNight_Settings_Section_Gifts>Gifts</DateNight_Settings_Section_Gifts>
+  <DateNight_Settings_Section_Romance>Romance</DateNight_Settings_Section_Romance>
+  <DateNight_Settings_Section_Schedule>Schedule tab</DateNight_Settings_Section_Schedule>
+  <DateNight_Settings_GiftAdd>Add gift...</DateNight_Settings_GiftAdd>
+  <DateNight_Settings_GiftUnknown>{0} (unknown item, ignored)</DateNight_Settings_GiftUnknown>
+  <DateNight_Settings_GiftRemove>Remove from the gift list.</DateNight_Settings_GiftRemove>
+  <DateNight_Settings_RomanceGizmos>Romance buttons on colonists</DateNight_Settings_RomanceGizmos>
+  <DateNight_Settings_RomanceGizmosTip>Show the Romance panel and "Ask out tonight" buttons when a colonist is selected.</DateNight_Settings_RomanceGizmosTip>
+  <DateNight_Settings_ColumnOffset>Date button column offset: {0}</DateNight_Settings_ColumnOffset>
+  <DateNight_Settings_ColumnOffsetTip>Date Night places its Schedule tab button after the vanilla, Rimbody and Schedule Everything buttons. If another mod adds a button and they overlap, move the Date button by whole cells here. 0 = automatic.</DateNight_Settings_ColumnOffsetTip>
+  <DateNight_GiftPicker_Title>Choose a gift item</DateNight_GiftPicker_Title>
+  <DateNight_GiftPicker_Search>Search...</DateNight_GiftPicker_Search>
+  <DateNight_Gizmo_Romance>Romance</DateNight_Gizmo_Romance>
+  <DateNight_Gizmo_RomanceDesc>Show this colonist's romance: stage, anniversary, last date, favourite spot and double-date rapport.</DateNight_Gizmo_RomanceDesc>
+  <DateNight_Gizmo_AskOut>Ask out tonight</DateNight_Gizmo_AskOut>
+  <DateNight_Gizmo_AskOutDesc>Plan one date with {0} at the next free evening hour, without changing either schedule.</DateNight_Gizmo_AskOutDesc>
+  <DateNight_Gizmo_AskOutCancel>Cancel planned date</DateNight_Gizmo_AskOutCancel>
+  <DateNight_Gizmo_AskOutCancelDesc>Cancel tonight's date with {0} at {1}:00.</DateNight_Gizmo_AskOutCancelDesc>
+  <DateNight_Gizmo_AskOutUnavailable>{0} can't go on a date right now.</DateNight_Gizmo_AskOutUnavailable>
+  <DateNight_AskOut_Planned>{0} asked {1} out. Their date starts at {2}:00.</DateNight_AskOut_Planned>
+  <DateNight_AskOut_Missed>{0} and {1} missed their planned date.</DateNight_AskOut_Missed>
+  <DateNight_Romance_Title>{0} and {1}</DateNight_Romance_Title>
+  <DateNight_Romance_Stage>Stage: {0}</DateNight_Romance_Stage>
+  <DateNight_Romance_Together>Together for {0}</DateNight_Romance_Together>
+  <DateNight_Romance_Anniversary>Anniversary: {0} {1}</DateNight_Romance_Anniversary>
+  <DateNight_Romance_Progress>Good dates toward the next step: {0} / {1}</DateNight_Romance_Progress>
+  <DateNight_Romance_LastDate>Last date: {0} ago ({1}). Dates together: {2}</DateNight_Romance_LastDate>
+  <DateNight_Romance_NoLastDate>No dates yet.</DateNight_Romance_NoLastDate>
+  <DateNight_Romance_Venue>Favourite spot: {0} (score {1})</DateNight_Romance_Venue>
+  <DateNight_Romance_NoVenue>No favourite spot yet.</DateNight_Romance_NoVenue>
+  <DateNight_Romance_VenueOutdoors>outdoors</DateNight_Romance_VenueOutdoors>
+  <DateNight_Romance_Rapport>Double dates with {0} and {1}: rapport {2}</DateNight_Romance_Rapport>
+  <DateNight_Romance_NoRapport>No double dates yet.</DateNight_Romance_NoRapport>
+  <DateNight_Romance_NoPartner>{0} has no partner to date.</DateNight_Romance_NoPartner>
+  <DateNight_Romance_Planned>Planned date tonight at {0}:00.</DateNight_Romance_Planned>
 </LanguageData>

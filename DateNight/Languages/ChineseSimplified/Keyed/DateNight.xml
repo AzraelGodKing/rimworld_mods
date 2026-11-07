@@ -22,7 +22,7 @@
   <DateNight_Settings_GiftsTip>一方可以取来小奢侈品（啤酒、巧克力、珍馐……）送给对方，提升心情和好感。物品会进入伴侣的物品栏。</DateNight_Settings_GiftsTip>
   <DateNight_Settings_GiftExtend>也接受娱乐奢侈品作为礼物</DateNight_Settings_GiftExtend>
   <DateNight_Settings_GiftExtendTip>扫描小型娱乐食物/饮品，模组巧克力饮料也可作礼物。</DateNight_Settings_GiftExtendTip>
-  <DateNight_Settings_GiftList>礼物 ThingDef 名（逗号分隔；空= Beer, Chocolate, Ambrosia, PsychiteTea, InsectJelly）</DateNight_Settings_GiftList>
+  <DateNight_Settings_GiftList>额外礼物（空 = 啤酒、巧克力、仙馔蜜酒、精神茶、虫子果冻）：</DateNight_Settings_GiftList>
   <DateNight_Settings_PostDateBoost>约会后的火花</DateNight_Settings_PostDateBoost>
   <DateNight_Settings_PostDateBoostTip>完成一次约会后，这对伴侣的爱爱几率提升约一个游戏日。</DateNight_Settings_PostDateBoostTip>
   <DateNight_Settings_Anniversaries>纪念日</DateNight_Settings_Anniversaries>
@@ -71,4 +71,41 @@
   <DateNight_Alert_SlotDate>约会</DateNight_Alert_SlotDate>
   <DateNight_ScheduleComboTip>点击涂约会。爱爱在 ▾ 菜单里。此按钮始终排在作息额外格子的最后。</DateNight_ScheduleComboTip>
 
+  <DateNight_Settings_Section_Lovin>爱爱</DateNight_Settings_Section_Lovin>
+  <DateNight_Settings_Section_Dates>约会</DateNight_Settings_Section_Dates>
+  <DateNight_Settings_Section_Gifts>礼物</DateNight_Settings_Section_Gifts>
+  <DateNight_Settings_Section_Romance>恋爱</DateNight_Settings_Section_Romance>
+  <DateNight_Settings_Section_Schedule>日程页</DateNight_Settings_Section_Schedule>
+  <DateNight_Settings_GiftAdd>添加礼物……</DateNight_Settings_GiftAdd>
+  <DateNight_Settings_GiftUnknown>{0}（未知物品，已忽略）</DateNight_Settings_GiftUnknown>
+  <DateNight_Settings_GiftRemove>从礼物列表移除。</DateNight_Settings_GiftRemove>
+  <DateNight_Settings_RomanceGizmos>殖民者的恋爱按钮</DateNight_Settings_RomanceGizmos>
+  <DateNight_Settings_RomanceGizmosTip>选中殖民者时显示“恋爱”面板和“今晚约出去”按钮。</DateNight_Settings_RomanceGizmosTip>
+  <DateNight_Settings_ColumnOffset>约会按钮列偏移：{0}</DateNight_Settings_ColumnOffset>
+  <DateNight_Settings_ColumnOffsetTip>约会之夜把日程页按钮放在原版、Rimbody 和 Schedule Everything 按钮之后。如果其他模组也加了按钮并重叠，在这里按整格移动约会按钮。0 = 自动。</DateNight_Settings_ColumnOffsetTip>
+  <DateNight_GiftPicker_Title>选择礼物</DateNight_GiftPicker_Title>
+  <DateNight_GiftPicker_Search>搜索……</DateNight_GiftPicker_Search>
+  <DateNight_Gizmo_Romance>恋爱</DateNight_Gizmo_Romance>
+  <DateNight_Gizmo_RomanceDesc>查看此殖民者的恋爱：阶段、纪念日、上次约会、最爱的地方和双人约会默契。</DateNight_Gizmo_RomanceDesc>
+  <DateNight_Gizmo_AskOut>今晚约出去</DateNight_Gizmo_AskOut>
+  <DateNight_Gizmo_AskOutDesc>在下一个空闲的晚间时段和{0}约会一次，不改动双方日程。</DateNight_Gizmo_AskOutDesc>
+  <DateNight_Gizmo_AskOutCancel>取消约会</DateNight_Gizmo_AskOutCancel>
+  <DateNight_Gizmo_AskOutCancelDesc>取消今晚{1}:00和{0}的约会。</DateNight_Gizmo_AskOutCancelDesc>
+  <DateNight_Gizmo_AskOutUnavailable>{0}现在不能去约会。</DateNight_Gizmo_AskOutUnavailable>
+  <DateNight_AskOut_Planned>{0}约了{1}。约会在{2}:00开始。</DateNight_AskOut_Planned>
+  <DateNight_AskOut_Missed>{0}和{1}错过了约好的约会。</DateNight_AskOut_Missed>
+  <DateNight_Romance_Title>{0}和{1}</DateNight_Romance_Title>
+  <DateNight_Romance_Stage>阶段：{0}</DateNight_Romance_Stage>
+  <DateNight_Romance_Together>在一起{0}</DateNight_Romance_Together>
+  <DateNight_Romance_Anniversary>纪念日：{1}第{0}天</DateNight_Romance_Anniversary>
+  <DateNight_Romance_Progress>距下一阶段的愉快约会：{0} / {1}</DateNight_Romance_Progress>
+  <DateNight_Romance_LastDate>上次约会：{0}前（{1}）。一起约会次数：{2}</DateNight_Romance_LastDate>
+  <DateNight_Romance_NoLastDate>还没有约会过。</DateNight_Romance_NoLastDate>
+  <DateNight_Romance_Venue>最爱的地方：{0}（评分 {1}）</DateNight_Romance_Venue>
+  <DateNight_Romance_NoVenue>还没有最爱的地方。</DateNight_Romance_NoVenue>
+  <DateNight_Romance_VenueOutdoors>户外</DateNight_Romance_VenueOutdoors>
+  <DateNight_Romance_Rapport>与{0}和{1}的双人约会：默契 {2}</DateNight_Romance_Rapport>
+  <DateNight_Romance_NoRapport>还没有双人约会。</DateNight_Romance_NoRapport>
+  <DateNight_Romance_NoPartner>{0}没有可以约会的对象。</DateNight_Romance_NoPartner>
+  <DateNight_Romance_Planned>今晚{0}:00有约会。</DateNight_Romance_Planned>
 </LanguageData>

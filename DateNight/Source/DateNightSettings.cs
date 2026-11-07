@@ -81,6 +81,17 @@ namespace DateNight
         /// </summary>
         public bool enableGradualRomance = true;
 
+        /// <summary>
+        /// Romance panel and "Ask out tonight" buttons on selected colonists.
+        /// </summary>
+        public bool showRomanceGizmos = true;
+
+        /// <summary>
+        /// Shifts the Schedule tab Date button by whole cells, for mods that add
+        /// their own buttons Date Night does not know about. 0 = automatic.
+        /// </summary>
+        public int scheduleColumnOffset;
+
         public override void ExposeData()
         {
             Scribe_Values.Look(ref pregnancySafeCooldown, "pregnancySafeCooldown", true);
@@ -97,6 +108,8 @@ namespace DateNight
             Scribe_Values.Look(ref rememberFavoriteSpot, "rememberFavoriteSpot", true);
             Scribe_Values.Look(ref allowDoubleDates, "allowDoubleDates", true);
             Scribe_Values.Look(ref enableGradualRomance, "enableGradualRomance", true);
+            Scribe_Values.Look(ref showRomanceGizmos, "showRomanceGizmos", true);
+            Scribe_Values.Look(ref scheduleColumnOffset, "scheduleColumnOffset", 0);
             if (Scribe.mode == LoadSaveMode.PostLoadInit && giftDefNames == null)
             {
                 giftDefNames = new List<string>();
@@ -119,6 +132,8 @@ namespace DateNight
             rememberFavoriteSpot = true;
             allowDoubleDates = true;
             enableGradualRomance = true;
+            showRomanceGizmos = true;
+            scheduleColumnOffset = 0;
             DateNightActivities.InvalidateGiftCache();
         }
     }

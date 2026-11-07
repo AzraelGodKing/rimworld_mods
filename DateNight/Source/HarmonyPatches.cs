@@ -47,7 +47,7 @@ namespace DateNight
 
             float cellW = rect.width * 0.5f;
             float cellH = rect.height * 0.5f;
-            int col = ExtraColumnIndex();
+            int col = Mathf.Max(0, ExtraColumnIndex() + DateNightMod.Settings.scheduleColumnOffset);
             float x = rect.x + cellW * col;
             float w = cellW;
             Rect areas = Patch_AllowedArea_DoHeader.ButtonRect;
@@ -80,6 +80,8 @@ namespace DateNight
         /// Vanilla 1.6 is a 2×2 (Meditate tucks beside Sleep). Extra mods skip ahead
         /// (Rimbody Workout, Schedule Everything). Sit immediately after the rightmost
         /// of those — last on the strip, not a cell further into Manage areas.
+        /// Other Harmony owners of the grid are not guessed at (they may draw no
+        /// button at all); players fix those with the column-offset setting.
         /// Cached after first Schedule-tab draw; mods do not load/unload mid-session.
         /// </summary>
         private static int ExtraColumnIndex()
@@ -91,11 +93,8 @@ namespace DateNight
 
             int royalty = ModsConfig.RoyaltyActive ? 1 : 0;
             int last = 3 + royalty;
-            int known = 0;
-
             if (HasRimbodySchedulePatch())
             {
-                known++;
                 int rimbody = 4 + royalty;
                 if (IsRimbodyExosuitLoaded())
                 {
@@ -109,7 +108,6 @@ namespace DateNight
 
             if (HasScheduleEverythingPatch())
             {
-                known++;
                 int se = 5 + royalty;
                 if (se > last)
                 {
@@ -117,13 +115,7 @@ namespace DateNight
                 }
             }
 
-            int unknown = CountOtherSelectorOwners() - known;
-            if (unknown < 0)
-            {
-                unknown = 0;
-            }
-
-            cachedColumn = last + 1 + unknown;
+            cachedColumn = last + 1;
             return cachedColumn;
         }
 
@@ -169,58 +161,6 @@ namespace DateNight
             {
                 return false;
             }
-        }
-
-        /// <summary>
-        /// Each other Harmony owner on this method is treated as one extra top-row button.
-        /// Unique id, so a postfix+transpiler from the same mod still counts as one slot.
-        /// </summary>
-        private static int CountOtherSelectorOwners()
-        {
-            MethodInfo method = AccessTools.DeclaredMethod(
-                typeof(TimeAssignmentSelector),
-                nameof(TimeAssignmentSelector.DrawTimeAssignmentSelectorGrid));
-            if (method == null)
-            {
-                return 0;
-            }
-
-            Patches patches = Harmony.GetPatchInfo(method);
-            if (patches == null)
-            {
-                return 0;
-            }
-
-            var seen = new HashSet<string>();
-            int n = 0;
-            n += CountOwners(patches.Prefixes, seen);
-            n += CountOwners(patches.Postfixes, seen);
-            n += CountOwners(patches.Transpilers, seen);
-            n += CountOwners(patches.Finalizers, seen);
-            return n;
-        }
-
-        private static int CountOwners(IEnumerable<Patch> list, HashSet<string> seen)
-        {
-            if (list == null)
-            {
-                return 0;
-            }
-
-            int n = 0;
-            foreach (Patch patch in list)
-            {
-                if (patch == null || patch.owner == DateNightInit.HarmonyId)
-                {
-                    continue;
-                }
-                if (!seen.Add(patch.owner ?? ""))
-                {
-                    continue;
-                }
-                n++;
-            }
-            return n;
         }
 
         private static void DrawComboButton(Rect rect, TimeAssignmentDef? date, TimeAssignmentDef? lovin)

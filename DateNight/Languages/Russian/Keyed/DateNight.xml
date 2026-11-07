@@ -22,7 +22,7 @@
   <DateNight_Settings_GiftsTip>Один из пары может принести небольшой презент (пиво, шоколад, амброзию...) и вручить его — настроение и мнение растут. Предмет переходит в инвентарь партнёра.</DateNight_Settings_GiftsTip>
   <DateNight_Settings_GiftExtend>Также принимать радостные предметы как подарки</DateNight_Settings_GiftExtend>
   <DateNight_Settings_GiftExtendTip>Ищет мелкие ingestibles с радостью — модовые шоколадки и напитки тоже подойдут.</DateNight_Settings_GiftExtendTip>
-  <DateNight_Settings_GiftList>Имена ThingDef подарков (через запятую; пусто = Beer, Chocolate, Ambrosia, PsychiteTea, InsectJelly)</DateNight_Settings_GiftList>
+  <DateNight_Settings_GiftList>Дополнительные подарки (пусто = пиво, шоколад, амброзия, психитовый чай, насекомое желе):</DateNight_Settings_GiftList>
   <DateNight_Settings_PostDateBoost>Искра после свидания</DateNight_Settings_PostDateBoost>
   <DateNight_Settings_PostDateBoostTip>Завершённое свидание повышает шанс любовных часов примерно на игровой день.</DateNight_Settings_PostDateBoostTip>
   <DateNight_Settings_Anniversaries>Годовщины</DateNight_Settings_Anniversaries>
@@ -71,4 +71,41 @@
   <DateNight_Alert_SlotDate>свидание</DateNight_Alert_SlotDate>
   <DateNight_ScheduleComboTip>Свидание (клик). Любовные часы — в меню ▾. Эта кнопка всегда последняя в дополнительном ряду расписания.</DateNight_ScheduleComboTip>
 
+  <DateNight_Settings_Section_Lovin>Любовь</DateNight_Settings_Section_Lovin>
+  <DateNight_Settings_Section_Dates>Свидания</DateNight_Settings_Section_Dates>
+  <DateNight_Settings_Section_Gifts>Подарки</DateNight_Settings_Section_Gifts>
+  <DateNight_Settings_Section_Romance>Роман</DateNight_Settings_Section_Romance>
+  <DateNight_Settings_Section_Schedule>Вкладка расписания</DateNight_Settings_Section_Schedule>
+  <DateNight_Settings_GiftAdd>Добавить подарок...</DateNight_Settings_GiftAdd>
+  <DateNight_Settings_GiftUnknown>{0} (неизвестный предмет, пропущен)</DateNight_Settings_GiftUnknown>
+  <DateNight_Settings_GiftRemove>Убрать из списка подарков.</DateNight_Settings_GiftRemove>
+  <DateNight_Settings_RomanceGizmos>Кнопки романа у колонистов</DateNight_Settings_RomanceGizmos>
+  <DateNight_Settings_RomanceGizmosTip>Показывать панель «Роман» и кнопку «Пригласить вечером», когда выбран колонист.</DateNight_Settings_RomanceGizmosTip>
+  <DateNight_Settings_ColumnOffset>Сдвиг кнопки свидания: {0}</DateNight_Settings_ColumnOffset>
+  <DateNight_Settings_ColumnOffsetTip>Date Night ставит свою кнопку на вкладке расписания после кнопок игры, Rimbody и Schedule Everything. Если кнопка другого мода перекрывается, сдвиньте кнопку свидания здесь на целые ячейки. 0 = автоматически.</DateNight_Settings_ColumnOffsetTip>
+  <DateNight_GiftPicker_Title>Выберите подарок</DateNight_GiftPicker_Title>
+  <DateNight_GiftPicker_Search>Поиск...</DateNight_GiftPicker_Search>
+  <DateNight_Gizmo_Romance>Роман</DateNight_Gizmo_Romance>
+  <DateNight_Gizmo_RomanceDesc>Роман этого колониста: ступень, годовщина, последнее свидание, любимое место и слаженность на двойных свиданиях.</DateNight_Gizmo_RomanceDesc>
+  <DateNight_Gizmo_AskOut>Пригласить вечером</DateNight_Gizmo_AskOut>
+  <DateNight_Gizmo_AskOutDesc>Одно свидание с {0} в ближайший свободный вечерний час, без изменения расписаний.</DateNight_Gizmo_AskOutDesc>
+  <DateNight_Gizmo_AskOutCancel>Отменить свидание</DateNight_Gizmo_AskOutCancel>
+  <DateNight_Gizmo_AskOutCancelDesc>Отменить сегодняшнее свидание с {0} в {1}:00.</DateNight_Gizmo_AskOutCancelDesc>
+  <DateNight_Gizmo_AskOutUnavailable>{0} сейчас не может пойти на свидание.</DateNight_Gizmo_AskOutUnavailable>
+  <DateNight_AskOut_Planned>{0} пригласил(а) {1} на свидание. Начало в {2}:00.</DateNight_AskOut_Planned>
+  <DateNight_AskOut_Missed>{0} и {1} пропустили запланированное свидание.</DateNight_AskOut_Missed>
+  <DateNight_Romance_Title>{0} и {1}</DateNight_Romance_Title>
+  <DateNight_Romance_Stage>Ступень: {0}</DateNight_Romance_Stage>
+  <DateNight_Romance_Together>Вместе {0}</DateNight_Romance_Together>
+  <DateNight_Romance_Anniversary>Годовщина: {0} {1}</DateNight_Romance_Anniversary>
+  <DateNight_Romance_Progress>Удачных свиданий до следующей ступени: {0} / {1}</DateNight_Romance_Progress>
+  <DateNight_Romance_LastDate>Последнее свидание: {0} назад ({1}). Свиданий вместе: {2}</DateNight_Romance_LastDate>
+  <DateNight_Romance_NoLastDate>Свиданий ещё не было.</DateNight_Romance_NoLastDate>
+  <DateNight_Romance_Venue>Любимое место: {0} (оценка {1})</DateNight_Romance_Venue>
+  <DateNight_Romance_NoVenue>Любимого места пока нет.</DateNight_Romance_NoVenue>
+  <DateNight_Romance_VenueOutdoors>на улице</DateNight_Romance_VenueOutdoors>
+  <DateNight_Romance_Rapport>Двойные свидания с {0} и {1}: слаженность {2}</DateNight_Romance_Rapport>
+  <DateNight_Romance_NoRapport>Двойных свиданий ещё не было.</DateNight_Romance_NoRapport>
+  <DateNight_Romance_NoPartner>У {0} нет пары для свиданий.</DateNight_Romance_NoPartner>
+  <DateNight_Romance_Planned>Свидание сегодня в {0}:00.</DateNight_Romance_Planned>
 </LanguageData>

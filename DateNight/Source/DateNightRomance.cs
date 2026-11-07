@@ -204,6 +204,33 @@ namespace DateNight
             }
         }
 
+        /// <summary>"lover" / "spouse" / "Friends with X"… for the romance panel.</summary>
+        public static string StageLabel(Pawn pawn, Pawn other)
+        {
+            DirectPawnRelation? rel = DateNightAnniversaries.GetLoveRelation(pawn, other);
+            if (rel != null)
+            {
+                return rel.def.GetGenderSpecificLabelCap(other);
+            }
+            switch (GetStage(pawn, other))
+            {
+                case DateNightRomanceStage.Friends:
+                    return "DateNight_Inspect_Friends".Translate(other.LabelShort);
+                case DateNightRomanceStage.Sweethearts:
+                    return "DateNight_Inspect_Sweethearts".Translate(other.LabelShort);
+                case DateNightRomanceStage.Partners:
+                    return "DateNight_Inspect_Partners".Translate(other.LabelShort, PartnerWord(other));
+                default:
+                    return "-";
+            }
+        }
+
+        /// <summary>Good dates counted toward the next ladder step.</summary>
+        public static int Progress(Pawn a, Pawn b)
+        {
+            return GetBond(a, b)?.progress ?? 0;
+        }
+
         public static string DebugDescribe(Pawn pawn)
         {
             Pawn? other = FindDatePartner(pawn);
