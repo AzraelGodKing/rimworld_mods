@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
@@ -82,7 +83,7 @@ namespace Homesteader
         public override void PreAbsorbStack(Thing otherStack, int count)
         {
             base.PreAbsorbStack(otherStack, count);
-            CompPreserveAging other = otherStack.TryGetComp<CompPreserveAging>();
+            CompPreserveAging? other = otherStack.TryGetComp<CompPreserveAging>();
             int total = parent.stackCount + count;
             if (other == null || total <= 0)
             {
@@ -96,7 +97,7 @@ namespace Homesteader
         public override void PostSplitOff(Thing piece)
         {
             base.PostSplitOff(piece);
-            CompPreserveAging other = piece.TryGetComp<CompPreserveAging>();
+            CompPreserveAging? other = piece.TryGetComp<CompPreserveAging>();
             if (other != null)
             {
                 other.agedTicks = agedTicks;
@@ -149,16 +150,16 @@ namespace Homesteader
     {
         public override void TransformValue(StatRequest req, ref float val)
         {
-            CompPreserveAging comp = Comp(req);
+            CompPreserveAging? comp = Comp(req);
             if (comp != null)
             {
                 val *= comp.ValueFactor;
             }
         }
 
-        public override string ExplanationPart(StatRequest req)
+        public override string? ExplanationPart(StatRequest req)
         {
-            CompPreserveAging comp = Comp(req);
+            CompPreserveAging? comp = Comp(req);
             if (comp == null || comp.Tier == 0)
             {
                 return null;
@@ -169,7 +170,7 @@ namespace Homesteader
                 comp.ValueFactor.ToString("0.##"));
         }
 
-        private static CompPreserveAging Comp(StatRequest req)
+        private static CompPreserveAging? Comp(StatRequest req)
         {
             return req.HasThing ? req.Thing.TryGetComp<CompPreserveAging>() : null;
         }

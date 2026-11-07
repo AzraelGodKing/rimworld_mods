@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace Homesteader
 
         // Packed "DefA|DefB|..." per pawn. Legacy favoritesByPawnId (single def) migrates on load.
         // Allergies pack AllergyCatalog ids (or empty = rolled None). Key present means rolled.
-        private Dictionary<int, string> favoritesByPawnId;
+        private Dictionary<int, string>? favoritesByPawnId;
         private Dictionary<int, string> favoriteListsPacked = new Dictionary<int, string>();
         private Dictionary<int, string> allergiesPacked = new Dictionary<int, string>();
         private Dictionary<int, string> discoveredAllergiesPacked = new Dictionary<int, string>();
@@ -59,7 +60,7 @@ namespace Homesteader
             }
 
             // One colonist per pulse — spreads Mold/PetDander map scans (FPS+-style).
-            Pawn chosen = null;
+            Pawn? chosen = null;
             int seen = 0;
             int target = envAllergyCursor;
             List<Map> maps = Find.Maps;
@@ -100,7 +101,7 @@ namespace Homesteader
             List<string> allergies = GetAllergyNames(pawn.thingIDNumber);
             for (int i = 0; i < allergies.Count; i++)
             {
-                AllergyKind kind = AllergyCatalog.Get(allergies[i]);
+                AllergyKind? kind = AllergyCatalog.Get(allergies[i]);
                 if (kind == null || kind.Type != AllergyKindType.Environmental)
                 {
                     continue;
@@ -135,10 +136,10 @@ namespace Homesteader
             favoritesByPawnId = null;
         }
 
-        private static List<string> Unpack(string packed)
+        private static List<string> Unpack(string? packed)
         {
             var list = new List<string>();
-            if (packed.NullOrEmpty())
+            if (packed == null || packed.Length == 0)
             {
                 return list;
             }
@@ -155,14 +156,14 @@ namespace Homesteader
             return list;
         }
 
-        private static string Pack(List<string> list)
+        private static string Pack(List<string>? list)
         {
             return list == null || list.Count == 0 ? string.Empty : string.Join("|", list);
         }
 
         private List<string> GetFavoriteNames(int pawnId)
         {
-            if (!favoriteListsPacked.TryGetValue(pawnId, out string packed))
+            if (!favoriteListsPacked.TryGetValue(pawnId, out string? packed))
             {
                 return new List<string>();
             }
@@ -178,7 +179,7 @@ namespace Homesteader
 
         private List<string> GetAllergyNames(int pawnId)
         {
-            if (!allergiesPacked.TryGetValue(pawnId, out string packed))
+            if (!allergiesPacked.TryGetValue(pawnId, out string? packed))
             {
                 return new List<string>();
             }
@@ -194,7 +195,7 @@ namespace Homesteader
 
         private List<string> GetDiscoveredNames(int pawnId)
         {
-            if (!discoveredAllergiesPacked.TryGetValue(pawnId, out string packed))
+            if (!discoveredAllergiesPacked.TryGetValue(pawnId, out string? packed))
             {
                 return new List<string>();
             }
@@ -210,7 +211,7 @@ namespace Homesteader
 
         private HashSet<string> FavoriteNameSet(int pawnId)
         {
-            if (!favoriteNameSets.TryGetValue(pawnId, out HashSet<string> set))
+            if (!favoriteNameSets.TryGetValue(pawnId, out HashSet<string>? set))
             {
                 set = new HashSet<string>(GetFavoriteNames(pawnId));
                 favoriteNameSets[pawnId] = set;
@@ -221,7 +222,7 @@ namespace Homesteader
 
         private HashSet<string> AllergyIdSet(int pawnId)
         {
-            if (!allergyIdSets.TryGetValue(pawnId, out HashSet<string> set))
+            if (!allergyIdSets.TryGetValue(pawnId, out HashSet<string>? set))
             {
                 set = new HashSet<string>(GetAllergyNames(pawnId));
                 allergyIdSets[pawnId] = set;
@@ -232,7 +233,7 @@ namespace Homesteader
 
         private HashSet<string> DiscoveredAllergySet(int pawnId)
         {
-            if (!discoveredAllergySets.TryGetValue(pawnId, out HashSet<string> set))
+            if (!discoveredAllergySets.TryGetValue(pawnId, out HashSet<string>? set))
             {
                 set = new HashSet<string>(GetDiscoveredNames(pawnId));
                 discoveredAllergySets[pawnId] = set;
@@ -288,7 +289,7 @@ namespace Homesteader
             }
 
             EnsureTastes(pawn);
-            string match = AllergyCatalog.MatchingFoodAllergyId(AllergyIdSet(pawn.thingIDNumber), foodDef);
+            string? match = AllergyCatalog.MatchingFoodAllergyId(AllergyIdSet(pawn.thingIDNumber), foodDef);
             return match != null && DiscoveredAllergySet(pawn.thingIDNumber).Contains(match);
         }
 
@@ -300,7 +301,7 @@ namespace Homesteader
             }
 
             EnsureTastes(pawn);
-            string match = AllergyCatalog.MatchingFoodAllergyId(AllergyIdSet(pawn.thingIDNumber), food);
+            string? match = AllergyCatalog.MatchingFoodAllergyId(AllergyIdSet(pawn.thingIDNumber), food);
             return match != null && DiscoveredAllergySet(pawn.thingIDNumber).Contains(match);
         }
 
@@ -346,7 +347,7 @@ namespace Homesteader
 
             List<string> allergies = GetAllergyNames(id);
             List<string> favorites = GetFavoriteNames(id);
-            string packedBefore = favoriteListsPacked.TryGetValue(id, out string existing) ? existing : string.Empty;
+            string packedBefore = favoriteListsPacked.TryGetValue(id, out string? existing) ? existing : string.Empty;
             FillUniqueFavorites(favorites, FavoriteCount, allergies);
             string packedAfter = Pack(favorites);
             if (packedAfter != packedBefore)
@@ -413,7 +414,7 @@ namespace Homesteader
         {
             list.RemoveAll(n =>
             {
-                ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(n);
+                ThingDef? def = DefDatabase<ThingDef>.GetNamedSilentFail(n);
                 return def == null
                     || !FavoriteFoodUtility.IsValidFavoriteCandidate(def)
                     || AllergyCatalog.FoodMatchesAny(allergyIds, def);
@@ -422,7 +423,7 @@ namespace Homesteader
             int guard = 0;
             while (list.Count < targetCount && guard++ < 200)
             {
-                ThingDef pick = FavoriteFoodUtility.PickRandomFavorite(list, allergyIds);
+                ThingDef? pick = FavoriteFoodUtility.PickRandomFavorite(list, allergyIds);
                 if (pick == null)
                 {
                     break;
@@ -432,7 +433,7 @@ namespace Homesteader
             }
         }
 
-        private static List<ThingDef> ResolveDefs(List<string> names)
+        private static List<ThingDef> ResolveDefs(List<string>? names)
         {
             var result = new List<ThingDef>();
             if (names == null)
@@ -442,7 +443,7 @@ namespace Homesteader
 
             for (int i = 0; i < names.Count; i++)
             {
-                ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(names[i]);
+                ThingDef? def = DefDatabase<ThingDef>.GetNamedSilentFail(names[i]);
                 if (def != null)
                 {
                     result.Add(def);
@@ -495,9 +496,9 @@ namespace Homesteader
             "Wellspring_BoiledWater",
         };
 
-        private static List<ThingDef> cachedPool;
+        private static List<ThingDef>? cachedPool;
 
-        public static GameComponent_HomesteaderFavorites Comp =>
+        public static GameComponent_HomesteaderFavorites? Comp =>
             Current.Game?.GetComponent<GameComponent_HomesteaderFavorites>();
 
         public static List<ThingDef> GetFavoritePool()
@@ -511,7 +512,7 @@ namespace Homesteader
 
             foreach (string defName in PriorityFavoriteDefNames)
             {
-                ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(defName);
+                ThingDef? def = DefDatabase<ThingDef>.GetNamedSilentFail(defName);
                 if (IsValidFavoriteCandidate(def))
                 {
                     set.Add(def);
@@ -539,7 +540,7 @@ namespace Homesteader
             return cachedPool;
         }
 
-        public static bool IsValidFavoriteCandidate(ThingDef def)
+        public static bool IsValidFavoriteCandidate(ThingDef? def)
         {
             if (def?.ingestible == null || def.IsCorpse)
             {
@@ -559,7 +560,7 @@ namespace Homesteader
             return true;
         }
 
-        public static ThingDef PickRandomFavorite(List<string> already = null, List<string> allergyIds = null)
+        public static ThingDef? PickRandomFavorite(List<string>? already = null, List<string>? allergyIds = null)
         {
             List<ThingDef> pool = GetFavoritePool();
             List<ThingDef> filtered = pool
@@ -591,9 +592,7 @@ namespace Homesteader
                 return;
             }
 
-            float flareIntensity = HomesteaderMod.Settings != null
-                ? HomesteaderMod.Settings.allergyFlareIntensity
-                : 1f;
+            float flareIntensity = HomesteaderMod.Settings.allergyFlareIntensity;
 
             bool firstDiscovery = !Comp.IsDiscoveredAllergyId(pawn, allergyId);
             // Intensity 0: discover only — no hediff / mood flare.
@@ -611,7 +610,7 @@ namespace Homesteader
                 return;
             }
 
-            HediffDef hediff = DefDatabase<HediffDef>.GetNamedSilentFail("Homesteader_AllergicReaction");
+            HediffDef? hediff = DefDatabase<HediffDef>.GetNamedSilentFail("Homesteader_AllergicReaction");
             if (hediff != null && pawn.health.hediffSet.HasHediff(hediff))
             {
                 // Already flaring — still discover, but don't stack mood spam every env tick.
@@ -629,7 +628,7 @@ namespace Homesteader
 
             Comp.DiscoverAllergy(pawn, allergyId);
 
-            ThoughtDef thought = DefDatabase<ThoughtDef>.GetNamedSilentFail("Homesteader_AteAllergen");
+            ThoughtDef? thought = DefDatabase<ThoughtDef>.GetNamedSilentFail("Homesteader_AteAllergen");
             if (thought != null && pawn.needs?.mood != null)
             {
                 pawn.needs.mood.thoughts.memories.TryGainMemory(thought);
@@ -660,20 +659,20 @@ namespace Homesteader
             labelKey = "Homesteader_TabTastes";
         }
 
-        private Pawn SelPawnForTastes => SelPawn ?? (SelThing as Corpse)?.InnerPawn;
+        private Pawn? SelPawnForTastes => SelPawn ?? (SelThing as Corpse)?.InnerPawn;
 
         public override bool IsVisible
         {
             get
             {
-                Pawn pawn = SelPawnForTastes;
+                Pawn? pawn = SelPawnForTastes;
                 return pawn?.RaceProps?.Humanlike == true && pawn.needs?.mood != null;
             }
         }
 
         protected override void FillTab()
         {
-            Pawn pawn = SelPawnForTastes;
+            Pawn? pawn = SelPawnForTastes;
             if (pawn == null)
             {
                 return;
@@ -712,7 +711,7 @@ namespace Homesteader
             listing.Label("Homesteader_TastesAllergiesHeader".Translate());
             Text.Font = GameFont.Small;
             listing.GapLine();
-            bool revealHidden = HomesteaderMod.Settings != null && HomesteaderMod.Settings.revealAllergies;
+            bool revealHidden = HomesteaderMod.Settings.revealAllergies;
             if (allergies.Count == 0)
             {
                 // "None" stays hidden too — otherwise empty list spoils that they have no allergy.
@@ -805,12 +804,12 @@ namespace Homesteader
                 return;
             }
 
-            if (HomesteaderMod.Settings != null && HomesteaderMod.Settings.favoriteFoodMoodFactor <= 0.01f)
+            if (HomesteaderMod.Settings.favoriteFoodMoodFactor <= 0.01f)
             {
                 return;
             }
 
-            ThoughtDef thought = DefDatabase<ThoughtDef>.GetNamedSilentFail("Homesteader_AteFavoriteFood");
+            ThoughtDef? thought = DefDatabase<ThoughtDef>.GetNamedSilentFail("Homesteader_AteFavoriteFood");
             if (thought == null)
             {
                 return;
@@ -843,7 +842,7 @@ namespace Homesteader
                 return;
             }
 
-            string allergyId = AllergyCatalog.MatchingFoodAllergyId(
+            string? allergyId = AllergyCatalog.MatchingFoodAllergyId(
                 FavoriteFoodUtility.Comp?.GetAllergyIds(ingester),
                 __instance);
             if (allergyId != null)

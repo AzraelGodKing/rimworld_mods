@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using Verse;
 
@@ -33,21 +34,11 @@ namespace Homesteader
             "Homesteader_PreserveCrate"
         };
 
-        private static HashSet<string> defNameSet;
+        private static readonly HashSet<string> DefNameSet = new HashSet<string>(DefNames);
 
-        internal static bool IsPreserveKind(ThingDef def)
+        internal static bool IsPreserveKind(ThingDef? def)
         {
-            if (def?.defName == null)
-            {
-                return false;
-            }
-
-            if (defNameSet == null)
-            {
-                defNameSet = new HashSet<string>(DefNames);
-            }
-
-            return defNameSet.Contains(def.defName);
+            return def?.defName != null && DefNameSet.Contains(def.defName);
         }
     }
 }

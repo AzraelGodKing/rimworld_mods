@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,14 +15,14 @@ namespace Homesteader
 
     public sealed class AllergyKind
     {
-        public string Id;
+        public string Id = "";
         public AllergyKindType Type;
-        public string LabelKey;
+        public string LabelKey = "";
         /// <summary>Relative weight when rolling a real allergy (None is separate).</summary>
         public float Weight = 1f;
-        public string[] DefNames;
-        public string[] DefNameContains;
-        public string[] CategoryDefNames;
+        public string[]? DefNames;
+        public string[]? DefNameContains;
+        public string[]? CategoryDefNames;
 
         public string LabelCap => LabelKey.Translate().CapitalizeFirst();
     }
@@ -161,34 +162,33 @@ namespace Homesteader
             },
         };
 
-        private static Dictionary<string, AllergyKind> byId;
+        private static readonly Dictionary<string, AllergyKind> byId = BuildIndex();
 
-        public static AllergyKind Get(string id)
+        public static AllergyKind? Get(string? id)
         {
-            EnsureIndex();
-            if (id.NullOrEmpty() || id == NoneId)
+            if (id == null || id.Length == 0 || id == NoneId)
             {
                 return null;
             }
 
-            return byId.TryGetValue(id, out AllergyKind kind) ? kind : null;
+            return byId.TryGetValue(id, out AllergyKind? kind) ? kind : null;
         }
 
-        public static bool IsValidId(string id) => id == NoneId || Get(id) != null;
+        public static bool IsValidId(string? id) => id == NoneId || Get(id) != null;
 
-        public static string LabelFor(string id)
+        public static string LabelFor(string? id)
         {
             if (id == NoneId || id.NullOrEmpty())
             {
                 return "Homesteader_TastesNone".Translate();
             }
 
-            AllergyKind kind = Get(id);
-            return kind != null ? kind.LabelCap : id;
+            AllergyKind? kind = Get(id);
+            return kind != null ? kind.LabelCap : id!;
         }
 
         /// <summary>Weighted roll: usually None; otherwise 1 allergy (rarely 2).</summary>
-        public static List<string> RollAllergyIds(HashSet<string> excludedIds = null)
+        public static List<string> RollAllergyIds(HashSet<string>? excludedIds = null)
         {
             float total = NoneWeight;
             var choices = new List<AllergyKind>();
@@ -224,7 +224,7 @@ namespace Homesteader
             return result;
         }
 
-        public static bool FoodMatches(AllergyKind kind, ThingDef foodDef)
+        public static bool FoodMatches(AllergyKind? kind, ThingDef? foodDef)
         {
             if (kind == null || kind.Type != AllergyKindType.Food || foodDef == null)
             {
@@ -282,9 +282,9 @@ namespace Homesteader
         /// Match allergy tokens on word / camelCase boundaries so "Egg" does not
         /// hit Veggie*, "Nuts" does not hit Donuts, "Crab" does not hit Crabapple (AZR-528).
         /// </summary>
-        internal static bool DefNameContainsToken(string defName, string token)
+        internal static bool DefNameContainsToken(string? defName, string? token)
         {
-            if (string.IsNullOrEmpty(defName) || string.IsNullOrEmpty(token))
+            if (defName == null || token == null || defName.Length == 0 || token.Length == 0)
             {
                 return false;
             }
@@ -316,12 +316,12 @@ namespace Homesteader
             return false;
         }
 
-        public static bool FoodMatchesAny(IEnumerable<string> allergyIds, ThingDef foodDef)
+        public static bool FoodMatchesAny(IEnumerable<string>? allergyIds, ThingDef? foodDef)
         {
             return MatchingFoodAllergyId(allergyIds, foodDef) != null;
         }
 
-        public static string MatchingFoodAllergyId(IEnumerable<string> allergyIds, ThingDef foodDef)
+        public static string? MatchingFoodAllergyId(IEnumerable<string>? allergyIds, ThingDef? foodDef)
         {
             if (allergyIds == null || foodDef == null)
             {
@@ -330,7 +330,7 @@ namespace Homesteader
 
             foreach (string id in allergyIds)
             {
-                AllergyKind kind = Get(id);
+                AllergyKind? kind = Get(id);
                 if (FoodMatches(kind, foodDef))
                 {
                     return id;
@@ -340,20 +340,20 @@ namespace Homesteader
             return null;
         }
 
-        public static string MatchingFoodAllergyId(IEnumerable<string> allergyIds, Thing food)
+        public static string? MatchingFoodAllergyId(IEnumerable<string>? allergyIds, Thing? food)
         {
             if (food == null)
             {
                 return null;
             }
 
-            string direct = MatchingFoodAllergyId(allergyIds, food.def);
+            string? direct = MatchingFoodAllergyId(allergyIds, food.def);
             if (direct != null)
             {
                 return direct;
             }
 
-            CompIngredients ingredients = food.TryGetComp<CompIngredients>();
+            CompIngredients? ingredients = food.TryGetComp<CompIngredients>();
             if (ingredients?.ingredients == null)
             {
                 return null;
@@ -361,7 +361,7 @@ namespace Homesteader
 
             for (int i = 0; i < ingredients.ingredients.Count; i++)
             {
-                string match = MatchingFoodAllergyId(allergyIds, ingredients.ingredients[i]);
+                string? match = MatchingFoodAllergyId(allergyIds, ingredients.ingredients[i]);
                 if (match != null)
                 {
                     return match;
@@ -371,7 +371,7 @@ namespace Homesteader
             return null;
         }
 
-        public static bool IsEnvironmentallyExposed(Pawn pawn, AllergyKind kind)
+        public static bool IsEnvironmentallyExposed(Pawn? pawn, AllergyKind? kind)
         {
             if (pawn?.Map == null || kind == null || kind.Type != AllergyKindType.Environmental)
             {
@@ -422,7 +422,7 @@ namespace Homesteader
                 {
                     if (!pos.Roofed(map))
                     {
-                        WeatherDef fog = DefDatabase<WeatherDef>.GetNamedSilentFail("Fog");
+                        WeatherDef? fog = DefDatabase<WeatherDef>.GetNamedSilentFail("Fog");
                         bool foggy = fog != null && map.weatherManager.CurWeatherPerceived == fog;
                         return map.weatherManager.RainRate > 0.4f || foggy;
                     }
@@ -444,7 +444,7 @@ namespace Homesteader
                         for (int i = 0; i < things.Count; i++)
                         {
                             Thing t = things[i];
-                            CompRottable rot = t.TryGetComp<CompRottable>();
+                            CompRottable? rot = t.TryGetComp<CompRottable>();
                             if (rot != null && rot.Stage != RotStage.Fresh)
                             {
                                 return true;
@@ -465,18 +465,15 @@ namespace Homesteader
             }
         }
 
-        private static void EnsureIndex()
+        private static Dictionary<string, AllergyKind> BuildIndex()
         {
-            if (byId != null)
-            {
-                return;
-            }
-
-            byId = new Dictionary<string, AllergyKind>();
+            var index = new Dictionary<string, AllergyKind>(All.Length);
             for (int i = 0; i < All.Length; i++)
             {
-                byId[All[i].Id] = All[i];
+                index[All[i].Id] = All[i];
             }
+
+            return index;
         }
     }
 }

@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using AzraelCommon;
 using RimWorld;
@@ -84,7 +85,7 @@ namespace Homesteader
                 return;
             }
 
-            ThoughtDef def = DefDatabase<ThoughtDef>.GetNamedSilentFail(defName);
+            ThoughtDef? def = DefDatabase<ThoughtDef>.GetNamedSilentFail(defName);
             if (def?.stages == null || def.stages.Count == 0)
             {
                 return;
@@ -95,7 +96,7 @@ namespace Homesteader
 
         private static void ApplyThoughtMood(string defName, float factor)
         {
-            ThoughtDef def = DefDatabase<ThoughtDef>.GetNamedSilentFail(defName);
+            ThoughtDef? def = DefDatabase<ThoughtDef>.GetNamedSilentFail(defName);
             if (def?.stages == null || def.stages.Count == 0)
             {
                 return;
@@ -112,7 +113,7 @@ namespace Homesteader
 
         private static void ApplyCoopEggInterval()
         {
-            ThingDef coop = DefDatabase<ThingDef>.GetNamedSilentFail("Homesteader_ChickenCoop");
+            ThingDef? coop = DefDatabase<ThingDef>.GetNamedSilentFail("Homesteader_ChickenCoop");
             if (coop?.comps == null)
             {
                 return;
@@ -131,9 +132,7 @@ namespace Homesteader
                 }
 
                 IntRange original = OriginalCoopEggInterval.Value;
-                float factor = HomesteaderMod.Settings != null
-                    ? HomesteaderMod.Settings.coopEggIntervalFactor
-                    : 1f;
+                float factor = HomesteaderMod.Settings.coopEggIntervalFactor;
                 spawner.spawnIntervalRange = new IntRange(
                     Mathf.Max(1, Mathf.RoundToInt(original.min * factor)),
                     Mathf.Max(1, Mathf.RoundToInt(original.max * factor)));
@@ -143,7 +142,7 @@ namespace Homesteader
 
         private static void ApplyKatsChance()
         {
-            IncidentDef def = DefDatabase<IncidentDef>.GetNamedSilentFail("Homesteader_KatsEffect");
+            IncidentDef? def = DefDatabase<IncidentDef>.GetNamedSilentFail("Homesteader_KatsEffect");
             if (def == null)
             {
                 return;
@@ -154,21 +153,22 @@ namespace Homesteader
                 OriginalKatsChance = def.baseChance;
             }
 
-            bool enabled = HomesteaderMod.Settings == null || HomesteaderMod.Settings.enableKatsEffect;
+            bool enabled = HomesteaderMod.Settings.enableKatsEffect;
             def.baseChance = enabled ? OriginalKatsChance.Value : 0f;
         }
     }
 
     public class HomesteaderMod : Mod
     {
-        public static HomesteaderSettings Settings;
-        public static ModContentPack ContentPack;
+        /// <summary>Never null: defaults until the mod constructor loads the saved settings.</summary>
+        public static HomesteaderSettings Settings = new HomesteaderSettings();
+        public static ModContentPack? ContentPack;
 
         public HomesteaderMod(ModContentPack content) : base(content)
         {
             ContentPack = content;
             Settings = GetSettings<HomesteaderSettings>();
-            ModVersionLog.Write("[Homesteader]", content, "landrace-aura-kats-v1");
+            ModVersionLog.Write("[Homesteader]", content, "homesteader-2-v1");
         }
 
         public override string SettingsCategory() => "Homesteader_SettingsCategory".Translate();
@@ -217,24 +217,15 @@ namespace Homesteader
             if (!TextureRefresh.PackPresent())
             {
                 listing.Label("Homesteader_SettingsRefreshPackMissing".Translate());
-                if (Settings.useRefreshedTextures)
-                {
-                    Settings.useRefreshedTextures = false;
-                    TextureRefresh.Apply(false);
-                }
+                Settings.useRefreshedTextures = false;
             }
             else
             {
-                bool previousRefresh = Settings.useRefreshedTextures;
                 listing.CheckboxLabeled(
                     "Homesteader_SettingsUseRefreshedTextures".Translate(),
                     ref Settings.useRefreshedTextures,
                     "Homesteader_SettingsUseRefreshedTexturesTip".Translate());
                 listing.Label("Homesteader_SettingsUseRefreshedTexturesRestart".Translate());
-                if (previousRefresh != Settings.useRefreshedTextures)
-                {
-                    TextureRefresh.Apply(Settings.useRefreshedTextures);
-                }
             }
 
             listing.GapLine();

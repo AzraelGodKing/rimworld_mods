@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using AzraelCommon;
 using HarmonyLib;
@@ -22,7 +23,7 @@ namespace Homesteader
                     RottableDefs.Add(def);
             }
 
-            HomesteaderMod.Settings?.ApplyGameplaySettings();
+            HomesteaderMod.Settings.ApplyGameplaySettings();
         }
     }
 }

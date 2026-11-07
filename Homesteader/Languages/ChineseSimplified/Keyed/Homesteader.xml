@@ -39,7 +39,7 @@
   <Homesteader_SettingsCategory>Homesteader</Homesteader_SettingsCategory>
   <Homesteader_SettingsUseRefreshedTextures>使用刷新贴图</Homesteader_SettingsUseRefreshedTextures>
   <Homesteader_SettingsUseRefreshedTexturesTip>将 Homesteader 建筑、物品、植物和地板切换到可选的独立美术包。该包不包含在工坊下载中——请把 GitHub 仓库里的 Textures/HomesteaderRefresh 复制到本模组文件夹。原贴图始终保留；默认关闭。</Homesteader_SettingsUseRefreshedTexturesTip>
-  <Homesteader_SettingsUseRefreshedTexturesRestart>如果贴图看起来没更新，请在更改此项后重启 RimWorld。</Homesteader_SettingsUseRefreshedTexturesRestart>
+  <Homesteader_SettingsUseRefreshedTexturesRestart>下次启动 RimWorld 时生效。</Homesteader_SettingsUseRefreshedTexturesRestart>
   <Homesteader_SettingsRefreshPackMissing>未安装可选的独立美术包。工坊与站点压缩包只附带原贴图。若要启用「使用刷新贴图」，请把 GitHub 仓库中的 Textures/HomesteaderRefresh 复制到本模组文件夹后重启。</Homesteader_SettingsRefreshPackMissing>
   <Homesteader_SettingsDevHeader>开发者</Homesteader_SettingsDevHeader>
   <Homesteader_SettingsRevealAllergies>显示过敏</Homesteader_SettingsRevealAllergies>

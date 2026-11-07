@@ -1,3 +1,4 @@
+#nullable enable
 using RimWorld;
 using Verse;
 
@@ -9,7 +10,7 @@ namespace Homesteader
     /// </summary>
     public class ScenPart_ForcedStoryteller : ScenPart
     {
-        public StorytellerDef storyteller;
+        public StorytellerDef? storyteller;
 
         public override void ExposeData()
         {

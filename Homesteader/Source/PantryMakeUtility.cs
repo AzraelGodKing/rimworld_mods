@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -13,13 +14,13 @@ namespace Homesteader
 
     internal sealed class PantryMakeRow
     {
-        public RecipeDef recipe;
+        public RecipeDef recipe = null!;
         public PantryMakeStatus status;
         public int batches;
-        public ThingDef missingDef;
+        public ThingDef? missingDef;
         public int missingCount;
-        public string lockReason;
-        public ThingDef stationDef;
+        public string lockReason = "";
+        public ThingDef? stationDef;
         public List<Building_WorkTable> stations = new List<Building_WorkTable>();
     }
 
@@ -36,7 +37,7 @@ namespace Homesteader
     /// </summary>
     internal static class PantryMakeUtility
     {
-        private static PantryMakeReport cached;
+        private static PantryMakeReport? cached;
         private static int cachedTick = -99999;
 
         internal static PantryMakeReport Snapshot()
@@ -57,7 +58,7 @@ namespace Homesteader
             cachedTick = -99999;
         }
 
-        internal static void AddBillAt(RecipeDef recipe, Building_WorkTable table)
+        internal static void AddBillAt(RecipeDef? recipe, Building_WorkTable? table)
         {
             if (recipe == null || table?.billStack == null || !table.Spawned)
             {
@@ -68,7 +69,7 @@ namespace Homesteader
             CameraJumper.TryJumpAndSelect(table);
         }
 
-        internal static List<Building_WorkTable> FindStations(RecipeDef recipe)
+        internal static List<Building_WorkTable> FindStations(RecipeDef? recipe)
         {
             List<Building_WorkTable> found = new List<Building_WorkTable>();
             if (recipe == null || Find.Maps == null)
@@ -119,7 +120,7 @@ namespace Homesteader
                     continue;
                 }
 
-                PantryMakeRow row = Evaluate(recipe, stock);
+                PantryMakeRow? row = Evaluate(recipe, stock);
                 if (row == null)
                 {
                     continue;
@@ -172,7 +173,7 @@ namespace Homesteader
             {
                 for (int i = 0; i < recipe.ingredients.Count; i++)
                 {
-                    IngredientCount ing = recipe.ingredients[i];
+                    IngredientCount? ing = recipe.ingredients[i];
                     if (ing != null && ing.IsFixedIngredient && IsHomesteaderDef(ing.FixedIngredient))
                     {
                         return true;
@@ -191,14 +192,14 @@ namespace Homesteader
             return false;
         }
 
-        private static bool IsHomesteaderDef(Def def)
+        private static bool IsHomesteaderDef(Def? def)
         {
             return def?.defName != null && def.defName.StartsWith("Homesteader_");
         }
 
-        private static IEnumerable<ThingDef> RecipeUsers(RecipeDef recipe)
+        private static IEnumerable<ThingDef> RecipeUsers(RecipeDef? recipe)
         {
-            IEnumerable<ThingDef> users = recipe?.AllRecipeUsers;
+            IEnumerable<ThingDef>? users = recipe?.AllRecipeUsers;
             if (users == null)
             {
                 yield break;
@@ -213,7 +214,7 @@ namespace Homesteader
             }
         }
 
-        private static PantryMakeRow Evaluate(RecipeDef recipe, Dictionary<ThingDef, int> stock)
+        private static PantryMakeRow? Evaluate(RecipeDef recipe, Dictionary<ThingDef, int> stock)
         {
             if (recipe.ingredients == null || recipe.ingredients.Count == 0)
             {
@@ -244,7 +245,7 @@ namespace Homesteader
             }
 
             int batches = int.MaxValue;
-            ThingDef shortDef = null;
+            ThingDef? shortDef = null;
             int shortNeed = 0;
             int shortKinds = 0;
 
@@ -309,7 +310,7 @@ namespace Homesteader
             }
         }
 
-        private static int CountMatching(Dictionary<ThingDef, int> stock, ThingFilter filter)
+        private static int CountMatching(Dictionary<ThingDef, int> stock, ThingFilter? filter)
         {
             if (filter == null)
             {
@@ -335,7 +336,7 @@ namespace Homesteader
             return n;
         }
 
-        private static ThingDef FirstAllowedDef(ThingFilter filter, Dictionary<ThingDef, int> stock, int have)
+        private static ThingDef? FirstAllowedDef(ThingFilter filter, Dictionary<ThingDef, int> stock, int have)
         {
             if (have > 0)
             {
@@ -389,7 +390,7 @@ namespace Homesteader
             return true;
         }
 
-        private static ThingDef FirstUser(RecipeDef recipe)
+        private static ThingDef? FirstUser(RecipeDef recipe)
         {
             foreach (ThingDef user in RecipeUsers(recipe))
             {

@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using HarmonyLib;
 using RimWorld;
@@ -29,7 +30,7 @@ namespace Homesteader
 
         public float Total => yieldBonus + frostBonus + droughtBonus;
 
-        public void CopyFrom(CompLandrace other)
+        public void CopyFrom(CompLandrace? other)
         {
             if (other == null)
             {
@@ -42,7 +43,7 @@ namespace Homesteader
             generations = other.generations;
         }
 
-        public void ImproveOnHarvest(Map map, IntVec3 pos)
+        public void ImproveOnHarvest(Map? map, IntVec3 pos)
         {
             if (map == null)
             {
@@ -69,7 +70,7 @@ namespace Homesteader
 
         public override bool AllowStackWith(Thing other)
         {
-            CompLandrace o = other?.TryGetComp<CompLandrace>();
+            CompLandrace? o = other?.TryGetComp<CompLandrace>();
             if (o == null)
             {
                 return false;
@@ -82,7 +83,7 @@ namespace Homesteader
 
         public override void PostSplitOff(Thing piece)
         {
-            CompLandrace c = piece.TryGetComp<CompLandrace>();
+            CompLandrace? c = piece.TryGetComp<CompLandrace>();
             c?.CopyFrom(this);
         }
 
@@ -94,7 +95,7 @@ namespace Homesteader
             Scribe_Values.Look(ref generations, "hsGenerations", 0);
         }
 
-        public override string CompInspectStringExtra()
+        public override string? CompInspectStringExtra()
         {
             if (Total <= 0.001f)
             {
@@ -128,7 +129,7 @@ namespace Homesteader
                 return;
             }
 
-            CompLandrace plantComp = __instance.TryGetComp<CompLandrace>();
+            CompLandrace? plantComp = __instance.TryGetComp<CompLandrace>();
             if (plantComp == null)
             {
                 return;
@@ -147,7 +148,7 @@ namespace Homesteader
             List<Pawn> pawns = map.mapPawns.SpawnedPawnsInFaction(Faction.OfPlayer);
             for (int i = 0; i < pawns.Count; i++)
             {
-                Job job = pawns[i].CurJob;
+                Job? job = pawns[i].CurJob;
                 if (job != null && job.def == JobDefOf.Sow && job.targetA.Cell == cell)
                 {
                     return true;
@@ -165,9 +166,9 @@ namespace Homesteader
     public struct LandraceHarvestState
     {
         public bool valid;
-        public Map map;
+        public Map? map;
         public IntVec3 pos;
-        public ThingDef plantDef;
+        public ThingDef? plantDef;
         public float growth;
         public float yieldBonus;
         public float frostBonus;
@@ -186,7 +187,7 @@ namespace Homesteader
                 return;
             }
 
-            CompLandrace plantComp = __instance.TryGetComp<CompLandrace>();
+            CompLandrace? plantComp = __instance.TryGetComp<CompLandrace>();
             if (plantComp == null)
             {
                 return;
@@ -227,7 +228,7 @@ namespace Homesteader
     {
         public static void Postfix(Plant __instance, ref int __result)
         {
-            CompLandrace c = __instance?.TryGetComp<CompLandrace>();
+            CompLandrace? c = __instance?.TryGetComp<CompLandrace>();
             if (c == null || c.yieldBonus <= 0f || __result <= 0)
             {
                 return;
@@ -242,7 +243,7 @@ namespace Homesteader
     {
         public static void Postfix(Plant __instance, ref float __result)
         {
-            CompLandrace c = __instance?.TryGetComp<CompLandrace>();
+            CompLandrace? c = __instance?.TryGetComp<CompLandrace>();
             if (c == null || c.frostBonus <= 0f || __result >= 0.99f)
             {
                 return;
@@ -257,7 +258,7 @@ namespace Homesteader
     {
         public static void Postfix(Plant __instance, ref float __result)
         {
-            CompLandrace c = __instance?.TryGetComp<CompLandrace>();
+            CompLandrace? c = __instance?.TryGetComp<CompLandrace>();
             if (c == null || c.droughtBonus <= 0f || __result >= 0.99f)
             {
                 return;
@@ -269,7 +270,7 @@ namespace Homesteader
 
     internal static class LandraceUtility
     {
-        internal static ThingDef SeedDefFor(ThingDef plantDef)
+        internal static ThingDef? SeedDefFor(ThingDef? plantDef)
         {
             if (plantDef?.defName == null)
             {
@@ -295,14 +296,14 @@ namespace Homesteader
 
         internal static void TryConsumeSeed(ThingDef plantDef, Map map, CompLandrace plantComp)
         {
-            ThingDef seedDef = SeedDefFor(plantDef);
+            ThingDef? seedDef = SeedDefFor(plantDef);
             if (seedDef == null || map == null || plantComp == null)
             {
                 return;
             }
 
             List<Thing> list = map.listerThings.ThingsOfDef(seedDef);
-            Thing best = null;
+            Thing? best = null;
             float bestScore = -1f;
             for (int i = 0; i < list.Count; i++)
             {
@@ -317,7 +318,7 @@ namespace Homesteader
                     continue;
                 }
 
-                CompLandrace c = t.TryGetComp<CompLandrace>();
+                CompLandrace? c = t.TryGetComp<CompLandrace>();
                 float score = c != null ? c.Total : 0f;
                 if (best == null || score > bestScore)
                 {
@@ -332,7 +333,7 @@ namespace Homesteader
             }
 
             Thing taken = best.stackCount == 1 ? best : best.SplitOff(1);
-            CompLandrace from = taken.TryGetComp<CompLandrace>();
+            CompLandrace? from = taken.TryGetComp<CompLandrace>();
             plantComp.CopyFrom(from);
             if (!taken.Destroyed)
             {
@@ -347,7 +348,7 @@ namespace Homesteader
                 return;
             }
 
-            ThingDef seedDef = SeedDefFor(plantDef);
+            ThingDef? seedDef = SeedDefFor(plantDef);
             if (seedDef == null)
             {
                 return;

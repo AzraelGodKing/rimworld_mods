@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
@@ -11,13 +12,13 @@ namespace Homesteader
         public float nutrition;
         public float daysOfFood;
         public int colonistCount;
-        public Thing nearestRot;
+        public Thing? nearestRot;
         public float nearestRotDays = -1f;
         public readonly List<KindRow> kinds = new List<KindRow>();
 
         public struct KindRow
         {
-            public ThingDef def;
+            public ThingDef? def;
             public int count;
             public float rotProgress;
         }
@@ -45,7 +46,7 @@ namespace Homesteader
         };
 
         private const float NutritionPerColonistPerDay = 1.6f;
-        private static PantryReport cached;
+        private static PantryReport? cached;
         private static int cachedTick = -99999;
 
         internal static PantryReport Snapshot()
@@ -90,7 +91,7 @@ namespace Homesteader
 
                 for (int s = 0; s < StorageDefNames.Length; s++)
                 {
-                    ThingDef storageDef = DefDatabase<ThingDef>.GetNamedSilentFail(StorageDefNames[s]);
+                    ThingDef? storageDef = DefDatabase<ThingDef>.GetNamedSilentFail(StorageDefNames[s]);
                     if (storageDef == null)
                     {
                         continue;
@@ -99,7 +100,7 @@ namespace Homesteader
                     List<Thing> buildings = map.listerThings.ThingsOfDef(storageDef);
                     for (int i = 0; i < buildings.Count; i++)
                     {
-                        Building_Storage storage = buildings[i] as Building_Storage;
+                        Building_Storage? storage = buildings[i] as Building_Storage;
                         if (storage?.GetSlotGroup() == null)
                         {
                             continue;
@@ -200,7 +201,7 @@ namespace Homesteader
                 report.nutrition += thing.GetStatValue(StatDefOf.Nutrition) * n;
             }
 
-            CompRottable rot = thing.TryGetComp<CompRottable>();
+            CompRottable? rot = thing.TryGetComp<CompRottable>();
             if (rot == null || rot.Stage != RotStage.Fresh)
             {
                 return;

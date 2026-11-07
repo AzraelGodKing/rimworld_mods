@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using HarmonyLib;
 using RimWorld;
@@ -9,18 +10,18 @@ namespace Homesteader
     {
         public const string TraitDefName = "Homesteader_Polyarmory";
 
-        public static TraitDef Trait => DefDatabase<TraitDef>.GetNamedSilentFail(TraitDefName);
+        public static TraitDef? Trait => DefDatabase<TraitDef>.GetNamedSilentFail(TraitDefName);
 
-        public static bool HasPolyarmory(Pawn pawn)
+        public static bool HasPolyarmory(Pawn? pawn)
         {
-            TraitDef trait = Trait;
+            TraitDef? trait = Trait;
             return trait != null && pawn?.story?.traits != null && pawn.story.traits.HasTrait(trait);
         }
 
         /// <summary>
         /// Direct love partners, or metamours connected through love relations among polyarmory pawns.
         /// </summary>
-        public static bool AreInSamePolycule(Pawn a, Pawn b)
+        public static bool AreInSamePolycule(Pawn? a, Pawn? b)
         {
             if (a == null || b == null)
             {
@@ -49,7 +50,7 @@ namespace Homesteader
             while (queue.Count > 0)
             {
                 Pawn cur = queue.Dequeue();
-                List<DirectPawnRelation> partners = LovePartnerRelationUtility.ExistingLovePartners(cur, allowDead: false);
+                List<DirectPawnRelation>? partners = LovePartnerRelationUtility.ExistingLovePartners(cur, allowDead: false);
                 if (partners == null)
                 {
                     continue;
@@ -57,7 +58,7 @@ namespace Homesteader
 
                 for (int i = 0; i < partners.Count; i++)
                 {
-                    Pawn other = partners[i].otherPawn;
+                    Pawn? other = partners[i].otherPawn;
                     if (other == null || other.Dead || !visited.Add(other))
                     {
                         continue;
@@ -110,21 +111,21 @@ namespace Homesteader
     [HarmonyPatch(typeof(LovePartnerRelationUtility), nameof(LovePartnerRelationUtility.GetMostDislikedNonPartnerBedOwner))]
     public static class Patch_Polyarmory_MostDislikedBedOwner
     {
-        public static void Postfix(Pawn p, ref Pawn __result)
+        public static void Postfix(Pawn p, ref Pawn? __result)
         {
             if (__result == null || p == null || !PolyarmoryUtility.HasPolyarmory(p))
             {
                 return;
             }
 
-            Building_Bed bed = p.ownership?.OwnedBed;
+            Building_Bed? bed = p.ownership?.OwnedBed;
             if (bed == null)
             {
                 __result = null;
                 return;
             }
 
-            Pawn worst = null;
+            Pawn? worst = null;
             int worstOpinion = 0;
             List<Pawn> owners = bed.OwnersForReading;
             for (int i = 0; i < owners.Count; i++)

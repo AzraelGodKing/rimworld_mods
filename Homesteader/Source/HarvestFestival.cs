@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -67,15 +68,15 @@ namespace Homesteader
                 return;
             }
 
-            ThingDef maypoleDef = DefDatabase<ThingDef>.GetNamedSilentFail(MaypoleDefName);
-            ThoughtDef thought = DefDatabase<ThoughtDef>.GetNamedSilentFail("Homesteader_HarvestFestival");
+            ThingDef? maypoleDef = DefDatabase<ThingDef>.GetNamedSilentFail(MaypoleDefName);
+            ThoughtDef? thought = DefDatabase<ThoughtDef>.GetNamedSilentFail("Homesteader_HarvestFestival");
             if (maypoleDef == null || thought == null)
             {
                 return;
             }
 
             List<Thing> maypoles = map.listerThings.ThingsOfDef(maypoleDef);
-            Thing maypole = null;
+            Thing? maypole = null;
             for (int i = 0; i < maypoles.Count; i++)
             {
                 if (maypoles[i].Faction == Faction.OfPlayer)
