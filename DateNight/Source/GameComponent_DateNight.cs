@@ -7,6 +7,13 @@ namespace DateNight
 {
     public class GameComponent_DateNight : GameComponent
     {
+        // Per frame, draw only (AZR-558). A GameComponent, not a new MapComponent,
+        // so removing the mod adds no unknown class to saved maps.
+        public override void GameComponentUpdate()
+        {
+            DateNightVisuals.Draw();
+        }
+
         /// <summary>
         /// Save layout version (AZR-539). 0 = a 1.x save (key missing), 2 = 2.0.0.
         /// Bump only when a saved key changes meaning; new keys need no bump.

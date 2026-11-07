@@ -111,4 +111,6 @@
   <DateNight_Report_Fishing>fishing with {0}.</DateNight_Report_Fishing>
   <DateNight_Gizmo_Baby>Trying for a baby</DateNight_Gizmo_Baby>
   <DateNight_Gizmo_BabyDesc>This colonist and {0} are trying for a baby. Lovin comes about twice as often and uses the short cooldown during Lovin hours. This turns off by itself once she is pregnant.</DateNight_Gizmo_BabyDesc>
+  <DateNight_Settings_Visuals>Date effects</DateNight_Settings_Visuals>
+  <DateNight_Settings_VisualsTip>Date Night's own effects: a rose heart for gifts, sparkles after a wonderful date, stars while stargazing, confetti on milestone anniversaries, a candle glow at dinner, a shimmer when stargazing, a glow on the dance floor, and a ring on the selected couple's favourite spot and Lovin bed. Off: only the vanilla heart.</DateNight_Settings_VisualsTip>
 </LanguageData>

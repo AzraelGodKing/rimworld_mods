@@ -306,6 +306,10 @@ namespace DateNight
             if (def != null)
             {
                 pawn.needs.mood.thoughts.memories.TryGainMemory(def, partner);
+                if (def == DateNightDefOf.DateNight_DateWonderful)
+                {
+                    DateNightVisuals.Burst(pawn, DateNightDefOf.DateNight_Sparkle);
+                }
             }
 
             if (DateNightAnniversaries.IsAnniversaryToday(pawn, partner)

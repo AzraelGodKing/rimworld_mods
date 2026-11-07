@@ -69,6 +69,7 @@ namespace DateNight
             Check(listing, "Anniversaries", ref Settings.enableAnniversaries);
             Check(listing, "GradualRomance", ref Settings.enableGradualRomance);
             Check(listing, "RomanceGizmos", ref Settings.showRomanceGizmos);
+            Check(listing, "Visuals", ref Settings.dateVisuals);
 
             Section(listing, "DateNight_Settings_Section_Schedule");
             DoColumnOffset(listing);

@@ -111,4 +111,6 @@
   <DateNight_Report_Fishing>рыбачит с {0}.</DateNight_Report_Fishing>
   <DateNight_Gizmo_Baby>Хотим ребёнка</DateNight_Gizmo_Baby>
   <DateNight_Gizmo_BabyDesc>Этот колонист и {0} хотят ребёнка. Любовь примерно вдвое чаще, а в любовные часы действует короткий перерыв. Выключается само, когда она забеременеет.</DateNight_Gizmo_BabyDesc>
+  <DateNight_Settings_Visuals>Эффекты свиданий</DateNight_Settings_Visuals>
+  <DateNight_Settings_VisualsTip>Собственные эффекты Date Night: розовое сердце за подарок, искры после чудесного свидания, звёзды при наблюдении за небом, конфетти на круглую годовщину, свет свечей за ужином, мерцание при наблюдении за звёздами, свечение на танцполе и кольцо на любимом месте и кровати выбранной пары. Выкл: только обычное сердце.</DateNight_Settings_VisualsTip>
 </LanguageData>

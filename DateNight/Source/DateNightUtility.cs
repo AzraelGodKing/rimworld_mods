@@ -815,6 +815,17 @@ namespace DateNight
             }
         }
 
+        /// <summary>Cached rendezvous bed only: no search, no state change (for drawing).</summary>
+        public static Building_Bed? PeekRendezvousBed(Pawn pawn, Pawn partner)
+        {
+            if (RendezvousBeds.TryGetValue(DateNightActivities.CoupleKey(pawn, partner), out RendezvousEntry entry)
+                && !entry.bed.Destroyed && entry.bed.Spawned && entry.bed.Map == pawn.Map)
+            {
+                return entry.bed;
+            }
+            return null;
+        }
+
         /// <summary>
         /// One stable double bed for the couple. Does not claim ownership (LayDown toil claims).
         /// </summary>

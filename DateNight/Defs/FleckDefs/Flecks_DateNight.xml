@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- Date Night effects (AZR-558). Thrown like the vanilla heart; textures in Textures/DateNight/Effects. -->
+
+  <!-- Rose heart: a gift handed over. -->
+  <FleckDef>
+    <defName>DateNight_RoseHeart</defName>
+    <fleckSystemClass>FleckSystemThrown</fleckSystemClass>
+    <graphicData>
+      <graphicClass>Graphic_Fleck</graphicClass>
+      <texPath>DateNight/Effects/RoseHeart</texPath>
+      <shaderType>MoteGlow</shaderType>
+    </graphicData>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.08</fadeInTime>
+    <solidTime>0.9</solidTime>
+    <fadeOutTime>0.7</fadeOutTime>
+  </FleckDef>
+
+  <!-- Sparkle burst: a wonderful date. -->
+  <FleckDef>
+    <defName>DateNight_Sparkle</defName>
+    <fleckSystemClass>FleckSystemThrown</fleckSystemClass>
+    <graphicData>
+      <graphicClass>Graphic_Fleck</graphicClass>
+      <texPath>DateNight/Effects/Sparkle</texPath>
+      <shaderType>MoteGlow</shaderType>
+    </graphicData>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.05</fadeInTime>
+    <solidTime>0.5</solidTime>
+    <fadeOutTime>0.6</fadeOutTime>
+  </FleckDef>
+
+  <!-- Soft star: stargazing. -->
+  <FleckDef>
+    <defName>DateNight_Star</defName>
+    <fleckSystemClass>FleckSystemThrown</fleckSystemClass>
+    <graphicData>
+      <graphicClass>Graphic_Fleck</graphicClass>
+      <texPath>DateNight/Effects/Star</texPath>
+      <shaderType>MoteGlow</shaderType>
+    </graphicData>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.3</fadeInTime>
+    <solidTime>0.6</solidTime>
+    <fadeOutTime>0.9</fadeOutTime>
+  </FleckDef>
+
+  <!-- Confetti: a milestone anniversary. -->
+  <FleckDef>
+    <defName>DateNight_Confetti</defName>
+    <fleckSystemClass>FleckSystemThrown</fleckSystemClass>
+    <graphicData>
+      <graphicClass>Graphic_Fleck</graphicClass>
+      <texPath>DateNight/Effects/Confetti</texPath>
+      <shaderType>MoteGlow</shaderType>
+    </graphicData>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <fadeInTime>0.05</fadeInTime>
+    <solidTime>1.2</solidTime>
+    <fadeOutTime>0.8</fadeOutTime>
+  </FleckDef>
+
+</Defs>

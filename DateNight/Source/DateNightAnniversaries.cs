@@ -301,6 +301,11 @@ namespace DateNight
                 : DateNightDefOf.DateNight_Anniversary;
             DateNightDateUtility.TryGainThought(pawn, partner, thought);
             DateNightDateUtility.TryGainThought(partner, pawn, thought);
+            if (milestone)
+            {
+                DateNightVisuals.Burst(pawn, DateNightDefOf.DateNight_Confetti);
+                DateNightVisuals.Burst(partner, DateNightDefOf.DateNight_Confetti);
+            }
 
             string yearsText = years == 1
                 ? "DateNight_OneYear".Translate()
