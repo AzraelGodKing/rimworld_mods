@@ -9,6 +9,8 @@ namespace WaveSurvivalReforged
     public class WaveSurvivalSettings : ModSettings
     {
         public bool showHud = true;
+        // RimWorld 1.7 only. Turn off for photosensitivity.
+        public bool screenEffect = true;
         public WavePreset preset = WavePreset.Standard;
         public RunSettings custom;
         // Local best runs, most waves first. Never read by gameplay.
@@ -28,6 +30,7 @@ namespace WaveSurvivalReforged
         public override void ExposeData()
         {
             Scribe_Values.Look(ref showHud, "showHud", true);
+            Scribe_Values.Look(ref screenEffect, "screenEffect", true);
             Scribe_Values.Look(ref preset, "preset", WavePreset.Standard);
             Scribe_Deep.Look(ref custom, "custom");
             Scribe_Collections.Look(ref bestRuns, "bestRuns", LookMode.Deep);
@@ -73,6 +76,9 @@ namespace WaveSurvivalReforged
             list.Begin(view);
 
             list.CheckboxLabeled("WSR_SettingsShowHud".Translate(), ref s.showHud, "WSR_SettingsShowHudTip".Translate());
+#if RIMWORLD_1_7
+            list.CheckboxLabeled("WSR_SettingsScreenEffect".Translate(), ref s.screenEffect, "WSR_SettingsScreenEffectTip".Translate());
+#endif
             list.GapLine();
 
             list.Label("WSR_SettingsPreset".Translate(), tooltip: "WSR_SettingsPresetTip".Translate());

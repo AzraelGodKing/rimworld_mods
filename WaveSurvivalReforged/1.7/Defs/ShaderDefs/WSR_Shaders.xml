@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- RimWorld 1.7 only (loaded from the 1.7 folder). The GLSL lives in
+       1.7/Shaders/WaveSurvivalReforged and is drawn by WaveVignette in the 1.7 DLL. -->
+
+  <ShaderDef>
+    <defName>WSR_WaveVignette</defName>
+    <shaderProgram>
+      <vertexShaderFileName>WSROverlay.vert.glsl</vertexShaderFileName>
+      <fragmentShaderFileName>WSRWaveVignette.frag.glsl</fragmentShaderFileName>
+      <transparent>true</transparent>
+      <depthTest>false</depthTest>
+      <depthWrite>false</depthWrite>
+      <renderQueue>4100</renderQueue>
+    </shaderProgram>
+  </ShaderDef>
+</Defs>

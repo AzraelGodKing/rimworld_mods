@@ -64,6 +64,9 @@ namespace WaveSurvivalReforged
 
             tracker.Started(plan, now);
             stats.Notify_WaveStarted(waveNum);
+#if RIMWORLD_1_7
+            WaveVignette.Notify_WaveArrived(plan.type.pool);
+#endif
             Messages.Message(ArrivedKey(plan.type.pool).Translate(waveNum, plan.Describe()), MessageTypeDefOf.ThreatBig);
             float days = run.daysBetweenWaves + (plan.type.pool != WavePool.Normal ? cfg.breatherDays : 0f);
             ticksNextWave = now + Mathf.RoundToInt(days * GenDate.TicksPerDay);
