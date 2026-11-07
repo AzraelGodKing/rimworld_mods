@@ -8,9 +8,18 @@
   <Azrael_ScenPart_PreferMountainSummary>Default and random starting sites favor large hills or mountains.</Azrael_ScenPart_PreferMountainSummary>
 
   <Azrael_SettingsCategory>Azrael</Azrael_SettingsCategory>
+  <Azrael_Settings_SeriesWeights>Series event weights under the Azrael storyteller</Azrael_Settings_SeriesWeights>
+  <Azrael_Settings_SeriesWeightsTip>On: while Azrael is your storyteller, series events (Living World, Homesteader, Stormproof, Strata) win their category more often. Off: plain Azrael pacing. How often events fire is the same either way. In Multiplayer every player needs the host's setting.</Azrael_Settings_SeriesWeightsTip>
   <Azrael_Hub_Intro>Series hub. What's loaded, DLC, live vs broken soft-compat, named conflicts, and failed Harmony patches. Copy the report from the main menu or in a colony — no log diving.</Azrael_Hub_Intro>
   <Azrael_Hub_Copy>Copy report</Azrael_Hub_Copy>
   <Azrael_Hub_Copied>Copied to clipboard.</Azrael_Hub_Copied>
+  <Azrael_Hub_SaveReport>Save report to file</Azrael_Hub_SaveReport>
+  <Azrael_Hub_Saved>Saved: {0}</Azrael_Hub_Saved>
+  <Azrael_Hub_SaveFailed>Could not save the report: {0}</Azrael_Hub_SaveFailed>
+  <Azrael_Hub_Runtime>Runtime: {0}</Azrael_Hub_Runtime>
+  <Azrael_Hub_Folder>folder {0}</Azrael_Hub_Folder>
+  <Azrael_Hub_Mismatch_Game>Does not list RimWorld {0} in its supported versions. Update it, or expect errors.</Azrael_Hub_Mismatch_Game>
+  <Azrael_Hub_Mismatch_Older>Older than {0}, the version this Azrael build was tested with. Update it before reporting a bug.</Azrael_Hub_Mismatch_Older>
   <Azrael_Hub_Mods>Series mods</Azrael_Hub_Mods>
   <Azrael_Hub_Loaded>loaded</Azrael_Hub_Loaded>
   <Azrael_Hub_NotLoaded>not loaded</Azrael_Hub_NotLoaded>
@@ -20,6 +29,8 @@
   <Azrael_Hub_BridgeWaiting>{0} not loaded</Azrael_Hub_BridgeWaiting>
   <Azrael_Hub_BridgeNoHook>both loaded — no live hook yet</Azrael_Hub_BridgeNoHook>
   <Azrael_Hub_BridgeNoType>loaded, but {0} was not found</Azrael_Hub_BridgeNoType>
+  <Azrael_Hub_BridgeSummary>{0} of {1} bridges live.</Azrael_Hub_BridgeSummary>
+  <Azrael_Hub_BridgeSummaryBroken>{0} of {1} bridges live, {2} broken (both mods loaded, hook missing).</Azrael_Hub_BridgeSummaryBroken>
   <Azrael_Hub_Bridge_RootCellar>Homesteader ↔ Strata — root cellars</Azrael_Hub_Bridge_RootCellar>
   <Azrael_Hub_Bridge_Wells>Homesteader ↔ Strata — wells</Azrael_Hub_Bridge_Wells>
   <Azrael_Hub_Bridge_StormRooms>Strata ↔ Stormproof — underground rooms</Azrael_Hub_Bridge_StormRooms>
@@ -50,6 +61,8 @@
   <Azrael_Removal_NeedSave>Load a colony first.</Azrael_Removal_NeedSave>
   <Azrael_Removal_Empty>Nothing from this mod is on the maps or caravans.</Azrael_Removal_Empty>
   <Azrael_Removal_Blocked>Resolve the named blockers first.</Azrael_Removal_Blocked>
+  <Azrael_Removal_NothingToDeconstruct>No buildings from this mod to deconstruct.</Azrael_Removal_NothingToDeconstruct>
+  <Azrael_Removal_Confirm>Designate {0} building(s) from {1} for deconstruction on every map? You can only undo this by cancelling the designations by hand.</Azrael_Removal_Confirm>
   <Azrael_Removal_NemesisHunt>Active Nemesis hunt (or truce) — resolve it in play before removing Nemesis.</Azrael_Removal_NemesisHunt>
   <Azrael_Removal_NemesisWorldPawn>A Nemesis world pawn is still parked (cleaned by uninstall).</Azrael_Removal_NemesisWorldPawn>
   <Azrael_Removal_StrataPawns>{0} colonist(s) still on a pocket floor — bring them up first.</Azrael_Removal_StrataPawns>

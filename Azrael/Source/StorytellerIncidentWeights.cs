@@ -30,7 +30,7 @@ namespace Azrael
 
         public static float FactorFor(StorytellerDef? teller, IncidentDef? incident)
         {
-            if (teller == null || incident == null)
+            if (teller == null || incident == null || AzraelMod.Settings?.seriesIncidentWeights == false)
             {
                 return 1f;
             }

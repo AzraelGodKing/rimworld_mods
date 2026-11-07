@@ -23,6 +23,10 @@ namespace Azrael
             public bool Loaded;
             public string Version;
             public string? Stamp;
+            /// <summary>Version folder(s) the game loaded for this mod, e.g. "1.7" ("/" = root only).</summary>
+            public string? Folder;
+            /// <summary>Why this build looks out of step with the series, or null.</summary>
+            public string? Mismatch;
         }
 
         internal struct BridgeRow
@@ -60,6 +64,20 @@ namespace Azrael
 
         internal const string AzraelPackageId = "azraelgodking.Azrael";
 
+        // Series versions this Azrael build was tested with (the 2026-11 release wave). An older
+        // sister build gets a hub warning so mixed waves are spotted before a bug report.
+        private static readonly Dictionary<string, string> TestedWith = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        {
+            { "AzraelGodKing.Homesteader", "1.5.1" },
+            { "AzraelGodKing.Strata", "4.0.0" },
+            { "AzraelGodKing.Stormproof", "2.0.0" },
+            { "AzraelGodKing.Nemesis", "1.5.0" },
+            { "azraelgodking.DeepColony", "1.10.0" },
+            { "azraelgodking.livingworld", "1.0.0" },
+            { "azraelgodking.DateNight", "2.0.0" },
+            { "AzraelGodKing.Niceties", "1.6.1" },
+        };
+
         internal static readonly SeriesMod[] Series =
         {
             new SeriesMod("Azrael", AzraelPackageId),
@@ -81,7 +99,7 @@ namespace Azrael
             "AzraelGodKing.Wellspring",
         };
 
-        // Hub inventory is static for the session; rebuild once per open (dirty flag).
+        // Rebuilt each time Mod Options opens (AzraelMod calls InvalidateHub) and on Copy report.
         private static bool hubDirty = true;
         private static List<ModRow>? cachedMods;
         private static List<BridgeRow>? cachedBridges;
@@ -220,7 +238,9 @@ namespace Azrael
                     PackageId = packageId,
                     Loaded = meta != null,
                     Version = VersionOf(meta),
-                    Stamp = meta != null ? StampOf(display) : null
+                    Stamp = meta != null ? StampOf(display) : null,
+                    Folder = meta != null ? LoadFolderOf(packageId) : null,
+                    Mismatch = meta != null ? MismatchOf(packageId, meta) : null,
                 });
             }
             return rows;
@@ -353,6 +373,7 @@ namespace Azrael
             var sb = new StringBuilder();
             sb.AppendLine("Azrael series hub");
             sb.AppendLine("RimWorld " + RimWorldVersion());
+            sb.AppendLine("Runtime " + RuntimeDescription());
 
             sb.AppendLine();
             sb.AppendLine("Mods");
@@ -367,8 +388,16 @@ namespace Azrael
                     {
                         sb.Append(" [").Append(row.Stamp).Append("]");
                     }
+                    if (!string.IsNullOrEmpty(row.Folder))
+                    {
+                        sb.Append(" folder ").Append(row.Folder);
+                    }
                 }
                 sb.Append(" (").Append(row.PackageId).AppendLine(")");
+                if (row.Mismatch != null)
+                {
+                    sb.Append("  ! ").AppendLine(row.Mismatch);
+                }
             }
 
             sb.AppendLine();
@@ -380,7 +409,7 @@ namespace Azrael
             }
 
             sb.AppendLine();
-            sb.AppendLine("Bridges");
+            sb.AppendLine("Bridges (" + BridgeSummary(Bridges()) + ")");
             foreach (BridgeRow row in Bridges())
             {
                 sb.Append("- ").Append(row.LabelKey.Translate()).Append(": ").AppendLine(row.Status);
@@ -430,6 +459,130 @@ namespace Azrael
             {
                 return "(version unread)";
             }
+        }
+
+        /// <summary>CLR and engine, e.g. ".NET 10.0.0 (Waylith)" on 1.7 or "Mono ... (Unity 2022.3...)" on 1.6.</summary>
+        internal static string RuntimeDescription()
+        {
+            string clr;
+            try
+            {
+                clr = System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription;
+            }
+            catch
+            {
+                clr = Environment.Version.ToString();
+            }
+#if RIMWORLD_1_7
+            const string engine = "Waylith";
+#else
+            string engine = "Unity " + Application.unityVersion;
+#endif
+            return clr + " (" + engine + ")";
+        }
+
+        /// <summary>"5 of 7 live" style count for the soft-compat section.</summary>
+        internal static string BridgeSummary(List<BridgeRow> bridges)
+        {
+            int live = 0;
+            int degraded = 0;
+            foreach (BridgeRow row in bridges)
+            {
+                if (row.Live)
+                {
+                    live++;
+                }
+                else if (row.Degraded)
+                {
+                    degraded++;
+                }
+            }
+            return degraded > 0
+                ? "Azrael_Hub_BridgeSummaryBroken".Translate(live, bridges.Count, degraded)
+                : "Azrael_Hub_BridgeSummary".Translate(live, bridges.Count);
+        }
+
+        private static ModContentPack? RunningPack(string packageId)
+        {
+            foreach (ModContentPack pack in LoadedModManager.RunningModsListForReading)
+            {
+                if (pack != null
+                    && (string.Equals(pack.PackageId, packageId, StringComparison.OrdinalIgnoreCase)
+                        || string.Equals(pack.PackageIdPlayerFacing, packageId, StringComparison.OrdinalIgnoreCase)))
+                {
+                    return pack;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>Loaded folders other than the root, relative to the mod, e.g. "1.7"; "/" when only the root loads.</summary>
+        private static string? LoadFolderOf(string packageId)
+        {
+            try
+            {
+                ModContentPack? pack = RunningPack(packageId);
+                List<string>? folders = pack?.foldersToLoadDescendingOrder;
+                if (pack == null || folders == null)
+                {
+                    return null;
+                }
+                string root = System.IO.Path.GetFullPath(pack.RootDir).TrimEnd('/', '\\');
+                var names = new List<string>();
+                foreach (string folder in folders)
+                {
+                    string full = System.IO.Path.GetFullPath(folder).TrimEnd('/', '\\');
+                    if (full.Length > root.Length && full.StartsWith(root, StringComparison.OrdinalIgnoreCase))
+                    {
+                        names.Add(full.Substring(root.Length + 1).Replace('\\', '/'));
+                    }
+                }
+                return names.Count == 0 ? "/" : string.Join(", ", names);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Series-version mismatch (AZR-688): the mod does not declare the running game version,
+        /// or it is older than the build this Azrael was tested with.
+        /// </summary>
+        private static string? MismatchOf(string packageId, ModMetaData meta)
+        {
+            try
+            {
+                var game = new Version(VersionControl.CurrentMajor, VersionControl.CurrentMinor);
+                List<Version>? supported = meta.SupportedVersionsReadOnly;
+                if (supported != null && supported.Count > 0 && !supported.Exists(v => v.Major == game.Major && v.Minor == game.Minor))
+                {
+                    return "Azrael_Hub_Mismatch_Game".Translate(game.ToString(2));
+                }
+                if (TestedWith.TryGetValue(packageId, out string? tested)
+                    && TryParseVersion(meta.ModVersion, out Version? have)
+                    && TryParseVersion(tested, out Version? want)
+                    && have! < want!)
+                {
+                    return "Azrael_Hub_Mismatch_Older".Translate(tested);
+                }
+            }
+            catch
+            {
+                // Fail-open: no warning.
+            }
+            return null;
+        }
+
+        private static bool TryParseVersion(string? text, out Version? version)
+        {
+            version = null;
+            if (string.IsNullOrEmpty(text))
+            {
+                return false;
+            }
+            int cut = text!.IndexOfAny(new[] { '-', '+', ' ' });
+            return Version.TryParse(cut > 0 ? text.Substring(0, cut) : text, out version);
         }
 
         internal static bool IsLoaded(string packageId)
@@ -586,20 +739,7 @@ namespace Azrael
                 // Older GetActiveModWithIdentifier overloads — fall through.
             }
 
-            if (ModsConfig.IsActive(packageId))
-            {
-                foreach (ModContentPack pack in LoadedModManager.RunningModsListForReading)
-                {
-                    if (pack?.PackageId != null
-                        && (string.Equals(pack.PackageId, packageId, StringComparison.OrdinalIgnoreCase)
-                            || string.Equals(pack.PackageIdPlayerFacing, packageId, StringComparison.OrdinalIgnoreCase)))
-                    {
-                        return pack.ModMetaData;
-                    }
-                }
-            }
-
-            return null;
+            return ModsConfig.IsActive(packageId) ? RunningPack(packageId)?.ModMetaData : null;
         }
 
         private static string VersionOf(ModMetaData? meta)

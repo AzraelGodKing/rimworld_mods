@@ -1,5 +1,7 @@
 #nullable enable
+using System;
 using System.Collections.Generic;
+using System.IO;
 using AzraelCommon;
 using HarmonyLib;
 using UnityEngine;
@@ -9,12 +11,21 @@ namespace Azrael
 {
     public class AzraelMod : Mod
     {
+        private const float RowHeight = 26f;
+        private const string ReportFileName = "Azrael hub report.txt";
+
+        internal static AzraelSettings? Settings { get; private set; }
+
         private Vector2 scrollPos;
-        private string? copiedNotice;
-        private float copiedUntil;
+        private string? notice;
+        private float noticeUntil;
+        // Height the page used last frame; the scroll view sizes to it (AZR-687).
+        private float lastHeight = 1200f;
+        private int lastDrawFrame = -10;
 
         public AzraelMod(ModContentPack content) : base(content)
         {
+            Settings = GetSettings<AzraelSettings>();
             ModVersionLog.Write("[Azrael]", content, AzraelBuildInfo.BuildStamp);
             AzraelCommon.SafePatchAll.Apply(new Harmony("azraelgodking.azrael"), "[Azrael]");
         }
@@ -23,53 +34,37 @@ namespace Azrael
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
+            // A gap in drawn frames means the page was just (re)opened: rescan (AZR-602, AZR-725).
+            if (Time.frameCount - lastDrawFrame > 1)
+            {
+                SeriesHub.InvalidateHub();
+            }
+            lastDrawFrame = Time.frameCount;
+
             List<SeriesHub.ModRow> mods = SeriesHub.Mods();
             List<SeriesHub.BridgeRow> bridges = SeriesHub.Bridges();
             List<SeriesHub.ConflictRow> conflicts = SeriesHub.Conflicts();
             List<SeriesHub.DlcRow> dlc = SeriesHub.Dlc();
             List<string> fails = SeriesHub.HarmonyFailures();
 
-            int removalButtons = 0;
-            for (int i = 0; i < mods.Count; i++)
-            {
-                SeriesHub.ModRow row = mods[i];
-                if (row.Loaded && row.PackageId != "azraelgodking.Azrael")
-                {
-                    removalButtons++;
-                }
-            }
-
-            int harmonyRows = fails.Count == 0 ? 1 : 1 + Mathf.Min(fails.Count, 8);
-            float height = 520f
-                + (mods.Count + dlc.Count + bridges.Count
-                    + Mathf.Max(1, conflicts.Count)
-                    + harmonyRows
-                    + 2
-                    + removalButtons) * 26f;
-            Rect view = new Rect(0f, 0f, inRect.width - 20f, height);
+            Rect view = new Rect(0f, 0f, inRect.width - 20f, Mathf.Max(lastHeight, inRect.height));
             Widgets.BeginScrollView(inRect, ref scrollPos, view);
             Listing_Standard listing = new Listing_Standard();
             listing.Begin(view);
 
             listing.Label("Azrael_Hub_Intro".Translate());
             listing.Gap(6f);
+            DrawReportButtons(listing);
 
-            Rect copyRect = listing.GetRect(28f);
-            Rect button = new Rect(copyRect.x, copyRect.y, 280f, copyRect.height);
-            if (Widgets.ButtonText(button, "Azrael_Hub_Copy".Translate()))
+            if (Settings != null)
             {
-                GUIUtility.systemCopyBuffer = SeriesHub.ClipboardReport();
-                copiedNotice = "Azrael_Hub_Copied".Translate();
-                copiedUntil = Time.realtimeSinceStartup + 2.5f;
-            }
-            if (!string.IsNullOrEmpty(copiedNotice) && Time.realtimeSinceStartup < copiedUntil)
-            {
-                Widgets.Label(new Rect(copyRect.x + 290f, copyRect.y, copyRect.width - 290f, copyRect.height), copiedNotice);
+                listing.Gap(4f);
+                listing.CheckboxLabeled("Azrael_Settings_SeriesWeights".Translate(),
+                    ref Settings.seriesIncidentWeights, "Azrael_Settings_SeriesWeightsTip".Translate());
             }
 
-            listing.GapLine();
-            listing.Label("Azrael_Hub_Mods".Translate().CapitalizeFirst());
-            listing.Gap(4f);
+            Section(listing, "Azrael_Hub_Mods");
+            listing.Label("Azrael_Hub_Runtime".Translate(SeriesHub.RuntimeDescription()));
             foreach (SeriesHub.ModRow row in mods)
             {
                 GUI.color = SeriesHub.StatusColor(row.Loaded);
@@ -77,13 +72,17 @@ namespace Azrael
                     ? "Azrael_Hub_Loaded".Translate()
                     : "Azrael_Hub_NotLoaded".Translate();
                 listing.Label(row.Display + "  —  " + status + (row.Loaded ? "  v" + row.Version : "")
-                    + (row.Loaded && !string.IsNullOrEmpty(row.Stamp) ? "  [" + row.Stamp + "]" : ""));
+                    + (row.Loaded && !string.IsNullOrEmpty(row.Stamp) ? "  [" + row.Stamp + "]" : "")
+                    + (row.Loaded && !string.IsNullOrEmpty(row.Folder) ? "  " + "Azrael_Hub_Folder".Translate(row.Folder) : ""));
+                if (row.Mismatch != null)
+                {
+                    GUI.color = SeriesHub.WaitingColor;
+                    listing.Label("    " + row.Mismatch);
+                }
                 GUI.color = Color.white;
             }
 
-            listing.GapLine();
-            listing.Label("Azrael_Hub_Dlc".Translate().CapitalizeFirst());
-            listing.Gap(4f);
+            Section(listing, "Azrael_Hub_Dlc");
             foreach (SeriesHub.DlcRow row in dlc)
             {
                 GUI.color = SeriesHub.StatusColor(row.Loaded);
@@ -94,9 +93,8 @@ namespace Azrael
                 GUI.color = Color.white;
             }
 
-            listing.GapLine();
-            listing.Label("Azrael_Hub_Bridges".Translate().CapitalizeFirst());
-            listing.Gap(4f);
+            Section(listing, "Azrael_Hub_Bridges");
+            listing.Label(SeriesHub.BridgeSummary(bridges));
             foreach (SeriesHub.BridgeRow row in bridges)
             {
                 GUI.color = row.Live
@@ -106,14 +104,11 @@ namespace Azrael
                 GUI.color = Color.white;
             }
 
-            listing.GapLine();
-            listing.Label("Azrael_Hub_Conflicts".Translate().CapitalizeFirst());
-            listing.Gap(4f);
+            Section(listing, "Azrael_Hub_Conflicts");
             if (conflicts.Count == 0)
             {
                 GUI.color = SeriesHub.StatusColor(true);
                 listing.Label("Azrael_Hub_ConflictsNone".Translate());
-                GUI.color = Color.white;
             }
             else
             {
@@ -122,12 +117,10 @@ namespace Azrael
                 {
                     listing.Label(row.Name + "  —  " + row.Reason);
                 }
-                GUI.color = Color.white;
             }
+            GUI.color = Color.white;
 
-            listing.GapLine();
-            listing.Label("Azrael_Hub_Harmony".Translate().CapitalizeFirst());
-            listing.Gap(4f);
+            Section(listing, "Azrael_Hub_Harmony");
             if (fails.Count == 0)
             {
                 listing.Label("Azrael_Hub_HarmonyNone".Translate());
@@ -144,17 +137,15 @@ namespace Azrael
                 GUI.color = Color.white;
             }
 
-            listing.GapLine();
-            listing.Label("Azrael_Removal_Section".Translate());
-            listing.Gap(4f);
+            Section(listing, "Azrael_Removal_Section");
             listing.Label("Azrael_Removal_SectionHint".Translate());
             foreach (SeriesHub.ModRow row in mods)
             {
-                if (!row.Loaded || row.PackageId == "azraelgodking.Azrael")
+                if (!row.Loaded || string.Equals(row.PackageId, SeriesHub.AzraelPackageId, StringComparison.OrdinalIgnoreCase))
                 {
                     continue;
                 }
-                Rect r = listing.GetRect(26f);
+                Rect r = listing.GetRect(RowHeight);
                 if (Widgets.ButtonText(new Rect(r.x, r.y, Mathf.Min(420f, r.width), 24f),
                         "Azrael_Removal_Prep".Translate(row.Display)))
                 {
@@ -162,9 +153,70 @@ namespace Azrael
                 }
             }
 
+            lastHeight = listing.CurHeight + 12f;
             listing.End();
             Widgets.EndScrollView();
             base.DoSettingsWindowContents(inRect);
+        }
+
+        private static void Section(Listing_Standard listing, string headerKey)
+        {
+            listing.GapLine();
+            listing.Label(headerKey.Translate().CapitalizeFirst());
+            listing.Gap(4f);
+        }
+
+        private void DrawReportButtons(Listing_Standard listing)
+        {
+            Rect rect = listing.GetRect(28f);
+            Rect copy = new Rect(rect.x, rect.y, 220f, rect.height);
+            Rect save = new Rect(copy.xMax + 8f, rect.y, 220f, rect.height);
+            if (Widgets.ButtonText(copy, "Azrael_Hub_Copy".Translate()))
+            {
+                string report = SeriesHub.ClipboardReport();
+                try
+                {
+                    GUIUtility.systemCopyBuffer = report;
+                    Notify("Azrael_Hub_Copied".Translate());
+                }
+                catch (Exception e)
+                {
+                    // Clipboard unavailable (some Linux / Steam Deck setups): fall back to the file.
+                    Log.Warning("[Azrael] Clipboard copy failed: " + e.Message);
+                    Notify(WriteReport(report));
+                }
+            }
+            if (Widgets.ButtonText(save, "Azrael_Hub_SaveReport".Translate()))
+            {
+                Notify(WriteReport(SeriesHub.ClipboardReport()));
+            }
+            if (!string.IsNullOrEmpty(notice) && Time.realtimeSinceStartup < noticeUntil)
+            {
+                Widgets.Label(new Rect(save.xMax + 10f, rect.y, rect.xMax - save.xMax - 10f, rect.height), notice);
+            }
+        }
+
+        /// <summary>Writes the report beside the save folder (AZR-689) and returns the notice to show.</summary>
+        private static string WriteReport(string report)
+        {
+            try
+            {
+                string path = Path.Combine(GenFilePaths.SaveDataFolderPath, ReportFileName);
+                File.WriteAllText(path, report);
+                Log.Message("[Azrael] Hub report written to " + path);
+                return "Azrael_Hub_Saved".Translate(path);
+            }
+            catch (Exception e)
+            {
+                Log.Warning("[Azrael] Could not write the hub report: " + e.Message);
+                return "Azrael_Hub_SaveFailed".Translate(e.Message);
+            }
+        }
+
+        private void Notify(string text)
+        {
+            notice = text;
+            noticeUntil = Time.realtimeSinceStartup + 4f;
         }
     }
 }
