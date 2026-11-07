@@ -39,12 +39,39 @@ namespace Niceties
         private static bool Prepare()
         {
             return PatchTargets.Exists(typeof(Pawn), "CheckForDisturbedSleep", new[] { typeof(Pawn) },
-                "no disturbed sleep for roommates");
+                PatchTargets.RoommateSleep);
         }
 
         private static bool Prefix(Pawn __instance, Pawn source)
         {
             return !SharedRooms.ShouldSkipDisturbedSleep(__instance, source);
+        }
+    }
+
+    /// <summary>
+    /// "Bedroom (shared)" wherever the game shows a room's role, such as the room stats
+    /// readout, so the mark is visible without selecting a bed (AZR-703).
+    /// </summary>
+    [HarmonyPatch(typeof(Room), nameof(Room.GetRoomRoleLabel))]
+    internal static class Patch_Room_GetRoomRoleLabel
+    {
+        private static LoadedLanguage? suffixLanguage;
+        private static string suffix = "";
+
+        private static void Postfix(Room __instance, ref string __result)
+        {
+            if (string.IsNullOrEmpty(__result) || !SharedRooms.IsMarkedForDisplay(__instance))
+            {
+                return;
+            }
+
+            if (!ReferenceEquals(suffixLanguage, LanguageDatabase.activeLanguage))
+            {
+                suffixLanguage = LanguageDatabase.activeLanguage;
+                suffix = " " + "Niceties_SharedRoleSuffix".Translate();
+            }
+
+            __result += suffix;
         }
     }
 }

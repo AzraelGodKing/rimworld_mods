@@ -11,6 +11,9 @@ namespace Niceties
         public bool EnclosesThings;
         public bool EnclosesSelf;
 
+        /// <summary>The first other colonist the wall would trap, for the fail reason (AZR-568).</summary>
+        public Pawn? Trapped;
+
         /// <summary>True when finishing would enclose the builder (possibly alone).</summary>
         public bool EnclosesBuilder => EnclosesSelf;
     }
@@ -24,7 +27,6 @@ namespace Niceties
     internal static class OpenBuilds
     {
         internal const string SmarterConstructionId = "dhultgren.smarterconstruction";
-        private const int MaxRegionSize = 80;
         private const int CacheTicks = 15;
         private const int CachePruneSize = 64;
 
@@ -112,6 +114,12 @@ namespace Niceties
             RemoveScratchKeys();
         }
 
+        /// <summary>
+        /// A region with fewer walkable cells than this counts as closed. 80 by default, so a
+        /// 9×9 room is "open"; Mod Options can raise it for bigger rooms (AZR-568).
+        /// </summary>
+        private static int MaxRegionSize => NicetiesSim.Settings.leaveAWayOutMaxRoom;
+
         internal static bool Enabled
         {
             get
@@ -164,6 +172,36 @@ namespace Niceties
             }
 
             return Compute(target, pawn, GeometryFor(target, allowCache: false));
+        }
+
+        private static readonly List<IntVec3> OverlayCells = new List<IntVec3>();
+
+        /// <summary>
+        /// With one wall frame selected, outline the area finishing it would close off,
+        /// so the rule is visible instead of a silent skip (AZR-568).
+        /// </summary>
+        internal static void DrawEncloseOverlay(Frame frame)
+        {
+            if (!frame.Spawned || !Enabled || !NicetiesMod.Settings.showEncloseOverlay || !IsImpassableBuild(frame)
+                || Find.Selector.NumSelected != 1)
+            {
+                return;
+            }
+
+            Geometry geo = GeometryFor(frame, allowCache: true);
+            if (geo.Enclosed.Count == 0)
+            {
+                return;
+            }
+
+            OverlayCells.Clear();
+            for (int i = 0; i < geo.Enclosed.Count; i++)
+            {
+                OverlayCells.Add(frame.Map.cellIndices.IndexToCell(geo.Enclosed[i]));
+            }
+
+            GenDraw.DrawFieldEdges(OverlayCells, new UnityEngine.Color(1f, 0.55f, 0.3f));
+            OverlayCells.Clear();
         }
 
         internal static List<IntVec3> FindSafeSpots(Thing target)
@@ -395,6 +433,7 @@ namespace Niceties
                     else
                     {
                         result.EnclosesThings = true;
+                        result.Trapped ??= other;
                     }
                 }
             }

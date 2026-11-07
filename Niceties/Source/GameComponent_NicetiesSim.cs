@@ -14,7 +14,9 @@ namespace Niceties
     {
         /// <summary>
         /// 1 = Niceties 1.x (no version key). 2 = Niceties 2.0: adds
-        /// <c>wearAnyGenderGenerated</c> and drops the weapon-care flag (AZR-551).
+        /// <c>wearAnyGenderGenerated</c>, <c>meleeHuntMaxRevengeChance</c>
+        /// and <c>leaveAWayOutMaxRoom</c>, and drops the
+        /// weapon-care flag (AZR-551). The added fields default to 1.x behaviour.
         /// </summary>
         internal const int CurrentSnapshotVersion = 2;
 

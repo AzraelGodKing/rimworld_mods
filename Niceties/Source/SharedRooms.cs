@@ -1,8 +1,10 @@
 #nullable enable
 using System.Collections.Generic;
+using System.Linq;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using Verse.Sound;
 
 namespace Niceties
 {
@@ -12,6 +14,91 @@ namespace Niceties
     {
         internal static readonly Texture2D Icon =
             ContentFinder<Texture2D>.Get("UI/Commands/AssignOwner", reportFailure: false) ?? BaseContent.BadTex;
+    }
+
+    /// <summary>
+    /// Share-room toggle that works on a multi-selection: every selected bed's room is set to
+    /// the opposite of the first one's state, once per room. The default grouped toggle flips
+    /// each bed, so two beds in one room cancelled out (AZR-568).
+    /// </summary>
+    public class Command_ShareRoom : Command_Toggle
+    {
+        private readonly Building_Bed? bed;
+
+        public Command_ShareRoom(Building_Bed? bed)
+        {
+            this.bed = bed;
+        }
+
+        public override void ProcessGroupInput(Event ev, List<Gizmo> group)
+        {
+            if (bed == null || group.Count <= 1)
+            {
+                base.ProcessGroupInput(ev, group);
+                return;
+            }
+
+            bool target = !SharedRooms.IsMarked(bed);
+            HashSet<int> done = new HashSet<int>();
+            for (int i = 0; i < group.Count; i++)
+            {
+                if (group[i] is Command_ShareRoom cmd && cmd.bed != null && cmd.bed.Spawned
+                    && done.Add(cmd.bed.GetRoom()?.ID ?? -1))
+                {
+                    SharedRooms.SetMarkedForBed(cmd.bed, target);
+                }
+            }
+
+            (target ? SoundDefOf.Checkbox_TurnedOn : SoundDefOf.Checkbox_TurnedOff).PlayOneShotOnCamera();
+        }
+    }
+
+    /// <summary>
+    /// A titled colonist whose bed is in a room marked shared (with someone other than a
+    /// partner) loses the personal bedroom their title asks for. Vanilla's own alert says the
+    /// bedroom is wrong; this one says the share mark is why (AZR-568).
+    /// </summary>
+    public class Alert_NicetiesNobleSharedRoom : Alert
+    {
+        private readonly List<Pawn> culprits = new List<Pawn>();
+
+        public Alert_NicetiesNobleSharedRoom()
+        {
+            defaultLabel = "Niceties_NobleSharedRoom".Translate();
+            defaultPriority = AlertPriority.Medium;
+        }
+
+        public override TaggedString GetExplanation()
+        {
+            return "Niceties_NobleSharedRoomDesc".Translate(culprits.Select(p => p.LabelShort).ToCommaList(true));
+        }
+
+        public override AlertReport GetReport()
+        {
+            culprits.Clear();
+            if (!ModsConfig.RoyaltyActive || !NicetiesMod.Settings.sharedRoomNobleAlert || !SharedRooms.Enabled())
+            {
+                return false;
+            }
+
+            foreach (Pawn pawn in PawnsFinder.AllMaps_FreeColonistsSpawned)
+            {
+                if (pawn.royalty == null || pawn.royalty.HighestTitleWithBedroomRequirements() == null)
+                {
+                    continue;
+                }
+
+                Building_Bed? bed = pawn.ownership?.OwnedBed;
+                if (bed == null || !bed.Spawned || !SharedRooms.IsMarked(bed) || pawn.royalty.HasPersonalBedroom())
+                {
+                    continue;
+                }
+
+                culprits.Add(pawn);
+            }
+
+            return AlertReport.CulpritsAre(culprits);
+        }
     }
 
     public class CompProperties_SharedRoom : CompProperties
@@ -46,7 +133,7 @@ namespace Niceties
                 yield break;
             }
 
-            yield return new Command_Toggle
+            yield return new Command_ShareRoom(bed)
             {
                 defaultLabel = "Niceties_ShareRoom".Translate(),
                 defaultDesc = "Niceties_ShareRoomTip".Translate(),
@@ -197,6 +284,12 @@ namespace Niceties
             }
 
             SetMarked(bed.GetRoom(), marked);
+        }
+
+        /// <summary>Cached mark (up to 250 ticks old; dropped on change), for display only.</summary>
+        internal static bool IsMarkedForDisplay(Room room)
+        {
+            return Enabled() && !room.PsychologicallyOutdoors && Info(room).Marked;
         }
 
         internal static string? RoommateNames(Room? room)

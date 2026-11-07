@@ -18,7 +18,11 @@ namespace Niceties
         private static int lastFilteredCount = -1;
         private static List<ColonistBar.Entry>? lastFilteredList;
 
+        private static readonly List<Pawn> HiddenPawns = new List<Pawn>();
+        private static bool allInCaskets = true;
+
         private static int labelCount = -1;
+        private static bool labelAllCaskets = true;
         private static LoadedLanguage? labelLanguage;
         private static string label = "";
         private static string tooltip = "";
@@ -28,6 +32,7 @@ namespace Niceties
 
         internal static void MarkDirty()
         {
+            labelCount = -1;
             Find.ColonistBar?.MarkColonistsDirty();
         }
 
@@ -84,6 +89,7 @@ namespace Niceties
                 if (!ReferenceEquals(entries, lastFilteredList) || entries.Count != lastFilteredCount)
                 {
                     hiddenCount = 0;
+                    HiddenPawns.Clear();
                 }
 
                 return;
@@ -91,6 +97,8 @@ namespace Niceties
 
             Scratch.Clear();
             PlaceholderGroups.Clear();
+            HiddenPawns.Clear();
+            allInCaskets = true;
             for (int i = 0; i < entries.Count; i++)
             {
                 ColonistBar.Entry entry = entries[i];
@@ -99,6 +107,9 @@ namespace Niceties
                     Scratch.Add(entry);
                     continue;
                 }
+
+                HiddenPawns.Add(entry.pawn!);
+                allInCaskets &= entry.pawn!.InCryptosleep;
 
                 if (entry.map != null && !VisibleGroups.Contains(entry.group) && PlaceholderGroups.Add(entry.group))
                 {
@@ -130,9 +141,66 @@ namespace Niceties
             return VisibleGetter == null || VisibleGetter(bar);
         }
 
+        /// <summary>
+        /// Casket pawns always (when the nicety is on). Growth-vat children and pawns in a
+        /// biosculpter pod or subcore scanner only when their own local option is ticked (AZR-568).
+        /// </summary>
         private static bool Hides(Pawn? pawn)
         {
-            return pawn != null && pawn.InCryptosleep;
+            if (pawn == null)
+            {
+                return false;
+            }
+
+            if (pawn.InCryptosleep)
+            {
+                return true;
+            }
+
+            if (pawn.Spawned)
+            {
+                return false;
+            }
+
+            NicetiesSettings local = NicetiesMod.Settings;
+            IThingHolder? holder = pawn.ParentHolder;
+            if (local.hideGrowthVats && holder is Building_GrowthVat)
+            {
+                return true;
+            }
+
+            return local.hidePods && (holder is CompBiosculpterPod || holder is Building_SubcoreScanner);
+        }
+
+        /// <summary>The spawned building holding a hidden pawn: casket, vat, pod or scanner.</summary>
+        private static Thing? HolderThing(Pawn pawn)
+        {
+            IThingHolder? holder = pawn.ParentHolder;
+            Thing? thing = holder as Thing ?? (holder as ThingComp)?.parent;
+            return thing != null && thing.Spawned ? thing : null;
+        }
+
+        /// <summary>Click "+N": a list of the hidden pawns; picking one jumps to their casket (AZR-568).</summary>
+        private static void OpenRoster()
+        {
+            List<FloatMenuOption> options = new List<FloatMenuOption>();
+            for (int i = 0; i < HiddenPawns.Count; i++)
+            {
+                Pawn pawn = HiddenPawns[i];
+                Thing? holder = pawn.Destroyed ? null : HolderThing(pawn);
+                if (holder == null)
+                {
+                    continue;
+                }
+
+                options.Add(new FloatMenuOption(pawn.LabelShort + " (" + holder.LabelCap + ")",
+                    () => CameraJumper.TryJumpAndSelect(holder)));
+            }
+
+            if (options.Count > 0)
+            {
+                Find.WindowStack.Add(new FloatMenu(options));
+            }
         }
 
         internal static void DrawHiddenCount(ColonistBar bar)
@@ -159,6 +227,14 @@ namespace Niceties
                 }
 
                 TooltipHandler.TipRegion(rect, tooltip);
+                if (NicetiesMod.Settings.cryptosleepRoster)
+                {
+                    Widgets.DrawHighlightIfMouseover(rect);
+                    if (Widgets.ButtonInvisible(rect))
+                    {
+                        OpenRoster();
+                    }
+                }
             }
             finally
             {
@@ -170,15 +246,23 @@ namespace Niceties
 
         private static void RefreshLabel()
         {
-            if (labelCount == hiddenCount && ReferenceEquals(labelLanguage, LanguageDatabase.activeLanguage))
+            if (labelCount == hiddenCount && labelAllCaskets == allInCaskets
+                && ReferenceEquals(labelLanguage, LanguageDatabase.activeLanguage))
             {
                 return;
             }
 
             labelCount = hiddenCount;
+            labelAllCaskets = allInCaskets;
             labelLanguage = LanguageDatabase.activeLanguage;
-            label = "Niceties_CryptoHiddenCount".Translate(hiddenCount);
+            label = allInCaskets
+                ? "Niceties_CryptoHiddenCount".Translate(hiddenCount)
+                : "Niceties_HiddenCount".Translate(hiddenCount);
             tooltip = "Niceties_CryptoHiddenCountTip".Translate();
+            if (NicetiesMod.Settings.cryptosleepRoster)
+            {
+                tooltip += "\n\n" + "Niceties_CryptoRosterTip".Translate();
+            }
             labelSize = Text.CalcSize(label);
         }
 
@@ -237,7 +321,7 @@ namespace Niceties
         {
             return PatchTargets.Exists(typeof(ColonistBarDrawLocsFinder), "CalculateDrawLocs",
                 new[] { typeof(List<Vector2>), typeof(float).MakeByRefType(), typeof(int) },
-                "hide cryptosleep pawns from the colonist bar");
+                PatchTargets.HideCryptosleep);
         }
 
         private static void Prefix()

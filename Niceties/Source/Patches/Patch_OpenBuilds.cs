@@ -20,7 +20,9 @@ namespace Niceties
             if (enclose.EnclosesThings)
             {
                 __result = null;
-                JobFailReason.Is("Niceties_OpenBuilds_WouldEnclose".Translate());
+                JobFailReason.Is(enclose.Trapped != null
+                    ? "Niceties_OpenBuilds_WouldEncloseNamed".Translate(enclose.Trapped.LabelShort)
+                    : "Niceties_OpenBuilds_WouldEnclose".Translate());
                 return;
             }
 
@@ -66,6 +68,20 @@ namespace Niceties
 
             OpenBuilds.ClearCacheNear(__instance.Map, __instance.Position);
             return true;
+        }
+    }
+
+    // Frame inherits this from Building; patching the most derived declaration means the
+    // postfix runs whether or not an override in between calls base.
+    [HarmonyPatch(typeof(Frame), nameof(Frame.DrawExtraSelectionOverlays))]
+    internal static class Patch_Frame_DrawExtraSelectionOverlays
+    {
+        private static void Postfix(Thing __instance)
+        {
+            if (__instance is Frame frame)
+            {
+                OpenBuilds.DrawEncloseOverlay(frame);
+            }
         }
     }
 }

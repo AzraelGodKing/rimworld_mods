@@ -2,6 +2,15 @@
 [h1]Niceties — 2.0.0[/h1]
 Niceties 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting every update, and the same save carries over to 1.7.
 
+[b]Added[/b]
+[list]
+[*] [b]Cryptosleep list[/b] — click the "+N in cryptosleep" note for a list of the hidden colonists; pick one to jump to their casket.
+[*] [b]More to hide[/b] — optionally hide growth-vat children and pawns in biosculpter pods or subcore scanners from the colonist bar too.
+[*] [b]Melee hunting[/b] — an optional cap on how likely an animal is to turn on its hunter, one-click animal buttons for the size cap, and an inspect line on hunt-marked animals that melee hunters will skip.
+[*] [b]Leave a way out[/b] — select a wall frame to see the area it would close off. The "would wall someone in" reason now names who. The largest area that counts as walled in is a setting (80 cells by default, so a 9×9 room still counts as open).
+[*] [b]Shared bedrooms[/b] — the room role reads "Bedroom (shared)" in the room stats, Share room works on several selected beds at once, and an optional alert names nobles whose bed is in a shared room.
+[*] [b]Mod Options[/b] — each nicety is a collapsible section with its own Reset button, and says when it cannot run: missing DLC, Smarter Construction loaded, a RimWorld update renamed what it patches, or a Multiplayer game using the host's settings.
+[/list]
 [b]Changed[/b]
 [list]
 [*] [b]Performance[/b] — the leave-a-way-out wall check reuses its buffers instead of allocating on every check, roommate sleep checks skip awake pawns first and remember each room's owners, throne rooms look at the colony's thrones instead of every thing in the room, and inspect lines are rebuilt about once a second. Big build queues and big colonies gain the most.

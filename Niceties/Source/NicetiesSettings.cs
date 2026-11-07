@@ -26,10 +26,12 @@ namespace Niceties
         public bool protectCorpseApparel;
         public bool unarmedHunting;
         public float meleeHuntMaxBodySize;
+        public float meleeHuntMaxRevengeChance;
         public bool skipDisturbedSleepWhenSharing;
 
-        // Sub-toggle, not a preset knob: a choice about who the feature reaches.
+        // Sub-toggles and limits, not preset knobs: choices about who or what a nicety reaches.
         public bool wearAnyGenderGenerated;
+        public int leaveAWayOutMaxRoom;
 
         public static NicetiesSimFlags Defaults => new NicetiesSimFlags
         {
@@ -43,10 +45,12 @@ namespace Niceties
             apparelQualityScaling = true,
             apparelCraftingBonus = true,
             protectCorpseApparel = false,
-            wearAnyGenderGenerated = false,
             unarmedHunting = false,
             meleeHuntMaxBodySize = NicetiesSettings.DefaultMeleeCap,
+            meleeHuntMaxRevengeChance = 1f,
             skipDisturbedSleepWhenSharing = true,
+            wearAnyGenderGenerated = false,
+            leaveAWayOutMaxRoom = NicetiesSettings.DefaultMaxRoom,
         };
 
         /// <summary>
@@ -67,10 +71,12 @@ namespace Niceties
             Scribe_Values.Look(ref meleeHunting, "meleeHunting", d.meleeHunting);
             Scribe_Values.Look(ref unarmedHunting, "unarmedHunting", d.unarmedHunting);
             Scribe_Values.Look(ref meleeHuntMaxBodySize, "meleeHuntMaxBodySize", d.meleeHuntMaxBodySize);
+            Scribe_Values.Look(ref meleeHuntMaxRevengeChance, "meleeHuntMaxRevengeChance", d.meleeHuntMaxRevengeChance);
             Scribe_Values.Look(ref enableSharedRooms, "enableSharedRooms", d.enableSharedRooms);
             Scribe_Values.Look(ref skipDisturbedSleepWhenSharing, "skipDisturbedSleepWhenSharing",
                 d.skipDisturbedSleepWhenSharing);
             Scribe_Values.Look(ref enableLeaveAWayOut, "enableLeaveAWayOut", d.enableLeaveAWayOut);
+            Scribe_Values.Look(ref leaveAWayOutMaxRoom, "leaveAWayOutMaxRoom", d.leaveAWayOutMaxRoom);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 Clamp();
@@ -79,9 +85,11 @@ namespace Niceties
 
         public void Clamp()
         {
-            meleeHuntMaxBodySize = meleeHuntMaxBodySize < NicetiesSettings.MinMeleeCap
-                ? NicetiesSettings.MinMeleeCap
-                : (meleeHuntMaxBodySize > NicetiesSettings.MaxMeleeCap ? NicetiesSettings.MaxMeleeCap : meleeHuntMaxBodySize);
+            meleeHuntMaxBodySize = Clamp(meleeHuntMaxBodySize, NicetiesSettings.MinMeleeCap, NicetiesSettings.MaxMeleeCap);
+            meleeHuntMaxRevengeChance = Clamp(meleeHuntMaxRevengeChance, 0f, 1f);
+            leaveAWayOutMaxRoom = leaveAWayOutMaxRoom < NicetiesSettings.MinMaxRoom
+                ? NicetiesSettings.MinMaxRoom
+                : (leaveAWayOutMaxRoom > NicetiesSettings.MaxMaxRoom ? NicetiesSettings.MaxMaxRoom : leaveAWayOutMaxRoom);
         }
 
         /// <summary>Copies only the nested knobs of a preset; master toggles stay as they are.</summary>
@@ -92,6 +100,7 @@ namespace Niceties
             protectCorpseApparel = preset.protectCorpseApparel;
             unarmedHunting = preset.unarmedHunting;
             meleeHuntMaxBodySize = preset.meleeHuntMaxBodySize;
+            meleeHuntMaxRevengeChance = preset.meleeHuntMaxRevengeChance;
             skipDisturbedSleepWhenSharing = preset.skipDisturbedSleepWhenSharing;
         }
 
@@ -100,7 +109,54 @@ namespace Niceties
             NicetiesSimFlags probe = this;
             probe.ApplyKnobsFrom(preset);
             probe.meleeHuntMaxBodySize = meleeHuntMaxBodySize;
-            return probe == this && Approx(meleeHuntMaxBodySize, preset.meleeHuntMaxBodySize);
+            probe.meleeHuntMaxRevengeChance = meleeHuntMaxRevengeChance;
+            return probe == this
+                && Approx(meleeHuntMaxBodySize, preset.meleeHuntMaxBodySize)
+                && Approx(meleeHuntMaxRevengeChance, preset.meleeHuntMaxRevengeChance);
+        }
+
+        /// <summary>One nicety back to its defaults: its toggle, knobs and limits (AZR-656).</summary>
+        public void ResetFeature(NicetiesFeature feature)
+        {
+            NicetiesSimFlags d = Defaults;
+            switch (feature)
+            {
+                case NicetiesFeature.ApparelCare:
+                    enableApparelCare = d.enableApparelCare;
+                    apparelQualityScaling = d.apparelQualityScaling;
+                    apparelCraftingBonus = d.apparelCraftingBonus;
+                    protectCorpseApparel = d.protectCorpseApparel;
+                    break;
+                case NicetiesFeature.ThroneAltar:
+                    allowThroneAltars = d.allowThroneAltars;
+                    break;
+                case NicetiesFeature.WearAnyGender:
+                    wearAnyGender = d.wearAnyGender;
+                    wearAnyGenderGenerated = d.wearAnyGenderGenerated;
+                    break;
+                case NicetiesFeature.HideCryptosleep:
+                    hideCryptosleep = d.hideCryptosleep;
+                    break;
+                case NicetiesFeature.MeleeHunting:
+                    meleeHunting = d.meleeHunting;
+                    unarmedHunting = d.unarmedHunting;
+                    meleeHuntMaxBodySize = d.meleeHuntMaxBodySize;
+                    meleeHuntMaxRevengeChance = d.meleeHuntMaxRevengeChance;
+                    break;
+                case NicetiesFeature.SharedRooms:
+                    enableSharedRooms = d.enableSharedRooms;
+                    skipDisturbedSleepWhenSharing = d.skipDisturbedSleepWhenSharing;
+                    break;
+                case NicetiesFeature.LeaveAWayOut:
+                    enableLeaveAWayOut = d.enableLeaveAWayOut;
+                    leaveAWayOutMaxRoom = d.leaveAWayOutMaxRoom;
+                    break;
+            }
+        }
+
+        private static float Clamp(float v, float min, float max)
+        {
+            return v < min ? min : (v > max ? max : v);
         }
 
         private static bool Approx(float a, float b)
@@ -117,6 +173,17 @@ namespace Niceties
         Hard,
     }
 
+    public enum NicetiesFeature
+    {
+        ApparelCare,
+        ThroneAltar,
+        WearAnyGender,
+        HideCryptosleep,
+        MeleeHunting,
+        SharedRooms,
+        LeaveAWayOut,
+    }
+
     /// <summary>
     /// Every nicety has a master bool. Patches must no-op when that bool is off
     /// so players can mix features. Nested knobs only apply while the master is on.
@@ -126,16 +193,29 @@ namespace Niceties
         public const float DefaultMeleeCap = 1.5f;
         public const float MinMeleeCap = 0.2f;
         public const float MaxMeleeCap = 8f;
+        public const int DefaultMaxRoom = 80;
+        public const int MinMaxRoom = 20;
+        public const int MaxMaxRoom = 400;
 
         public NicetiesSimFlags sim = NicetiesSimFlags.Defaults;
 
-        // UI-only: never baked into the save snapshot.
+        // UI-only: never baked into the save snapshot, and never synced in Multiplayer.
         public bool showCryptosleepCount = true;
+        public bool cryptosleepRoster = true;
+        public bool hideGrowthVats = false;
+        public bool hidePods = false;
+        public bool sharedRoomNobleAlert = true;
+        public bool showEncloseOverlay = true;
 
         public override void ExposeData()
         {
             sim.Expose();
             Scribe_Values.Look(ref showCryptosleepCount, "showCryptosleepCount", true);
+            Scribe_Values.Look(ref cryptosleepRoster, "cryptosleepRoster", true);
+            Scribe_Values.Look(ref hideGrowthVats, "hideGrowthVats", false);
+            Scribe_Values.Look(ref hidePods, "hidePods", false);
+            Scribe_Values.Look(ref sharedRoomNobleAlert, "sharedRoomNobleAlert", true);
+            Scribe_Values.Look(ref showEncloseOverlay, "showEncloseOverlay", true);
         }
 
         /// <summary>Knob values for each preset. Master toggles are not part of a preset.</summary>
@@ -156,6 +236,7 @@ namespace Niceties
                     f.protectCorpseApparel = false;
                     f.unarmedHunting = false;
                     f.meleeHuntMaxBodySize = 0.8f;
+                    f.meleeHuntMaxRevengeChance = 0.5f;
                     break;
             }
 
@@ -167,11 +248,40 @@ namespace Niceties
             sim.ApplyKnobsFrom(PresetKnobs(preset));
         }
 
-        /// <summary>The one full reset: every toggle, every knob and the UI preference.</summary>
+        /// <summary>The one full reset: every toggle, every knob and the UI preferences.</summary>
         public void ResetToDefaults()
         {
             sim = NicetiesSimFlags.Defaults;
-            showCryptosleepCount = true;
+            for (int i = 0; i <= (int)NicetiesFeature.LeaveAWayOut; i++)
+            {
+                ResetUiFor((NicetiesFeature)i);
+            }
+        }
+
+        /// <summary>Per-feature reset, including that feature's UI-only preferences (AZR-656).</summary>
+        public void ResetFeature(NicetiesFeature feature)
+        {
+            sim.ResetFeature(feature);
+            ResetUiFor(feature);
+        }
+
+        private void ResetUiFor(NicetiesFeature feature)
+        {
+            switch (feature)
+            {
+                case NicetiesFeature.HideCryptosleep:
+                    showCryptosleepCount = true;
+                    cryptosleepRoster = true;
+                    hideGrowthVats = false;
+                    hidePods = false;
+                    break;
+                case NicetiesFeature.SharedRooms:
+                    sharedRoomNobleAlert = true;
+                    break;
+                case NicetiesFeature.LeaveAWayOut:
+                    showEncloseOverlay = true;
+                    break;
+            }
         }
 
         /// <summary>Soft / Default / Hard / Custom for the options label (AZR-293).</summary>
@@ -194,6 +304,13 @@ namespace Niceties
             }
 
             return "Niceties_Settings_PresetCustom";
+        }
+
+        /// <summary>Snapshot of the UI-only fields, for change detection in the options window.</summary>
+        internal (bool, bool, bool, bool, bool, bool) UiState()
+        {
+            return (showCryptosleepCount, cryptosleepRoster, hideGrowthVats, hidePods, sharedRoomNobleAlert,
+                showEncloseOverlay);
         }
     }
 }

@@ -61,6 +61,38 @@
   <Niceties_Apparel_ReducedWear>Daily wear: {0} of vanilla.</Niceties_Apparel_ReducedWear>
   <Niceties_Hunt_TooBig>{0} is too large for melee hunting.</Niceties_Hunt_TooBig>
   <Niceties_CryptoHiddenCount>+{0} in cryptosleep</Niceties_CryptoHiddenCount>
-  <Niceties_CryptoHiddenCountTip>Colonists in cryptosleep caskets are hidden from the bar by Niceties. Turn this off in Mod Options.</Niceties_CryptoHiddenCountTip>
+  <Niceties_CryptoHiddenCountTip>Colonists hidden from the bar by Niceties: cryptosleep, plus growth vats and pods if you ticked them. Turn this off in Mod Options.</Niceties_CryptoHiddenCountTip>
 
+  <Niceties_Hunt_TooDangerous>{0} is too likely to turn on a melee hunter.</Niceties_Hunt_TooDangerous>
+  <Niceties_Hunt_TooBigInspect>Melee hunters skip this animal: it is over the melee hunting size cap.</Niceties_Hunt_TooBigInspect>
+  <Niceties_Hunt_TooDangerousInspect>Melee hunters skip this animal: it is too likely to turn on them.</Niceties_Hunt_TooDangerousInspect>
+  <Niceties_OpenBuilds_WouldEncloseNamed>Finishing this would wall in {0}.</Niceties_OpenBuilds_WouldEncloseNamed>
+  <Niceties_HiddenCount>+{0} hidden</Niceties_HiddenCount>
+  <Niceties_CryptoRosterTip>Click to list them and jump to one.</Niceties_CryptoRosterTip>
+  <Niceties_Settings_CryptoRoster>Click the note to list them</Niceties_Settings_CryptoRoster>
+  <Niceties_Settings_CryptoRosterTip>Clicking the note opens a list of the hidden colonists. Pick one to jump to their casket. Only on this computer.</Niceties_Settings_CryptoRosterTip>
+  <Niceties_Settings_HideVats>Also hide children in growth vats</Niceties_Settings_HideVats>
+  <Niceties_Settings_HideVatsTip>Biotech growth-vat children drop off the colonist bar too. Only on this computer.</Niceties_Settings_HideVatsTip>
+  <Niceties_Settings_HidePods>Also hide pawns in biosculpter pods and subcore scanners</Niceties_Settings_HidePods>
+  <Niceties_Settings_HidePodsTip>Colonists inside a biosculpter pod or subcore scanner drop off the colonist bar too. Only on this computer.</Niceties_Settings_HidePodsTip>
+  <Niceties_Settings_NobleAlert>Warn when a noble is in a shared room</Niceties_Settings_NobleAlert>
+  <Niceties_Settings_NobleAlertTip>An alert names titled colonists whose bed is in a room marked shared, since their title wants a bedroom of their own.</Niceties_Settings_NobleAlertTip>
+  <Niceties_NobleSharedRoom>Noble in a shared room</Niceties_NobleSharedRoom>
+  <Niceties_NobleSharedRoomDesc>{0} own a bed in a room marked shared. Their royal title wants a bedroom of their own, so a shared room does not count. Untick Share room, or give them their own bedroom.</Niceties_NobleSharedRoomDesc>
+  <Niceties_SharedRoleSuffix>(shared)</Niceties_SharedRoleSuffix>
+  <Niceties_Settings_EncloseOverlay>Outline the area a selected wall frame would close off</Niceties_Settings_EncloseOverlay>
+  <Niceties_Settings_EncloseOverlayTip>With one wall frame selected, the cells finishing it would wall in are outlined in orange.</Niceties_Settings_EncloseOverlayTip>
+  <Niceties_Settings_MaxRoom>Largest area that counts as walled in: {0} cells</Niceties_Settings_MaxRoom>
+  <Niceties_Settings_MaxRoomTip>An area beside a new wall with fewer walkable cells than this counts as closed. 80 by default, so a 9×9 room counts as open. Bigger values catch bigger rooms but cost more.</Niceties_Settings_MaxRoomTip>
+  <Niceties_Settings_MeleeCapButtonTip>Set the cap to a {0} ({1}).</Niceties_Settings_MeleeCapButtonTip>
+  <Niceties_Settings_Revenge>Skip animals that turn on hunters more often than: {0}</Niceties_Settings_Revenge>
+  <Niceties_Settings_RevengeOff>no limit</Niceties_Settings_RevengeOff>
+  <Niceties_Settings_RevengeTip>Melee hunters skip animals whose chance to turn manhunter when hurt is above this. A hunt-designated animal they skip says so in its inspect pane.</Niceties_Settings_RevengeTip>
+  <Niceties_Settings_ResetOne>Reset</Niceties_Settings_ResetOne>
+  <Niceties_Settings_ResetOneTip>Reset {0} to its defaults. Other niceties are untouched.</Niceties_Settings_ResetOneTip>
+  <Niceties_Status_NeedsRoyaltyIdeology>Inactive: needs both Royalty and Ideology.</Niceties_Status_NeedsRoyaltyIdeology>
+  <Niceties_Status_SmarterConstruction>Inactive: Smarter Construction is loaded and does this job.</Niceties_Status_SmarterConstruction>
+  <Niceties_Status_Unavailable>Unavailable on this RimWorld build. See Player.log.</Niceties_Status_Unavailable>
+  <Niceties_Status_RoommateSleepUnavailable>Roommate sleep part unavailable on this RimWorld build. See Player.log.</Niceties_Status_RoommateSleepUnavailable>
+  <Niceties_Status_HostBaked>Multiplayer: this game uses the host's setting.</Niceties_Status_HostBaked>
 </LanguageData>
