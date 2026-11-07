@@ -8,6 +8,7 @@
     <li>1.7</li>
   </supportedVersions>
   <modVersion IgnoreIfNoMatchingField="True">1.0.0</modVersion>
+  <url>https://github.com/AzraelGodKing/rimworld_mods/tree/main/Azrael</url>
   <modDependencies>
     <li>
       <packageId>brrainz.harmony</packageId>
