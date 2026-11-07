@@ -42,4 +42,27 @@
   <WSR_HudActive>Волна {0}: врагов на ногах — {1}</WSR_HudActive>
   <WSR_HudLast>Волна {0}: убито {1}, повержено {2}, сбежало {3}</WSR_HudLast>
 
+  <WSR_ScenPartForcedSummary>Рассказчик закреплён: {0}.</WSR_ScenPartForcedSummary>
+  <WSR_SettingsPreset>Пресет для новых игр</WSR_SettingsPreset>
+  <WSR_SettingsPresetTip>Копируется в сохранение при старте забега. Изменение позже не влияет на идущий забег.</WSR_SettingsPresetTip>
+  <WSR_Preset_Casual>Лёгкий</WSR_Preset_Casual>
+  <WSR_Preset_CasualTip>Волны слабее и реже, припасов больше.</WSR_Preset_CasualTip>
+  <WSR_Preset_Standard>Стандартный</WSR_Preset_Standard>
+  <WSR_Preset_StandardTip>Исходные настройки «Выживания волнами» из Defs/WaveSurvivalConfig.xml.</WSR_Preset_StandardTip>
+  <WSR_Preset_Brutal>Жестокий</WSR_Preset_Brutal>
+  <WSR_Preset_BrutalTip>Волны сильнее и чаще, припасов меньше, бонус к настроению ниже.</WSR_Preset_BrutalTip>
+  <WSR_Preset_Custom>Свой</WSR_Preset_Custom>
+  <WSR_Preset_CustomTip>Задайте все значения сами.</WSR_Preset_CustomTip>
+  <WSR_SettingsPoints>Сила волн: {0}</WSR_SettingsPoints>
+  <WSR_SettingsFirstWave>Дней до первой волны: {0}</WSR_SettingsFirstWave>
+  <WSR_SettingsBetween>Дней между волнами: {0}</WSR_SettingsBetween>
+  <WSR_SettingsSpecial>Особая волна каждые {0} волн</WSR_SettingsSpecial>
+  <WSR_SettingsSupply>Шансы посылок: {0}</WSR_SettingsSupply>
+  <WSR_SettingsMood>Настроение «ещё жив»: +{0}</WSR_SettingsMood>
+  <WSR_SettingsWanderer>Шансы странников: {0}</WSR_SettingsWanderer>
+  <WSR_SettingsSummary>Сила волн {0}. Первая волна через {1} дн., затем каждые {2} дн. Особая волна каждые {3}. Шансы посылок {4}. Настроение +{5}. Странники {6}.</WSR_SettingsSummary>
+  <WSR_SettingsCurrentRun>Эта игра использует пресет «{0}», выбранный при старте.</WSR_SettingsCurrentRun>
+  <WSR_SettingsNewRunsOnly>Пресеты применяются при старте забега «Выживания волнами».</WSR_SettingsNewRunsOnly>
+  <WSR_SettingsMultiplayer>Мультиплеер не поддерживается.</WSR_SettingsMultiplayer>
+
 </LanguageData>
