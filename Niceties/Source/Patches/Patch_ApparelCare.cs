@@ -97,9 +97,32 @@ namespace Niceties
     [HarmonyPatch(typeof(Apparel), nameof(Apparel.GetInspectString))]
     internal static class Patch_Apparel_GetInspectString
     {
+        // The inspect pane asks every frame for the one selected thing; rebuild the line
+        // about once a second instead (AZR-549).
+        private const int CacheTicks = 60;
+        private static int cachedThing = -1;
+        private static int cachedTick = int.MinValue;
+        private static LoadedLanguage? cachedLanguage;
+        private static string? cachedLine;
+
+        internal static void Invalidate()
+        {
+            cachedThing = -1;
+        }
+
         private static void Postfix(Apparel __instance, ref string __result)
         {
-            ApparelCare.AppendInspect(ref __result, ApparelCare.InspectLine(__instance, __instance.Wearer));
+            int tick = Find.TickManager?.TicksGame ?? 0;
+            if (__instance.thingIDNumber != cachedThing || tick < cachedTick || tick - cachedTick >= CacheTicks
+                || !ReferenceEquals(cachedLanguage, LanguageDatabase.activeLanguage))
+            {
+                cachedThing = __instance.thingIDNumber;
+                cachedTick = tick;
+                cachedLanguage = LanguageDatabase.activeLanguage;
+                cachedLine = ApparelCare.InspectLine(__instance, __instance.Wearer);
+            }
+
+            ApparelCare.AppendInspect(ref __result, cachedLine);
         }
     }
 }

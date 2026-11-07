@@ -88,6 +88,7 @@ namespace Niceties
 
             CryptosleepBar.MarkDirty();
             OpenBuilds.ClearCache();
+            SharedRooms.ClearCache();
         }
 
         public void PullFromModSettings()
@@ -96,6 +97,7 @@ namespace Niceties
             src.Clamp();
             snapshot = src;
             hasSnapshot = true;
+            Patch_Apparel_GetInspectString.Invalidate();
         }
 
         public bool DiffersFromModSettings()

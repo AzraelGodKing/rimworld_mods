@@ -53,9 +53,16 @@ namespace Niceties
                 return;
             }
 
-            foreach (Thing thing in room.ContainedAndAdjacentThings)
+            // The colony's thrones, not every thing in and around the room (AZR-549).
+            Map? map = room.Map;
+            if (map == null)
             {
-                if (thing is Building_Throne)
+                return;
+            }
+
+            foreach (Building_Throne throne in map.listerBuildings.AllBuildingsColonistOfClass<Building_Throne>())
+            {
+                if (throne.Spawned && throne.GetRoom() == room)
                 {
                     __result = 0f;
                     return;
