@@ -10,7 +10,7 @@ namespace Homesteader
     {
         public const string TraitDefName = "Homesteader_Polyarmory";
 
-        public static TraitDef? Trait => DefDatabase<TraitDef>.GetNamedSilentFail(TraitDefName);
+        public static TraitDef? Trait => HomesteaderDefOf.Homesteader_Polyarmory;
 
         public static bool HasPolyarmory(Pawn? pawn)
         {
@@ -44,8 +44,12 @@ namespace Homesteader
             }
 
             // BFS through love partners, only stepping via polyarmory pawns (polycule members).
-            var visited = new HashSet<Pawn> { a };
-            var queue = new Queue<Pawn>();
+            // Reused buffers: bed checks run often and always on the main thread (AZR-561).
+            HashSet<Pawn> visited = Visited;
+            Queue<Pawn> queue = Queue;
+            visited.Clear();
+            queue.Clear();
+            visited.Add(a);
             queue.Enqueue(a);
             while (queue.Count > 0)
             {
@@ -78,6 +82,9 @@ namespace Homesteader
 
             return false;
         }
+
+        private static readonly HashSet<Pawn> Visited = new HashSet<Pawn>();
+        private static readonly Queue<Pawn> Queue = new Queue<Pawn>();
 
         public static bool AcceptsSharingBedWith(Pawn pawn, Pawn other)
         {

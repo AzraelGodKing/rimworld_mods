@@ -26,14 +26,14 @@ namespace Homesteader
         {
             base.PostSpawnSetup(respawningAfterLoad);
             if (parent.Map != null)
-                CoolingLookup.For(parent.Map)?.MarkDirty();
+                CoolingLookup.For(parent.Map)?.AddCooler(this);
         }
 
         public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)
         {
             base.PostDeSpawn(map, mode);
             if (map != null)
-                CoolingLookup.For(map)?.MarkDirty();
+                CoolingLookup.For(map)?.RemoveCooler(this);
         }
 
         public override string? CompInspectStringExtra()
@@ -53,9 +53,15 @@ namespace Homesteader
     /// </summary>
     public class RootCellarCoolingMapComponent : MapComponent
     {
-        private readonly Dictionary<IntVec3, float> cooledCellTemps = new Dictionary<IntVec3, float>();
-
         private const int FallbackRescanTicks = 250;
+
+        // Coolers on this map, kept by the comp's spawn/despawn so a rebuild never
+        // scans every building (AZR-679).
+        private readonly HashSet<CompRootCellarCooling> coolers = new HashSet<CompRootCellarCooling>();
+
+        // Cooling ceiling per cell by CellIndices; NaN = not cooled (AZR-561).
+        private float[]? ceilings;
+        private readonly List<int> cooledCells = new List<int>();
 
         private bool dirty = true;
 
@@ -69,10 +75,40 @@ namespace Homesteader
             CoolingLookup.Unregister(map);
         }
 
-        public bool HasAnyCooling => cooledCellTemps.Count > 0;
+        public bool HasAnyCooling => cooledCells.Count > 0;
 
-        public bool TryGetCoolingCeiling(IntVec3 cell, out float maxTemperature) =>
-            cooledCellTemps.TryGetValue(cell, out maxTemperature);
+        /// <summary>Cooled cells by CellIndices, for the overlay. Valid until the next rebuild.</summary>
+        internal IReadOnlyList<int> CooledCells => cooledCells;
+
+        public bool TryGetCoolingCeiling(IntVec3 cell, out float maxTemperature)
+        {
+            maxTemperature = 0f;
+            if (ceilings == null || cooledCells.Count == 0 || !cell.InBounds(map))
+            {
+                return false;
+            }
+
+            float v = ceilings[map.cellIndices.CellToIndex(cell)];
+            if (float.IsNaN(v))
+            {
+                return false;
+            }
+
+            maxTemperature = v;
+            return true;
+        }
+
+        internal void AddCooler(CompRootCellarCooling comp)
+        {
+            coolers.Add(comp);
+            dirty = true;
+        }
+
+        internal void RemoveCooler(CompRootCellarCooling comp)
+        {
+            coolers.Remove(comp);
+            dirty = true;
+        }
 
         public void MarkDirty()
         {
@@ -98,14 +134,27 @@ namespace Homesteader
         public void Rebuild()
         {
             dirty = false;
-            cooledCellTemps.Clear();
-
-            List<Thing> buildings = map.listerThings.ThingsInGroup(ThingRequestGroup.BuildingArtificial);
-            for (int i = 0; i < buildings.Count; i++)
+            if (ceilings == null || ceilings.Length != map.cellIndices.NumGridCells)
             {
-                Thing t = buildings[i];
-                CompRootCellarCooling? comp = t.TryGetComp<CompRootCellarCooling>();
-                if (comp == null)
+                ceilings = new float[map.cellIndices.NumGridCells];
+                for (int i = 0; i < ceilings.Length; i++)
+                {
+                    ceilings[i] = float.NaN;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < cooledCells.Count; i++)
+                {
+                    ceilings[cooledCells[i]] = float.NaN;
+                }
+            }
+
+            cooledCells.Clear();
+            foreach (CompRootCellarCooling comp in coolers)
+            {
+                Thing t = comp.parent;
+                if (!t.Spawned || t.Map != map)
                 {
                     continue;
                 }
@@ -122,15 +171,10 @@ namespace Homesteader
                         continue;
                     }
 
-                    foreach (IntVec3 adj in GenAdj.CellsAdjacent8Way(new TargetInfo(cell, map)))
+                    for (int d = 0; d < 8; d++)
                     {
-                        if (!adj.InBounds(map))
-                        {
-                            continue;
-                        }
-
-                        Room? adjRoom = adj.GetRoom(map);
-                        if (adjRoom == room)
+                        IntVec3 adj = cell + GenAdj.AdjacentCells[d];
+                        if (adj.InBounds(map) && adj.GetRoom(map) == room)
                         {
                             AddCell(adj, ceiling);
                         }
@@ -141,13 +185,21 @@ namespace Homesteader
 
         private void AddCell(IntVec3 cell, float maxTemperature)
         {
-            if (cooledCellTemps.TryGetValue(cell, out float existing))
+            if (!cell.InBounds(map))
             {
-                cooledCellTemps[cell] = Mathf.Min(existing, maxTemperature);
+                return;
             }
-            else
+
+            int index = map.cellIndices.CellToIndex(cell);
+            float existing = ceilings![index];
+            if (float.IsNaN(existing))
             {
-                cooledCellTemps[cell] = maxTemperature;
+                ceilings[index] = maxTemperature;
+                cooledCells.Add(index);
+            }
+            else if (maxTemperature < existing)
+            {
+                ceilings[index] = maxTemperature;
             }
         }
     }
@@ -229,19 +281,14 @@ namespace Homesteader
     {
         public static void Postfix(Thing __instance, ref float __result)
         {
-            Map map = __instance.Map;
-            if (map == null || !__instance.Spawned)
+            // Def check first: pawns and buildings leave before any map lookup (AZR-561).
+            if (!HomesteaderHarmony.IsRottable(__instance.def) || !__instance.Spawned)
             {
                 return;
             }
 
-            RootCellarCoolingMapComponent? cooling = CoolingLookup.For(map);
+            RootCellarCoolingMapComponent? cooling = CoolingLookup.For(__instance.Map);
             if (cooling == null || !cooling.HasAnyCooling)
-            {
-                return;
-            }
-
-            if (!HomesteaderHarmony.RottableDefs.Contains(__instance.def))
             {
                 return;
             }

@@ -22,6 +22,9 @@ namespace Homesteader
         public string lockReason = "";
         public ThingDef? stationDef;
         public List<Building_WorkTable> stations = new List<Building_WorkTable>();
+
+        /// <summary>Row text, built once per scan instead of every frame (AZR-561).</summary>
+        public string text = "";
     }
 
     internal sealed class PantryMakeReport
@@ -112,21 +115,17 @@ namespace Homesteader
             }
 
             Dictionary<ThingDef, int> stock = CountMapStock();
-            List<RecipeDef> recipes = DefDatabase<RecipeDef>.AllDefsListForReading;
+            List<RecipeDef> recipes = HomesteaderRecipes();
             for (int i = 0; i < recipes.Count; i++)
             {
                 RecipeDef recipe = recipes[i];
-                if (!IsHomesteaderRecipe(recipe))
-                {
-                    continue;
-                }
-
                 PantryMakeRow? row = Evaluate(recipe, stock);
                 if (row == null)
                 {
                     continue;
                 }
 
+                row.text = LineText(row);
                 switch (row.status)
                 {
                     case PantryMakeStatus.CanMake:
@@ -147,9 +146,52 @@ namespace Homesteader
             return report;
         }
 
+        private static string LineText(PantryMakeRow row)
+        {
+            string name = row.recipe.LabelCap;
+            switch (row.status)
+            {
+                case PantryMakeStatus.CanMake:
+                    return name + "  ×" + row.batches;
+                case PantryMakeStatus.OneShort:
+                    string missing = row.missingDef != null
+                        ? row.missingDef.LabelCap.ToString()
+                        : "Homesteader_PantryMakeUnknownIng".Translate().ToString();
+                    return name + "  —  " + "Homesteader_PantryMakeNeedIng".Translate(row.missingCount, missing);
+                default:
+                    return name + "  —  " + row.lockReason;
+            }
+        }
+
         private static int CompareRows(PantryMakeRow a, PantryMakeRow b)
         {
             return string.CompareOrdinal(a.recipe?.label, b.recipe?.label);
+        }
+
+        // Built once after defs load: which recipes the Make page lists, and each
+        // recipe's work tables (AllRecipeUsers walks every ThingDef) (AZR-561).
+        private static List<RecipeDef>? homesteaderRecipes;
+        private static readonly Dictionary<RecipeDef, ThingDef[]> usersByRecipe = new Dictionary<RecipeDef, ThingDef[]>();
+
+        private static List<RecipeDef> HomesteaderRecipes()
+        {
+            if (homesteaderRecipes != null)
+            {
+                return homesteaderRecipes;
+            }
+
+            var list = new List<RecipeDef>();
+            List<RecipeDef> all = DefDatabase<RecipeDef>.AllDefsListForReading;
+            for (int i = 0; i < all.Count; i++)
+            {
+                if (IsHomesteaderRecipe(all[i]))
+                {
+                    list.Add(all[i]);
+                }
+            }
+
+            homesteaderRecipes = list;
+            return list;
         }
 
         private static bool IsHomesteaderRecipe(RecipeDef recipe)
@@ -198,21 +240,33 @@ namespace Homesteader
             return def?.defName != null && def.defName.StartsWith("Homesteader_");
         }
 
-        private static IEnumerable<ThingDef> RecipeUsers(RecipeDef? recipe)
+        private static ThingDef[] RecipeUsers(RecipeDef? recipe)
         {
-            IEnumerable<ThingDef>? users = recipe?.AllRecipeUsers;
-            if (users == null)
+            if (recipe == null)
             {
-                yield break;
+                return new ThingDef[0];
             }
 
-            foreach (ThingDef user in users)
+            if (!usersByRecipe.TryGetValue(recipe, out ThingDef[]? users))
             {
-                if (user != null)
+                var found = new List<ThingDef>();
+                IEnumerable<ThingDef>? all = recipe.AllRecipeUsers;
+                if (all != null)
                 {
-                    yield return user;
+                    foreach (ThingDef user in all)
+                    {
+                        if (user != null)
+                        {
+                            found.Add(user);
+                        }
+                    }
                 }
+
+                users = found.ToArray();
+                usersByRecipe[recipe] = users;
             }
+
+            return users;
         }
 
         private static PantryMakeRow? Evaluate(RecipeDef recipe, Dictionary<ThingDef, int> stock)
@@ -393,12 +447,8 @@ namespace Homesteader
 
         private static ThingDef? FirstUser(RecipeDef recipe)
         {
-            foreach (ThingDef user in RecipeUsers(recipe))
-            {
-                return user;
-            }
-
-            return null;
+            ThingDef[] users = RecipeUsers(recipe);
+            return users.Length > 0 ? users[0] : null;
         }
 
         private static Dictionary<ThingDef, int> CountMapStock()

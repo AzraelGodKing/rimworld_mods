@@ -239,7 +239,8 @@
     <fillPercent>0.25</fillPercent>
     <rotatable>false</rotatable>
     <size>(1,1)</size>
-    <tickerType>Normal</tickerType>
+    <!-- Rare: the spawner is the only ticking comp (AZR-561). -->
+    <tickerType>Rare</tickerType>
     <statBases>
       <MaxHitPoints>80</MaxHitPoints>
       <WorkToBuild>700</WorkToBuild>

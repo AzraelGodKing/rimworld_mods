@@ -8,7 +8,7 @@ Detailed notes for Homesteader only.
 
 Player-facing version **2.0.0** (`About.xml` `modVersion`). Stamp `homesteader-2-v1`. Ships for RimWorld **1.6** and **1.7** from the same source; 1.6 is not frozen.
 
-AZR-512 AZR-525 AZR-527 AZR-541 AZR-543 AZR-544 AZR-680 AZR-681 AZR-694 AZR-695
+AZR-512 AZR-525 AZR-527 AZR-541 AZR-543 AZR-544 AZR-561 AZR-679 AZR-680 AZR-681 AZR-694 AZR-695
 
 ### Added
 - **Soft Multiplayer** (AZR-527) — `HomesteaderMultiplayer` registers `HomesteaderSync.SetGameplay`, `RerollTastes` and `AddBill` through `Multiplayer.API.MP.RegisterSyncMethod`, found by reflection (no DLL), the Date Night pattern. Every UI action that changes the game goes through `HomesteaderSync`. The two-client test is still to do.
@@ -20,6 +20,13 @@ AZR-512 AZR-525 AZR-527 AZR-541 AZR-543 AZR-544 AZR-680 AZR-681 AZR-694 AZR-695
 - **Stale caches** (AZR-527) — the cooling lookup and the pantry stock and Make caches are cleared when a game is created or loaded (map ids repeat across saves). A cache from a later tick is never treated as fresh.
 - **Harvest festival** (AZR-680) — saving drops festival years for maps that no longer exist.
 - **Outlander trader patch** (AZR-541) — `PatchOperationConditional`: if `OutlanderFactionBase` is gone, the supplier goes onto `OutlanderCivil` / `OutlanderRough` lists when they have one, otherwise it is skipped without an error.
+- **Performance** (AZR-561, AZR-679) — behaviour unchanged:
+  - Def flags by `ThingDef.index` (rottable, landrace, maple sap, aging) let the `AmbientTemperature`, plant growth/yield and market-value hooks leave before any comp or map lookup.
+  - Cooled cells are a per-map `float[]` by cell index instead of a `Dictionary<IntVec3,float>`. Each map keeps its own set of coolers, maintained on spawn and despawn, so a room rebuild no longer walks every artificial building.
+  - Food allergen matching uses a per-`ThingDef` 13-bit mask computed once; pawns with no discovered allergy skip the matcher. The favourites component is cached instead of `GetComponent` per food candidate.
+  - The landrace and maple `YieldNow` postfixes are merged. Polyarmory binds its trait through `HomesteaderDefOf` and reuses its search buffers.
+  - The pantry Make page indexes Homesteader recipes and their work tables once; stock and Make rows build their text once per scan. The Tastes tab re-reads at most twice a second.
+  - Chicken coop, beehive and solar still tick Rare (spawner only). The rain barrel, cistern and water tower stay Normal because Dubs Bad Hygiene adds its comps to them.
 - **Package layout** (AZR-525) — one set of defs for both game versions. The Homesteaders scenario (was `1.6/Defs`) and the backstories (was `1.5/Defs`) moved to root `Defs/`. `LoadFolders.xml` loads `/` plus `1.6` or `1.7` (assemblies only) plus `Odyssey` when Odyssey is active. Def names and classes are unchanged.
 - **.NET 10 build for 1.7** (AZR-543) — `Homesteader.1.7.csproj` targets net10.0 against `Krafs.Rimworld.Ref` 1.7.4998-unstable and Lib.Harmony 3.0.0-rc.4. The 1.6 build stays net472.
 - **Private fields** (AZR-543, AZR-695) — `PrivateAccess` binds `RegionAndRoomUpdater.map` and `GraphicData.cachedGraphic` with `[UnsafeAccessor]` on 1.7 and Harmony `FieldRef`s on 1.6, probed once at startup. No `FieldInfo.GetValue` on the room-rebuild path. A missing field logs one warning; the room hook then falls back to the 250-tick rescan, and the refresh pack logs an error and keeps the original art instead of silently doing nothing.

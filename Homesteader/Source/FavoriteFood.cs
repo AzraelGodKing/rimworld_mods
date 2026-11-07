@@ -33,9 +33,12 @@ namespace Homesteader
         private bool tastesPruned;
         private bool pruneNonColonyOnLoad;
 
+        internal static GameComponent_HomesteaderFavorites? instance;
+
         public GameComponent_HomesteaderFavorites(Game game)
         {
             tastesPruned = true;
+            instance = this;
         }
 
         public override void ExposeData()
@@ -422,8 +425,10 @@ namespace Homesteader
             }
 
             EnsureTastes(pawn);
-            string? match = AllergyCatalog.MatchingFoodAllergyId(AllergyIdSet(pawn.thingIDNumber), foodDef);
-            return match != null && DiscoveredAllergySet(pawn.thingIDNumber).Contains(match);
+            // Discovered allergies are a subset of the pawn's allergies, and most pawns
+            // have none: skip the matcher entirely then (AZR-561).
+            HashSet<string> discovered = DiscoveredAllergySet(pawn.thingIDNumber);
+            return discovered.Count > 0 && AllergyCatalog.MatchingFoodAllergyId(discovered, foodDef) != null;
         }
 
         public bool IsDiscoveredFoodAllergy(Pawn pawn, Thing food)
@@ -434,8 +439,8 @@ namespace Homesteader
             }
 
             EnsureTastes(pawn);
-            string? match = AllergyCatalog.MatchingFoodAllergyId(AllergyIdSet(pawn.thingIDNumber), food);
-            return match != null && DiscoveredAllergySet(pawn.thingIDNumber).Contains(match);
+            HashSet<string> discovered = DiscoveredAllergySet(pawn.thingIDNumber);
+            return discovered.Count > 0 && AllergyCatalog.MatchingFoodAllergyId(discovered, food) != null;
         }
 
         public bool IsDiscoveredAllergyId(Pawn pawn, string allergyId)
@@ -639,7 +644,7 @@ namespace Homesteader
         private static List<ThingDef>? cachedPool;
 
         public static GameComponent_HomesteaderFavorites? Comp =>
-            Current.Game?.GetComponent<GameComponent_HomesteaderFavorites>();
+            Current.Game != null ? GameComponent_HomesteaderFavorites.instance : null;
 
         public static List<ThingDef> GetFavoritePool()
         {
@@ -792,6 +797,12 @@ namespace Homesteader
     public class ITab_Pawn_HomesteaderTastes : ITab
     {
         private Vector2 scrollPos;
+        private Pawn? shownPawn;
+        private int shownFrame;
+        private bool shownKnown;
+        private List<ThingDef> shownFavorites = new List<ThingDef>();
+        private List<string> shownAllergies = new List<string>();
+        private List<string> shownDiscovered = new List<string>();
 
         public ITab_Pawn_HomesteaderTastes()
         {
@@ -819,7 +830,18 @@ namespace Homesteader
                 return;
             }
 
-            bool known = comp.TryPeekTastes(pawn, out List<ThingDef> favorites, out List<string> allergies, out List<string> discovered);
+            // Re-read at most twice a second, not every frame (AZR-561).
+            if (pawn != shownPawn || Time.frameCount - shownFrame > 30)
+            {
+                shownKnown = comp.TryPeekTastes(pawn, out shownFavorites, out shownAllergies, out shownDiscovered);
+                shownPawn = pawn;
+                shownFrame = Time.frameCount;
+            }
+
+            bool known = shownKnown;
+            List<ThingDef> favorites = shownFavorites;
+            List<string> allergies = shownAllergies;
+            List<string> discovered = shownDiscovered;
             Rect outRect = new Rect(0f, 0f, size.x, size.y).ContractedBy(10f);
             float viewHeight = 80f + Math.Max(favorites.Count, 1) * 28f + 40f + Math.Max(allergies.Count, 1) * 28f + 50f;
             Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, viewHeight);
@@ -955,11 +977,7 @@ namespace Homesteader
                 return;
             }
 
-            ThoughtDef? thought = DefDatabase<ThoughtDef>.GetNamedSilentFail("Homesteader_AteFavoriteFood");
-            if (thought == null)
-            {
-                return;
-            }
+            ThoughtDef thought = HomesteaderDefOf.Homesteader_AteFavoriteFood;
 
             for (int i = 0; i < __result.Count; i++)
             {

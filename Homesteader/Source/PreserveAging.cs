@@ -172,7 +172,9 @@ namespace Homesteader
 
         private static CompPreserveAging? Comp(StatRequest req)
         {
-            return req.HasThing ? req.Thing.TryGetComp<CompPreserveAging>() : null;
+            return req.HasThing && HomesteaderHarmony.HasPreserveAging(req.Thing.def)
+                ? req.Thing.TryGetComp<CompPreserveAging>()
+                : null;
         }
 
         internal static void Register()
