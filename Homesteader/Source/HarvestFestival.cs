@@ -77,11 +77,8 @@ namespace Homesteader
             }
         }
 
-        internal static int StageFor(int preserveKinds, bool seasonalFood)
-        {
-            int stage = preserveKinds >= 6 ? 2 : preserveKinds >= 3 ? 1 : 0;
-            return seasonalFood && stage < 2 ? stage + 1 : stage;
-        }
+        internal static int StageFor(int preserveKinds, bool seasonalFood) =>
+            HomesteaderPure.FestivalStage(preserveKinds, seasonalFood);
 
         /// <summary>Seasonal food (HS-A01): pumpkin pie or cider on the shelves lifts the festival a step.</summary>
         private static bool HasSeasonalFood(PantryReport pantry)

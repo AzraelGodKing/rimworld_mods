@@ -272,30 +272,9 @@ namespace Homesteader
             favoritesByPawnId = null;
         }
 
-        private static List<string> Unpack(string? packed)
-        {
-            var list = new List<string>();
-            if (packed == null || packed.Length == 0)
-            {
-                return list;
-            }
+        private static List<string> Unpack(string? packed) => HomesteaderPure.Unpack(packed);
 
-            string[] parts = packed.Split('|');
-            for (int i = 0; i < parts.Length; i++)
-            {
-                if (!parts[i].NullOrEmpty())
-                {
-                    list.Add(parts[i]);
-                }
-            }
-
-            return list;
-        }
-
-        private static string Pack(List<string>? list)
-        {
-            return list == null || list.Count == 0 ? string.Empty : string.Join("|", list);
-        }
+        private static string Pack(List<string>? list) => HomesteaderPure.Pack(list);
 
         private List<string> GetFavoriteNames(int pawnId)
         {

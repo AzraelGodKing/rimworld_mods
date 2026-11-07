@@ -35,37 +35,9 @@ namespace Homesteader
 
         public float AgedDays => agedTicks / (float)GenDate.TicksPerDay;
 
-        public int Tier
-        {
-            get
-            {
-                int tier = 0;
-                float days = AgedDays;
-                for (int i = 0; i < Props.tierDays.Count; i++)
-                {
-                    if (days >= Props.tierDays[i])
-                    {
-                        tier = i + 1;
-                    }
-                }
+        public int Tier => HomesteaderPure.AgingTier(AgedDays, Props.tierDays);
 
-                return tier;
-            }
-        }
-
-        public float ValueFactor
-        {
-            get
-            {
-                List<float> factors = Props.tierValueFactors;
-                if (factors == null || factors.Count == 0)
-                {
-                    return 1f;
-                }
-
-                return factors[Mathf.Min(Tier, factors.Count - 1)];
-            }
-        }
+        public float ValueFactor => HomesteaderPure.AgingValueFactor(Tier, Props.tierValueFactors);
 
         public override void CompTickRare()
         {

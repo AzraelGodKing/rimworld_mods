@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <Homesteader_Homesteaders.label>Усадебники</Homesteader_Homesteaders.label>
+  <Homesteader_Homesteaders.description>Трое поселенцев уходят далеко от цивилизации, чтобы построить самодостаточную ферму. Никаких хитрых технологий — только скот, семенное зерно, ручные инструменты и умение жить с земли.\n\nФиксирует рассказчика Azrael (поставляется с Homesteader).</Homesteader_Homesteaders.description>
+  <Homesteader_Homesteaders.scenario.summary>Трое усадебников под Azrael. Скот, семена и упорство.</Homesteader_Homesteaders.scenario.summary>
+  <Homesteader_Homesteaders.scenario.parts.3.text>Повозка разгружена, и земля ваша — работайте.
+
+Нужно сеять зерно, ухаживать за животными, а где-то за горизонтом ждёт долгая зима.
+
+Постройте усадьбу, которая всё это переживёт.</Homesteader_Homesteaders.scenario.parts.3.text>
+  <Homesteader_Homesteaders.scenario.parts.4.text>Повозка разгружена, и земля ваша — работайте.
+
+Нужно сеять зерно, ухаживать за животными, а где-то за горизонтом ждёт долгая зима.
+
+Постройте усадьбу, которая всё это переживёт.</Homesteader_Homesteaders.scenario.parts.4.text>
+</LanguageData>

@@ -61,7 +61,7 @@ namespace Homesteader
                     "Homesteader_Flapjacks",
                     "Homesteader_ToastAndJam",
                 },
-                DefNameContains = new[] { "Milk", "Cheese", "Butter", "Cream", "Yogurt" },
+                DefNameContains = AllergyTokens.Milk,
             },
             new AllergyKind
             {
@@ -69,14 +69,14 @@ namespace Homesteader
                 Type = AllergyKindType.Food,
                 LabelKey = "Homesteader_Allergy_Eggs",
                 CategoryDefNames = new[] { "EggsUnfertilized", "EggsFertilized" },
-                DefNameContains = new[] { "Egg" },
+                DefNameContains = AllergyTokens.Eggs,
             },
             new AllergyKind
             {
                 Id = "Peanuts",
                 Type = AllergyKindType.Food,
                 LabelKey = "Homesteader_Allergy_Peanuts",
-                DefNameContains = new[] { "Peanut" },
+                DefNameContains = AllergyTokens.Peanuts,
             },
             new AllergyKind
             {
@@ -85,7 +85,7 @@ namespace Homesteader
                 LabelKey = "Homesteader_Allergy_TreeNuts",
                 DefNames = new[] { "RawNuts" },
                 // Avoid bare "Nut" — it false-matches MealNutrientPaste.
-                DefNameContains = new[] { "Nuts", "Walnut", "Almond", "Cashew", "Pecan", "Hazelnut" },
+                DefNameContains = AllergyTokens.TreeNuts,
             },
             new AllergyKind
             {
@@ -105,14 +105,14 @@ namespace Homesteader
                     "Homesteader_PumpkinPie",
                     "Homesteader_PloughmansLunch",
                 },
-                DefNameContains = new[] { "Wheat", "Flour", "Bread", "Biscuit", "Toast", "Pasta", "Hardtack" },
+                DefNameContains = AllergyTokens.Wheat,
             },
             new AllergyKind
             {
                 Id = "Soy",
                 Type = AllergyKindType.Food,
                 LabelKey = "Homesteader_Allergy_Soy",
-                DefNameContains = new[] { "Soy", "Tofu", "Edamame" },
+                DefNameContains = AllergyTokens.Soy,
             },
             new AllergyKind
             {
@@ -120,21 +120,21 @@ namespace Homesteader
                 Type = AllergyKindType.Food,
                 LabelKey = "Homesteader_Allergy_Fish",
                 DefNames = new[] { "Homesteader_SmokedFish", "Homesteader_SaltedFish" },
-                DefNameContains = new[] { "Fish" },
+                DefNameContains = AllergyTokens.Fish,
             },
             new AllergyKind
             {
                 Id = "Shellfish",
                 Type = AllergyKindType.Food,
                 LabelKey = "Homesteader_Allergy_Shellfish",
-                DefNameContains = new[] { "Shellfish", "Shrimp", "Crab", "Lobster", "Oyster", "Clam", "Mussel" },
+                DefNameContains = AllergyTokens.Shellfish,
             },
             new AllergyKind
             {
                 Id = "Sesame",
                 Type = AllergyKindType.Food,
                 LabelKey = "Homesteader_Allergy_Sesame",
-                DefNameContains = new[] { "Sesame", "Tahini" },
+                DefNameContains = AllergyTokens.Sesame,
             },
             new AllergyKind
             {
@@ -254,66 +254,8 @@ namespace Homesteader
                 }
             }
 
-            // Peanut is a nut — don't let TreeNuts swallow Peanut* defs if Peanuts kind exists separately.
-            if (kind.DefNameContains != null)
-            {
-                string name = foodDef.defName;
-                for (int i = 0; i < kind.DefNameContains.Length; i++)
-                {
-                    string token = kind.DefNameContains[i];
-                    if (!DefNameContainsToken(name, token))
-                    {
-                        continue;
-                    }
-
-                    if (kind.Id == "TreeNuts" && DefNameContainsToken(name, "Peanut"))
-                    {
-                        continue;
-                    }
-
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Match allergy tokens on word / camelCase boundaries so "Egg" does not
-        /// hit Veggie*, "Nuts" does not hit Donuts, "Crab" does not hit Crabapple (AZR-528).
-        /// </summary>
-        internal static bool DefNameContainsToken(string? defName, string? token)
-        {
-            if (defName == null || token == null || defName.Length == 0 || token.Length == 0)
-            {
-                return false;
-            }
-
-            int idx = 0;
-            while (idx <= defName.Length - token.Length)
-            {
-                int found = defName.IndexOf(token, idx, StringComparison.OrdinalIgnoreCase);
-                if (found < 0)
-                {
-                    return false;
-                }
-
-                bool startOk = found == 0
-                    || !char.IsLetter(defName[found - 1])
-                    || (char.IsLower(defName[found - 1]) && char.IsUpper(defName[found]));
-                int end = found + token.Length;
-                bool endOk = end >= defName.Length
-                    || !char.IsLetter(defName[end])
-                    || char.IsUpper(defName[end]);
-                if (startOk && endOk)
-                {
-                    return true;
-                }
-
-                idx = found + 1;
-            }
-
-            return false;
+            return kind.DefNameContains != null
+                && HomesteaderPure.NameMatchesAllergy(kind.Id, foodDef.defName, kind.DefNameContains);
         }
 
         public static bool FoodMatchesAny(IEnumerable<string>? allergyIds, ThingDef? foodDef)

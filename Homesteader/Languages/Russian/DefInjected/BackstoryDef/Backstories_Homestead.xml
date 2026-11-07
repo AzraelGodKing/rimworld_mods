@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <Homesteader_FarmKid.title>деревенский ребёнок</Homesteader_FarmKid.title>
+  <Homesteader_FarmKid.titleShort>деревенский</Homesteader_FarmKid.titleShort>
+  <Homesteader_FarmKid.description>[PAWN_nameDef] вырос(ла) на далёкой ферме: чистил(а) стойла до рассвета и таскал(а) корм до темноты. Работа не кончалась, но и свежий воздух с открытым небом тоже.</Homesteader_FarmKid.description>
+  <Homesteader_PreserversApprentice.title>ученик заготовщика</Homesteader_PreserversApprentice.title>
+  <Homesteader_PreserversApprentice.titleShort>ученик</Homesteader_PreserversApprentice.titleShort>
+  <Homesteader_PreserversApprentice.description>[PAWN_nameDef] провёл(а) детство в дымной кухне-кладовой: учился(ась) солить мясо, закатывать варенье и на ощупь судить о холоде погреба. В доме ничего не пропадало зря.</Homesteader_PreserversApprentice.description>
+  <Homesteader_Homesteader.title>усадебник</Homesteader_Homesteader.title>
+  <Homesteader_Homesteader.titleShort>усадебник</Homesteader_Homesteader.titleShort>
+  <Homesteader_Homesteader.description>[PAWN_nameDef] вырубил(а) рабочую ферму из дикой глуши, растя урожай и скот почти одними ручными инструментами и упрямством. Зимы переживали, а не любили.</Homesteader_Homesteader.description>
+  <Homesteader_FarmsteadBrewer.title>фермерский пивовар</Homesteader_FarmsteadBrewer.title>
+  <Homesteader_FarmsteadBrewer.titleShort>пивовар</Homesteader_FarmsteadBrewer.titleShort>
+  <Homesteader_FarmsteadBrewer.description>[PAWN_nameDef] держал(а) маленькую, но любимую фермерскую пивоварню и бродил(а) сидр и медовуху к каждому базарному дню на день пути вокруг. Имя [PAWN_possessive] знали все; свои вечера помнили немногие.</Homesteader_FarmsteadBrewer.description>
+</LanguageData>

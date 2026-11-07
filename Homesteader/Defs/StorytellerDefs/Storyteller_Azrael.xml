@@ -5,7 +5,7 @@
   <StorytellerDef ParentName="BaseStoryteller">
     <defName>Azrael</defName>
     <label>Azrael</label>
-    <description>Azrael tells the series story: distant wars, hard weather, deep shafts, and homestead grit.\n\nPacing follows Cassandra Classic — big threats come in waves with breathing room — but miscellaneous events and small threats arrive a little more often so Living World news, Stormproof weather, and other soft series content have room to breathe.\n\nRaids and major threats stay near Cassandra so Nemesis hunts and colony defense still matter.\n\nShips with Homesteader (canonical). The standalone Azrael showcase mod adds The Deep Homestead scenario and only injects this teller if Homesteader is not loaded.</description>
+    <description>Azrael tells the series story: distant wars, hard weather, deep shafts, and homestead grit.\n\nPacing follows Cassandra Classic — big threats come in waves with breathing room — but miscellaneous events and small threats arrive a little more often so Living World news, Stormproof weather, and other soft series content have room to breathe.\n\nRaids and major threats stay near Cassandra so Nemesis hunts and colony defense still matter. The first raid is not forced until day 30 (Cassandra: day 20), so a new homestead gets a longer opening.\n\nShips with Homesteader (canonical). The standalone Azrael showcase mod adds The Deep Homestead scenario and only injects this teller if Homesteader is not loaded.</description>
     <!-- Reuse Cassandra Classic art until custom portraits ship. -->
     <portraitLarge>UI/HeroArt/Storytellers/CassandraClassic</portraitLarge>
     <portraitTiny>UI/HeroArt/Storytellers/CassandraClassicTiny</portraitTiny>
