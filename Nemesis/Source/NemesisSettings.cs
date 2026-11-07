@@ -45,6 +45,7 @@ namespace Nemesis
         public float postEscapeSabotageWeightMul = 0.35f;
         public bool enableSoftMounts = true;
         public bool enableSoftMechs = true;
+        public bool enableShuttleDrops = true;
 
         public bool enableInformants = true;
         public int informantLeadCost = 180;
@@ -83,6 +84,7 @@ namespace Nemesis
             Scribe_Values.Look(ref postEscapeSabotageWeightMul, "postEscapeSabotageWeightMul", 0.35f);
             Scribe_Values.Look(ref enableSoftMounts, "enableSoftMounts", true);
             Scribe_Values.Look(ref enableSoftMechs, "enableSoftMechs", true);
+            Scribe_Values.Look(ref enableShuttleDrops, "enableShuttleDrops", true);
             Scribe_Values.Look(ref enableInformants, "enableInformants", true);
             Scribe_Values.Look(ref informantLeadCost, "informantLeadCost", 180);
         }
@@ -120,6 +122,7 @@ namespace Nemesis
             postEscapeSabotageWeightMul = 0.35f;
             enableSoftMounts = true;
             enableSoftMechs = true;
+            enableShuttleDrops = true;
             enableInformants = true;
             informantLeadCost = 180;
         }

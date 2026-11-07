@@ -450,10 +450,14 @@ namespace Nemesis
                    ?? DefDatabase<PawnKindDef>.GetNamedSilentFail("Mech_Scyther");
         }
 
-        /// <summary>Spawn remembered mount animal beside the captain when soft mounts are on.</summary>
-        public static void TrySpawnMountEscort(Map map, Faction faction, NemesisData data, Pawn? near)
+        /// <summary>
+        /// Soft escorts beside the captain: the remembered mount animal, and a VFE Pirates
+        /// warcasket for a high-level Destroyer or Survivor (AZR-554).
+        /// </summary>
+        public static void TrySpawnSoftEscorts(Map map, Faction faction, NemesisData data, Pawn? near)
         {
             SoftCompat.TrySpawnMountBeside(map, faction, data, near);
+            SoftCompat.TrySpawnWarcasketBeside(map, faction, data, near);
         }
     }
 }

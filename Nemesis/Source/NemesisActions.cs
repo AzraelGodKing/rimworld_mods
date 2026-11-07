@@ -192,7 +192,8 @@ namespace Nemesis
                 {
                     LordMaker.MakeNewLord(
                         nemesis.Faction,
-                        new LordJob_AssaultColony(nemesis.Faction, canKidnap: false, canTimeoutOrFlee: true),
+                        new LordJob_NemesisHunt(nemesis.Faction, data.huntId, kidnap: false,
+                            NemesisTactic.Assault, entry),
                         map,
                         new[] { nemesis });
                 }
@@ -201,20 +202,20 @@ namespace Nemesis
             if (armyReturn && canInject && nemesis != null && nemesis.Spawned && nemesis.Map == map)
             {
                 NemesisProgression.TrySpawnMechEscort(map, faction, data, nemesis);
-                NemesisProgression.TrySpawnMountEscort(map, faction, data, nemesis);
+                NemesisProgression.TrySpawnSoftEscorts(map, faction, data, nemesis);
             }
             else if (armyReturn)
             {
                 // Inject may place them mid-raid; try near any spawned nemesis or map edge.
                 Pawn? onMap = nemesis != null && nemesis.Spawned ? nemesis : null;
                 NemesisProgression.TrySpawnMechEscort(map, faction, data, onMap);
-                NemesisProgression.TrySpawnMountEscort(map, faction, data, onMap);
+                NemesisProgression.TrySpawnSoftEscorts(map, faction, data, onMap);
             }
         }
 
         /// <summary>
-        /// Pawn-mode only: the nemesis leads a kidnap-enabled assault while the fixation
-        /// target is on the map. Uses vanilla kidnap duty (any downed colonist), not a target-only LordJob.
+        /// Pawn-mode only: the nemesis leads a kidnap assault while the fixation target is on
+        /// the map. The hunt lord only carries off the target, never another downed colonist.
         /// </summary>
         public static bool CanKidnap(NemesisData data, Map map)
         {
@@ -235,61 +236,55 @@ namespace Nemesis
 
         private static void NemesisAssault(NemesisData data, Map map, bool kidnap = false)
         {
+            NemesisAssault(data, map, NemesisTactics.Choose(data), kidnap);
+        }
+
+        /// <summary>
+        /// The captain leads their own hunt lord (AZR-554) beside a supporting raid run with the
+        /// tactic's strategy. With Odyssey the captain may land by shuttle instead of walking in
+        /// (AZR-706). Public for the dev-mode tactic actions.
+        /// </summary>
+        public static void NemesisAssault(NemesisData data, Map map, NemesisTactic tactic, bool kidnap,
+            bool? forceShuttle = null)
+        {
             GameComponent_Nemesis? comp = GameComponent_Nemesis.Instance;
             Pawn? nemesis = comp?.FindNemesisPawnFor(data);
+            Faction? faction = FindFaction(data);
 
-            if (nemesis == null || nemesis.Dead || nemesis.Destroyed)
+            if (nemesis == null || nemesis.Dead || nemesis.Destroyed || faction == null)
             {
                 DirectRaid(data, map);
                 return;
             }
 
-            // Already fighting on this map — don't double-lord; fall back to a supporting raid.
+            // Already fighting on this map: don't double-lord; fall back to a supporting raid.
             if (nemesis.Spawned && nemesis.Map == map)
             {
                 DirectRaid(data, map);
                 return;
             }
 
-            if (!CellFinder.TryFindRandomEdgeCellWith(c => c.Standable(map) && !c.Fogged(map), map, 0f, out IntVec3 spawnCell))
-                spawnCell = CellFinder.RandomEdgeCell(map);
-
+            NemesisPawnUtil.EnsureHuntFaction(nemesis, data.faction ?? faction);
             NemesisProgression.Apply(nemesis, data);
-            if (!NemesisPawnUtil.TrySpawnOnMap(nemesis, map, spawnCell))
+            Faction captainFaction = nemesis.Faction ?? faction;
+
+            bool byShuttle = forceShuttle ?? NemesisShuttle.ShouldUse(data, captainFaction);
+            if (!(byShuttle && NemesisShuttle.TryDrop(data, nemesis, captainFaction, map, tactic, kidnap))
+                && !WalkIn(data, nemesis, captainFaction, map, tactic, kidnap))
             {
                 DirectRaid(data, map);
                 return;
             }
-
             data.cachedNemesis = nemesis;
-            Faction? escortFaction = FindFaction(data);
-            if (escortFaction != null)
-            {
-                NemesisProgression.TrySpawnMechEscort(map, escortFaction, data, nemesis);
-                NemesisProgression.TrySpawnMountEscort(map, escortFaction, data, nemesis);
-            }
 
-            // canTimeoutOrFlee: true so they pull back when losing; Kill intercept still handles "death".
-            if (nemesis.Faction != null && !nemesis.Faction.IsPlayer && nemesis.GetLord() == null)
+            IncidentDef raidDef = DefDatabase<IncidentDef>.GetNamedSilentFail("RaidEnemy");
+            if (raidDef != null)
             {
-                LordMaker.MakeNewLord(
-                    nemesis.Faction,
-                    new LordJob_AssaultColony(nemesis.Faction, canKidnap: kidnap, canTimeoutOrFlee: true),
-                    map,
-                    new[] { nemesis });
-            }
-
-            Faction? faction = FindFaction(data);
-            if (faction != null)
-            {
-                IncidentDef raidDef = DefDatabase<IncidentDef>.GetNamedSilentFail("RaidEnemy");
-                if (raidDef != null)
-                {
-                    IncidentParms parms = StorytellerUtility.DefaultParmsNow(IncidentCategoryDefOf.ThreatBig, map);
-                    parms.faction = faction;
-                    parms.points = Mathf.Max(150f, parms.points * AggressionRaidFactor(data.EffectiveAggression) * 0.55f);
-                    raidDef.Worker.TryExecute(parms);
-                }
+                IncidentParms parms = StorytellerUtility.DefaultParmsNow(IncidentCategoryDefOf.ThreatBig, map);
+                parms.faction = faction;
+                parms.points = Mathf.Max(150f, parms.points * AggressionRaidFactor(data.EffectiveAggression) * 0.55f);
+                parms.raidStrategy = NemesisTactics.SupportStrategy(tactic, parms);
+                raidDef.Worker.TryExecute(parms);
             }
 
             string targetName = data.targetPawnName ?? "Nemesis_Phrase_Someone".Translate();
@@ -301,12 +296,37 @@ namespace Nemesis
                 : data.targetMode == NemesisTargetMode.Pawn && data.targetPawnName != null
                     ? "Nemesis_Letter_AssaultPawn".Translate(data.nemesisName, data.targetPawnName)
                     : "Nemesis_Letter_AssaultColony".Translate(data.nemesisName);
+            body += "\n\n" + ("Nemesis_Tactic_Desc_" + tactic).Translate(data.nemesisName);
+            if (byShuttle && !nemesis.Spawned)
+                body += "\n\n" + "Nemesis_Letter_ShuttleNote".Translate(data.nemesisName);
 
             Find.LetterStack.ReceiveLetter(
                 title,
                 body,
                 LetterDefOf.ThreatBig,
-                nemesis);
+                nemesis.Spawned ? new LookTargets(nemesis) : LookTargets.Invalid);
+        }
+
+        /// <summary>Walk in at an edge cell with a fresh hunt lord, then spawn escorts into it.</summary>
+        private static bool WalkIn(NemesisData data, Pawn nemesis, Faction faction, Map map,
+            NemesisTactic tactic, bool kidnap)
+        {
+            if (!CellFinder.TryFindRandomEdgeCellWith(c => c.Standable(map) && !c.Fogged(map), map, 0f, out IntVec3 spawnCell))
+                spawnCell = CellFinder.RandomEdgeCell(map);
+            if (!NemesisPawnUtil.TrySpawnOnMap(nemesis, map, spawnCell))
+                return false;
+
+            if (!faction.IsPlayer && nemesis.GetLord() == null)
+            {
+                LordMaker.MakeNewLord(
+                    faction,
+                    new LordJob_NemesisHunt(faction, data.huntId, kidnap, tactic, spawnCell),
+                    map,
+                    new[] { nemesis });
+            }
+            NemesisProgression.TrySpawnMechEscort(map, faction, data, nemesis);
+            NemesisProgression.TrySpawnSoftEscorts(map, faction, data, nemesis);
+            return true;
         }
 
         private static void WastePackDrop(NemesisData data, Map map)
