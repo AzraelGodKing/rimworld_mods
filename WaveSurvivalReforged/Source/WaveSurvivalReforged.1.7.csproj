@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <RootNamespace>WaveSurvivalReforged</RootNamespace>
     <AssemblyName>WaveSurvivalReforged</AssemblyName>
-    <!-- Unstable 1.7. Building the 1.6 project does not overwrite this DLL. -->
+    <!-- 1.7. Building WaveSurvivalReforged.csproj does not overwrite this DLL. -->
     <OutputPath>../1.7/Assemblies/</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <DebugType>none</DebugType>
@@ -19,7 +19,6 @@
     <Compile Include="..\..\Common\ModVersionLog.cs" Link="Common\ModVersionLog.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4871" />
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+    <PackageReference Include="Krafs.Rimworld.Ref" Version="1.7.4998-unstable" />
   </ItemGroup>
 </Project>

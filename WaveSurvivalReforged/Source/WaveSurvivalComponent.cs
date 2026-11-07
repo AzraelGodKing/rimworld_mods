@@ -45,11 +45,29 @@ namespace WaveSurvivalReforged
             if (!started)
                 Start(now);
             if (now >= ticksNextWave)
-                RunWave(now);
-            if (now >= ticksNextDay)
-                RunDay(now);
-            else if (dropPending && TryDropSupplies())
-                dropPending = false;
+            {
+                DeepProfiler.Start("WaveSurvivalReforged.RunWave");
+                try
+                {
+                    RunWave(now);
+                }
+                finally
+                {
+                    DeepProfiler.End();
+                }
+            }
+            DeepProfiler.Start("WaveSurvivalReforged.Supplies");
+            try
+            {
+                if (now >= ticksNextDay)
+                    RunDay(now);
+                else if (dropPending && TryDropSupplies())
+                    dropPending = false;
+            }
+            finally
+            {
+                DeepProfiler.End();
+            }
         }
 
         private void Start(int now)

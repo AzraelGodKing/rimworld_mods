@@ -1,10 +1,11 @@
-Unreleased
-[h1]Wave Survival Reforged — Unreleased[/h1]
+2.0.0
+[h1]Wave Survival Reforged — 2.0.0[/h1]
+Wave Survival Reforged 2 ships for both RimWorld 1.6 and 1.7 from the same source. Your 1.6 run keeps getting every update, and the same save carries over to 1.7.
+
 [b]Changed[/b]
 [list]
-[*] Declared RimWorld 1.7 in supportedVersions alongside 1.6. No gameplay change. No modVersion bump (Myleek).
-[*] [b]Separate 1.6 and 1.7 assemblies.[/b] Official 1.6 loads 1.6/Assemblies. Unstable 1.7 loads 1.7/Assemblies.
-[*] [b]Mod description[/b] — shorter workshop text. Same storyteller, waves, and drops.
+[*] [b]RimWorld 1.7[/b] — the 1.7 folder now has its own .NET 10 build made against the 1.7 game files. 1.6 keeps its own build from the same source.
+[*] [b]Mod description[/b] — shorter Workshop text. Same storyteller, waves, and drops.
 [/list]
 
 1.0.0

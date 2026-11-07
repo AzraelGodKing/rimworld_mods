@@ -1,4 +1,3 @@
-using AzraelCommon;
 using Verse;
 
 namespace WaveSurvivalReforged
@@ -8,7 +7,7 @@ namespace WaveSurvivalReforged
     {
         static WaveSurvivalInit()
         {
-            LongEventHandler.ExecuteWhenFinished(() => ModVersionLog.Write("[Wave Survival Reforged]"));
+            LongEventHandler.ExecuteWhenFinished(WaveSurvivalReforgedBuildInfo.LogLoaded);
         }
     }
 }

@@ -1,6 +1,6 @@
 # Wave Survival Reforged
 
-A RimWorld 1.6 rebuild of [Wave Survival [Game Mode]](https://steamcommunity.com/sharedfiles/filedetails/?id=732261506) by Justin C, last built for Alpha 14. Storyteller art by [Philbro](http://philbro.deviantart.com/), reused with credit. The original shipped only a compiled DLL, so this is a fresh rewrite of the same design against the 1.6 API.
+A RimWorld 1.6 and 1.7 rebuild of [Wave Survival [Game Mode]](https://steamcommunity.com/sharedfiles/filedetails/?id=732261506) by Justin C, last built for Alpha 14. Storyteller art by [Philbro](http://philbro.deviantart.com/), reused with credit. The original shipped only a compiled DLL, so this is a fresh rewrite of the same design. Version 2.0.0 ships for 1.6 and 1.7 from one source.
 
 ## What it does
 
@@ -38,4 +38,4 @@ dotnet build WaveSurvivalReforged/Source/WaveSurvivalReforged.csproj -c Release
 dotnet build WaveSurvivalReforged/Source/WaveSurvivalReforged.1.7.csproj -c Release
 ```
 
-Output goes to `WaveSurvivalReforged/1.6/Assemblies/` and `WaveSurvivalReforged/1.7/Assemblies/` (gitignored).
+Output goes to `WaveSurvivalReforged/1.6/Assemblies/` (net472, 1.6 refs) and `WaveSurvivalReforged/1.7/Assemblies/` (.NET 10, 1.7 refs). Both are gitignored, so rebuild both before any Workshop upload; the 1.7 build needs the .NET 10 SDK.
