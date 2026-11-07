@@ -83,6 +83,12 @@ namespace LivingWorld
             queue.Add(new Entry { kind = Kind.SpawnTraffic });
         }
 
+        /// <summary>Drops commands queued in a previous game (called on load and new game).</summary>
+        public static void Clear()
+        {
+            queue.Clear();
+        }
+
         public static void Drain()
         {
             if (queue.Count == 0)

@@ -128,4 +128,8 @@
   <LivingWorld_WarSite_BattlefieldInspect>Свежие обломки поля боя с войны за картой.</LivingWorld_WarSite_BattlefieldInspect>
   <LivingWorld_WarSite_RefugeeCampInspect>Временный лагерь беженцев от далёких боёв.</LivingWorld_WarSite_RefugeeCampInspect>
   <LivingWorld_WarSite_FadesIn>Исчезнет через {0}.</LivingWorld_WarSite_FadesIn>
+  <LivingWorld_Settings_PrepareRemoval>Подготовить сохранение к удалению мода</LivingWorld_Settings_PrepareRemoval>
+  <LivingWorld_Settings_PrepareRemovalDesc>Убирает из текущей игры места сражений, стоянки, караваны Living World и состояние «закалён дорогой», затем выключает симуляцию. После этого сохранитесь и удалите мод.</LivingWorld_Settings_PrepareRemovalDesc>
+  <LivingWorld_Settings_PrepareRemovalConfirm>Убрать объекты Living World из этой игры и выключить симуляцию? Хроника сохранится.</LivingWorld_Settings_PrepareRemovalConfirm>
+  <LivingWorld_Settings_PrepareRemovalDone>Living World: убрано объектов и состояний: {0}. Сохраните игру, затем удалите мод.</LivingWorld_Settings_PrepareRemovalDone>
 </LanguageData>

@@ -429,9 +429,9 @@ namespace LivingWorld
             }
 
             // Generic war site (LW8).
-            if (settings != null && settings.warSitesEnabled && sev == NewsSeverity.Major)
+            if (settings != null && settings.warSitesEnabled && sev == NewsSeverity.Major && site != null)
             {
-                LivingWorldWarSites.TrySpawnNear(site?.Tile ?? -1, winner, loser);
+                LivingWorldWarSites.TrySpawnNear(site.Tile, winner, loser);
             }
 
             MaybeEnqueueFallout(comp, pair, loser, winner, site, sev, ev.seenByPlayer);

@@ -8,6 +8,13 @@ namespace LivingWorld
 {
     public class GameComponent_LivingWorld : GameComponent
     {
+        /// <summary>
+        /// 1 = saves before the field existed. 2 = layer-aware tiles, pruned moods
+        /// and fallout. Bump and add a step in <see cref="Migrate"/> for format changes.
+        /// </summary>
+        internal const int CurrentSaveVersion = 2;
+        private const int FalloutExpiryTicks = 60000 * 60;
+
         private const int ChronicleCapacity = 96;
         private const int EvictedCorrectionCapacity = 64;
 
@@ -27,6 +34,7 @@ namespace LivingWorld
         private int pulseIndex;
         private string lastNewsVersion;
         private List<int> collapsedFactionIds = new List<int>();
+        private int saveVersion = CurrentSaveVersion;
 
         // Cache Get across Label/inspect hot paths for the current Game.
         private static Game cachedGame;
@@ -38,6 +46,9 @@ namespace LivingWorld
 
         public override void FinalizeInit()
         {
+            // Debug commands queued in another game must not run in this one.
+            LivingWorldDebugCommand.Clear();
+            PruneStale();
             UpdateNewsLetter.TrySend(ref lastNewsVersion);
         }
 
@@ -85,6 +96,8 @@ namespace LivingWorld
             Scribe_Values.Look(ref lastYear, "lastYear", -1);
             Scribe_Values.Look(ref pulseIndex, "pulseIndex");
             Scribe_Values.Look(ref lastNewsVersion, "lastNewsVersion");
+            // Missing in saves from before versioning: those load as 1.
+            Scribe_Values.Look(ref saveVersion, "saveVersion", 1);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 chronicle ??= new List<WorldEvent>();
@@ -93,8 +106,105 @@ namespace LivingWorld
                 pairs ??= new List<FactionPairState>();
                 pendingFallout ??= new List<PendingFallout>();
                 collapsedFactionIds ??= new List<int>();
+                pairs.RemoveAll(p => p == null);
+                pendingFallout.RemoveAll(f => f == null);
+                moods.RemoveAll(m => m == null);
                 moodIndex = null;
+                Migrate();
             }
+        }
+
+        private void Migrate()
+        {
+            if (saveVersion < 2)
+            {
+                // v1 tiles have no layer; they read back as surface tiles (tileLayer -1).
+                // Stale moods and fallout are pruned in FinalizeInit once the world is ready.
+                Log.Message("[LivingWorld] Upgraded save data from version " + saveVersion
+                    + " to " + CurrentSaveVersion + ".");
+            }
+            saveVersion = CurrentSaveVersion;
+        }
+
+        /// <summary>
+        /// Drops moods for settlements that no longer exist (vanilla destroys
+        /// settlements without telling us) and fallout that expired or whose
+        /// feature is turned off. Runs on load and every sim pulse.
+        /// </summary>
+        internal void PruneStale()
+        {
+            if (Find.World?.worldObjects == null)
+            {
+                return;
+            }
+            if (moods.Count > 0)
+            {
+                var alive = new HashSet<int>();
+                List<Settlement> settlements = Find.WorldObjects.Settlements;
+                for (int i = 0; i < settlements.Count; i++)
+                {
+                    if (settlements[i] != null)
+                    {
+                        alive.Add(settlements[i].ID);
+                    }
+                }
+                if (moods.RemoveAll(m => !alive.Contains(m.settlementId)) > 0)
+                {
+                    moodIndex = null;
+                }
+            }
+
+            if (pendingFallout.Count > 0)
+            {
+                LivingWorldSettings s = LivingWorldMod.Settings;
+                int now = Find.TickManager.TicksGame;
+                pendingFallout.RemoveAll(f =>
+                    now - f.enqueueTick > FalloutExpiryTicks
+                    || s == null
+                    || !s.falloutEnabled
+                    || (f.kind == FalloutKind.Warband && !s.warbandFalloutEnabled));
+            }
+        }
+
+        /// <summary>
+        /// Before removing the mod from a save: removes Living World world objects
+        /// and road-worn hediffs, and forgets moods, epithets and fallout. The
+        /// chronicle stays (it is harmless and useful if the player changes their mind).
+        /// </summary>
+        internal int PrepareForRemoval()
+        {
+            int removed = 0;
+            List<WorldObject> all = Find.WorldObjects.AllWorldObjects;
+            for (int i = all.Count - 1; i >= 0; i--)
+            {
+                WorldObject wo = all[i];
+                if (wo is WorldObject_LivingWorldWarSite
+                    || wo is WorldObject_LivingWorldWayCamp
+                    || wo is WorldObject_LivingWorldTraffic)
+                {
+                    wo.Destroy();
+                    removed++;
+                }
+            }
+
+            HediffDef veteran = DefDatabase<HediffDef>.GetNamedSilentFail("LW_Hediff_RoadVeteran");
+            if (veteran != null)
+            {
+                foreach (Pawn pawn in PawnsFinder.AllMapsWorldAndTemporary_AliveOrDead)
+                {
+                    Hediff h = pawn?.health?.hediffSet?.GetFirstHediffOfDef(veteran);
+                    if (h != null)
+                    {
+                        pawn.health.RemoveHediff(h);
+                        removed++;
+                    }
+                }
+            }
+
+            moods.Clear();
+            moodIndex = null;
+            pendingFallout.Clear();
+            return removed;
         }
 
         public override void GameComponentTick()
@@ -139,6 +249,7 @@ namespace LivingWorld
             LivingWorldTraffic.TryResolvePulse(this);
 
             // Delayed fallout: give letters a beat, then try to fire.
+            PruneStale();
             TryFirePendingFallout();
         }
 
@@ -321,19 +432,13 @@ namespace LivingWorld
             return FalloutDelayTicks + travel;
         }
 
-        public PendingFallout TryDequeueFallout(FalloutKind kind)
+        /// <summary>Consumes a fallout entry once its incident has fired, or when it can never fire.</summary>
+        public void RemoveFallout(PendingFallout fallout)
         {
-            int i = IndexOfReadyFallout(kind);
-            if (i < 0)
-            {
-                return null;
-            }
-            PendingFallout hit = pendingFallout[i];
-            pendingFallout.RemoveAt(i);
-            return hit;
+            pendingFallout.Remove(fallout);
         }
 
-        /// <summary>Only entries past the delay; matches what TryDequeueFallout will return.</summary>
+        /// <summary>The oldest entry of this kind that is past its travel delay.</summary>
         public PendingFallout PeekFallout(FalloutKind kind)
         {
             int i = IndexOfReadyFallout(kind);

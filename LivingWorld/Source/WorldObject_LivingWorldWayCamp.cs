@@ -73,6 +73,11 @@ namespace LivingWorld
             {
                 return;
             }
+            LivingWorldSettings settings = LivingWorldMod.Settings;
+            if (settings == null || !settings.enabled)
+            {
+                return;
+            }
             Caravan caravan = pawn.GetCaravan();
             if (caravan == null || !caravan.IsPlayerControlled)
             {

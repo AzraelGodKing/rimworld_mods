@@ -5,6 +5,7 @@ using Verse;
 
 namespace LivingWorld
 {
+    // Saved by member name: never rename or remove a member.
     public enum FactionRelationTone : byte
     {
         Peace = 0,

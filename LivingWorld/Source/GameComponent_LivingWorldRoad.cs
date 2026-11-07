@@ -32,6 +32,12 @@ namespace LivingWorld
             {
                 return;
             }
+            // Master switch: no trail, way-camps, letter or road-worn hediff while off.
+            LivingWorldSettings settings = LivingWorldMod.Settings;
+            if (settings == null || !settings.enabled)
+            {
+                return;
+            }
             List<Caravan> caravans = Find.WorldObjects.Caravans;
             HediffDef veteran = DefDatabase<HediffDef>.GetNamedSilentFail("LW_Hediff_RoadVeteran");
             for (int i = 0; i < caravans.Count; i++)
@@ -42,7 +48,7 @@ namespace LivingWorld
                     continue;
                 }
                 int tile = c.Tile;
-                    if (!roadTiles.Contains(tile))
+                if (!roadTiles.Contains(tile))
                 {
                     roadTiles.Add(tile);
                     while (roadTiles.Count > 80)
