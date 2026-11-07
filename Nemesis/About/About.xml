@@ -23,10 +23,14 @@
     <li>AzraelGodKing.Stormproof</li>
     <li>AzraelGodKing.Strata</li>
     <li>AzraelGodKing.Homesteader</li>
+    <li>azraelgodking.DeepColony</li>
+    <li>azraelgodking.livingworld</li>
+    <li>azraelgodking.Azrael</li>
+    <li>OskarPotocki.VFE.Pirates</li>
   </loadAfter>
   <description>A named pawn from a hostile faction becomes a personal antagonist — not another faceless raid. They harass, level up after each escape, and prefer coming back with an army. The hunt ends when you capture or kill them… or when they get what they came for.
 
-Foundation by Dredd (Misakabob). Requires Harmony. RimWorld 1.6 and 1.7. Safe to add mid-save. Before removing: resolve any active hunt.
+Foundation by Dredd (Misakabob). Requires Harmony. Safe to add mid-save. Before removing: resolve any active hunt.
 
 Full notes: https://azraelgodking.github.io/rimworld_mods/nemesis
 Discord: https://discord.gg/Vwh2y7qMXv</description>

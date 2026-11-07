@@ -122,6 +122,9 @@ namespace Nemesis
         public Site? campSite;
         public bool campIsReal;
         public bool campVisited;
+
+        /// <summary>Last tick an ion storm pulled this hunt's next move forward (AZR-556).</summary>
+        public int lastIonBaitTick = -GenDate.TicksPerDay;
         /// <summary>Silver the player posted against this hunt (AZR-657).</summary>
         public int bountySilver;
         public string? lastGearSeen;
@@ -215,6 +218,7 @@ namespace Nemesis
             Scribe_References.Look(ref campSite, "campSite");
             Scribe_Values.Look(ref campIsReal, "campIsReal");
             Scribe_Values.Look(ref campVisited, "campVisited");
+            Scribe_Values.Look(ref lastIonBaitTick, "lastIonBaitTick", -GenDate.TicksPerDay);
             Scribe_Values.Look(ref lastGearSeen, "lastGearSeen", null);
             Scribe_Values.Look(ref bountySilver, "bountySilver", 0);
             Scribe_Collections.Look(ref notes, "notes", LookMode.Deep);

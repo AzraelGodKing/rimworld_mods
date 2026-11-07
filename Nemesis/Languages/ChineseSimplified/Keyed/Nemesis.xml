@@ -309,4 +309,21 @@
   <Nemesis_Letter_CampEmptyTitle>{0} 不在这里</Nemesis_Letter_CampEmptyTitle>
   <Nemesis_Letter_CampMissedBody>这是 {0} 的营地，但他们出去了。手下还在。</Nemesis_Letter_CampMissedBody>
   <Nemesis_Letter_CampFalseBody>{0} 从未来过这里。线人卖给你的是诱饵，有人留下了标记等你发现。</Nemesis_Letter_CampFalseBody>
+  <Nemesis_Settings_PresetRelentless>无情</Nemesis_Settings_PresetRelentless>
+  <Nemesis_Settings_PresetDefault>默认</Nemesis_Settings_PresetDefault>
+  <Nemesis_Settings_PresetSlowBurn>慢热</Nemesis_Settings_PresetSlowBurn>
+  <Nemesis_Settings_PresetTip>预设会设置触发几率、追猎上限、节奏和袭击权重，可在下方微调。把某个行动的权重设为 0 即可关闭它。</Nemesis_Settings_PresetTip>
+  <Nemesis_Settings_WeightOff>关闭</Nemesis_Settings_WeightOff>
+  <Nemesis_Settings_IonBaiting>离子风暴时出击（Stormproof）</Nemesis_Settings_IonBaiting>
+  <Nemesis_Settings_IonBaitingTip>启用 Stormproof 时，好斗的宿敌会在离子风暴期间提前行动，并在你断电时更倾向袭击和突击而非破坏。</Nemesis_Settings_IonBaitingTip>
+  <Nemesis_Settings_LivingWorldEscalate>派系覆灭会让宿敌更凶（Living World）</Nemesis_Settings_LivingWorldEscalate>
+  <Nemesis_Settings_LivingWorldEscalateTip>启用 Living World 时，若追猎派系被消灭，宿敌便无所顾忌：侵略性 +2，并在一天内行动。关闭时：改为沉寂 15 天。</Nemesis_Settings_LivingWorldEscalateTip>
+  <Nemesis_Note_IonBait>趁着离子风暴提前行动。</Nemesis_Note_IonBait>
+  <Nemesis_Note_FactionCollapsedEscalate>{0} 已覆灭。再无顾忌。</Nemesis_Note_FactionCollapsedEscalate>
+  <Nemesis_Note_FactionCollapsedDormant>{0} 已覆灭。暂时销声匿迹。</Nemesis_Note_FactionCollapsedDormant>
+  <Nemesis_Note_FactionWon>{0} 赢得了决定性一战，气焰更盛。</Nemesis_Note_FactionWon>
+  <Nemesis_Note_FactionLost>{0} 在决定性一战中落败，正在舔舐伤口。</Nemesis_Note_FactionLost>
+  <Nemesis_Letter_FactionCollapsedTitle>{0} 的族人已不复存在</Nemesis_Letter_FactionCollapsedTitle>
+  <Nemesis_Letter_FactionCollapsedEscalate>{1} 已被消灭。{0} 再无可失，你成了他们唯一的仇恨对象。</Nemesis_Letter_FactionCollapsedEscalate>
+  <Nemesis_Letter_FactionCollapsedDormant>{1} 已被消灭。{0} 销声匿迹，大约 {2} 天后会卷土重来。</Nemesis_Letter_FactionCollapsedDormant>
 </LanguageData>

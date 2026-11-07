@@ -310,4 +310,21 @@
   <Nemesis_Letter_CampEmptyTitle>{0} is not here</Nemesis_Letter_CampEmptyTitle>
   <Nemesis_Letter_CampMissedBody>This is {0}'s camp, but they are out. Their people are still here.</Nemesis_Letter_CampMissedBody>
   <Nemesis_Letter_CampFalseBody>{0} was never here. The informant sold you a decoy, and someone left a mark for you to find.</Nemesis_Letter_CampFalseBody>
+  <Nemesis_Settings_PresetRelentless>Relentless</Nemesis_Settings_PresetRelentless>
+  <Nemesis_Settings_PresetDefault>Default</Nemesis_Settings_PresetDefault>
+  <Nemesis_Settings_PresetSlowBurn>Slow-burn</Nemesis_Settings_PresetSlowBurn>
+  <Nemesis_Settings_PresetTip>Presets set trigger odds, hunt limits, pacing and the raid weights. Fine-tune below. Setting an action's weight to 0 turns it off.</Nemesis_Settings_PresetTip>
+  <Nemesis_Settings_WeightOff>off</Nemesis_Settings_WeightOff>
+  <Nemesis_Settings_IonBaiting>Strike during ion storms (Stormproof)</Nemesis_Settings_IonBaiting>
+  <Nemesis_Settings_IonBaitingTip>With Stormproof, an aggressive nemesis moves sooner during an ion storm and prefers raids and assaults over sabotage while your power is down.</Nemesis_Settings_IonBaitingTip>
+  <Nemesis_Settings_LivingWorldEscalate>Faction collapse makes the nemesis worse (Living World)</Nemesis_Settings_LivingWorldEscalate>
+  <Nemesis_Settings_LivingWorldEscalateTip>With Living World, when a hunt's faction is wiped out the nemesis has nothing left to lose: aggression +2 and a move within a day. Off: they go quiet for 15 days instead.</Nemesis_Settings_LivingWorldEscalateTip>
+  <Nemesis_Note_IonBait>Moving early, under cover of the ion storm.</Nemesis_Note_IonBait>
+  <Nemesis_Note_FactionCollapsedEscalate>{0} has fallen. Nothing left to lose.</Nemesis_Note_FactionCollapsedEscalate>
+  <Nemesis_Note_FactionCollapsedDormant>{0} has fallen. Gone to ground for now.</Nemesis_Note_FactionCollapsedDormant>
+  <Nemesis_Note_FactionWon>{0} won a decisive battle. Emboldened.</Nemesis_Note_FactionWon>
+  <Nemesis_Note_FactionLost>{0} lost a decisive battle. Licking wounds.</Nemesis_Note_FactionLost>
+  <Nemesis_Letter_FactionCollapsedTitle>{0}'s people are gone</Nemesis_Letter_FactionCollapsedTitle>
+  <Nemesis_Letter_FactionCollapsedEscalate>{1} has been wiped out. {0} has nothing left to lose, and you are all they have left to hate.</Nemesis_Letter_FactionCollapsedEscalate>
+  <Nemesis_Letter_FactionCollapsedDormant>{1} has been wiped out. {0} has gone to ground. Expect them back in about {2} days.</Nemesis_Letter_FactionCollapsedDormant>
 </LanguageData>

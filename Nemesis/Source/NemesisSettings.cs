@@ -47,6 +47,10 @@ namespace Nemesis
         public bool enableSoftMechs = true;
         public bool enableShuttleDrops = true;
 
+        // Sister mods (AZR-556)
+        public bool livingWorldCollapseEscalates = true;
+        public bool enableIonStormBaiting = true;
+
         public bool enableInformants = true;
         public int informantLeadCost = 180;
 
@@ -85,8 +89,52 @@ namespace Nemesis
             Scribe_Values.Look(ref enableSoftMounts, "enableSoftMounts", true);
             Scribe_Values.Look(ref enableSoftMechs, "enableSoftMechs", true);
             Scribe_Values.Look(ref enableShuttleDrops, "enableShuttleDrops", true);
+            Scribe_Values.Look(ref livingWorldCollapseEscalates, "livingWorldCollapseEscalates", true);
+            Scribe_Values.Look(ref enableIonStormBaiting, "enableIonStormBaiting", true);
             Scribe_Values.Look(ref enableInformants, "enableInformants", true);
             Scribe_Values.Look(ref informantLeadCost, "informantLeadCost", 180);
+        }
+
+        /// <summary>
+        /// Relentless and Slow-burn presets (AZR-572): trigger odds, hunt caps, pacing and the
+        /// threat-heavy action weights. Everything else keeps its current value. Default is
+        /// <see cref="ResetToDefaults"/>.
+        /// </summary>
+        public void ApplyPreset(bool relentless)
+        {
+            ResetToDefaults();
+            float odds = relentless ? 1.6f : 0.5f;
+            killedAllyChance *= odds;
+            prisonerEscapedChance *= odds;
+            slaveEscapedChance *= odds;
+            fixationChance *= odds;
+            woundedEscapeChance *= odds;
+            if (relentless)
+            {
+                maxConcurrentHunts = 3;
+                huntCooldownDays = 1.5f;
+                truceDurationDays = 15;
+                maxAggressionCap = 0.8f;
+                escalationRatePerDay = 0.10f;
+                minActionCooldownTicks = 60000;
+                actionWeightIdle = 0.12f;
+                actionWeightRaid = 0.20f;
+                actionWeightAssault = 0.22f;
+                actionWeightKidnap = 0.08f;
+            }
+            else
+            {
+                maxConcurrentHunts = 1;
+                huntCooldownDays = 8f;
+                truceDurationDays = 45;
+                maxAggressionCap = 0.45f;
+                escalationRatePerDay = 0.03f;
+                minActionCooldownTicks = 100000;
+                actionWeightIdle = 0.35f;
+                actionWeightRaid = 0.10f;
+                actionWeightAssault = 0.10f;
+                actionWeightKidnap = 0.03f;
+            }
         }
 
         public void ResetToDefaults()
@@ -123,6 +171,8 @@ namespace Nemesis
             enableSoftMounts = true;
             enableSoftMechs = true;
             enableShuttleDrops = true;
+            livingWorldCollapseEscalates = true;
+            enableIonStormBaiting = true;
             enableInformants = true;
             informantLeadCost = 180;
         }

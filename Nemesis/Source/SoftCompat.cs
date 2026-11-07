@@ -50,6 +50,7 @@ namespace Nemesis
         // Bound once as typed delegates: no object[] or boxing per call (AZR-535).
         private static Func<Map, bool>? _strataIsUnderground;
         private static Func<Map, bool>? _strataIsUpper;
+        private static Func<Map, List<Map>>? _strataReachable;
         private static Func<Pawn, List<ThingDef>>? _homeGetFavorites;
         private static Action<string, string, Pawn?, LetterDef?>? _deepRecordNote;
 
@@ -94,6 +95,7 @@ namespace Nemesis
                         // Strata's public modder API, not its internal map utility.
                         _strataIsUnderground = Bind<Func<Map, bool>>("Strata.StrataModderApi", "IsUnderground");
                         _strataIsUpper = Bind<Func<Map, bool>>("Strata.StrataModderApi", "IsUpperLevel");
+                        _strataReachable = Bind<Func<Map, List<Map>>>("Strata.StrataModderApi", "ReachableMaps");
                     }
                 }
                 return _strataActive;
@@ -159,6 +161,7 @@ namespace Nemesis
             _stormChecked = _strataChecked = _homeChecked = _deepChecked = false;
             _stormActive = _strataActive = _homeActive = false;
             _strataIsUnderground = _strataIsUpper = null;
+            _strataReachable = null;
             _homeGetFavorites = null;
             _deepRecordNote = null;
             _cellarChecked = false;
@@ -372,6 +375,23 @@ namespace Nemesis
             }
             return anyHome;
         }
+
+        /// <summary>
+        /// Levels linked to <paramref name="map"/> through Strata (cellars, upper floors), not
+        /// including the map itself. Empty without Strata. Fresh list from Strata each call.
+        /// </summary>
+        public static List<Map> StrataReachableMaps(Map map)
+        {
+            if (!StrataActive || _strataReachable == null) return EmptyMaps;
+            try { return _strataReachable(map) ?? EmptyMaps; }
+            catch { return EmptyMaps; }
+        }
+
+        private static readonly List<Map> EmptyMaps = new List<Map>();
+
+        /// <summary>Stormproof says an ion storm is running on this map (AZR-556 baiting).</summary>
+        public static bool IonStormActive(Map? map) =>
+            map != null && StormproofActive && AzraelCommon.StormproofClient.IonStormActive(map);
 
         // Live dampener cover (radius and power) through Stormproof's compat API.
         public static bool IsBuildingEmpProtected(Building building) =>
