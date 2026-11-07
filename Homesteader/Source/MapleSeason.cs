@@ -17,19 +17,25 @@ namespace Homesteader
                 return 1f;
             }
 
-            float outdoor = map.mapTemperature.OutdoorTemp;
+            SapSeason season;
             switch (GenLocalDate.Season(map))
             {
                 case Season.Spring:
-                    return outdoor < 12f ? 1.45f : 1.15f;
+                    season = SapSeason.Spring;
+                    break;
                 case Season.Winter:
                 case Season.PermanentWinter:
-                    return outdoor < 5f ? 0.85f : 0.55f;
+                    season = SapSeason.Winter;
+                    break;
                 case Season.Fall:
-                    return 0.7f;
+                    season = SapSeason.Fall;
+                    break;
                 default:
-                    return outdoor > 22f ? 0.12f : 0.28f;
+                    season = SapSeason.Summer;
+                    break;
             }
+
+            return HomesteaderPure.MapleYieldFactor(season, map.mapTemperature.OutdoorTemp);
         }
     }
 

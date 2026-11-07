@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <Homesteader_FarmKid.title>农场孩子</Homesteader_FarmKid.title>
+  <Homesteader_FarmKid.titleShort>农场孩子</Homesteader_FarmKid.titleShort>
+  <Homesteader_FarmKid.description>[PAWN_nameDef]在偏远的农庄长大，天亮前清理畜栏，一直搬饲料到天黑。活儿永远干不完，但清新的空气和开阔的天空也一直都在。</Homesteader_FarmKid.description>
+  <Homesteader_PreserversApprentice.title>储藏学徒</Homesteader_PreserversApprentice.title>
+  <Homesteader_PreserversApprentice.titleShort>学徒</Homesteader_PreserversApprentice.titleShort>
+  <Homesteader_PreserversApprentice.description>[PAWN_nameDef]的童年在烟熏的储藏厨房里度过，学会了腌肉、封果酱罐，凭手感判断地窖的凉度。家里从不浪费任何东西。</Homesteader_PreserversApprentice.description>
+  <Homesteader_Homesteader.title>拓荒者</Homesteader_Homesteader.title>
+  <Homesteader_Homesteader.titleShort>拓荒者</Homesteader_Homesteader.titleShort>
+  <Homesteader_Homesteader.description>[PAWN_nameDef]在荒野中开出一座能运转的农场，几乎只凭手工工具和一股倔劲种地养畜。冬天是熬过来的，不是享受过来的。</Homesteader_Homesteader.description>
+  <Homesteader_FarmsteadBrewer.title>农庄酿酒人</Homesteader_FarmsteadBrewer.title>
+  <Homesteader_FarmsteadBrewer.titleShort>酿酒人</Homesteader_FarmsteadBrewer.titleShort>
+  <Homesteader_FarmsteadBrewer.description>[PAWN_nameDef]经营着一家小而受欢迎的农庄酒坊，为方圆一日路程内的每个集市日酿造苹果酒和蜂蜜酒。人人都知道[PAWN_possessive]名字；却很少有人记得自己的夜晚。</Homesteader_FarmsteadBrewer.description>
+</LanguageData>

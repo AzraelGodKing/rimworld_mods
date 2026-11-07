@@ -10,10 +10,7 @@ namespace Homesteader
     /// </summary>
     public class ThoughtWorker_WellStockedLarder : ThoughtWorker
     {
-        internal static int StageFor(int preserveKinds)
-        {
-            return preserveKinds >= 9 ? 2 : preserveKinds >= 6 ? 1 : preserveKinds >= 3 ? 0 : -1;
-        }
+        internal static int StageFor(int preserveKinds) => HomesteaderPure.LarderStage(preserveKinds);
 
         protected override ThoughtState CurrentStateInternal(Pawn p)
         {

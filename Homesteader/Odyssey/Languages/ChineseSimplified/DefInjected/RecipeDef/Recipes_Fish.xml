@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <Homesteader_CureFish.label>用盐腌鱼</Homesteader_CureFish.label>
+  <Homesteader_CureFish.description>用岩盐腌制生鱼直至入味。可保存数周，仍可做成餐食。</Homesteader_CureFish.description>
+  <Homesteader_CureFish.jobString>正在腌鱼。</Homesteader_CureFish.jobString>
+  <Homesteader_SmokeFish.label>熏鱼</Homesteader_SmokeFish.label>
+  <Homesteader_SmokeFish.description>用木烟熏制生鱼，可保存约一个月。熏鱼仍可做成餐食。</Homesteader_SmokeFish.description>
+  <Homesteader_SmokeFish.jobString>正在熏鱼。</Homesteader_SmokeFish.jobString>
+</LanguageData>

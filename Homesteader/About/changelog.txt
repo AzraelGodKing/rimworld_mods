@@ -19,6 +19,8 @@ Homesteader 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting
 [b]Changed[/b]
 [list]
 [*] [b]Tastes[/b] — only colonists, prisoners, slaves and guests you host get favourite foods and allergies. Raiders and traders no longer fill your save with tastes; old saves are cleaned up once on load. The Tastes tab shows "Not known yet" for anyone without tastes.
+[*] [b]Allergies[/b] — plural food names count now: an egg allergy also covers "scrambled eggs", a tree-nut allergy covers walnuts. Eggplant, veggies, donuts and crabapples still never match.
+[*] [b]Translations[/b] — Russian and Chinese for the Azrael storyteller, the Homesteaders scenario, the four homestead backstories and the Odyssey fish recipes.
 [*] [b]Kats Effect[/b] — no longer breaks if another mod's race or xenotype stops Kats from appearing.
 [*] [b]RimWorld 1.7[/b] — the 1.7 folder now has its own .NET 10 build made against the 1.7 game files. 1.6 keeps its own build from the same source, and both load the same defs.
 [*] [b]Refresh texture pack[/b] — the optional art pack is applied when the game starts, never mid-game. Turning it on or off takes effect on the next start.

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <Homesteader_CureFish.label>засолить рыбу</Homesteader_CureFish.label>
+  <Homesteader_CureFish.description>Переложить сырую рыбу каменной солью до готовности. Хранится неделями и всё ещё идёт в блюда.</Homesteader_CureFish.description>
+  <Homesteader_CureFish.jobString>Солит рыбу.</Homesteader_CureFish.jobString>
+  <Homesteader_SmokeFish.label>коптить рыбу</Homesteader_SmokeFish.label>
+  <Homesteader_SmokeFish.description>Закоптить сырую рыбу в древесном дыму, чтобы она хранилась около месяца. Копчёную рыбу всё ещё можно готовить в блюдах.</Homesteader_SmokeFish.description>
+  <Homesteader_SmokeFish.jobString>Коптит рыбу.</Homesteader_SmokeFish.jobString>
+</LanguageData>
