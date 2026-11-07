@@ -6,7 +6,8 @@
     <label>war scar</label>
     <description>A short-lived scar from an off-map battle — debris, camps, or contested ground. Not a personal nemesis site.</description>
     <worldObjectClass>LivingWorld.WorldObject_LivingWorldWarSite</worldObjectClass>
-    <texture>World/WorldObjects/Expanding/Sites</texture>
+    <texture>LivingWorld/World/WarScar</texture>
+    <expandingIconTexture>LivingWorld/World/WarScar</expandingIconTexture>
     <expandingIcon>true</expandingIcon>
     <expandingIconPriority>30</expandingIconPriority>
     <expandingIconColor>(0.75, 0.45, 0.25)</expandingIconColor>
@@ -17,7 +18,8 @@
     <label>way-camp</label>
     <description>A camp your caravans founded on a stretch of road they already walked. Overnight rest here is a little easier — not a settlement, not a war scar.</description>
     <worldObjectClass>LivingWorld.WorldObject_LivingWorldWayCamp</worldObjectClass>
-    <texture>World/WorldObjects/Expanding/Sites</texture>
+    <texture>LivingWorld/World/WayCamp</texture>
+    <expandingIconTexture>LivingWorld/World/WayCamp</expandingIconTexture>
     <expandingIcon>true</expandingIcon>
     <expandingIconPriority>28</expandingIconPriority>
     <expandingIconColor>(0.45, 0.62, 0.38)</expandingIconColor>
