@@ -12,6 +12,9 @@
   <NanoHive_Settings_Range>Repair radius: {0}</NanoHive_Settings_Range>
   <NanoHive_Settings_RangeDefault>Repair radius: {0} (the building's default)</NanoHive_Settings_RangeDefault>
 
+  <NanoHive_Settings_Shimmer>Repair shimmer</NanoHive_Settings_Shimmer>
+  <NanoHive_Settings_ShimmerTip>A soft glow on a hive while it repairs, and a spark on each thing it fixes. Only changes what you see, so it is safe to set differently from other Multiplayer players.</NanoHive_Settings_ShimmerTip>
+
   <!-- Inspect pane -->
   <NanoHive_Inspect_Settings>Radius {0}, {1} HP per target, up to {2} HP per cycle</NanoHive_Inspect_Settings>
   <NanoHive_Inspect_Repairing>Repairing: {1} of {0} things in range damaged, {2} HP repaired last cycle</NanoHive_Inspect_Repairing>

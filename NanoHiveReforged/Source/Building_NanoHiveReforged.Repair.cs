@@ -22,7 +22,15 @@ namespace NanoHiveReforged
         private int lastTargetsDamaged;
         private int lastHpRepaired;
 
+        // Up to MaxShown things repaired in the last cycle, for the shimmer.
+        private const int MaxShown = 16;
+        private readonly List<Thing> lastRepaired = new List<Thing>();
+
         public bool Working { get; private set; }
+
+        public List<Thing> LastRepaired => lastRepaired;
+
+        public float LastCycleRealtime { get; private set; } = -1000f;
 
         public int LastTargetsInRange => lastTargetsInRange;
 
@@ -51,6 +59,7 @@ namespace NanoHiveReforged
             if (Map == null || Faction == null || (compPowerTrader != null && !compPowerTrader.PowerOn))
             {
                 Working = false;
+                lastRepaired.Clear();
                 lastTargetsInRange = 0;
                 lastTargetsDamaged = 0;
                 lastHpRepaired = 0;
@@ -206,6 +215,8 @@ namespace NanoHiveReforged
             sortBuildingsFirst = cfg.buildingsFirst;
             targets.Sort(CompareTargets);
 
+            lastRepaired.Clear();
+            LastCycleRealtime = UnityEngine.Time.realtimeSinceStartup;
             int budget = Budget;
             int repaired = 0;
             for (int i = 0; i < targets.Count && budget > 0; i++)
@@ -220,6 +231,10 @@ namespace NanoHiveReforged
                 thing.HitPoints += amount;
                 budget -= amount;
                 repaired += amount;
+                if (lastRepaired.Count < MaxShown)
+                {
+                    lastRepaired.Add(thing);
+                }
                 if (thing is Building building && building.Spawned && building.Map == Map)
                 {
                     // Like vanilla repair: drops the building off the repair list once full.
