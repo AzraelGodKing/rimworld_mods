@@ -132,4 +132,5 @@
   <LivingWorld_Settings_PrepareRemovalDesc>从当前游戏中移除 Living World 的战场、路边营地、商队和“久经旅途”状态，并关闭模拟。之后请存档，再移除模组。</LivingWorld_Settings_PrepareRemovalDesc>
   <LivingWorld_Settings_PrepareRemovalConfirm>从本局游戏中移除 Living World 的对象并关闭模拟？编年史会保留。</LivingWorld_Settings_PrepareRemovalConfirm>
   <LivingWorld_Settings_PrepareRemovalDone>Living World：已移除 {0} 个对象和状态。请存档，然后移除模组。</LivingWorld_Settings_PrepareRemovalDone>
+  <LivingWorld_Settings_HostOnly>Living World：多人游戏中只有房主的设置会作用于游戏。你的模组设置已为你自己的游戏保存。</LivingWorld_Settings_HostOnly>
 </LanguageData>

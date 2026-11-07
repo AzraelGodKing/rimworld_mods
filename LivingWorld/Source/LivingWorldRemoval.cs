@@ -6,6 +6,18 @@ namespace LivingWorld
     /// <summary>"Prepare this save for removal" from Mod Options.</summary>
     public static class LivingWorldRemoval
     {
+        /// <summary>UI entry: also turns the player's own Mod Options off, then runs the synced part.</summary>
+        public static void Confirm()
+        {
+            if (LivingWorldMod.Global != null)
+            {
+                LivingWorldMod.Global.enabled = false;
+                LivingWorldMod.Global.Write();
+            }
+            Run();
+        }
+
+        /// <summary>Changes the game; a Multiplayer sync method.</summary>
         public static void Run()
         {
             GameComponent_LivingWorld comp = GameComponent_LivingWorld.Get;
@@ -14,11 +26,9 @@ namespace LivingWorld
                 return;
             }
             int removed = comp.PrepareForRemoval();
-            LivingWorldSettings settings = LivingWorldMod.Settings;
-            if (settings != null)
+            if (comp.SimSettings != null)
             {
-                settings.enabled = false;
-                settings.Write();
+                comp.SimSettings.enabled = false;
             }
             Messages.Message(
                 "LivingWorld_Settings_PrepareRemovalDone".Translate(removed),

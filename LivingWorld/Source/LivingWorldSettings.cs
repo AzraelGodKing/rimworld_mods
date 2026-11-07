@@ -73,9 +73,92 @@ namespace LivingWorld
             warRate = 1f;
         }
 
+        public LivingWorldSettings Clone()
+        {
+            var copy = new LivingWorldSettings();
+            copy.ReadFrom(Serialize());
+            return copy;
+        }
+
+        // Sync payload for Multiplayer: every public bool/int/float field as name=value;
+        // invariant culture so every client parses the same values.
+        private static readonly System.Reflection.FieldInfo[] syncedFields = SyncedFields();
+
+        private static System.Reflection.FieldInfo[] SyncedFields()
+        {
+            var list = new System.Collections.Generic.List<System.Reflection.FieldInfo>();
+            foreach (System.Reflection.FieldInfo f in typeof(LivingWorldSettings).GetFields(
+                         System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance
+                         | System.Reflection.BindingFlags.DeclaredOnly))
+            {
+                if (f.FieldType == typeof(bool) || f.FieldType == typeof(int) || f.FieldType == typeof(float))
+                {
+                    list.Add(f);
+                }
+            }
+            list.Sort((a, b) => string.CompareOrdinal(a.Name, b.Name));
+            return list.ToArray();
+        }
+
+        public string Serialize()
+        {
+            var sb = new System.Text.StringBuilder();
+            for (int i = 0; i < syncedFields.Length; i++)
+            {
+                System.Reflection.FieldInfo f = syncedFields[i];
+                object v = f.GetValue(this);
+                sb.Append(f.Name).Append('=').Append(
+                    v is float fl ? fl.ToString("R", System.Globalization.CultureInfo.InvariantCulture) : v.ToString())
+                    .Append(';');
+            }
+            return sb.ToString();
+        }
+
+        public void ReadFrom(string payload)
+        {
+            if (string.IsNullOrEmpty(payload))
+            {
+                return;
+            }
+            foreach (string part in payload.Split(';'))
+            {
+                int eq = part.IndexOf('=');
+                if (eq <= 0)
+                {
+                    continue;
+                }
+                string name = part.Substring(0, eq);
+                string value = part.Substring(eq + 1);
+                for (int i = 0; i < syncedFields.Length; i++)
+                {
+                    System.Reflection.FieldInfo f = syncedFields[i];
+                    if (f.Name != name)
+                    {
+                        continue;
+                    }
+                    var inv = System.Globalization.CultureInfo.InvariantCulture;
+                    if (f.FieldType == typeof(bool) && bool.TryParse(value, out bool b))
+                    {
+                        f.SetValue(this, b);
+                    }
+                    else if (f.FieldType == typeof(int)
+                             && int.TryParse(value, System.Globalization.NumberStyles.Integer, inv, out int n))
+                    {
+                        f.SetValue(this, n);
+                    }
+                    else if (f.FieldType == typeof(float)
+                             && float.TryParse(value, System.Globalization.NumberStyles.Float, inv, out float x))
+                    {
+                        f.SetValue(this, x);
+                    }
+                    break;
+                }
+            }
+        }
+
         public static void DoSettingsWindow(Rect inRect)
         {
-            LivingWorldSettings s = LivingWorldMod.Settings;
+            LivingWorldSettings s = LivingWorldMod.Global;
             Listing_Standard listing = new Listing_Standard();
             listing.Begin(inRect);
 
@@ -132,7 +215,7 @@ namespace LivingWorld
                 {
                     Find.WindowStack.Add(Dialog_MessageBox.CreateConfirmation(
                         "LivingWorld_Settings_PrepareRemovalConfirm".Translate(),
-                        LivingWorldRemoval.Run,
+                        LivingWorldRemoval.Confirm,
                         destructive: true));
                 }
                 listing.Label("LivingWorld_Settings_PrepareRemovalDesc".Translate());

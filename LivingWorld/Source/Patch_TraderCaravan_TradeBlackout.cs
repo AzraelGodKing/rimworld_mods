@@ -36,8 +36,11 @@ namespace LivingWorld
             }
             if (LivingWorldDiplomacy.FactionUnderTradeBlackout(faction))
             {
-                // Cautious: most of the time block; rare trickle still allowed.
-                if (!Rand.Chance(0.15f))
+                // Cautious: most of the time block; rare trickle still allowed. Seeded by
+                // faction and hour so every Multiplayer client rolls the same, even when
+                // CanFireNow is asked from UI code.
+                int seed = Gen.HashCombineInt(faction.loadID, Find.TickManager.TicksGame / 2500);
+                if (!Rand.ChanceSeeded(0.15f, seed))
                 {
                     __result = false;
                 }

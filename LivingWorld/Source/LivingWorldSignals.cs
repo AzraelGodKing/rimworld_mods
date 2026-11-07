@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Verse;
 
 namespace LivingWorld
@@ -9,9 +10,11 @@ namespace LivingWorld
     /// <para>
     /// Handlers run inside the sim tick, so they must be deterministic (Multiplayer) and cheap.
     /// Listen for <see cref="StableHookKinds"/> only; other kinds may change meaning between versions.
-    /// Rumours: <see cref="WorldEvent.kind"/> and faction names can be distorted on far news;
-    /// read <see cref="WorldEvent.trueKind"/> for ground truth. A later <see cref="WorldEventKind.Correction"/>
-    /// is raised when the record is fixed.
+    /// Handlers always receive ground truth: <see cref="WorldEvent.kind"/> equals
+    /// <see cref="WorldEvent.trueKind"/> and faction names are the real ones, even when the player
+    /// heard a distorted rumour (<see cref="WorldEvent.distorted"/> is then true). A later
+    /// <see cref="WorldEventKind.Correction"/> is raised when the player's record is fixed.
+    /// Prefer <see cref="LivingWorldCompatApi"/> for queries.
     /// </para>
     /// </summary>
     public static class LivingWorldSignals
@@ -47,7 +50,20 @@ namespace LivingWorld
             WorldEventKind.CaravanDiverted,
         };
 
+        // Field name read by older Azrael hub builds: keep "handlers".
         private static readonly List<WorldEventHandler> handlers = new List<WorldEventHandler>();
+
+        internal static bool IsRegistered(Type declaringType)
+        {
+            for (int i = 0; i < handlers.Count; i++)
+            {
+                if (handlers[i].Method?.DeclaringType == declaringType)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         public static void Register(WorldEventHandler handler)
         {
@@ -72,17 +88,22 @@ namespace LivingWorld
             {
                 return;
             }
+            // Consumers react to what really happened, not to the rumour.
+            WorldEvent truth = ev.distorted ? ev.TruthView() : ev;
             for (int i = 0; i < handlers.Count; i++)
             {
                 try
                 {
-                    handlers[i](ev);
+                    handlers[i](truth);
                 }
                 catch (Exception e)
                 {
+                    // One warning per broken handler, not one per event.
+                    MethodInfo m = handlers[i].Method;
                     Log.WarningOnce(
-                        "[Living World] Soft consumer threw: " + e.Message,
-                        e.GetHashCode());
+                        "[Living World] Soft consumer " + m?.DeclaringType?.FullName + "." + m?.Name
+                        + " threw: " + e.Message,
+                        0x4C570000 ^ (m?.MetadataToken ?? 0) ^ (m?.Module.MetadataToken ?? 0) << 8);
                 }
             }
         }

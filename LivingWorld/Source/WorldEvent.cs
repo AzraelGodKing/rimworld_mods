@@ -5,6 +5,10 @@ using Verse;
 
 namespace LivingWorld
 {
+    /// <summary>
+    /// One chronicle entry. Field names are public API: sister mods read them, so
+    /// never rename them (saves use them as keys too).
+    /// </summary>
     public class WorldEvent : IExposable
     {
         public int tick;
@@ -90,6 +94,16 @@ namespace LivingWorld
                 tile = LivingWorldTiles.IdOf(value);
                 tileLayer = LivingWorldTiles.LayerOf(value);
             }
+        }
+
+        /// <summary>A copy that says what really happened (signals); <see cref="distorted"/> stays set.</summary>
+        internal WorldEvent TruthView()
+        {
+            var copy = (WorldEvent)MemberwiseClone();
+            copy.kind = trueKind;
+            copy.factionAName = trueFactionAName;
+            copy.factionBName = trueFactionBName;
+            return copy;
         }
 
         public Faction FactionA() => FindFaction(factionAId);

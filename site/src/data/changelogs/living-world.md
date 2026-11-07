@@ -23,10 +23,15 @@ First public release, for RimWorld 1.6 and 1.7. Player-facing version **1.0.0** 
 - **Friendly warbands leave** — a non-hostile warband now crosses the map and exits instead of loitering.
 - **War sites** are skipped when a battle has no settlement to anchor them.
 - **Debug commands** queued in one game no longer run in the next one you load.
+- **Sister mods get the truth** — mods listening to Living World (Deep Colony goodwill) now react to what really happened, not to a distorted rumour.
+- **One warning per broken listener** — a sister-mod handler that throws logs once, not on every event.
 
 ### Added
 - **Prepare for removal** — a Mod Options button (in game) that removes Living World war sites, way-camps, caravans and the road-worn condition, then turns the sim off, so the save loads clean without the mod.
 - **Save versioning** — saves carry a Living World data version for future upgrades. Moods for settlements that no longer exist and stale fallout are pruned on load and every sim pulse.
+- **Multiplayer (soft support)** — the sim's settings are saved with the game, so every client runs the same simulation; only the host can change them in a session. Mod Options, debug actions and Prepare for removal are synced when the Multiplayer mod is loaded. See `LivingWorld/COMPATIBILITY.md`.
+- **Compatibility page** — `LivingWorld/COMPATIBILITY.md` lists sister mods, DLCs and Multiplayer.
+- **Modder API** — `LivingWorldCompatApi` (`ApiVersion` 1) for sister mods: register for news, check a handler, and read tone, war, blackout, prosperity and epithets.
 
 Not released yet: Living World stays at 1.0.0 until its first Workshop / Nexus / GitHub release. The 1.1.0–1.2.0 numbers below were internal pre-release bumps that never shipped; their notes are kept as development history.
 
