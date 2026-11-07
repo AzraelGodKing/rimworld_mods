@@ -24,6 +24,14 @@ namespace LivingWorld
         // Not scribed; rebuilt from moods on first lookup after load.
         private Dictionary<int, SettlementMood> moodIndex;
         private List<FactionPairState> pairs = new List<FactionPairState>();
+        // Not scribed; rebuilt from pairs after load. Key: LivingWorldRules.PairKey.
+        private Dictionary<long, FactionPairState> pairIndex;
+        /// <summary>World signature at the last EnsurePairs; not scribed, so a load rebuilds once.</summary>
+        internal int PairSignature = int.MinValue;
+        /// <summary>Set when Living World moves, founds or removes a settlement.</summary>
+        internal bool PairsDirty = true;
+        // Earliest pending rumour correction; -1 = recompute. Not scribed.
+        private int nextCorrectionTick = -1;
         private List<PendingFallout> pendingFallout = new List<PendingFallout>();
 
         private int lettersThisQuadrum;
@@ -110,6 +118,8 @@ namespace LivingWorld
                 pendingFallout.RemoveAll(f => f == null);
                 moods.RemoveAll(m => m == null);
                 moodIndex = null;
+                pairIndex = null;
+                nextCorrectionTick = -1;
                 Migrate();
             }
         }
@@ -187,17 +197,14 @@ namespace LivingWorld
                 }
             }
 
-            HediffDef veteran = DefDatabase<HediffDef>.GetNamedSilentFail("LW_Hediff_RoadVeteran");
-            if (veteran != null)
+            HediffDef veteran = LivingWorldDefOf.LW_Hediff_RoadVeteran;
+            foreach (Pawn pawn in PawnsFinder.AllMapsWorldAndTemporary_AliveOrDead)
             {
-                foreach (Pawn pawn in PawnsFinder.AllMapsWorldAndTemporary_AliveOrDead)
+                Hediff h = pawn?.health?.hediffSet?.GetFirstHediffOfDef(veteran);
+                if (h != null)
                 {
-                    Hediff h = pawn?.health?.hediffSet?.GetFirstHediffOfDef(veteran);
-                    if (h != null)
-                    {
-                        pawn.health.RemoveHediff(h);
-                        removed++;
-                    }
+                    pawn.health.RemoveHediff(h);
+                    removed++;
                 }
             }
 
@@ -217,8 +224,16 @@ namespace LivingWorld
 
             int now = Find.TickManager.TicksGame;
             LivingWorldDebugCommand.Drain();
-            RefreshBudgets(now);
-            LivingWorldRumour.TickCorrections(this);
+            // Budgets only roll over per quadrum/year; an hourly check is plenty.
+            if (now % 2500 == 0)
+            {
+                RefreshBudgets(now);
+            }
+            if (now % 250 == 0 && now >= NextCorrectionTick)
+            {
+                LivingWorldRumour.TickCorrections(this);
+                nextCorrectionTick = -1;
+            }
 
             int interval = settings.tickInterval <= 0 ? 10000 : settings.tickInterval;
             if (now % interval != 0)
@@ -276,6 +291,36 @@ namespace LivingWorld
             }
         }
 
+        /// <summary>Earliest tick a distorted record is due its correction (int.MaxValue if none).</summary>
+        private int NextCorrectionTick
+        {
+            get
+            {
+                if (nextCorrectionTick >= 0)
+                {
+                    return nextCorrectionTick;
+                }
+                int best = int.MaxValue;
+                Scan(chronicle, ref best);
+                Scan(evictedPendingCorrections, ref best);
+                nextCorrectionTick = best;
+                return best;
+
+                static void Scan(List<WorldEvent> list, ref int best)
+                {
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        WorldEvent ev = list[i];
+                        if (ev != null && ev.distorted && !ev.corrected && ev.correctionTick >= 0
+                            && ev.correctionTick < best)
+                        {
+                            best = ev.correctionTick;
+                        }
+                    }
+                }
+            }
+        }
+
         public bool TryConsumeLetterBudget()
         {
             LivingWorldSettings s = LivingWorldMod.Settings;
@@ -325,19 +370,29 @@ namespace LivingWorld
             }
 
             LivingWorldRumour.StampOnPublish(ev, allowDistortion: sendLetter);
+            if (ev.distorted && ev.correctionTick >= 0 && nextCorrectionTick >= 0
+                && ev.correctionTick < nextCorrectionTick)
+            {
+                nextCorrectionTick = ev.correctionTick;
+            }
 
             chronicle.Add(ev);
-            while (chronicle.Count > ChronicleCapacity)
+            int overflow = chronicle.Count - ChronicleCapacity;
+            if (overflow > 0)
             {
-                WorldEvent evicted = chronicle[0];
-                chronicle.RemoveAt(0);
-                if (evicted != null && evicted.distorted && !evicted.corrected && evicted.correctionTick >= 0)
+                for (int i = 0; i < overflow; i++)
                 {
-                    evictedPendingCorrections.Add(evicted);
-                    if (evictedPendingCorrections.Count > EvictedCorrectionCapacity)
+                    WorldEvent evicted = chronicle[i];
+                    if (evicted != null && evicted.distorted && !evicted.corrected && evicted.correctionTick >= 0)
                     {
-                        evictedPendingCorrections.RemoveAt(0);
+                        evictedPendingCorrections.Add(evicted);
                     }
+                }
+                chronicle.RemoveRange(0, overflow);
+                int extra = evictedPendingCorrections.Count - EvictedCorrectionCapacity;
+                if (extra > 0)
+                {
+                    evictedPendingCorrections.RemoveRange(0, extra);
                 }
             }
 
@@ -357,16 +412,47 @@ namespace LivingWorld
             {
                 return null;
             }
-            for (int i = 0; i < pairs.Count; i++)
+            long key = LivingWorldRules.PairKey(a.loadID, b.loadID);
+            if (PairIndex.TryGetValue(key, out FactionPairState found))
             {
-                if (pairs[i].Matches(a, b))
-                {
-                    return pairs[i];
-                }
+                return found;
             }
             FactionPairState created = FactionPairState.Create(a, b);
             pairs.Add(created);
+            pairIndex[key] = created;
             return created;
+        }
+
+        public FactionPairState TryGetPair(Faction a, Faction b)
+        {
+            if (a == null || b == null || a == b)
+            {
+                return null;
+            }
+            return PairIndex.TryGetValue(LivingWorldRules.PairKey(a.loadID, b.loadID), out FactionPairState p) ? p : null;
+        }
+
+        internal void RemovePairAt(int i)
+        {
+            FactionPairState p = pairs[i];
+            pairs.RemoveAt(i);
+            pairIndex?.Remove(LivingWorldRules.PairKey(p.factionAId, p.factionBId));
+        }
+
+        private Dictionary<long, FactionPairState> PairIndex
+        {
+            get
+            {
+                if (pairIndex == null)
+                {
+                    pairIndex = new Dictionary<long, FactionPairState>(pairs.Count);
+                    for (int i = 0; i < pairs.Count; i++)
+                    {
+                        pairIndex[LivingWorldRules.PairKey(pairs[i].factionAId, pairs[i].factionBId)] = pairs[i];
+                    }
+                }
+                return pairIndex;
+            }
         }
 
         public void EnqueueFallout(PendingFallout fallout)
@@ -381,6 +467,8 @@ namespace LivingWorld
         private const int FalloutDelayTicks = 30000;
         private const int FalloutTicksPerTile = 250;
         private const int FalloutTravelCapTicks = 120000;
+        // Past the travel cap the distance no longer matters; bounds the world search.
+        private const int FalloutMaxSearchTiles = FalloutTravelCapTicks / FalloutTicksPerTile + 1;
 
         public static Map NearestPlayerHome(PlanetTile tile)
         {
@@ -398,7 +486,7 @@ namespace LivingWorld
                 {
                     return map;
                 }
-                int dist = LivingWorldTiles.Distance(map.Tile, tile);
+                int dist = LivingWorldTiles.Distance(map.Tile, tile, FalloutMaxSearchTiles);
                 if (dist < 0)
                 {
                     continue;
@@ -423,11 +511,13 @@ namespace LivingWorld
             {
                 return FalloutDelayTicks;
             }
-            int dist = LivingWorldTiles.Distance(home.Tile, tile);
+            int dist = LivingWorldTiles.Distance(home.Tile, tile, FalloutMaxSearchTiles);
             if (dist < 0)
             {
                 dist = 0;
             }
+            // Beyond maxDist the search reports a huge value; clamp before multiplying.
+            dist = System.Math.Min(dist, FalloutMaxSearchTiles);
             int travel = System.Math.Min(FalloutTravelCapTicks, dist * FalloutTicksPerTile);
             return FalloutDelayTicks + travel;
         }
@@ -470,8 +560,8 @@ namespace LivingWorld
             if (refugeesPending != null)
             {
                 Map map = NearestPlayerHome(refugeesPending.Where);
-                IncidentDef refugees = DefDatabase<IncidentDef>.GetNamedSilentFail("LivingWorld_Refugees");
-                if (map != null && refugees != null)
+                IncidentDef refugees = LivingWorldDefOf.LivingWorld_Refugees;
+                if (map != null)
                 {
                     IncidentParms parms = StorytellerUtility.DefaultParmsNow(refugees.category, map);
                     parms.forced = true;
@@ -487,8 +577,8 @@ namespace LivingWorld
             {
                 PendingFallout warbandPending = PeekFallout(FalloutKind.Warband);
                 Map map = NearestPlayerHome(warbandPending.Where);
-                IncidentDef warband = DefDatabase<IncidentDef>.GetNamedSilentFail("LivingWorld_Warband");
-                if (map != null && warband != null)
+                IncidentDef warband = LivingWorldDefOf.LivingWorld_Warband;
+                if (map != null)
                 {
                     IncidentParms parms = StorytellerUtility.DefaultParmsNow(warband.category, map);
                     parms.forced = true;

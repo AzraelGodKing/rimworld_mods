@@ -61,6 +61,18 @@ namespace LivingWorld
 
         internal static bool IsNearby(WorldEvent ev)
         {
+            int now = Find.TickManager.TicksGame;
+            if (ev.nearbyTick == now)
+            {
+                return ev.nearbyCached;
+            }
+            ev.nearbyTick = now;
+            ev.nearbyCached = ComputeNearby(ev);
+            return ev.nearbyCached;
+        }
+
+        private static bool ComputeNearby(WorldEvent ev)
+        {
             PlanetTile where = ev.Where;
             if (!where.Valid)
             {
@@ -72,6 +84,12 @@ namespace LivingWorld
             {
                 Map map = maps[i];
                 if (map == null || !map.IsPlayerHome)
+                {
+                    continue;
+                }
+                // Straight-line pre-filter: walking is never shorter than 2/3 of it.
+                if (map.Tile.Layer != where.Layer
+                    || Find.WorldGrid.ApproxDistanceInTiles(map.Tile, where) > max * 1.5f)
                 {
                     continue;
                 }

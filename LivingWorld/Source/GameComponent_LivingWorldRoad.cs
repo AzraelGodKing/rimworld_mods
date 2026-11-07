@@ -39,7 +39,7 @@ namespace LivingWorld
                 return;
             }
             List<Caravan> caravans = Find.WorldObjects.Caravans;
-            HediffDef veteran = DefDatabase<HediffDef>.GetNamedSilentFail("LW_Hediff_RoadVeteran");
+            HediffDef veteran = LivingWorldDefOf.LW_Hediff_RoadVeteran;
             for (int i = 0; i < caravans.Count; i++)
             {
                 Caravan c = caravans[i];
@@ -68,7 +68,7 @@ namespace LivingWorld
                             LetterDefOf.NeutralEvent);
                     }
                 }
-                if (veteran != null && roadTiles.Count >= 8)
+                if (roadTiles.Count >= 8)
                 {
                     TryMarkVeterans(c, veteran);
                 }

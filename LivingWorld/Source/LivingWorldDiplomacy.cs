@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using RimWorld;
 using RimWorld.Planet;
 using Verse;
@@ -10,9 +9,30 @@ namespace LivingWorld
     {
         private const int PairCooldownTicks = 60000 * 3; // ~3 days between resolves on a pair
 
-        public static void EnsurePairs(GameComponent_LivingWorld comp)
+        /// <summary>
+        /// Creates pairs for new factions and drops pairs for factions that left.
+        /// Skipped unless settlements or factions changed since the last run.
+        /// </summary>
+        public static void EnsurePairs(GameComponent_LivingWorld comp, bool force = false)
         {
-            List<Faction> factions = EligibleFactions().ToList();
+            int signature = LivingWorldWorldStats.Signature();
+            if (!force && !comp.PairsDirty && signature == comp.PairSignature)
+            {
+                return;
+            }
+            comp.PairSignature = signature;
+            comp.PairsDirty = false;
+
+            factionBuffer.Clear();
+            List<Faction> all = Find.FactionManager.AllFactionsListForReading;
+            for (int i = 0; i < all.Count; i++)
+            {
+                if (IsEligible(all[i]))
+                {
+                    factionBuffer.Add(all[i]);
+                }
+            }
+            List<Faction> factions = factionBuffer;
             for (int i = 0; i < factions.Count; i++)
             {
                 for (int j = i + 1; j < factions.Count; j++)
@@ -38,10 +58,13 @@ namespace LivingWorld
                     {
                         MaybePublishFactionCollapse(comp, b);
                     }
-                    pairs.RemoveAt(i);
+                    comp.RemovePairAt(i);
                 }
             }
         }
+
+        private static readonly List<Faction> factionBuffer = new List<Faction>();
+        private static readonly List<FactionPairState> candidateBuffer = new List<FactionPairState>();
 
         /// <summary>
         /// Major Collapse when an NPC faction is defeated or has no settlements left.
@@ -88,16 +111,23 @@ namespace LivingWorld
             }
 
             EnsurePairs(comp);
-            List<FactionPairState> candidates = comp.PairsMutable
-                .Where(p => Find.TickManager.TicksGame - p.lastResolveTick >= PairCooldownTicks
-                    || p.lastResolveTick <= 0)
-                .ToList();
-            if (candidates.Count == 0)
+            int now = Find.TickManager.TicksGame;
+            List<FactionPairState> pairs = comp.PairsMutable;
+            candidateBuffer.Clear();
+            for (int i = 0; i < pairs.Count; i++)
+            {
+                FactionPairState p = pairs[i];
+                if (now - p.lastResolveTick >= PairCooldownTicks || p.lastResolveTick <= 0)
+                {
+                    candidateBuffer.Add(p);
+                }
+            }
+            if (candidateBuffer.Count == 0)
             {
                 return false;
             }
 
-            FactionPairState pair = candidates.RandomElement();
+            FactionPairState pair = candidateBuffer.RandomElement();
             return TryResolvePair(comp, pair);
         }
 
@@ -644,18 +674,6 @@ namespace LivingWorld
             return false;
         }
 
-        private static IEnumerable<Faction> EligibleFactions()
-        {
-            List<Faction> all = Find.FactionManager.AllFactionsListForReading;
-            for (int i = 0; i < all.Count; i++)
-            {
-                if (IsEligible(all[i]))
-                {
-                    yield return all[i];
-                }
-            }
-        }
-
         private static bool IsEligible(Faction f)
         {
             if (f == null || f.IsPlayer || f.defeated || f.def == null)
@@ -669,19 +687,7 @@ namespace LivingWorld
             return SettlementCount(f) >= 1;
         }
 
-        private static int SettlementCount(Faction f)
-        {
-            int n = 0;
-            List<Settlement> all = Find.WorldObjects.Settlements;
-            for (int i = 0; i < all.Count; i++)
-            {
-                if (all[i]?.Faction == f)
-                {
-                    n++;
-                }
-            }
-            return n;
-        }
+        private static int SettlementCount(Faction f) => LivingWorldWorldStats.SettlementCount(f);
 
         private static Settlement PickSettlementOf(Faction f)
         {
@@ -689,9 +695,22 @@ namespace LivingWorld
             {
                 return null;
             }
-            return Find.WorldObjects.Settlements
-                .Where(s => s?.Faction == f)
-                .RandomElementWithFallback();
+            int count = SettlementCount(f);
+            if (count == 0)
+            {
+                return null;
+            }
+            // Pick the k-th settlement of this faction without building a list.
+            int k = Rand.Range(0, count);
+            List<Settlement> all = Find.WorldObjects.Settlements;
+            for (int i = 0; i < all.Count; i++)
+            {
+                if (all[i]?.Faction == f && k-- == 0)
+                {
+                    return all[i];
+                }
+            }
+            return null;
         }
 
         private static Settlement PickSettlementNear(Faction a, Faction b)

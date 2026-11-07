@@ -31,7 +31,7 @@ namespace LivingWorld
                 return false;
             }
 
-            List<Settlement> settlements = EligibleSettlements().ToList();
+            List<Settlement> settlements = EligibleSettlements();
             if (settlements.Count == 0)
             {
                 return false;
@@ -67,7 +67,7 @@ namespace LivingWorld
 
         public static bool TryForce(GameComponent_LivingWorld comp, MorphKind kind)
         {
-            List<Settlement> settlements = EligibleSettlements().ToList();
+            List<Settlement> settlements = EligibleSettlements();
             if (settlements.Count == 0)
             {
                 return false;
@@ -87,8 +87,13 @@ namespace LivingWorld
             }
         }
 
-        private static IEnumerable<Settlement> EligibleSettlements()
+        private static readonly List<Settlement> eligibleBuffer = new List<Settlement>();
+
+        /// <summary>Reused buffer: valid until the next call. Not cached across pulses
+        /// because "in active use" (maps, caravans, quests) changes all the time.</summary>
+        private static List<Settlement> EligibleSettlements()
         {
+            eligibleBuffer.Clear();
             List<Settlement> all = Find.WorldObjects.Settlements;
             for (int i = 0; i < all.Count; i++)
             {
@@ -105,8 +110,9 @@ namespace LivingWorld
                 {
                     continue;
                 }
-                yield return s;
+                eligibleBuffer.Add(s);
             }
+            return eligibleBuffer;
         }
 
         private static bool IsPlayerHomeTile(PlanetTile tile)
@@ -180,6 +186,9 @@ namespace LivingWorld
 
         private static void TouchMorph(GameComponent_LivingWorld comp, Settlement settlement)
         {
+            // Ownership or settlement count may have changed: refresh pair and count caches.
+            comp.PairsDirty = true;
+            LivingWorldWorldStats.Invalidate();
             SettlementMood mood = comp.GetOrCreateMood(settlement);
             mood.lastMorphTick = Find.TickManager.TicksGame;
         }
@@ -329,7 +338,7 @@ namespace LivingWorld
             // Prefer factions that still have another settlement.
             Settlement target = settlements
                 .Where(s => !OnCooldown(comp, s, ignoreCooldown)
-                    && settlements.Count(o => o.Faction == s.Faction) >= 2)
+                    && LivingWorldWorldStats.SettlementCount(s.Faction) >= 2)
                 .RandomElementWithFallback();
             if (target == null)
             {
@@ -363,7 +372,7 @@ namespace LivingWorld
         {
             Settlement parent = settlements
                 .Where(s => !OnCooldown(comp, s, ignoreCooldown)
-                    && settlements.Count(o => o.Faction == s.Faction) < 4)
+                    && LivingWorldWorldStats.SettlementCount(s.Faction) < 4)
                 .RandomElementWithFallback();
             if (parent?.Faction == null)
             {

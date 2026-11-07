@@ -42,12 +42,10 @@ namespace LivingWorld
         {
             // GameComponent.Get is game-instance cached; epithet suffix is mood-cached.
             SettlementMood mood = GameComponent_LivingWorld.Get?.TryGetMood(__instance);
-            string suffix = mood?.EpithetLabelSuffix();
-            if (suffix == null)
+            if (mood != null)
             {
-                return;
+                __result = mood.LabelWithEpithet(__result);
             }
-            __result = __result + suffix;
         }
     }
 }

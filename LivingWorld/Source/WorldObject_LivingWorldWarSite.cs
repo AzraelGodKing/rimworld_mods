@@ -59,13 +59,7 @@ namespace LivingWorld
                 return;
             }
 
-            WorldObjectDef def = DefDatabase<WorldObjectDef>.GetNamedSilentFail("LivingWorld_WarSite");
-            if (def == null)
-            {
-                return;
-            }
-
-            var site = (WorldObject_LivingWorldWarSite)WorldObjectMaker.MakeWorldObject(def);
+            var site = (WorldObject_LivingWorldWarSite)WorldObjectMaker.MakeWorldObject(LivingWorldDefOf.LivingWorld_WarSite);
             site.Tile = tile.Value;
             site.SetFaction(winner ?? loser);
             site.expiresTick = Find.TickManager.TicksGame + LifetimeTicks;

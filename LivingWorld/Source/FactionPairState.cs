@@ -65,18 +65,6 @@ namespace LivingWorld
             };
         }
 
-        public bool Matches(Faction a, Faction b)
-        {
-            if (a == null || b == null)
-            {
-                return false;
-            }
-            int idA = a.loadID;
-            int idB = b.loadID;
-            NormalizeIds(ref idA, ref idB);
-            return factionAId == idA && factionBId == idB;
-        }
-
         public Faction FactionA() => WorldEvent.FindFaction(factionAId);
 
         public Faction FactionB() => WorldEvent.FindFaction(factionBId);
