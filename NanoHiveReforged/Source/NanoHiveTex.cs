@@ -16,6 +16,8 @@ namespace NanoHiveReforged
         public static readonly Texture2D Items = IconOf("ComponentIndustrial");
         public static readonly Texture2D Gear = IconOf("Apparel_FlakVest");
         public static readonly Texture2D Inventory = IconOf("MedicineIndustrial");
+        public static readonly Texture2D OnlyStored = ContentFinder<Texture2D>.Get("UI/Commands/ForbidOff");
+        public static readonly Texture2D BuildingsFirst = ContentFinder<Texture2D>.Get("UI/NanoHive/BuildingsFirst");
 
         public static Texture2D For(HiveToggle toggle)
         {
@@ -24,7 +26,9 @@ namespace NanoHiveReforged
                 case HiveToggle.Buildings: return Buildings;
                 case HiveToggle.Items: return Items;
                 case HiveToggle.Gear: return Gear;
-                default: return Inventory;
+                case HiveToggle.Inventory: return Inventory;
+                case HiveToggle.OnlyStoredItems: return OnlyStored;
+                default: return BuildingsFirst;
             }
         }
 
