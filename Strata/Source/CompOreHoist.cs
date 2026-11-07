@@ -35,7 +35,7 @@ namespace Strata
                 {
                     return ticks;
                 }
-                float brown = StormproofBrownout.For(parent);
+                float brown = AzraelCommon.StormproofClient.BrownoutFor(parent);
                 if (brown <= 0.01f)
                 {
                     return ticks;

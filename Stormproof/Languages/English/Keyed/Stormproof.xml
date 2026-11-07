@@ -193,5 +193,6 @@
   <Stormproof_Almanac_LifetimeDefence>Lifetime: pylon zaps {0}. EMP bursts {1}.</Stormproof_Almanac_LifetimeDefence>
   <Stormproof_LoadShedder_HoldSmart>Hold: Smart</Stormproof_LoadShedder_HoldSmart>
   <Stormproof_LoadShedder_SmartHolding>Smart hold: reconnecting now would hit the cutoff in {0}. Staying shed.</Stormproof_LoadShedder_SmartHolding>
+  <Stormproof_Settings_AzraelStack>Under the Azrael storyteller, which also weights these picks: {0}</Stormproof_Settings_AzraelStack>
 
 </LanguageData>

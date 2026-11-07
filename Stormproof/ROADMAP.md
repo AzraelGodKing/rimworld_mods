@@ -29,11 +29,13 @@ Playable core is in. Next pool: [docs/ideas/stormproof-updates.md](../docs/ideas
 
 ## Soft-compat (Stormproof side)
 
-Do not implement the other mod's systems here. Name the hook so each side can fail-open. No public compat surface ships today; sister mods still scan defs or reflect `MapComponent_Stormproof`.
+Do not implement the other mod's systems here. `StormproofCompatApi` (API v2) is the public surface; sister mods read it through `Common/Sibling/StormproofClient.cs`, which fails open. Full matrix: [COMPATIBILITY.md](COMPATIBILITY.md).
 
-- [ ] **Strata** — ion-immune underground grid and surge awareness. Surface antenna / flood logic stays in Strata.
-- [ ] **Homesteader HS-S02** — drought inspect on wells / cisterns. Drought condenser stays Stormproof; Homesteader only reads the drought.
-- [ ] **Nemesis** — high-aggression baiting during an ion storm (Nemesis owns the hunt).
+- [x] **Strata** (AZR-496, AZR-503): freight-lift brownout, storm surge on unpumped seep floods, surface forecast on the seismograph. Flood logic stays in Strata.
+- [x] **Nemesis** (AZR-496): EMP sabotage respects live dampener cover; a ready surge protector blocks the extra Zzzt.
+- [x] **Deep Colony** (AZR-496): ion-storm trauma reads `IonStormActive`.
+- [ ] **Homesteader HS-S02**: drought inspect on wells / cisterns. Drought condenser stays Stormproof; Homesteader only reads the drought.
+- [ ] **Nemesis**: high-aggression baiting during an ion storm (Nemesis owns the hunt; `IonStormStarted` / `IonStormEnded` are there for it).
 
 ---
 

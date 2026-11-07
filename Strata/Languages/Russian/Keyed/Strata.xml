@@ -430,6 +430,9 @@
   <Strata_Seismograph_CaveIn>Cave-in risk: {0}</Strata_Seismograph_CaveIn>
   <Strata_Seismograph_Infestation>Infestation pressure: {0}</Strata_Seismograph_Infestation>
   <Strata_Seismograph_Noise>Local noise: {0}</Strata_Seismograph_Noise>
+  <Strata_Seismograph_SurfaceWeather>Погода на поверхности: {0}, может смениться через {1}</Strata_Seismograph_SurfaceWeather>
+  <Strata_Seismograph_SurfaceWeatherNow>Погода на поверхности: {0}</Strata_Seismograph_SurfaceWeatherNow>
+  <Strata_Seismograph_StormSurge>Штормовой нагон сверху: {0} (без работающего дренажного насоса затопления растут быстрее)</Strata_Seismograph_StormSurge>
   <Strata_Seismograph_RiskLow>low</Strata_Seismograph_RiskLow>
   <Strata_Seismograph_RiskModerate>moderate</Strata_Seismograph_RiskModerate>
   <Strata_Seismograph_RiskHigh>high</Strata_Seismograph_RiskHigh>

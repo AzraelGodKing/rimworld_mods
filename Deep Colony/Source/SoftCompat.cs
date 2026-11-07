@@ -55,15 +55,9 @@ namespace DeepColony
             return RoyalTitleSeniority(pawn) > 0;
         }
 
-        public static bool MapHasIonStorm(Map map)
-        {
-            if (map?.GameConditionManager == null || !StormproofLoaded) return false;
-            GameConditionDef ion = DefDatabase<GameConditionDef>.GetNamedSilentFail("Stormproof_IonStorm");
-            GameConditionDef dry = DefDatabase<GameConditionDef>.GetNamedSilentFail("Stormproof_DryLightning");
-            if (ion != null && map.GameConditionManager.ConditionIsActive(ion)) return true;
-            if (dry != null && map.GameConditionManager.ConditionIsActive(dry)) return true;
-            return false;
-        }
+        // Ion storm or dry lightning front, through Stormproof's compat API.
+        public static bool MapHasIonStorm(Map map) =>
+            StormproofLoaded && AzraelCommon.StormproofClient.IonStormActive(map);
 
         public static bool IsAnomalyEntity(Thing instigator)
         {

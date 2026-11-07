@@ -175,6 +175,7 @@ namespace Stormproof
             foreach (Map map in cond.AffectedMaps)
             {
                 MapComponent_Stormproof.For(map)?.NotifyCondition(cond, started: true);
+                StormproofCompatApi.NotifyCondition(cond, map, started: true);
             }
         }
     }
@@ -191,6 +192,7 @@ namespace Stormproof
             foreach (Map map in __instance.AffectedMaps)
             {
                 MapComponent_Stormproof.For(map)?.NotifyCondition(__instance, started: false);
+                StormproofCompatApi.NotifyCondition(__instance, map, started: false);
             }
         }
     }

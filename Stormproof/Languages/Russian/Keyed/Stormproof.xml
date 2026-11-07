@@ -192,5 +192,6 @@
   <Stormproof_Almanac_LifetimeDefence>Итого: разрядов пилона {0}. Всплесков ЭМИ {1}.</Stormproof_Almanac_LifetimeDefence>
   <Stormproof_LoadShedder_HoldSmart>Удерж.: умно</Stormproof_LoadShedder_HoldSmart>
   <Stormproof_LoadShedder_SmartHolding>Умное удержание: при подключении сейчас порог сработает через {0}. Остаётся отключено.</Stormproof_LoadShedder_SmartHolding>
+  <Stormproof_Settings_AzraelStack>С рассказчиком Azrael, который тоже усиливает выбор этих событий: {0}</Stormproof_Settings_AzraelStack>
 
 </LanguageData>

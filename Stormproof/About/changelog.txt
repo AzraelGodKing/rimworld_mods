@@ -8,6 +8,9 @@ Stormproof 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting 
 [*] [b]Grid monitor[/b] — opens the almanac too.
 [*] [b]Almanac[/b] — counts static pylon zaps and ion storm EMP bursts.
 [*] [b]Settings[/b] — storm caller recharge and storm length sliders, a one-time warning for an undefended grid in a storm, and (Biotech) EMP dampener cover for your own mechanoids.
+[*] [b]Compatibility list[/b]: a full table of what Stormproof works with on 1.6 and 1.7 (linked in the description).
+[*] [b]Azrael storyteller[/b]: settings show the combined incident rate when the Azrael storyteller also weights Stormproof incidents.
+[*] [b]Modder API[/b]: Strata, Nemesis and Deep Colony now read Stormproof through one public API instead of guessing at its buildings.
 [/list]
 
 [b]Changed[/b]
@@ -29,5 +32,5 @@ Stormproof 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting 
 [*] [b]Translations[/b] — Russian and Chinese now cover condition end messages, the research tab and the Stormfront scenario.
 [/list]
 
-[i]Build stamp (Player.log): stormproof2-gridtools[/i]
+[i]Build stamp (Player.log): stormproof2-compat[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/stormproof.md[/i]

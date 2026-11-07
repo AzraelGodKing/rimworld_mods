@@ -240,11 +240,16 @@
       ],
       "compatibility": {
         "compatibleWith": [
-          { "name": "Homesteader", "note": "Pairs naturally with Homesteader batteries and generators" },
-          { "name": "Nemesis", "note": "Nemesis EMP sabotage respects EMP dampeners; surge protectors blunt its grid sabotage" }
+          { "name": "Strata", "note": "Brownout slows the freight lift; storm surge grows seep floods on levels without a running sump pump; the seismograph shows the surface forecast" },
+          { "name": "Homesteader", "note": "Pairs naturally with Homesteader batteries and generators; with Homesteader, the Stormfront scenario locks the Azrael storyteller" },
+          { "name": "Nemesis", "note": "Nemesis EMP sabotage respects EMP dampeners; surge protectors blunt its grid sabotage" },
+          { "name": "Deep Colony", "note": "Colonists downed during an ion storm get the ion-storm trauma" },
+          { "name": "Azrael", "note": "The Azrael storyteller weights Stormproof incidents on top of the frequency slider; settings show the combined rate" }
         ],
-        "incompatibleWith": [],
-        "notes": []
+        "incompatibleWith": [
+          { "name": "Multiplayer", "note": "Not supported" }
+        ],
+        "notes": ["Full compatibility matrix (1.6 and 1.7, integration points, fail-open behaviour): https://github.com/AzraelGodKing/rimworld_mods/blob/main/Stormproof/COMPATIBILITY.md"]
       },
       "changelogPath": "changelogs/stormproof.md"
     },

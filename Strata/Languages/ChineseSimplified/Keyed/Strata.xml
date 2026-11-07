@@ -431,6 +431,9 @@
   <Strata_Seismograph_CaveIn>Cave-in risk: {0}</Strata_Seismograph_CaveIn>
   <Strata_Seismograph_Infestation>Infestation pressure: {0}</Strata_Seismograph_Infestation>
   <Strata_Seismograph_Noise>Local noise: {0}</Strata_Seismograph_Noise>
+  <Strata_Seismograph_SurfaceWeather>地表天气：{0}，可能在{1}后变化</Strata_Seismograph_SurfaceWeather>
+  <Strata_Seismograph_SurfaceWeatherNow>地表天气：{0}</Strata_Seismograph_SurfaceWeatherNow>
+  <Strata_Seismograph_StormSurge>来自地表的风暴涌流：{0}（没有运行中的排水泵时，渗水淹没扩展更快）</Strata_Seismograph_StormSurge>
   <Strata_Seismograph_RiskLow>low</Strata_Seismograph_RiskLow>
   <Strata_Seismograph_RiskModerate>moderate</Strata_Seismograph_RiskModerate>
   <Strata_Seismograph_RiskHigh>high</Strata_Seismograph_RiskHigh>

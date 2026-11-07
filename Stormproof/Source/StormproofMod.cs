@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -14,6 +18,53 @@ namespace Stormproof
         public StormproofMod(ModContentPack content) : base(content)
         {
             Settings = GetSettings<StormproofSettings>();
+        }
+
+        private static bool azraelResolved;
+        private static MethodInfo azraelFactorFor;
+        private static StorytellerDef azraelTeller;
+
+        // The Azrael storyteller weights Stormproof picks on top of the frequency
+        // slider (Azrael_SeriesIncidentWeights). Show the combined rate so the two
+        // settings don't surprise anyone. Null when Azrael is not loaded.
+        private static string AzraelStackLine()
+        {
+            if (!azraelResolved)
+            {
+                azraelResolved = true;
+                azraelTeller = DefDatabase<StorytellerDef>.GetNamedSilentFail("Azrael");
+                azraelFactorFor = GenTypes.GetTypeInAnyAssembly("Azrael.StorytellerIncidentWeights")
+                    ?.GetMethod("FactorFor", new[] { typeof(StorytellerDef), typeof(IncidentDef) });
+            }
+            if (azraelTeller == null || azraelFactorFor == null)
+            {
+                return null;
+            }
+            var parts = new List<string>();
+            foreach (IncidentDef incident in StormproofIncidentDefOf.All)
+            {
+                if (incident == null)
+                {
+                    continue;
+                }
+                float factor;
+                try
+                {
+                    factor = (float)azraelFactorFor.Invoke(null, new object[] { azraelTeller, incident });
+                }
+                catch (Exception)
+                {
+                    azraelFactorFor = null;
+                    return null;
+                }
+                if (factor != 1f)
+                {
+                    parts.Add(incident.label + " " + (Settings.incidentFrequency * factor).ToStringPercent());
+                }
+            }
+            return parts.Count == 0
+                ? null
+                : "Stormproof_Settings_AzraelStack".Translate(string.Join(", ", parts));
         }
 
         public override string SettingsCategory() => "Stormproof_SettingsCategory".Translate();
@@ -88,6 +139,11 @@ namespace Stormproof
             listing.Label("Stormproof_Settings_IncidentFreq".Translate(
                 Settings.incidentFrequency.ToStringPercent()));
             Settings.incidentFrequency = listing.Slider(Settings.incidentFrequency, 0f, 2.5f);
+            string azrael = AzraelStackLine();
+            if (azrael != null)
+            {
+                listing.Label(azrael);
+            }
 
             listing.GapLine();
             listing.Label("Stormproof_Settings_Suppressors".Translate());
