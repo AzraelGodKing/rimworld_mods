@@ -4,23 +4,24 @@ Detailed notes for Deep Colony only.
 
 ## [Unreleased]
 
+## [2.0.0]
+
+Player-facing version **2.0.0** (`About.xml` `modVersion`). Stamp `deepcolony2-net10`. Ships for RimWorld **1.6** and **1.7** from the same source; 1.6 is not frozen. The Linear tickets call this release "Deep Colony 3 / 3.0.0"; it ships as 2.0.0, the next major after 1.10.0.
+
+AZR-617 AZR-618 AZR-620 AZR-626 AZR-627
+
 ### Fixed
 - **Odyssey crash trauma** (AZR-626) — patch `IncidentWorker.TryExecute`; allowlist Odyssey gravship-crash incidents (no bare `"Crash"` substring).
 - **Touch comfort save growth** (AZR-618) — seed only colonists/prisoners/guests; daily prune of stale pawn IDs; skip empty ID-keyed collections on save.
+- **Chronicle export on 1.7** (AZR-620) — the clipboard write is wrapped; if it fails the text file is still written, and if both fail a message says so (`DC_ChronicleFailed`).
+- **Birth safety net setting** (AZR-620) — turning `enableBirthSafetyNet` off now also turns off the failed-birth finalizers (labor teardown, `GeneratePawn` for newborns, `ApplyBirthOutcome`); before, only the newborn pawnkind clone obeyed it. `WorldPawns.RemovePreservedPawnHediff` also swallows `NullReferenceException`, which CoreCLR can throw where Mono threw `KeyNotFoundException`.
 
 ### Changed
+- **RimWorld 1.7 build** (AZR-617) — `DeepColony.1.7.csproj` targets net10.0 against `Krafs.Rimworld.Ref 1.7.4998-unstable` and Harmony 3.0.0-rc.4. 1.6 keeps its net472 build from the same source. `LoadFolders.xml` loads `/` plus the version folder.
+- **1.7 patch targets checked** (AZR-620) — every string-named Harmony target (`CanFireNowSub`, `BirthdayBiological`, `TryExecuteWorker` ×2, `MakeDowned`, `PlantCollected`, `SuccessChance`), the tracker `pawn` fields, `ResearchManager.AddProgress`, `RecruitUtility.Recruit` and `LordJob_Ritual` members exist in both the 1.6.4871 and 1.7.4998 reference assemblies. No transpilers.
 - **Stormproof compat API** (AZR-496) — the ion-storm trauma check asks Stormproof's `StormproofCompatApi.IonStormActive` (ion storm or dry lightning front) through the shared `Common/Sibling/StormproofClient.cs` (fail-open) instead of looking conditions up by def name. Needs Stormproof 2.0.0; older Stormproof counts as absent.
 - **Separate 1.6 and 1.7 assemblies.** Official 1.6 loads `1.6/Assemblies`. Unstable 1.7 loads `1.7/Assemblies`.
 - One Harmony patch class per vanilla method for `Pawn.Kill`, `SpawnSetup`, `MakeDowned`, `Ingested`, `SetFaction`, `AddDirectRelation`, and raid `TryExecuteWorker` (AZR-627). Same utility calls in the same order. Shared one `FieldRef` per tracker. Deleted leftover `Patch_BatchC` / `Patch_BatchD` dump files. Settings heading key is `DC_Settings_LaterSystems`. Odyssey crash hook lives in `Patch_Events` on `TryExecute`.
-
-## [1.10.1] (proposed)
-
-Player-facing version **1.10.1** pending Myleek confirmation (`About.xml` still **1.10.0**). Stamp `odyssey-save-growth-v1`.
-
-AZR-618 AZR-626 AZR-627
-
-### Fixed / Changed
-- Same as Unreleased above.
 
 ## [1.10.0]
 

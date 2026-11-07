@@ -74,7 +74,7 @@
   <DC_Settings_EnableEstate>Estate (wills and inheritance)</DC_Settings_EnableEstate>
   <DC_Settings_EnableEstateTip>Name an heir on the Legacy tab. On death, that person inherits; other children take it hard. Sleeping in a dead colonist's bed is its own small event. Heirlooms remember who carried them.</DC_Settings_EnableEstateTip>
   <DC_Settings_EnableBirthSafetyNet>Birth safety net (newborn pawnkinds)</DC_Settings_EnableBirthSafetyNet>
-  <DC_Settings_EnableBirthSafetyNetTip>Default on. Some race mods require skills a baby cannot have, which silently eats the birth. Deep Colony strips those requirements for newborns only. Adults are unchanged. Turn off to restore vanilla handling.</DC_Settings_EnableBirthSafetyNetTip>
+  <DC_Settings_EnableBirthSafetyNetTip>Default on. Some race mods require skills a baby cannot have, which silently eats the birth. Deep Colony strips those requirements for newborns only, and if a birth still fails it restores the pregnancy instead of leaving the mother stuck in labor. Adults are unchanged. Turn off to restore vanilla handling.</DC_Settings_EnableBirthSafetyNetTip>
   <DC_Settings_EnableBody>The body (convalescence / contagion)</DC_Settings_EnableBody>
   <DC_Settings_EnableBodyTip>Off by default. Illness can spread in the same room. After a serious infection, convalescence reduces work until it wears off.</DC_Settings_EnableBodyTip>
   <DC_Settings_EnableCodex>Codex (losable notebooks)</DC_Settings_EnableCodex>
@@ -422,6 +422,7 @@
   <DC_ChronicleHeirlooms>Heirlooms</DC_ChronicleHeirlooms>
   <DC_ChronicleReputation>Reputation</DC_ChronicleReputation>
   <DC_ChronicleCopied>Colony chronicle copied to the clipboard.</DC_ChronicleCopied>
+  <DC_ChronicleFailed>Couldn't copy or save the colony chronicle. See the log for details.</DC_ChronicleFailed>
   <DC_ChronicleExported>Colony chronicle copied and saved to {PATH}.</DC_ChronicleExported>
   <DC_ChronicleFooter>Written by Deep Colony.</DC_ChronicleFooter>
 

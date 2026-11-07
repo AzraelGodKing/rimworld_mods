@@ -4,7 +4,7 @@ namespace DeepColony
 {
     public static class DeepColonyBuildInfo
     {
-        public const string BuildStamp = "odyssey-save-growth-v1";
+        public const string BuildStamp = "deepcolony2-net10";
 
         public static void LogStartup()
         {
