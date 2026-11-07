@@ -97,6 +97,9 @@ namespace LivingWorld
 
         public int PendingFalloutCount => pendingFallout.Count;
 
+        /// <summary>Read-only use by the world overlay.</summary>
+        internal List<PendingFallout> PendingFalloutForDrawing => pendingFallout;
+
         internal List<FactionPairState> PairsMutable => pairs;
 
         public override void ExposeData()

@@ -150,4 +150,6 @@
   <LivingWorld_InspectJoin>{0} · {1}</LivingWorld_InspectJoin>
   <LivingWorld_Hazard_Hunger>голодовку</LivingWorld_Hazard_Hunger>
   <LivingWorld_Hazard_Wounds>беду с ранами без лекарств</LivingWorld_Hazard_Wounds>
+  <LivingWorld_Overlay_Toggle>Слой Living World на карте мира</LivingWorld_Overlay_Toggle>
+  <LivingWorld_Overlay_Desc>Рисует на карте мира территории фракций в войне, напряжении или союзе, пульсирующие линии фронта, пути беженцев и след ваших караванов. По умолчанию выключено; влияет только на то, что видите вы.</LivingWorld_Overlay_Desc>
 </LanguageData>

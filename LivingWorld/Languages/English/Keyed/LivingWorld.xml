@@ -150,4 +150,6 @@
   <LivingWorld_InspectJoin>{0} · {1}</LivingWorld_InspectJoin>
   <LivingWorld_Hazard_Hunger>hunger</LivingWorld_Hazard_Hunger>
   <LivingWorld_Hazard_Wounds>festering wounds</LivingWorld_Hazard_Wounds>
+  <LivingWorld_Overlay_Toggle>Living World map overlay</LivingWorld_Overlay_Toggle>
+  <LivingWorld_Overlay_Desc>Draws faction territory for factions in a war, tension or alliance, pulsing war fronts, refugee routes and your caravan trail on the world map. Off by default; only affects what you see.</LivingWorld_Overlay_Desc>
 </LanguageData>

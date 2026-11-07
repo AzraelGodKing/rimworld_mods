@@ -150,4 +150,6 @@
   <LivingWorld_InspectJoin>{0} · {1}</LivingWorld_InspectJoin>
   <LivingWorld_Hazard_Hunger>饥饿</LivingWorld_Hazard_Hunger>
   <LivingWorld_Hazard_Wounds>无药可医的伤口</LivingWorld_Hazard_Wounds>
+  <LivingWorld_Overlay_Toggle>Living World 世界地图图层</LivingWorld_Overlay_Toggle>
+  <LivingWorld_Overlay_Desc>在世界地图上绘制处于战争、紧张或同盟中的派系领地、闪动的战线、难民路线和你的商队足迹。默认关闭，只影响你看到的画面。</LivingWorld_Overlay_Desc>
 </LanguageData>
