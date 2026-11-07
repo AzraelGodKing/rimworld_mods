@@ -13,10 +13,12 @@ Player-facing version **1.0.0** (`About.xml` `modVersion`). Startup writes `[Azr
 - **Runtime and load folder** (AZR-602) - the hub and the report show the CLR and engine (e.g. .NET 10 / Waylith on 1.7, Mono / Unity on 1.6) and which version folder each series mod loaded (`1.6`, `1.7`, or `/`).
 - **Version mismatch warning** (AZR-688) - a series mod that does not list the running RimWorld version, or is older than the version this Azrael build was tested with (Strata 4.0.0, Stormproof 2.0.0, Date Night 2.0.0 and the current versions of the rest), gets a yellow note under its row and a `!` line in the report.
 - **Bridge summary** (AZR-726) - the Soft-compat section and the report open with "5 of 7 bridges live" (plus how many are broken).
+- **Safe removal sees the whole save** (AZR-587) - Prepare to remove now also lists packed (minified) buildings, blueprints and frames, worn apparel and carried or stored items (inside pawns, graves, shuttles and transporters), plants, creatures, floors, active conditions (Stormproof weather), hediffs and memories from any series mod (Date Night, Niceties, Deep Colony), world-map objects (Living World sites, Nemesis hunt sites), factions, and the mod's saved Game/World/Map components.
 - **Deconstruct confirmation** (AZR-690) - designating a mod's buildings for deconstruction asks first, with the building count.
 
 ### Fixed
 - **Hub refresh** (AZR-602, AZR-725) - the hub rescans every time Mod Options → Azrael is opened. Before, it scanned once per session (only Copy report refreshed it), so a hub first opened at the main menu stayed stale after loading a save.
+- **Removal blocker on non-Strata pocket maps** (AZR-587) - colonists on an Anomaly or Odyssey pocket map no longer block removing Strata. The blocker now means "colonists on a map this mod generated" and works for any series mod.
 - **Hub page height** (AZR-687) - the scroll area sizes to what the page actually drew last frame, so new rows and sections never clip.
 - **Safe-removal deconstruct lost on save** (AZR-684) - "Designate buildings for deconstruction" waited for the next game tick, so pausing, saving and quitting dropped it while the message said it worked. Designations now apply on click, paused or not.
 - **Chinese and Russian start text for The Deep Homestead** (AZR-724) - the translated start dialog targeted the wrong scenario part and never showed. It is now keyed by the part's name, so it works with and without Odyssey.
