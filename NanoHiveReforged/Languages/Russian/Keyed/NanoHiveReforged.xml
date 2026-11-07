@@ -18,6 +18,10 @@
   <NanoHive_Toggle_GearDesc>Чинить одежду и снаряжение колонистов в радиусе.</NanoHive_Toggle_GearDesc>
   <NanoHive_Toggle_Inventory>Чинить инвентарь</NanoHive_Toggle_Inventory>
   <NanoHive_Toggle_InventoryDesc>Чинить предметы, которые несут колонисты в радиусе.</NanoHive_Toggle_InventoryDesc>
+  <NanoHive_Toggle_OnlyStoredItems>Только хранимые предметы</NanoHive_Toggle_OnlyStoredItems>
+  <NanoHive_Toggle_OnlyStoredItemsDesc>Чинить только предметы на складе или в хранилище, которые не запрещены. Добыча и хлам на полу остаются как есть.</NanoHive_Toggle_OnlyStoredItemsDesc>
+  <NanoHive_Toggle_BuildingsFirst>Сначала постройки</NanoHive_Toggle_BuildingsFirst>
+  <NanoHive_Toggle_BuildingsFirstDesc>Тратить запас ремонта сначала на постройки, потом на предметы и снаряжение. Иначе первыми чинятся самые повреждённые вещи.</NanoHive_Toggle_BuildingsFirstDesc>
   <NanoHive_Range>Радиус: {0}</NanoHive_Range>
   <NanoHive_RangeDesc>Задать, как далеко действует улей. Применяется ко всем выбранным ульям.</NanoHive_RangeDesc>
   <NanoHive_RangeSlider>Радиус ремонта: {0}</NanoHive_RangeSlider>

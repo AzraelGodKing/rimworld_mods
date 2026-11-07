@@ -18,6 +18,10 @@
   <NanoHive_Toggle_GearDesc>修理范围内殖民者的服装和装备。</NanoHive_Toggle_GearDesc>
   <NanoHive_Toggle_Inventory>修理背包</NanoHive_Toggle_Inventory>
   <NanoHive_Toggle_InventoryDesc>修理范围内殖民者携带的物品。</NanoHive_Toggle_InventoryDesc>
+  <NanoHive_Toggle_OnlyStoredItems>只修已存放的物品</NanoHive_Toggle_OnlyStoredItems>
+  <NanoHive_Toggle_OnlyStoredItemsDesc>只修理放在储存区或储物设施中且未被禁止的物品。地上的战利品和垃圾不会被修理。</NanoHive_Toggle_OnlyStoredItemsDesc>
+  <NanoHive_Toggle_BuildingsFirst>建筑优先</NanoHive_Toggle_BuildingsFirst>
+  <NanoHive_Toggle_BuildingsFirstDesc>先把修理额度用在建筑上，再修物品和装备。关闭时损坏最严重的东西优先。</NanoHive_Toggle_BuildingsFirstDesc>
   <NanoHive_Range>半径：{0}</NanoHive_Range>
   <NanoHive_RangeDesc>设置这个蜂巢的作用范围。对所有选中的蜂巢生效。</NanoHive_RangeDesc>
   <NanoHive_RangeSlider>修理半径：{0}</NanoHive_RangeSlider>
