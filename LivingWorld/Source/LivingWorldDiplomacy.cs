@@ -168,6 +168,10 @@ namespace LivingWorld
                 }
             }
 
+            if (tone == FactionRelationTone.Alliance && !CanAlly(a, b))
+            {
+                return false;
+            }
             pair.tone = tone;
             pair.intensity = tone == FactionRelationTone.Peace ? 0 : 1;
             pair.lastResolveTick = Find.TickManager.TicksGame;
@@ -202,8 +206,8 @@ namespace LivingWorld
             float rate)
         {
             float roll = Rand.Value;
-            // Rare formal pact.
-            if (roll < 0.04f * rate)
+            // Rare formal pact, never between factions vanilla keeps at odds.
+            if (roll < 0.04f * rate && CanAlly(a, b))
             {
                 pair.tone = FactionRelationTone.Alliance;
                 pair.intensity = 1;
@@ -241,10 +245,10 @@ namespace LivingWorld
             float rate)
         {
             float roll = Rand.Value;
-            // Cool off toward peace.
+            // Cool off toward peace. Factions vanilla keeps hostile stay at least tense.
             if (roll < 0.28f)
             {
-                pair.intensity = System.Math.Max(0, pair.intensity - 1);
+                pair.intensity = System.Math.Max(a.HostileTo(b) ? 1 : 0, pair.intensity - 1);
                 if (pair.intensity <= 0)
                 {
                     pair.tone = FactionRelationTone.Peace;
@@ -319,6 +323,13 @@ namespace LivingWorld
             Faction b,
             float rate)
         {
+            if (!CanAlly(a, b))
+            {
+                // Vanilla turned them against each other: the pact quietly ends.
+                pair.tone = FactionRelationTone.Tension;
+                pair.intensity = 1;
+                return true;
+            }
             float roll = Rand.Value;
             // Rare betrayal.
             if (roll < 0.08f * rate)
@@ -384,7 +395,9 @@ namespace LivingWorld
             Faction b,
             bool forceMajor)
         {
-            bool aWins = Rand.Bool;
+            Strength(comp, a, out int countA, out int prosA);
+            Strength(comp, b, out int countB, out int prosB);
+            bool aWins = Rand.Chance(LivingWorldRules.BattleOddsA(countA, countB, prosA, prosB));
             Faction winner = aWins ? a : b;
             Faction loser = aWins ? b : a;
             Settlement site = PickSettlementOf(loser) ?? PickSettlementNear(a, b);
@@ -435,7 +448,89 @@ namespace LivingWorld
             }
 
             MaybeEnqueueFallout(comp, pair, loser, winner, site, sev, ev.seenByPlayer);
+
+            // Hard-fought wars move borders: settlements only change hands here.
+            int loserCount = aWins ? countB : countA;
+            if (LivingWorldRules.ConquestAllowed(pair.intensity, loserCount, IsProtected(loser))
+                && Rand.Chance(LivingWorldRules.ConquestChance)
+                && comp.HasMorphBudget()
+                && LivingWorldMorph.TryConquest(comp, winner, loser))
+            {
+                comp.ConsumeMorphBudget();
+            }
             return true;
+        }
+
+        /// <summary>Settlement count and summed prosperity of a faction.</summary>
+        private static void Strength(GameComponent_LivingWorld comp, Faction f, out int count, out int prosperity)
+        {
+            count = 0;
+            prosperity = 0;
+            List<Settlement> all = Find.WorldObjects.Settlements;
+            for (int i = 0; i < all.Count; i++)
+            {
+                Settlement s = all[i];
+                if (s?.Faction != f)
+                {
+                    continue;
+                }
+                count++;
+                prosperity += comp.TryGetMood(s)?.prosperity ?? 0;
+            }
+        }
+
+        /// <summary>
+        /// Factions the world needs: the Empire (royal titles) and anyone involved in
+        /// an open quest. They can lose settlements but never their last one.
+        /// </summary>
+        internal static bool IsProtected(Faction f)
+        {
+            if (f == null)
+            {
+                return true;
+            }
+            if (f.def.HasRoyalTitles)
+            {
+                return true;
+            }
+            List<Quest> quests = Find.QuestManager.QuestsListForReading;
+            for (int i = 0; i < quests.Count; i++)
+            {
+                Quest q = quests[i];
+                if (q == null || (q.State != QuestState.Ongoing && q.State != QuestState.NotYetAccepted))
+                {
+                    continue;
+                }
+                foreach (Faction inv in q.InvolvedFactions)
+                {
+                    if (inv == f)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// No pacts between factions vanilla keeps hostile, permanent enemies, or
+        /// natural enemies such as pirates.
+        /// </summary>
+        internal static bool CanAlly(Faction a, Faction b)
+        {
+            if (a?.def == null || b?.def == null)
+            {
+                return false;
+            }
+            if (a.def.naturalEnemy || b.def.naturalEnemy)
+            {
+                return false;
+            }
+            if (a.def.PermanentlyHostileTo(b.def) || b.def.PermanentlyHostileTo(a.def))
+            {
+                return false;
+            }
+            return !a.HostileTo(b);
         }
 
         private static void MaybeEnqueueFallout(

@@ -12,6 +12,9 @@ First public release, for RimWorld 1.6 and 1.7. Player-facing version **1.0.0** 
 - **Refugee and warband fallout** (AZR-514) — refugees visit, then leave, and a hostile losing faction does not arrive as a neutral event. Warbands are a combat group scaled by threat points (capped at 600). Fallout lands on the player home nearest the event, later when the trip is longer. News counts as nearby if any colony is in range.
 - Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457).
 - **Workshop preview** — added `About/Preview.png` (settlements, roads, and a caravan).
+- **Wars move borders** — settlements no longer change hands at random. A faction only takes a settlement after winning a battle in a hard-fought war, and it takes the loser's settlement closest to its own lands. The Empire and factions in an open quest never lose their last settlement.
+- **Battles favour the strong** — bigger, more prosperous factions win more often, but upsets still happen.
+- **Relations start from vanilla** — factions that are hostile in vanilla start tense and never cool below tension, vanilla allies start allied, and pirates, permanent enemies and hostile factions never form pacts.
 
 ### Fixed
 - **Master switch** — turning Living World off now also stops way-camp founding, the road letter, the road-worn condition and the way-camp rest bonus.
