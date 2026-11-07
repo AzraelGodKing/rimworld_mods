@@ -1,3 +1,4 @@
+#nullable enable
 using RimWorld;
 using RimWorld.Planet;
 using UnityEngine;
@@ -37,7 +38,7 @@ namespace Nemesis
                 return;
             }
 
-            Pawn nemesis = GameComponent_Nemesis.Instance?.FindNemesisPawnFor(data);
+            Pawn? nemesis = GameComponent_Nemesis.Instance?.FindNemesisPawnFor(data);
             if (nemesis != null && !nemesis.Dead)
             {
                 NemesisPawnUtil.DetachFromLord(nemesis);

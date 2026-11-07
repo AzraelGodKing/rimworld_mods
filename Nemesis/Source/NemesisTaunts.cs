@@ -1,3 +1,4 @@
+#nullable enable
 using RimWorld;
 using Verse;
 
@@ -8,8 +9,8 @@ namespace Nemesis
     {
         public static string TargetPhrase(NemesisData data)
         {
-            if (data.targetMode == NemesisTargetMode.Pawn && !string.IsNullOrEmpty(data.targetPawnName))
-                return data.targetPawnName;
+            if (data.targetMode == NemesisTargetMode.Pawn && data.targetPawnName is string name && name.Length > 0)
+                return name;
             return "Nemesis_Phrase_YourColony".Translate();
         }
 
@@ -55,11 +56,11 @@ namespace Nemesis
             };
         }
 
-        private static string SoftHomesteaderTaunt(NemesisData data, string name, string target)
+        private static string? SoftHomesteaderTaunt(NemesisData data, string name, string target)
         {
             if (!SoftCompat.HomesteaderActive) return null;
-            Pawn victim = GameComponent_Nemesis.Instance?.FindTargetPawn(data);
-            string fav = SoftCompat.TryFavoriteFoodLabel(victim);
+            Pawn? victim = GameComponent_Nemesis.Instance?.FindTargetPawn(data);
+            string? fav = SoftCompat.TryFavoriteFoodLabel(victim);
             if (fav != null)
                 return "Nemesis_Taunt_FavoriteFood".Translate(name, target, fav);
             if (data != null)
@@ -67,7 +68,7 @@ namespace Nemesis
             return null;
         }
 
-        private static string SoftStormFlavor(NemesisData data, string name, string target)
+        private static string? SoftStormFlavor(NemesisData data, string name, string target)
         {
             if (!SoftCompat.StormproofActive) return null;
             return "Nemesis_Taunt_Ion".Translate(name, target);
@@ -76,7 +77,7 @@ namespace Nemesis
         public static string EscapeLetterBody(NemesisData data)
         {
             int n = data.escapeCount;
-            string name = data.nemesisName;
+            string? name = data.nemesisName;
             if (n == 1) return "Nemesis_Letter_Escape1".Translate(name);
             if (n == 2) return "Nemesis_Letter_Escape2".Translate(name);
             if (n <= 4) return "Nemesis_Letter_EscapeN".Translate(name, n);

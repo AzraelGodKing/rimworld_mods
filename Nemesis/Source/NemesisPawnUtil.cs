@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using RimWorld.Planet;
@@ -53,13 +54,9 @@ namespace Nemesis
 
             RestoreMissingParts(pawn);
 
-            HediffDef bloodLossDef = DefDatabase<HediffDef>.GetNamedSilentFail("BloodLoss");
-            if (bloodLossDef != null)
-            {
-                Hediff bloodLoss = pawn.health.hediffSet.GetFirstHediffOfDef(bloodLossDef);
-                if (bloodLoss != null)
-                    pawn.health.RemoveHediff(bloodLoss);
-            }
+            Hediff bloodLoss = pawn.health.hediffSet.GetFirstHediffOfDef(HediffDefOf.BloodLoss);
+            if (bloodLoss != null)
+                pawn.health.RemoveHediff(bloodLoss);
 
             List<Hediff> hediffs = pawn.health.hediffSet.hediffs;
             for (int guard = 0; guard < 48; guard++)
@@ -67,7 +64,7 @@ namespace Nemesis
                 if (pawn.health.summaryHealth.SummaryHealthPercent >= minHealth)
                     break;
 
-                Hediff_Injury worst = null;
+                Hediff_Injury? worst = null;
                 float worstSev = 0f;
                 for (int i = 0; i < hediffs.Count; i++)
                 {
@@ -85,18 +82,14 @@ namespace Nemesis
             }
 
             // Clear lingering anesthetic so they can fight on return.
-            HediffDef anesthetic = DefDatabase<HediffDef>.GetNamedSilentFail("Anesthetic");
-            if (anesthetic != null)
-            {
-                Hediff a = pawn.health.hediffSet.GetFirstHediffOfDef(anesthetic);
-                if (a != null)
-                    pawn.health.RemoveHediff(a);
-            }
+            Hediff a = pawn.health.hediffSet.GetFirstHediffOfDef(HediffDefOf.Anesthetic);
+            if (a != null)
+                pawn.health.RemoveHediff(a);
         }
 
         private static void RestoreMissingParts(Pawn pawn)
         {
-            HediffSet set = pawn.health?.hediffSet;
+            HediffSet? set = pawn.health?.hediffSet;
             if (set == null) return;
 
             List<Hediff_MissingPart> missing = set.GetMissingPartsCommonAncestors();
@@ -105,7 +98,7 @@ namespace Nemesis
             List<BodyPartRecord> parts = new List<BodyPartRecord>(missing.Count);
             for (int i = 0; i < missing.Count; i++)
             {
-                BodyPartRecord part = missing[i]?.Part;
+                BodyPartRecord? part = missing[i]?.Part;
                 if (part != null)
                     parts.Add(part);
             }
@@ -116,7 +109,7 @@ namespace Nemesis
             {
                 try
                 {
-                    pawn.health.RestorePart(parts[i], null, checkStateChange: false);
+                    pawn.health!.RestorePart(parts[i], null, checkStateChange: false);
                 }
                 catch (System.Exception e)
                 {
@@ -144,7 +137,7 @@ namespace Nemesis
                 Find.WorldPawns.PassToWorld(pawn, PawnDiscardDecideMode.KeepForever);
         }
 
-        public static void EnsureHuntFaction(Pawn pawn, Faction faction)
+        public static void EnsureHuntFaction(Pawn? pawn, Faction? faction)
         {
             if (pawn == null || pawn.Destroyed || faction == null || faction.defeated) return;
             if (pawn.Faction == faction) return;

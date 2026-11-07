@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -16,11 +17,11 @@ namespace Nemesis
     internal static class NemesisPatchTargets
     {
         private static bool _killResolved;
-        private static MethodInfo _pawnKill;
+        private static MethodInfo? _pawnKill;
         private static bool _guestPawnResolved;
         private static bool _guestPawnFieldExists;
 
-        internal static MethodInfo PawnKill
+        internal static MethodInfo? PawnKill
         {
             get
             {
@@ -54,137 +55,110 @@ namespace Nemesis
         }
     }
 
-    // --- Nemesis cannot die until the hunt is over (Dredd foundation) ---
+    // --- Pawn.Kill: one patch class for every Nemesis hook (AZR-535) ---
 
+    /// <summary>
+    /// Every Nemesis hook on Pawn.Kill, in one prefix and one postfix, so each death costs one
+    /// component lookup instead of five patch calls. Arguments bind by position (__0 = dinfo),
+    /// so a 1.7 parameter rename cannot break the patch.
+    /// </summary>
     [HarmonyPatch]
-    public static class Patch_Pawn_Kill_Nemesis
+    public static class Patch_Pawn_Kill
     {
         static bool Prepare() => NemesisPatchTargets.PawnKill != null;
 
         [HarmonyTargetMethod]
-        static MethodBase TargetMethod() => NemesisPatchTargets.PawnKill;
+        static MethodBase TargetMethod() => NemesisPatchTargets.PawnKill!;
 
         [HarmonyPrefix]
         [HarmonyPriority(Priority.First)]
-        static bool Prefix(Pawn __instance)
+        static bool Prefix(Pawn __instance, DamageInfo? __0)
         {
-            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
-            if (comp == null || !comp.IsNemesisPawn(__instance)) return true;
-            return !comp.CancelLethalHit(__instance);
+            GameComponent_Nemesis? comp = GameComponent_Nemesis.Instance;
+            if (comp == null) return true;
+            // A nemesis cannot die until the hunt is over (Dredd foundation).
+            if (comp.IsNemesisPawn(__instance))
+                return !comp.CancelLethalHit(__instance);
+            return !TryWoundedEscape(comp, __instance, __0);
         }
-    }
-
-    // --- Triggers ---
-
-    [HarmonyPatch]
-    public static class Patch_Pawn_Kill_TriggerNemesis
-    {
-        static bool Prepare() => NemesisPatchTargets.PawnKill != null;
-
-        [HarmonyTargetMethod]
-        static MethodBase TargetMethod() => NemesisPatchTargets.PawnKill;
 
         [HarmonyPostfix]
-        // Arguments bind by position (__0 = dinfo) so a 1.7 parameter rename cannot break the patch.
         static void Postfix(Pawn __instance, DamageInfo? __0)
         {
-            DamageInfo? dinfo = __0;
-            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
+            GameComponent_Nemesis? comp = GameComponent_Nemesis.Instance;
             if (comp == null) return;
-            if (__instance.Faction == null || __instance.Faction.IsPlayer || __instance.Faction.def.hidden) return;
-            if (!__instance.RaceProps.Humanlike) return;
-            if (!comp.CanStartHunt(__instance.Faction)) return;
+            // End-condition dirty flag (cheap; the real check is staggered in the component).
+            if (comp.IsEngaged && (comp.IsTargetPawn(__instance) || comp.IsNemesisPawn(__instance)))
+                NemesisRegistry.ResolutionDirty = true;
+            if (__instance.IsColonist)
+                TryFixation(comp, __instance, __0);
+            else
+                TryKilledAlly(comp, __instance, __0);
+        }
 
-            if (NemesisTriggers.IsColonyInternedOrExecution(__instance, dinfo)) return;
+        /// <summary>
+        /// Wounded-and-escaped: a lethal blow on a hostile humanlike sometimes becomes a cinematic
+        /// escape and starts a personal hunt against the colonist who struck them. True cancels the death.
+        /// </summary>
+        private static bool TryWoundedEscape(GameComponent_Nemesis comp, Pawn pawn, DamageInfo? dinfo)
+        {
+            if (pawn.Faction == null || pawn.Faction.IsPlayer || pawn.Faction.def.hidden) return false;
+            if (!pawn.RaceProps.Humanlike) return false;
+            if (comp.EngagedHuntForNemesis(pawn) != null) return false;
+            if (!comp.CanStartHunt(pawn.Faction)) return false;
+            // Executions, prisoners, and slaves are already a death: don't park them
+            // as a world-map hunt (Steam: executing a prisoner started a nemesis).
+            if (NemesisTriggers.IsColonyInternedOrExecution(pawn, dinfo)) return false;
+            if (!pawn.HostileTo(Faction.OfPlayer)) return false;
 
-            Pawn attacker = dinfo?.Instigator as Pawn;
-            if (attacker == null || !attacker.IsColonist) return;
+            if (!(dinfo?.Instigator is Pawn attacker) || !attacker.IsColonist) return false;
+            if (!Rand.Chance(NemesisMod.Settings?.woundedEscapeChance ?? 0.12f)) return false;
 
+            // Do not AddHediff(Anesthetic) here: a ShouldBeDead pawn can re-enter
+            // Kill, leave a corpse, and CreateNemesis then generates a lookalike.
+            comp.CreateNemesis(pawn, NemesisTargetMode.Pawn, NemesisTrigger.WoundedAndEscaped,
+                attacker, useAsNemesis: pawn);
+            // Foreign-antagonist / failed create must not cancel vanilla death.
+            return comp.HuntForNemesis(pawn) != null;
+        }
+
+        /// <summary>A colonist killed a hostile humanlike: its faction may send a nemesis after them.</summary>
+        private static void TryKilledAlly(GameComponent_Nemesis comp, Pawn dead, DamageInfo? dinfo)
+        {
+            if (dead.Faction == null || dead.Faction.IsPlayer || dead.Faction.def.hidden) return;
+            if (!dead.RaceProps.Humanlike) return;
+            if (!comp.CanStartHunt(dead.Faction)) return;
+            if (NemesisTriggers.IsColonyInternedOrExecution(dead, dinfo)) return;
+            if (!(dinfo?.Instigator is Pawn attacker) || !attacker.IsColonist) return;
             if (!Rand.Chance(NemesisMod.Settings?.killedAllyChance ?? 0.15f)) return;
 
-            comp.CreateNemesis(__instance, NemesisTargetMode.Pawn, NemesisTrigger.KilledAlly, attacker);
+            comp.CreateNemesis(dead, NemesisTargetMode.Pawn, NemesisTrigger.KilledAlly, attacker);
         }
-    }
 
-    [HarmonyPatch]
-    public static class Patch_Pawn_Kill_FixationTrigger
-    {
-        static bool Prepare() => NemesisPatchTargets.PawnKill != null;
-
-        [HarmonyTargetMethod]
-        static MethodBase TargetMethod() => NemesisPatchTargets.PawnKill;
-
-        [HarmonyPostfix]
-        static void Postfix(Pawn __instance, DamageInfo? __0)
+        /// <summary>A hostile killed a colonist: the killer may fixate on one of the survivors.</summary>
+        private static void TryFixation(GameComponent_Nemesis comp, Pawn dead, DamageInfo? dinfo)
         {
-            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
-            if (comp == null) return;
-            if (!__instance.IsColonist) return;
-
-            Pawn killer = __0?.Instigator as Pawn;
-            if (killer?.Faction == null || killer.Faction.IsPlayer || killer.Faction.def.hidden) return;
+            if (!(dinfo?.Instigator is Pawn killer)) return;
+            if (killer.Faction == null || killer.Faction.IsPlayer || killer.Faction.def.hidden) return;
             if (!killer.RaceProps.Humanlike) return;
             if (!comp.CanStartHunt(killer.Faction)) return;
-
             if (!Rand.Chance(NemesisMod.Settings?.fixationChance ?? 0.10f)) return;
 
-            Map map = __instance.MapHeld ?? killer.MapHeld ?? killer.Map;
-            if (map?.mapPawns?.FreeColonistsSpawned == null) return;
+            Map? map = dead.MapHeld ?? killer.MapHeld ?? killer.Map;
+            List<Pawn>? colonists = map?.mapPawns?.FreeColonistsSpawned;
+            if (colonists == null) return;
 
             List<Pawn> candidates = new List<Pawn>();
-            List<Pawn> colonists = map.mapPawns.FreeColonistsSpawned;
             for (int i = 0; i < colonists.Count; i++)
             {
                 Pawn p = colonists[i];
-                if (p != null && p != __instance && !p.Dead)
+                if (p != null && p != dead && !p.Dead)
                     candidates.Add(p);
             }
             if (candidates.Count == 0) return;
 
             comp.CreateNemesis(killer, NemesisTargetMode.Pawn, NemesisTrigger.Fixation,
-                candidates[Rand.Range(0, candidates.Count)], useAsNemesis: killer);
-        }
-    }
-
-    /// <summary>
-    /// Wounded-and-escaped: a lethal blow on a hostile humanlike sometimes becomes a cinematic escape
-    /// and starts a personal hunt against the colonist who struck them.
-    /// </summary>
-    [HarmonyPatch]
-    public static class Patch_Pawn_Kill_WoundedEscape
-    {
-        static bool Prepare() => NemesisPatchTargets.PawnKill != null;
-
-        [HarmonyTargetMethod]
-        static MethodBase TargetMethod() => NemesisPatchTargets.PawnKill;
-
-        [HarmonyPrefix]
-        [HarmonyPriority(Priority.High)]
-        static bool Prefix(Pawn __instance, DamageInfo? __0)
-        {
-            DamageInfo? dinfo = __0;
-            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
-            if (comp == null) return true;
-            if (__instance.Faction == null || __instance.Faction.IsPlayer || __instance.Faction.def.hidden) return true;
-            if (!__instance.RaceProps.Humanlike) return true;
-            if (comp.EngagedHuntForNemesis(__instance) != null) return true;
-            if (!comp.CanStartHunt(__instance.Faction)) return true;
-            // Executions, prisoners, and slaves are already a death — don't park them
-            // as a world-map hunt (Steam: executing a prisoner started a nemesis).
-            if (NemesisTriggers.IsColonyInternedOrExecution(__instance, dinfo)) return true;
-            if (!__instance.HostileTo(Faction.OfPlayer)) return true;
-
-            Pawn attacker = dinfo?.Instigator as Pawn;
-            if (attacker == null || !attacker.IsColonist) return true;
-
-            if (!Rand.Chance(NemesisMod.Settings?.woundedEscapeChance ?? 0.12f)) return true;
-
-            // Do not AddHediff(Anesthetic) here: a ShouldBeDead pawn can re-enter
-            // Kill, leave a corpse, and CreateNemesis then generates a lookalike.
-            comp.CreateNemesis(__instance, NemesisTargetMode.Pawn, NemesisTrigger.WoundedAndEscaped,
-                attacker, useAsNemesis: __instance);
-            // Foreign-antagonist / failed create must not cancel vanilla death.
-            return comp.HuntForNemesis(__instance) == null;
+                candidates.RandomElement(), useAsNemesis: killer);
         }
     }
 
@@ -207,7 +181,7 @@ namespace Nemesis
         static void Postfix(Pawn __0, List<Pawn> __4)
         {
             Pawn initiator = __0;
-            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
+            GameComponent_Nemesis? comp = GameComponent_Nemesis.Instance;
             if (comp == null) return;
             if (__4 == null || __4.Count == 0) return;
             if (initiator?.Faction == null || initiator.Faction.IsPlayer || initiator.Faction.def.hidden) return;
@@ -249,7 +223,7 @@ namespace Nemesis
         {
             Pawn initiator = __0;
             if (!__result) return;
-            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
+            GameComponent_Nemesis? comp = GameComponent_Nemesis.Instance;
             if (comp == null) return;
             if (initiator?.Faction == null || initiator.Faction.IsPlayer || initiator.Faction.def.hidden) return;
             if (!comp.CanStartHunt(initiator.Faction)) return;
@@ -261,24 +235,6 @@ namespace Nemesis
 
     // --- End-condition dirty flags (cheap; real check is staggered in GameComponent) ---
 
-    [HarmonyPatch]
-    public static class Patch_Pawn_Kill_EndConditionDirty
-    {
-        static bool Prepare() => NemesisPatchTargets.PawnKill != null;
-
-        [HarmonyTargetMethod]
-        static MethodBase TargetMethod() => NemesisPatchTargets.PawnKill;
-
-        [HarmonyPostfix]
-        static void Postfix(Pawn __instance)
-        {
-            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
-            if (comp == null || !comp.IsEngaged) return;
-            if (comp.IsTargetPawn(__instance) || comp.IsNemesisPawn(__instance))
-                NemesisRegistry.ResolutionDirty = true;
-        }
-    }
-
     [HarmonyPatch(typeof(Pawn), nameof(Pawn.SetFaction))]
     public static class Patch_Pawn_SetFaction_HandOver
     {
@@ -286,7 +242,7 @@ namespace Nemesis
         static void Postfix(Pawn __instance, Faction __0)
         {
             Faction newFaction = __0;
-            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
+            GameComponent_Nemesis? comp = GameComponent_Nemesis.Instance;
             if (comp == null || !comp.IsEngaged) return;
             if (!comp.IsTargetPawn(__instance)) return;
             if (newFaction == Faction.OfPlayer) return;
@@ -302,7 +258,7 @@ namespace Nemesis
         [HarmonyPostfix]
         static void Postfix(Pawn ___pawn)
         {
-            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
+            GameComponent_Nemesis? comp = GameComponent_Nemesis.Instance;
             if (comp == null || !comp.IsEngaged) return;
             if (___pawn != null && comp.IsNemesisPawn(___pawn))
                 NemesisRegistry.ResolutionDirty = true;
@@ -351,7 +307,7 @@ namespace Nemesis
             if (!myPawn.health.capacities.CapableOf(PawnCapacityDefOf.Talking))
                 return;
 
-            GameComponent_Nemesis comp = GameComponent_Nemesis.Instance;
+            GameComponent_Nemesis? comp = GameComponent_Nemesis.Instance;
             if (comp == null || comp.Hunts.Count == 0)
                 return;
 
@@ -362,7 +318,7 @@ namespace Nemesis
             {
                 NemesisData h = hunts[i];
                 if (!h.active) continue;
-                string name = h.nemesisName;
+                string? name = h.nemesisName;
                 extras.Add(Option("Nemesis_Comms_TauntBack".Translate(name), myPawn, __instance, h, NemesisCommsKind.TauntBack));
                 extras.Add(Option("Nemesis_Comms_OfferTruce".Translate(name), myPawn, __instance, h, NemesisCommsKind.OfferTruce));
                 extras.Add(Option("Nemesis_Comms_DemandSurrender".Translate(name), myPawn, __instance, h, NemesisCommsKind.DemandSurrender));

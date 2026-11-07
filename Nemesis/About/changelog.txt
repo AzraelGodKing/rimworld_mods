@@ -16,6 +16,7 @@ Nemesis 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting eve
 [*] [b]RimWorld 1.7[/b] — the 1.7 folder now has its own .NET 10 build made against the 1.7 game files. 1.6 keeps its own build from the same source.
 [*] [b]Stormproof[/b] — EMP sabotage asks Stormproof whether a building is covered by a dampener, using its real radius and power. A surge protector that is still recharging no longer blocks the extra short circuit.
 [*] [b]Quieter hunt schedule[/b] — comms taunts need a console that can call right now. Some picks are a deliberate quiet spell.
+[*] [b]Performance[/b] — less work on every pawn death and while the dossier is open, and faster calls into Strata, Homesteader and Deep Colony.
 [/list]
 [b]Fixed[/b]
 [list]

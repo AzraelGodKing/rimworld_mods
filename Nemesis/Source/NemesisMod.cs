@@ -1,3 +1,4 @@
+#nullable enable
 using AzraelCommon;
 using HarmonyLib;
 using UnityEngine;
@@ -7,7 +8,8 @@ namespace Nemesis
 {
     public class NemesisMod : Mod
     {
-        public static NemesisSettings Settings;
+        // Set in the Mod constructor, before any def or game code runs.
+        public static NemesisSettings Settings { get; private set; } = null!;
         private Vector2 settingsScroll;
         private float settingsContentHeight = 900f;
 

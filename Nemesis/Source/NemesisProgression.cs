@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
@@ -93,8 +94,7 @@ namespace Nemesis
         private static void EnsureBattleHardened(Pawn pawn, int level)
         {
             if (level < 1) return;
-            HediffDef def = DefDatabase<HediffDef>.GetNamedSilentFail("Nemesis_BattleHardened");
-            if (def == null) return;
+            HediffDef def = NemesisDefOf.Nemesis_BattleHardened;
 
             Hediff existing = pawn.health.hediffSet.GetFirstHediffOfDef(def);
             float sev = Mathf.Clamp(level, 1, 8);
@@ -165,32 +165,31 @@ namespace Nemesis
             return (QualityCategory)q;
         }
 
-        public static ThingDef PeekWeaponDef(NemesisCombatFocus focus, TechLevel tech) =>
+        public static ThingDef? PeekWeaponDef(NemesisCombatFocus focus, TechLevel tech) =>
             PickWeaponDef(focus, tech);
 
         private static void EnsureFocusWeapon(Pawn pawn, NemesisData data, QualityCategory quality)
         {
-            if (pawn.equipment == null) return;
-            ThingWithComps primary = pawn.equipment.Primary;
-            ThingDef locked = !string.IsNullOrEmpty(data?.weaponDefName)
-                ? DefDatabase<ThingDef>.GetNamedSilentFail(data.weaponDefName)
-                : null;
+            if (pawn.equipment == null || data == null) return;
+            ThingWithComps? primary = pawn.equipment.Primary;
+            ThingDef? locked = data.weaponDefName.NullOrEmpty()
+                ? null
+                : DefDatabase<ThingDef>.GetNamedSilentFail(data.weaponDefName);
 
             if (primary != null && (locked == null
                 ? WeaponMatchesFocus(primary.def, data.combatFocus)
                 : primary.def == locked))
             {
                 SetQuality(primary, quality);
-                if (locked == null && data != null)
+                if (locked == null)
                     data.weaponDefName = primary.def.defName;
                 return;
             }
 
-            ThingDef weaponDef = locked
+            ThingDef? weaponDef = locked
                 ?? PickWeaponDef(data.combatFocus, pawn.Faction?.def?.techLevel ?? TechLevel.Industrial);
             if (weaponDef == null) return;
-            if (data != null)
-                data.weaponDefName = weaponDef.defName;
+            data.weaponDefName = weaponDef.defName;
 
             if (primary != null)
                 pawn.equipment.DestroyEquipment(primary);
@@ -220,13 +219,13 @@ namespace Nemesis
             }
         }
 
-        private static ThingDef PickWeaponDef(NemesisCombatFocus focus, TechLevel tech)
+        private static ThingDef? PickWeaponDef(NemesisCombatFocus focus, TechLevel tech)
         {
-            ThingDef Named(params string[] names)
+            ThingDef? Named(params string[] names)
             {
                 for (int i = 0; i < names.Length; i++)
                 {
-                    ThingDef d = DefDatabase<ThingDef>.GetNamedSilentFail(names[i]);
+                    ThingDef? d = DefDatabase<ThingDef>.GetNamedSilentFail(names[i]);
                     if (d != null) return d;
                 }
                 return null;
@@ -272,7 +271,7 @@ namespace Nemesis
         {
             if (pawn.apparel == null) return;
             TechLevel tech = pawn.Faction?.def?.techLevel ?? TechLevel.Industrial;
-            ThingDef armorDef = null;
+            ThingDef? armorDef = null;
             if (tech >= TechLevel.Spacer)
                 armorDef = DefDatabase<ThingDef>.GetNamedSilentFail("Apparel_PowerArmor");
             if (armorDef == null && tech >= TechLevel.Industrial)
@@ -304,7 +303,7 @@ namespace Nemesis
 
         private static void SetQuality(Thing thing, QualityCategory quality)
         {
-            CompQuality q = thing?.TryGetComp<CompQuality>();
+            CompQuality? q = thing?.TryGetComp<CompQuality>();
             if (q == null) return;
             if (q.Quality < quality)
                 q.SetQuality(quality, ArtGenerationContext.Outsider);
@@ -315,7 +314,7 @@ namespace Nemesis
             if (!ModsConfig.BiotechActive) return;
             if (level != 3 && level != 5 && level != 7) return;
 
-            string hediffName = level switch
+            string? hediffName = level switch
             {
                 3 => "BionicEye",
                 5 => "BionicArm",
@@ -327,12 +326,12 @@ namespace Nemesis
             if (hediff == null) return;
             if (pawn.health.hediffSet.HasHediff(hediff)) return;
 
-            BodyPartRecord part = FindInstallPart(pawn, hediffName);
+            BodyPartRecord? part = FindInstallPart(pawn, hediffName);
             if (part == null) return;
             pawn.health.AddHediff(hediff, part);
         }
 
-        private static BodyPartRecord FindInstallPart(Pawn pawn, string hediffName)
+        private static BodyPartRecord? FindInstallPart(Pawn pawn, string hediffName)
         {
             string[] tags = hediffName switch
             {
@@ -383,7 +382,7 @@ namespace Nemesis
         }
 
         /// <summary>Spawn Biotech mech escorts near the captain on army-return raids.</summary>
-        public static void TrySpawnMechEscort(Map map, Faction faction, NemesisData data, Pawn near)
+        public static void TrySpawnMechEscort(Map map, Faction faction, NemesisData data, Pawn? near)
         {
             if (!ProgressionEnabled) return;
             if (!(NemesisMod.Settings?.enableSoftMechs ?? true)) return;
@@ -420,7 +419,7 @@ namespace Nemesis
 
             if (mechs.Count == 0) return;
 
-            Lord lord = near?.GetLord();
+            Lord? lord = near?.GetLord();
             if (lord != null)
             {
                 for (int i = 0; i < mechs.Count; i++)
@@ -452,7 +451,7 @@ namespace Nemesis
         }
 
         /// <summary>Spawn remembered mount animal beside the captain when soft mounts are on.</summary>
-        public static void TrySpawnMountEscort(Map map, Faction faction, NemesisData data, Pawn near)
+        public static void TrySpawnMountEscort(Map map, Faction faction, NemesisData data, Pawn? near)
         {
             SoftCompat.TrySpawnMountBeside(map, faction, data, near);
         }

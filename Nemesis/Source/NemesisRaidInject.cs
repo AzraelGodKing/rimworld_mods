@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using HarmonyLib;
 using RimWorld;
@@ -11,7 +12,7 @@ namespace Nemesis
     /// </summary>
     public static class NemesisRaidInject
     {
-        public static Pawn Pending;
+        public static Pawn? Pending;
 
         public static void Arm(Pawn nemesis)
         {
@@ -44,7 +45,7 @@ namespace Nemesis
                 yield return p;
             }
 
-            Pawn inject = NemesisRaidInject.Pending;
+            Pawn? inject = NemesisRaidInject.Pending;
             if (!yielded || inject == null || parms == null) yield break;
             if (parms.groupKind != PawnGroupKindDefOf.Combat) yield break;
             if (parms.faction == null) yield break;
@@ -61,7 +62,7 @@ namespace Nemesis
             NemesisPawnUtil.DetachFromLord(inject);
             NemesisPawnUtil.EnsureNotWorldPawn(inject);
             NemesisPawnUtil.RecoverForReturn(inject);
-            NemesisData data = GameComponent_Nemesis.Instance?.HuntForNemesis(inject);
+            NemesisData? data = GameComponent_Nemesis.Instance?.HuntForNemesis(inject);
             if (data != null)
                 NemesisProgression.Apply(inject, data);
             if (inject.Spawned)

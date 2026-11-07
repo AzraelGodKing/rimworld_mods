@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using RimWorld.Planet;
@@ -14,7 +15,21 @@ namespace Nemesis
     /// </summary>
     public class GameComponent_Nemesis : GameComponent
     {
-        public static GameComponent_Nemesis Instance => Current.Game?.GetComponent<GameComponent_Nemesis>();
+        private static GameComponent_Nemesis? instance;
+        private readonly Game owner;
+
+        /// <summary>
+        /// This game's component. Set in the constructor, so the five Kill patches and the
+        /// other hot hooks no longer scan the game's component list on every call (AZR-535).
+        /// </summary>
+        public static GameComponent_Nemesis? Instance
+        {
+            get
+            {
+                GameComponent_Nemesis? c = instance;
+                return c != null && c.owner == Current.Game ? c : null;
+            }
+        }
 
         /// <summary>Save layout. 1 = 1.x single <c>nemesisData</c>; 2 = hunt list (2.0.0).</summary>
         private const int CurrentSaveVersion = 2;
@@ -25,10 +40,10 @@ namespace Nemesis
         private int lastHuntStartTick = -9999999;
         private int lastThreatTick = -9999999;
         private int saveVersion = CurrentSaveVersion;
-        private string lastNewsVersion;
+        private string? lastNewsVersion;
 
         // 1.x layout, read once on load and folded into the hunt list.
-        private NemesisData legacyData;
+        private NemesisData? legacyData;
         private int legacyBounty;
 
         public IReadOnlyList<NemesisData> Hunts => hunts;
@@ -55,11 +70,14 @@ namespace Nemesis
 
         public GameComponent_Nemesis(Game game)
         {
+            owner = game;
+            instance = this;
         }
 
         public override void FinalizeInit()
         {
             base.FinalizeInit();
+            instance = this;
             SoftCompat.ResetCaches();
             NemesisRegistry.Clear();
             if (saveVersion < CurrentSaveVersion)
@@ -107,7 +125,7 @@ namespace Nemesis
                 {
                     if (t % 250 == 0)
                     {
-                        Pawn captive = FindNemesisPawnAnywhere(h);
+                        Pawn? captive = FindNemesisPawnAnywhere(h);
                         if (!IsHeldCaptive(captive))
                         {
                             HandleLostCustody(h, captive);
@@ -133,7 +151,7 @@ namespace Nemesis
 
             if (h.pendingFakeAmbush && tick >= h.fakeAmbushTick)
             {
-                Map ambushMap = SoftCompat.PreferHarassmentMap(Find.AnyPlayerHomeMap);
+                Map? ambushMap = SoftCompat.PreferHarassmentMap(Find.AnyPlayerHomeMap);
                 if (ambushMap != null)
                 {
                     NemesisActions.ResolvePendingFakeAmbush(h, ambushMap);
@@ -185,9 +203,9 @@ namespace Nemesis
         /// True when a new hunt for <paramref name="faction"/> may start: under the global cap,
         /// past the cooldown since the last hunt began, and that faction has no hunt yet.
         /// </summary>
-        public bool CanStartHunt(Faction faction) => CanStartHunt(faction, ignoreLimits: false);
+        public bool CanStartHunt(Faction? faction) => CanStartHunt(faction, ignoreLimits: false);
 
-        private bool CanStartHunt(Faction faction, bool ignoreLimits)
+        private bool CanStartHunt(Faction? faction, bool ignoreLimits)
         {
             if (faction == null || faction.IsPlayer) return false;
             NemesisSettings s = NemesisMod.Settings;
@@ -208,12 +226,12 @@ namespace Nemesis
 
         /// <summary>Starts a hunt; returns it, or null when none could start.</summary>
         /// <param name="ignoreLimits">Dev mode: skip the global cap and cooldown (one hunt per faction still holds).</param>
-        public NemesisData CreateNemesis(Pawn sourcePawn, NemesisTargetMode mode, NemesisTrigger trigger,
-            Pawn targetPawn = null, Pawn useAsNemesis = null, bool ignoreLimits = false)
+        public NemesisData? CreateNemesis(Pawn? sourcePawn, NemesisTargetMode mode, NemesisTrigger trigger,
+            Pawn? targetPawn = null, Pawn? useAsNemesis = null, bool ignoreLimits = false)
         {
-            Pawn candidate = useAsNemesis ?? sourcePawn;
-            Faction faction = candidate?.Faction;
-            if (!CanStartHunt(faction, ignoreLimits)) return null;
+            Pawn? candidate = useAsNemesis ?? sourcePawn;
+            Faction? faction = candidate?.Faction;
+            if (candidate == null || faction == null || !CanStartHunt(faction, ignoreLimits)) return null;
             // Exclusive claim: never start a hunt on a Rimesis / BFV captain, or on another hunt's nemesis.
             if (SoftCompat.IsForeignAntagonistPawn(candidate) || EngagedHuntForNemesis(candidate) != null) return null;
 
@@ -295,7 +313,7 @@ namespace Nemesis
         // --- Lookups ---
 
         /// <summary>The active hunt whose nemesis this is, or null.</summary>
-        public NemesisData HuntForNemesis(Pawn pawn)
+        public NemesisData? HuntForNemesis(Pawn? pawn)
         {
             if (pawn == null) return null;
             int id = pawn.thingIDNumber;
@@ -307,7 +325,7 @@ namespace Nemesis
         }
 
         /// <summary>Any engaged hunt (active, truce, pending) for this pawn.</summary>
-        public NemesisData EngagedHuntForNemesis(Pawn pawn)
+        public NemesisData? EngagedHuntForNemesis(Pawn? pawn)
         {
             if (pawn == null) return null;
             int id = pawn.thingIDNumber;
@@ -318,7 +336,7 @@ namespace Nemesis
             return null;
         }
 
-        public NemesisData HuntById(int huntId)
+        public NemesisData? HuntById(int huntId)
         {
             for (int i = 0; i < hunts.Count; i++)
             {
@@ -327,12 +345,12 @@ namespace Nemesis
             return null;
         }
 
-        public bool IsNemesisPawn(Pawn pawn) => HuntForNemesis(pawn) != null;
+        public bool IsNemesisPawn(Pawn? pawn) => HuntForNemesis(pawn) != null;
 
-        public bool IsTargetPawn(Pawn pawn) => HuntsTargeting(pawn) != null;
+        public bool IsTargetPawn(Pawn? pawn) => HuntsTargeting(pawn) != null;
 
         /// <summary>First active pawn-mode hunt fixated on this colonist.</summary>
-        public NemesisData HuntsTargeting(Pawn pawn)
+        public NemesisData? HuntsTargeting(Pawn? pawn)
         {
             if (pawn == null) return null;
             int id = pawn.thingIDNumber;
@@ -350,7 +368,7 @@ namespace Nemesis
         /// <summary>True cancels the killing blow. Off-map and unspawned hits are allowed to land.</summary>
         public bool CancelLethalHit(Pawn nemesis)
         {
-            NemesisData h = HuntForNemesis(nemesis);
+            NemesisData? h = HuntForNemesis(nemesis);
             if (h == null || nemesis.Destroyed) return false;
             if (!nemesis.Spawned || nemesis.Map == null)
             {
@@ -373,7 +391,7 @@ namespace Nemesis
                 FireEscape(h, nemesis);
         }
 
-        private void FireEscape(NemesisData h, Pawn nemesis)
+        private void FireEscape(NemesisData h, Pawn? nemesis)
         {
             if (!h.active || nemesis == null || nemesis.Destroyed) return;
             if (!nemesis.Spawned || nemesis.Map == null) return;
@@ -409,8 +427,7 @@ namespace Nemesis
         private static void ApplyEscapeMoodFallout(NemesisData h)
         {
             if (h.escapeCount < (NemesisMod.Settings?.escapeMoodThreshold ?? 2)) return;
-            ThoughtDef def = DefDatabase<ThoughtDef>.GetNamedSilentFail("Nemesis_EscapedAgain");
-            if (def == null) return;
+            ThoughtDef def = NemesisDefOf.Nemesis_EscapedAgain;
 
             List<Pawn> colonists = PawnsFinder.AllMaps_FreeColonistsSpawned;
             for (int i = 0; i < colonists.Count; i++)
@@ -422,7 +439,7 @@ namespace Nemesis
             }
         }
 
-        private static void SubdueNemesis(NemesisData h, Pawn nemesis, bool fromLethalDamage)
+        private static void SubdueNemesis(NemesisData h, Pawn? nemesis, bool fromLethalDamage)
         {
             if (nemesis == null || nemesis.Dead) return;
 
@@ -433,12 +450,8 @@ namespace Nemesis
                     injury.Heal(injury.Severity + 1f);
             }
 
-            HediffDef bloodLossDef = DefDatabase<HediffDef>.GetNamedSilentFail("BloodLoss");
-            if (bloodLossDef != null)
-            {
-                Hediff bloodLoss = nemesis.health.hediffSet.GetFirstHediffOfDef(bloodLossDef);
-                if (bloodLoss != null) nemesis.health.RemoveHediff(bloodLoss);
-            }
+            Hediff bloodLoss = nemesis.health.hediffSet.GetFirstHediffOfDef(HediffDefOf.BloodLoss);
+            if (bloodLoss != null) nemesis.health.RemoveHediff(bloodLoss);
 
             if (fromLethalDamage)
             {
@@ -450,10 +463,7 @@ namespace Nemesis
             }
 
             if (!nemesis.Downed)
-            {
-                HediffDef anesthetic = DefDatabase<HediffDef>.GetNamedSilentFail("Anesthetic");
-                if (anesthetic != null) nemesis.health.AddHediff(anesthetic);
-            }
+                nemesis.health.AddHediff(HediffDefOf.Anesthetic);
 
             if (!h.corneredAnnounced)
             {
@@ -468,7 +478,7 @@ namespace Nemesis
 
         private void CheckNemesisHealth(NemesisData h)
         {
-            Pawn nemesis = FindNemesisPawnFor(h);
+            Pawn? nemesis = FindNemesisPawnFor(h);
             if (nemesis == null || !nemesis.Spawned || nemesis.Dead || nemesis.IsPrisonerOfColony) return;
 
             float hp = nemesis.health.summaryHealth.SummaryHealthPercent;
@@ -494,7 +504,7 @@ namespace Nemesis
 
             if (h.targetMode == NemesisTargetMode.Pawn && h.targetPawnId > 0)
             {
-                Pawn target = FindTargetPawn(h);
+                Pawn? target = FindTargetPawn(h);
                 if (target == null || target.Dead)
                 {
                     EndHunt(h, NemesisEndReason.TargetDied, look: null);
@@ -515,7 +525,7 @@ namespace Nemesis
                 }
             }
 
-            Pawn nemesis = FindNemesisPawnFor(h);
+            Pawn? nemesis = FindNemesisPawnFor(h);
             if (nemesis != null && nemesis.Dead && h.active)
                 EndHunt(h, NemesisEndReason.Killed, nemesis);
         }
@@ -523,7 +533,7 @@ namespace Nemesis
         private void CheckNemesisStillExists(NemesisData h)
         {
             if (!h.active || h.nemesisPawnId <= 0) return;
-            Pawn nemesis = FindNemesisPawnAnywhere(h);
+            Pawn? nemesis = FindNemesisPawnAnywhere(h);
             if (nemesis == null)
                 EndHunt(h, NemesisEndReason.Vanished, null);
             else if (nemesis.Dead)
@@ -549,7 +559,7 @@ namespace Nemesis
 
         private void CheckResolution(NemesisData h)
         {
-            Pawn nemesis = FindNemesisPawnFor(h);
+            Pawn? nemesis = FindNemesisPawnFor(h);
             if (nemesis == null || !nemesis.IsPrisonerOfColony) return;
 
             // Keep pendingResolution across save so the dialog can reopen.
@@ -559,11 +569,11 @@ namespace Nemesis
         }
 
         /// <summary>Reopen the capture dialog after load or if the modal was dismissed.</summary>
-        public bool TryOpenResolutionDialog(NemesisData h, Pawn nemesis = null)
+        public bool TryOpenResolutionDialog(NemesisData? h, Pawn? nemesis = null)
         {
             if (h == null || !h.pendingResolution) return false;
             nemesis ??= FindNemesisPawnFor(h);
-            if (!IsHeldCaptive(nemesis)) return false;
+            if (nemesis == null || !IsHeldCaptive(nemesis)) return false;
             WindowStack stack = Find.WindowStack;
             if (stack == null) return false;
             for (int i = 0; i < stack.Windows.Count; i++)
@@ -575,13 +585,13 @@ namespace Nemesis
             return true;
         }
 
-        private static bool IsHeldCaptive(Pawn pawn) =>
+        private static bool IsHeldCaptive(Pawn? pawn) =>
             pawn != null && !pawn.Dead && !pawn.Destroyed && pawn.IsPrisonerOfColony;
 
         /// <summary>Also checks carried / caravan / transporter / dead pawns that <see cref="FindNemesisPawnFor(NemesisData)"/> skips.</summary>
-        private Pawn FindNemesisPawnAnywhere(NemesisData h)
+        private Pawn? FindNemesisPawnAnywhere(NemesisData h)
         {
-            Pawn found = FindNemesisPawnFor(h);
+            Pawn? found = FindNemesisPawnFor(h);
             if (found != null) return found;
             int id = h.nemesisPawnId;
             if (id < 0) return null;
@@ -597,7 +607,7 @@ namespace Nemesis
         /// Captive left custody before the player chose a fate (died, destroyed, traded, freed by
         /// another mod). Without this the hunt stays pending forever.
         /// </summary>
-        private void HandleLostCustody(NemesisData h, Pawn nemesis)
+        private void HandleLostCustody(NemesisData h, Pawn? nemesis)
         {
             string name = h.nemesisName ?? "Nemesis_Phrase_Someone".Translate();
             int now = Find.TickManager.TicksGame;
@@ -647,14 +657,14 @@ namespace Nemesis
             h.ClearCaches();
         }
 
-        public void EndHunt(NemesisData h, NemesisEndReason reason, Thing look = null)
+        public void EndHunt(NemesisData? h, NemesisEndReason reason, Thing? look = null)
         {
             if (h == null) return;
 
             string name = h.nemesisName ?? "Nemesis_Phrase_Someone".Translate();
             string title = h.ColoredName;
             RecordEpitaph(h, reason);
-            Pawn nemesis = FindNemesisPawnFor(h);
+            Pawn? nemesis = FindNemesisPawnFor(h);
             NemesisInformants.SettleBounty(h, won: reason == NemesisEndReason.Killed || reason == NemesisEndReason.Captured);
             CloseHunt(h);
 
@@ -718,7 +728,7 @@ namespace Nemesis
             PruneEndedHunts();
         }
 
-        private static void ReleaseNemesisWorldPawn(Pawn nemesis)
+        private static void ReleaseNemesisWorldPawn(Pawn? nemesis)
         {
             if (nemesis == null || nemesis.Dead) return;
             if (nemesis.IsPrisonerOfColony) return;
@@ -737,8 +747,8 @@ namespace Nemesis
         /// </summary>
         private void UnpinLeakedNemeses()
         {
-            HediffDef marker = DefDatabase<HediffDef>.GetNamedSilentFail("Nemesis_BattleHardened");
-            if (marker == null || Find.WorldPawns == null) return;
+            HediffDef marker = NemesisDefOf.Nemesis_BattleHardened;
+            if (Find.WorldPawns == null) return;
             List<Pawn> kept = new List<Pawn>(Find.WorldPawns.ForcefullyKeptPawns);
             int unpinned = 0;
             for (int i = 0; i < kept.Count; i++)
@@ -764,10 +774,10 @@ namespace Nemesis
 
         private void GoRogue(NemesisData h)
         {
-            Faction old = h.faction;
+            Faction? old = h.faction;
             h.rogue = true;
 
-            Faction rogueFaction = null;
+            Faction? rogueFaction = null;
             foreach (Faction f in Find.FactionManager.AllFactions)
             {
                 if (f == null || f.IsPlayer || f.defeated || f.Hidden || f == old) continue;
@@ -815,14 +825,14 @@ namespace Nemesis
         private void FireNextAction(NemesisData h)
         {
             int now = Find.TickManager.TicksGame;
-            Map map = SoftCompat.PreferHarassmentMap(Find.AnyPlayerHomeMap);
+            Map? map = SoftCompat.PreferHarassmentMap(Find.AnyPlayerHomeMap);
             if (map == null)
             {
                 h.nextActionTick = now + 60000;
                 return;
             }
 
-            Pawn nemesisPawn = FindNemesisPawnFor(h);
+            Pawn? nemesisPawn = FindNemesisPawnFor(h);
             if (nemesisPawn != null && nemesisPawn.IsPrisonerOfColony)
             {
                 h.nextActionTick = now + 1000;
@@ -952,7 +962,7 @@ namespace Nemesis
         /// by reflection without argument types, so it must stay the only FindNemesisPawn overload.
         /// Nemesis code uses <see cref="FindNemesisPawnFor(NemesisData)"/>.
         /// </summary>
-        public Pawn FindNemesisPawn()
+        public Pawn? FindNemesisPawn()
         {
             for (int i = 0; i < hunts.Count; i++)
             {
@@ -961,41 +971,57 @@ namespace Nemesis
             return null;
         }
 
-        public Pawn FindNemesisPawnFor(NemesisData h)
+        public Pawn? FindNemesisPawnFor(NemesisData? h)
         {
             if (h == null) return null;
             int id = h.nemesisPawnId;
-            Pawn cached = h.cachedNemesis;
+            Pawn? cached = h.cachedNemesis;
             if (cached != null && !cached.Destroyed && cached.thingIDNumber == id)
                 return cached;
-            Pawn saved = h.nemesisPawn;
-            Pawn found = saved != null && !saved.Destroyed && saved.thingIDNumber == id
+            Pawn? saved = h.nemesisPawn;
+            Pawn? found = saved != null && !saved.Destroyed && saved.thingIDNumber == id
                 ? saved
-                : FindPawnById(id);
+                : FindPawnById(id, ref h.nemesisMissTick);
             h.cachedNemesis = found;
             if (found != null) h.nemesisPawn = found;
             return found;
         }
 
-        public Pawn FindTargetPawn(NemesisData h)
+        public Pawn? FindTargetPawn(NemesisData? h)
         {
             if (h == null || h.targetPawnId < 0) return null;
             int id = h.targetPawnId;
-            Pawn cached = h.cachedTarget;
+            Pawn? cached = h.cachedTarget;
             if (cached != null && !cached.Destroyed && cached.thingIDNumber == id)
                 return cached;
-            Pawn saved = h.targetPawn;
-            Pawn found = saved != null && !saved.Destroyed && saved.thingIDNumber == id
+            Pawn? saved = h.targetPawn;
+            Pawn? found = saved != null && !saved.Destroyed && saved.thingIDNumber == id
                 ? saved
-                : FindPawnById(id);
+                : FindPawnById(id, ref h.targetMissTick);
             h.cachedTarget = found;
             if (found != null) h.targetPawn = found;
             return found;
         }
 
-        private static Pawn FindPawnById(int id)
+        private const int MissRescanTicks = 2500;
+
+        /// <summary>
+        /// Full scan of every map and world pawn. After a miss, returns null without scanning
+        /// until MissRescanTicks pass. The end-condition paths do their own full scan, so a
+        /// missing nemesis still ends the hunt on time.
+        /// </summary>
+        private static Pawn? FindPawnById(int id, ref int missTick)
         {
             if (id < 0) return null;
+            int now = Find.TickManager.TicksGame;
+            if (now - missTick < MissRescanTicks) return null;
+            Pawn? found = ScanPawnById(id);
+            missTick = found == null ? now : int.MinValue / 2;
+            return found;
+        }
+
+        private static Pawn? ScanPawnById(int id)
+        {
             List<Map> maps = Find.Maps;
             for (int m = 0; m < maps.Count; m++)
             {
@@ -1016,11 +1042,11 @@ namespace Nemesis
             return null;
         }
 
-        private static void SendIntroLetter(NemesisData h, Pawn targetPawn)
+        private static void SendIntroLetter(NemesisData h, Pawn? targetPawn)
         {
             string body;
-            string fac = h.factionName;
-            string nem = h.nemesisName;
+            string fac = h.factionName ?? "Nemesis_Phrase_TheirFaction".Translate();
+            string nem = h.nemesisName ?? "Nemesis_Phrase_Someone".Translate();
             if (h.targetMode == NemesisTargetMode.Pawn && targetPawn != null)
             {
                 body = h.trigger switch
