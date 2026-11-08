@@ -1,6 +1,6 @@
 # Niceties
 
-Small colony comforts for RimWorld 1.6. Harmony QoL companion for the Azrael series — not a content pack.
+Small colony comforts for RimWorld 1.6 and 1.7, both built from the same source. Harmony QoL companion for the Azrael series — not a content pack.
 
 Every nicety ships with a master Mod Options toggle. Nested knobs must no-op while that toggle is off. Do not add a nicety that cannot be turned off without disabling the whole mod.
 
@@ -17,7 +17,7 @@ Every nicety ships with a master Mod Options toggle. Nested knobs must no-op whi
 
 **Presets** — Soft / Default / Hard buttons set the nested knobs (not which niceties are on). The options page shows which preset is active, or Custom.
 
-Requires [Harmony](https://github.com/pardeike/HarmonyRimWorld). Royalty and Ideology optional. Safe to add or remove mid-save.
+Requires [Harmony](https://github.com/pardeike/HarmonyRimWorld). Royalty and Ideology optional. Safe to add mid-save; removing it logs a few harmless errors once on the next load.
 
 Inspired by ideas from Jecrell's Everlasting Apparel, Allow Altars in Throneroom, Wear What You Want, Hide Cryptosleep Pawn, Melee Hunting, Share Rooms, and Smarter Construction. Original implementations — not ports of those Workshop zips.
 

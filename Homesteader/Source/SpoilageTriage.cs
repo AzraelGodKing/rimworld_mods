@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using HarmonyLib;
@@ -9,16 +10,16 @@ namespace Homesteader
     internal static class SpoilageTriage
     {
         internal static bool Enabled =>
-            HomesteaderMod.Settings == null || HomesteaderMod.Settings.spoilageTriage;
+            HomesteaderMod.Settings.spoilageTriage;
 
-        internal static void ApplyEatBias(Thing foodSource, ref float optimality)
+        internal static void ApplyEatBias(Thing? foodSource, ref float optimality)
         {
             if (!Enabled || foodSource == null)
             {
                 return;
             }
 
-            CompRottable rot = foodSource.TryGetComp<CompRottable>();
+            CompRottable? rot = foodSource.TryGetComp<CompRottable>();
             if (rot == null || rot.Stage != RotStage.Fresh)
             {
                 return;
@@ -27,9 +28,9 @@ namespace Homesteader
             optimality += rot.RotProgressPct * 32f;
         }
 
-        internal static bool IsPreserveBill(Bill bill)
+        internal static bool IsPreserveBill(Bill? bill)
         {
-            string n = bill?.recipe?.defName;
+            string? n = bill?.recipe?.defName;
             if (n == null || !n.StartsWith("Homesteader_", StringComparison.Ordinal))
             {
                 return false;
@@ -53,7 +54,7 @@ namespace Homesteader
                 || n.IndexOf("Sausage", StringComparison.Ordinal) >= 0;
         }
 
-        internal static void SortRotFirst(List<Thing> availableThings, IntVec3 rootCell)
+        internal static void SortRotFirst(List<Thing>? availableThings, IntVec3 rootCell)
         {
             if (availableThings == null || availableThings.Count < 2)
             {
@@ -66,7 +67,7 @@ namespace Homesteader
             });
         }
 
-        private static float Score(Thing t, IntVec3 rootCell)
+        private static float Score(Thing? t, IntVec3 rootCell)
         {
             if (t == null)
             {
@@ -78,9 +79,9 @@ namespace Homesteader
         }
 
         /// <summary>0 for non-rotting or already-rotten stacks; otherwise 0..1 toward spoiling.</summary>
-        internal static float FreshRotProgress(Thing t)
+        internal static float FreshRotProgress(Thing? t)
         {
-            CompRottable comp = t?.TryGetComp<CompRottable>();
+            CompRottable? comp = t?.TryGetComp<CompRottable>();
             return comp != null && comp.Stage == RotStage.Fresh ? comp.RotProgressPct : 0f;
         }
     }

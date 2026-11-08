@@ -74,7 +74,7 @@
   <DC_Settings_EnableEstate>Наследство (завещания)</DC_Settings_EnableEstate>
   <DC_Settings_EnableEstateTip>На вкладке Наследие назовите наследника. После смерти он получает вещи; другие дети тяжело это переносят. Сон в кровати умершего — отдельное событие. Наследие помнит, кто носил вещь.</DC_Settings_EnableEstateTip>
   <DC_Settings_EnableBirthSafetyNet>Страховка родов (виды новорождённых)</DC_Settings_EnableBirthSafetyNet>
-  <DC_Settings_EnableBirthSafetyNetTip>По умолчанию вкл. Некоторые расовые моды требуют навыки, которых не может быть у младенца — роды срываются без письма, ребёнок пропадает. Deep Colony снимает эти требования только для новорождённых. Взрослые не затрагиваются. Выключите, чтобы вернуть ванильную обработку.</DC_Settings_EnableBirthSafetyNetTip>
+  <DC_Settings_EnableBirthSafetyNetTip>По умолчанию вкл. Некоторые расовые моды требуют навыки, которых не может быть у младенца — роды срываются без письма, ребёнок пропадает. Deep Colony снимает эти требования только для новорождённых. Если роды всё же срываются, беременность восстанавливается, а мать не застревает в родах. Взрослые не затрагиваются. Выключите, чтобы вернуть ванильную обработку.</DC_Settings_EnableBirthSafetyNetTip>
   <DC_Settings_EnableBody>Тело (выздоровление / зараза)</DC_Settings_EnableBody>
   <DC_Settings_EnableBodyTip>По умолчанию выкл. Болезнь может передаваться в одной комнате. После тяжёлой инфекции — восстановление: меньше работы, пока статус не спадёт.</DC_Settings_EnableBodyTip>
   <DC_Settings_EnableCodex>Кодекс (теряемые тетради)</DC_Settings_EnableCodex>
@@ -416,6 +416,7 @@
   <DC_ChronicleHeirlooms>Наследие</DC_ChronicleHeirlooms>
   <DC_ChronicleReputation>Репутация</DC_ChronicleReputation>
   <DC_ChronicleCopied>Хроника колонии скопирована в буфер.</DC_ChronicleCopied>
+  <DC_ChronicleFailed>Не удалось скопировать или сохранить хронику колонии. Подробности в логе.</DC_ChronicleFailed>
   <DC_ChronicleExported>Хроника колонии скопирована и сохранена в {PATH}.</DC_ChronicleExported>
   <DC_ChronicleFooter>Записано Deep Colony.</DC_ChronicleFooter>
   <DC_RetrainFloat>Переучить {APPRENTICE}: {FROM} → {TO}</DC_RetrainFloat>

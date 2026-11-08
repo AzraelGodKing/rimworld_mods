@@ -1,3 +1,4 @@
+#nullable enable
 using RimWorld;
 using Verse;
 
@@ -33,9 +34,9 @@ namespace Homesteader
             return fuel != null && fuel.HasFuel ? Props.fueledBeauty : Props.dryBeauty;
         }
 
-        public override string CompInspectStringExtra()
+        public override string? CompInspectStringExtra()
         {
-            CompRefuelable fuel = parent.GetComp<CompRefuelable>();
+            CompRefuelable? fuel = parent.GetComp<CompRefuelable>();
             if (fuel != null && !fuel.HasFuel)
             {
                 return "Homesteader_FountainDry".Translate();

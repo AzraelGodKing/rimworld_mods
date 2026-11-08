@@ -39,7 +39,7 @@
   <Homesteader_SettingsCategory>Homesteader</Homesteader_SettingsCategory>
   <Homesteader_SettingsUseRefreshedTextures>Обновлённые текстуры</Homesteader_SettingsUseRefreshedTextures>
   <Homesteader_SettingsUseRefreshedTexturesTip>Переключить здания, предметы, растения и полы Homesteader на отдельный набор уникальных спрайтов. Этот набор не входит в загрузку Workshop — скопируйте Textures/HomesteaderRefresh из репозитория GitHub в папку мода. Оригинальные спрайты всегда остаются; по умолчанию выключено.</Homesteader_SettingsUseRefreshedTexturesTip>
-  <Homesteader_SettingsUseRefreshedTexturesRestart>После смены этой опции перезапустите RimWorld, если спрайты не обновились.</Homesteader_SettingsUseRefreshedTexturesRestart>
+  <Homesteader_SettingsUseRefreshedTexturesRestart>Вступает в силу при следующем запуске RimWorld.</Homesteader_SettingsUseRefreshedTexturesRestart>
   <Homesteader_SettingsRefreshPackMissing>Дополнительный набор уникальных спрайтов не установлен. Workshop и zip с сайта поставляют только оригинальные текстуры. Чтобы включить «Обновлённые текстуры», скопируйте Textures/HomesteaderRefresh из репозитория GitHub в папку мода и перезапустите игру.</Homesteader_SettingsRefreshPackMissing>
   <Homesteader_SettingsDevHeader>Разработчик</Homesteader_SettingsDevHeader>
   <Homesteader_SettingsRevealAllergies>Показывать аллергии</Homesteader_SettingsRevealAllergies>

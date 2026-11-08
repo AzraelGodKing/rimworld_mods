@@ -13,6 +13,8 @@ namespace LivingWorld
         public int factionAId = -1;
         public int factionBId = -1;
         public int tile = -1;
+        /// <summary>Planet layer of <see cref="tile"/>; -1 (surface) in saves from before layers were stored.</summary>
+        public int tileLayer = -1;
         public string settlementLabel;
         public string factionAName;
         public string factionBName;
@@ -34,6 +36,7 @@ namespace LivingWorld
             Scribe_Values.Look(ref factionAId, "factionAId", -1);
             Scribe_Values.Look(ref factionBId, "factionBId", -1);
             Scribe_Values.Look(ref tile, "tile", -1);
+            Scribe_Values.Look(ref tileLayer, "tileLayer", -1);
             Scribe_Values.Look(ref settlementLabel, "settlementLabel");
             Scribe_Values.Look(ref factionAName, "factionAName");
             Scribe_Values.Look(ref factionBName, "factionBName");
@@ -55,7 +58,7 @@ namespace LivingWorld
             Faction b = null,
             Settlement settlement = null)
         {
-            return new WorldEvent
+            var ev = new WorldEvent
             {
                 tick = Find.TickManager.TicksGame,
                 kind = kind,
@@ -64,9 +67,24 @@ namespace LivingWorld
                 factionBId = b?.loadID ?? -1,
                 factionAName = a?.Name ?? string.Empty,
                 factionBName = b?.Name ?? string.Empty,
-                tile = settlement?.Tile ?? -1,
                 settlementLabel = settlement?.Label ?? string.Empty,
             };
+            if (settlement != null)
+            {
+                ev.Where = settlement.Tile;
+            }
+            return ev;
+        }
+
+        /// <summary>Layer-aware tile; Invalid when the event has no place.</summary>
+        public PlanetTile Where
+        {
+            get => LivingWorldTiles.Make(tile, tileLayer);
+            set
+            {
+                tile = LivingWorldTiles.IdOf(value);
+                tileLayer = LivingWorldTiles.LayerOf(value);
+            }
         }
 
         public Faction FactionA() => FindFaction(factionAId);
@@ -95,6 +113,7 @@ namespace LivingWorld
     {
         public int settlementId = -1;
         public int tile = -1;
+        public int tileLayer = -1;
         public int prosperity; // -2..+2
         public int lastMorphTick;
         public string epithet;
@@ -107,6 +126,7 @@ namespace LivingWorld
         {
             Scribe_Values.Look(ref settlementId, "settlementId", -1);
             Scribe_Values.Look(ref tile, "tile", -1);
+            Scribe_Values.Look(ref tileLayer, "tileLayer", -1);
             Scribe_Values.Look(ref prosperity, "prosperity");
             Scribe_Values.Look(ref lastMorphTick, "lastMorphTick");
             Scribe_Values.Look(ref epithet, "epithet");

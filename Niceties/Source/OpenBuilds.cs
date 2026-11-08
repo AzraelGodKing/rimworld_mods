@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -35,9 +36,9 @@ namespace Niceties
         {
             public int Tick;
             public int MapId;
-            public HashSet<IntVec3> Blockers;
-            public HashSet<IntVec3> Enclosed;
-            public HashSet<IntVec3> SafeSpots;
+            public HashSet<IntVec3> Blockers = null!;
+            public HashSet<IntVec3> Enclosed = null!;
+            public HashSet<IntVec3>? SafeSpots;
         }
 
         private static readonly Dictionary<int, Geometry> GeometryCache = new Dictionary<int, Geometry>();
@@ -53,7 +54,7 @@ namespace Niceties
             get
             {
                 NicetiesSettings settings = NicetiesSim.Settings;
-                if (settings == null || !settings.enableLeaveAWayOut)
+                if (!settings.enableLeaveAWayOut)
                 {
                     return false;
                 }
@@ -147,7 +148,7 @@ namespace Niceties
             int tick = Find.TickManager.TicksGame;
             int mapId = target.Map.uniqueID;
             if (allowCache
-                && GeometryCache.TryGetValue(target.thingIDNumber, out Geometry cached)
+                && GeometryCache.TryGetValue(target.thingIDNumber, out Geometry? cached)
                 && cached.MapId == mapId
                 && tick >= cached.Tick
                 && tick - cached.Tick < CacheTicks)
@@ -297,7 +298,7 @@ namespace Niceties
                         result.EnclosesThings = true;
                     }
 
-                    Pawn other = thing as Pawn;
+                    Pawn? other = thing as Pawn;
                     if (other == null || other.Faction == null || !other.Faction.IsPlayer)
                     {
                         continue;

@@ -1,19 +1,17 @@
 # Changelog
 
-## [Unreleased]
-
-### Changed
-- **Separate 1.6 and 1.7 assemblies.** Official 1.6 loads `1.6/Assemblies`. Unstable 1.7 loads `1.7/Assemblies`.
-- **Settlements in use stay put** (AZR-513) — abandon and faction flips skip a settlement with a generated map, a player caravan, an open trade request, or a quest look target. New outposts need a valid settlement tile at least 10 tiles from a player base.
-- **Refugee and warband fallout** (AZR-514) — refugees visit, then leave, and a hostile losing faction does not arrive as a neutral event. Warbands are a combat group scaled by threat points (capped at 600). Fallout lands on the player home nearest the event, later when the trip is longer. News counts as nearby if any colony is in range.
-- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457). No gameplay change. No `modVersion` bump (Myleek).
-
 ## [1.0.0]
 
-### Changed
-- **Workshop preview** — added `About/Preview.png` (settlements, roads, and a caravan).
+First public release, for RimWorld 1.6 and 1.7. Player-facing version **1.0.0** (`About.xml` `modVersion`). Stamp `waylith-v1`.
 
-Player-facing version **1.0.0** (`About.xml` `modVersion`). Stamp `world-traffic-v1`.
+### Changed
+- **RimWorld 1.7 build.** 1.7 loads its own .NET 10 DLL from `1.7/Assemblies`, built against the 1.7 references; 1.6 keeps `1.6/Assemblies`. Same source, same features.
+- **Planet layers.** Chronicle entries, settlement moods and pending fallout remember which planet layer their tile is on, so jump-to-tile and distance checks stay right with Odyssey orbits. Older entries load as surface tiles. Inter-settlement caravans only travel between surface settlements.
+- **Sturdier patches.** The settlement label and trader-caravan patches bind to the exact game methods; if a game update moves them, the patch logs an error instead of silently patching the wrong method.
+- **Settlements in use stay put** (AZR-513) — abandon and faction flips skip a settlement with a generated map, a player caravan, an open trade request, or a quest look target. New outposts need a valid settlement tile at least 10 tiles from a player base.
+- **Refugee and warband fallout** (AZR-514) — refugees visit, then leave, and a hostile losing faction does not arrive as a neutral event. Warbands are a combat group scaled by threat points (capped at 600). Fallout lands on the player home nearest the event, later when the trip is longer. News counts as nearby if any colony is in range.
+- Declared RimWorld **1.7** in `supportedVersions` alongside 1.6 (AZR-457).
+- **Workshop preview** — added `About/Preview.png` (settlements, roads, and a caravan).
 
 Not released yet: Living World stays at 1.0.0 until its first Workshop / Nexus / GitHub release. The 1.1.0–1.2.0 numbers below were internal pre-release bumps that never shipped; their notes are kept as development history.
 

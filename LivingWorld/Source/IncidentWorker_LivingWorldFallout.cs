@@ -109,7 +109,7 @@ namespace LivingWorld
                     fallout?.Winner(),
                     null);
                 ev.settlementLabel = place;
-                ev.tile = fallout?.tile ?? -1;
+                ev.Where = fallout?.Where ?? PlanetTile.Invalid;
                 ev.seenByPlayer = true;
                 comp.RecordAndPublish(ev);
             }
@@ -219,7 +219,7 @@ namespace LivingWorld
                     fallout?.Loser(),
                     null);
                 ev.settlementLabel = fallout?.settlementLabel;
-                ev.tile = fallout?.tile ?? -1;
+                ev.Where = fallout?.Where ?? PlanetTile.Invalid;
                 ev.seenByPlayer = true;
                 comp.RecordAndPublish(ev);
             }

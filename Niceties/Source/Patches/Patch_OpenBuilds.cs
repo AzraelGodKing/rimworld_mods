@@ -1,3 +1,4 @@
+#nullable enable
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -8,7 +9,7 @@ namespace Niceties
     [HarmonyPatch(typeof(WorkGiver_ConstructFinishFrames), nameof(WorkGiver_Scanner.JobOnThing))]
     internal static class Patch_OpenBuilds_JobOnThing
     {
-        private static void Postfix(Pawn pawn, Thing t, bool forced, ref Job __result)
+        private static void Postfix(Pawn pawn, Thing t, bool forced, ref Job? __result)
         {
             if (__result == null || forced || !OpenBuilds.Enabled || !OpenBuilds.IsImpassableBuild(t))
             {

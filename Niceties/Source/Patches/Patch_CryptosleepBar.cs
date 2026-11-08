@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using HarmonyLib;
 using RimWorld;
@@ -19,7 +20,7 @@ namespace Niceties
         internal static bool ShouldHide(Pawn pawn)
         {
             NicetiesSettings settings = NicetiesSim.Settings;
-            if (pawn == null || settings == null || !settings.hideCryptosleep)
+            if (pawn == null || !settings.hideCryptosleep)
             {
                 return false;
             }
@@ -31,7 +32,7 @@ namespace Niceties
         {
             hiddenCount = 0;
             NicetiesSettings settings = NicetiesSim.Settings;
-            if (bar == null || settings == null || !settings.hideCryptosleep)
+            if (bar == null || !settings.hideCryptosleep)
             {
                 return;
             }
@@ -69,8 +70,8 @@ namespace Niceties
         {
             NicetiesSettings local = NicetiesMod.Settings;
             NicetiesSettings settings = NicetiesSim.Settings;
-            if (hiddenCount <= 0 || bar == null || local == null || !local.showCryptosleepCount
-                || settings == null || !settings.hideCryptosleep)
+            if (hiddenCount <= 0 || bar == null || !local.showCryptosleepCount
+                || !settings.hideCryptosleep)
             {
                 return;
             }
@@ -138,7 +139,7 @@ namespace Niceties
         private static void Postfix(bool __result)
         {
             NicetiesSettings settings = NicetiesSim.Settings;
-            if (__result && settings != null && settings.hideCryptosleep)
+            if (__result && settings.hideCryptosleep)
             {
                 CryptosleepBar.MarkDirty();
             }
@@ -151,7 +152,7 @@ namespace Niceties
         private static void Postfix()
         {
             NicetiesSettings settings = NicetiesSim.Settings;
-            if (settings != null && settings.hideCryptosleep)
+            if (settings.hideCryptosleep)
             {
                 CryptosleepBar.MarkDirty();
             }

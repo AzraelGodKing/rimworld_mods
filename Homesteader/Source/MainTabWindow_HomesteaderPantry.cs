@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace Homesteader
         private Vector2 makeScroll;
         private int page;
         private PantrySortMode sortMode = PantrySortMode.Count;
-        private PantryReport sortedReport;
+        private PantryReport? sortedReport;
         private PantrySortMode sortedMode;
 
         public override Vector2 RequestedTabSize => new Vector2(620f, 540f);

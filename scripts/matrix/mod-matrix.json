@@ -93,7 +93,7 @@
     "dllName": "WaveSurvivalReforged",
     "csproj": "WaveSurvivalReforged/Source/WaveSurvivalReforged.csproj",
     "zipName": "WaveSurvivalReforged",
-    "publish": false,
+    "publish": true,
     "nexus": "",
     "nexus_mod_id": "",
     "nexus_file_id": ""

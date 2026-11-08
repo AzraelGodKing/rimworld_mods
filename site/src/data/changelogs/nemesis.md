@@ -4,6 +4,11 @@ Foundation by **Dredd (Misakabob)** — original design, persistent antagonist p
 
 ## [Unreleased]
 
+## [2.0.0]
+
+Player-facing version **2.0.0** (`About.xml` `modVersion`). Stamp `nemesis2-net10`. Ships for RimWorld **1.6** and **1.7** from the same source; 1.6 is not frozen.
+
+- **RimWorld 1.7 build** (AZR-519) — the `1.7` folder gets its own .NET 10 DLL built against the 1.7 game files and Harmony 3. The `1.6` folder keeps its .NET Framework DLL. Both are built from the same source.
 - **Stormproof compat API** (AZR-496) — EMP sabotage asks Stormproof's `StormproofCompatApi` (through the shared `Common/Sibling/StormproofClient.cs`, fail-open) whether a building is covered. That uses the dampener's live radius and power state instead of a hardcoded 14.9-cell scan. The surge-protector check now asks whether a protector is ready to absorb, so one still recharging no longer blocks the extra Zzzt. Needs Stormproof 2.0.0; older Stormproof counts as absent.
 - **Separate 1.6 and 1.7 assemblies.** Official 1.6 loads `1.6/Assemblies`. Unstable 1.7 loads `1.7/Assemblies`.
 - **Quieter hunt schedule.** A comms taunt only happens while a colony comms console can call. Depowering the last one, flicking it off, or a solar flare locks the taunt again until a console can call. The same lock hides the nemesis options on that console's menu. The action mix includes a do-nothing weight (default 0.22); a quiet pick waits a random slice of the usual cooldown and does not count as harassment. With no usable console, the taunt weight is added to do-nothing instead of the other actions.

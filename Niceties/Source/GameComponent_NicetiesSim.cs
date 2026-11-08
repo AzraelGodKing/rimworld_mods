@@ -1,3 +1,4 @@
+#nullable enable
 using Verse;
 
 namespace Niceties
@@ -11,16 +12,16 @@ namespace Niceties
     /// </summary>
     public class GameComponent_NicetiesSim : GameComponent
     {
-        private NicetiesSettings snapshot;
+        private NicetiesSettings? snapshot;
         private bool loadedFromSave;
 
         public GameComponent_NicetiesSim(Game game)
         {
             // Starting pawns are generated before FinalizeInit; drop the previous game's tags.
-            ApparelGender.Apply(NicetiesMod.Settings == null || NicetiesMod.Settings.wearAnyGender);
+            ApparelGender.Apply(NicetiesMod.Settings.wearAnyGender);
         }
 
-        public NicetiesSettings Snapshot => snapshot;
+        public NicetiesSettings? Snapshot => snapshot;
 
         public override void ExposeData()
         {
@@ -71,7 +72,7 @@ namespace Niceties
             return snapshot != null && src != null && snapshot.SimFingerprint() != src.SimFingerprint();
         }
 
-        public static GameComponent_NicetiesSim Get()
+        public static GameComponent_NicetiesSim? Get()
         {
             return Current.Game?.GetComponent<GameComponent_NicetiesSim>();
         }
@@ -86,7 +87,7 @@ namespace Niceties
         {
             get
             {
-                GameComponent_NicetiesSim gc = GameComponent_NicetiesSim.Get();
+                GameComponent_NicetiesSim? gc = GameComponent_NicetiesSim.Get();
                 if (gc?.Snapshot != null)
                 {
                     return gc.Snapshot;

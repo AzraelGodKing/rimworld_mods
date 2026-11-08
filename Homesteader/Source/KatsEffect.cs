@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using System.Text;
 using RimWorld;
@@ -28,7 +29,7 @@ namespace Homesteader
 
         protected override bool CanFireNowSub(IncidentParms parms)
         {
-            if (HomesteaderMod.Settings != null && !HomesteaderMod.Settings.enableKatsEffect)
+            if (!HomesteaderMod.Settings.enableKatsEffect)
             {
                 return false;
             }
@@ -41,7 +42,7 @@ namespace Homesteader
         protected override bool TryExecuteWorker(IncidentParms parms)
         {
             Map map = (Map)parms.target;
-            Building statue = FindAnyStatue(map);
+            Building? statue = FindAnyStatue(map);
             if (statue == null)
             {
                 return false;
@@ -54,14 +55,14 @@ namespace Homesteader
             map.gameConditionManager.RegisterCondition(condition);
 
             int silverTaken = TryTakeSilver(map, SuperChatCost);
-            Pawn kats = null;
+            Pawn? kats = null;
             if (silverTaken < SuperChatCost)
             {
                 kats = TrySpawnHostileKats(map);
             }
 
-            HediffDef brainRot = DefDatabase<HediffDef>.GetNamedSilentFail("Homesteader_KatsBrainRot");
-            ThoughtDef directive = DefDatabase<ThoughtDef>.GetNamedSilentFail("Homesteader_KatsDirective");
+            HediffDef? brainRot = DefDatabase<HediffDef>.GetNamedSilentFail("Homesteader_KatsBrainRot");
+            ThoughtDef? directive = DefDatabase<ThoughtDef>.GetNamedSilentFail("Homesteader_KatsDirective");
             foreach (Pawn pawn in map.mapPawns.FreeColonistsSpawned)
             {
                 if (pawn.RaceProps.Humanlike && pawn.needs?.mood != null)
@@ -163,7 +164,7 @@ namespace Homesteader
             return amount - remaining;
         }
 
-        private static string BuildLetterText(int silverTaken, Pawn kats)
+        private static string BuildLetterText(int silverTaken, Pawn? kats)
         {
             var sb = new StringBuilder();
             sb.Append("Homesteader_KatsLetter_Open".Translate());
@@ -190,7 +191,7 @@ namespace Homesteader
             return sb.ToString();
         }
 
-        private static Pawn TrySpawnHostileKats(Map map)
+        private static Pawn? TrySpawnHostileKats(Map map)
         {
             if (!RCellFinder.TryFindRandomPawnEntryCell(out IntVec3 entry, map, CellFinder.EdgeRoadChance_Hostile))
             {
@@ -200,7 +201,7 @@ namespace Homesteader
                 }
             }
 
-            Faction faction = Faction.OfAncientsHostile ?? Faction.OfPirates;
+            Faction? faction = Faction.OfAncientsHostile ?? Faction.OfPirates;
             if (faction == null)
             {
                 return null;
@@ -208,7 +209,7 @@ namespace Homesteader
 
             // Prefer Wolfein when that race mod is loaded; any humanlike pawn kind is fine otherwise.
             PawnKindDef kind = ResolveKatsPawnKind(out bool wolfein);
-            XenotypeDef xenotype = wolfein ? ResolveOrangeWolfeinXenotype() : null;
+            XenotypeDef? xenotype = wolfein ? ResolveOrangeWolfeinXenotype() : null;
 
             var request = new PawnGenerationRequest(
                 kind,
@@ -239,7 +240,7 @@ namespace Homesteader
             return kats;
         }
 
-        private static void ApplyOrangeLook(Pawn pawn)
+        private static void ApplyOrangeLook(Pawn? pawn)
         {
             if (pawn?.story == null)
             {
@@ -264,7 +265,7 @@ namespace Homesteader
 
             for (int i = 0; i < preferred.Length; i++)
             {
-                PawnKindDef kind = DefDatabase<PawnKindDef>.GetNamedSilentFail(preferred[i]);
+                PawnKindDef? kind = DefDatabase<PawnKindDef>.GetNamedSilentFail(preferred[i]);
                 if (IsUsableKatsKind(kind))
                 {
                     wolfein = true;
@@ -308,12 +309,12 @@ namespace Homesteader
             return PawnKindDefOf.Villager;
         }
 
-        private static bool IsUsableKatsKind(PawnKindDef kind)
+        private static bool IsUsableKatsKind(PawnKindDef? kind)
         {
             return kind?.race != null && kind.RaceProps.Humanlike && kind.combatPower > 0f;
         }
 
-        private static bool IsWolfeinRace(ThingDef race)
+        private static bool IsWolfeinRace(ThingDef? race)
         {
             if (race == null)
             {
@@ -328,15 +329,15 @@ namespace Homesteader
                 || raceLabel.IndexOf("Wolfin", System.StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
-        private static XenotypeDef ResolveOrangeWolfeinXenotype()
+        private static XenotypeDef? ResolveOrangeWolfeinXenotype()
         {
             if (!ModsConfig.BiotechActive)
             {
                 return null;
             }
 
-            XenotypeDef orangeWolfein = null;
-            XenotypeDef anyWolfein = null;
+            XenotypeDef? orangeWolfein = null;
+            XenotypeDef? anyWolfein = null;
             List<XenotypeDef> all = DefDatabase<XenotypeDef>.AllDefsListForReading;
             for (int i = 0; i < all.Count; i++)
             {
@@ -364,11 +365,11 @@ namespace Homesteader
             return orangeWolfein ?? anyWolfein;
         }
 
-        private static Building FindAnyStatue(Map map)
+        private static Building? FindAnyStatue(Map map)
         {
             for (int i = 0; i < StatueDefNames.Length; i++)
             {
-                ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(StatueDefNames[i]);
+                ThingDef? def = DefDatabase<ThingDef>.GetNamedSilentFail(StatueDefNames[i]);
                 if (def == null)
                 {
                     continue;

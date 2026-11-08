@@ -17,9 +17,10 @@ First release.
 [*] [b]Inter-settlement caravans[/b] - NPC caravans travel between friendly settlements. Rarely, one passing near your colony turns aside to trade. Toggle in Mod Options.
 [*] [b]The road[/b] - long caravan trips bring route hazards, way-camps on familiar stretches, and a road-worn condition.
 [*] [b]Listening Post[/b] scenario - an off-map start that shows the world sim.
+[*] [b]RimWorld 1.6 and 1.7[/b] - each game version loads its own build from the same source.
 [*] [b]Chinese and Russian[/b] translations.
 [*] [b]Update letter[/b] - loading a colony sends a letter with these notes and a link to the full changelog.
 [/list]
 
-[i]Build stamp (Player.log): world-traffic-v1[/i]
+[i]Build stamp (Player.log): waylith-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/living-world.md[/i]

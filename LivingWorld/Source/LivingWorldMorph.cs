@@ -112,7 +112,7 @@ namespace LivingWorld
             }
         }
 
-        private static bool IsPlayerHomeTile(int tile)
+        private static bool IsPlayerHomeTile(PlanetTile tile)
         {
             List<Map> maps = Find.Maps;
             for (int i = 0; i < maps.Count; i++)
@@ -286,7 +286,7 @@ namespace LivingWorld
 
             Faction faction = target.Faction;
             string label = target.Label;
-            int tile = target.Tile;
+            PlanetTile tile = target.Tile;
             TouchMorph(comp, target);
 
             var ev = WorldEvent.Create(
@@ -296,7 +296,7 @@ namespace LivingWorld
                 null,
                 target);
             ev.settlementLabel = label;
-            ev.tile = tile;
+            ev.Where = tile;
 
             target.Destroy();
             comp.RemoveMood(target);
@@ -401,7 +401,7 @@ namespace LivingWorld
 
         private static bool NearPlayerTile(PlanetTile tile, PlanetTile playerTile)
         {
-            int dist = Find.WorldGrid.TraversalDistanceBetween(playerTile, tile);
+            int dist = LivingWorldTiles.Distance(playerTile, tile, OutpostMinTilesFromPlayer);
             return dist >= 0 && dist < OutpostMinTilesFromPlayer;
         }
 

@@ -1,3 +1,4 @@
+#nullable enable
 using HarmonyLib;
 using RimWorld;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace Homesteader
     /// </summary>
     internal static class MapleSeason
     {
-        internal static float YieldFactor(Map map)
+        internal static float YieldFactor(Map? map)
         {
             if (map == null)
             {
@@ -43,9 +44,9 @@ namespace Homesteader
 
     public class CompMapleSap : ThingComp
     {
-        public override string CompInspectStringExtra()
+        public override string? CompInspectStringExtra()
         {
-            Map map = parent.MapHeld;
+            Map? map = parent.MapHeld;
             if (map == null)
             {
                 return null;

@@ -1,3 +1,16 @@
+2.0.0
+[h1]Homesteader — 2.0.0[/h1]
+Homesteader 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting every update, and the same save carries over to 1.7.
+
+[b]Changed[/b]
+[list]
+[*] [b]RimWorld 1.7[/b] — the 1.7 folder now has its own .NET 10 build made against the 1.7 game files. 1.6 keeps its own build from the same source, and both load the same defs.
+[*] [b]Refresh texture pack[/b] — the optional art pack is applied when the game starts, never mid-game. Turning it on or off takes effect on the next start.
+[/list]
+
+[i]Build stamp (Player.log): homesteader-2-v1[/i]
+[i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/homesteader.md[/i]
+
 1.5.1
 [h1]Homesteader — 1.5.1[/h1]
 
