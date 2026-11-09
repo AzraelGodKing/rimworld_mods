@@ -29,7 +29,15 @@ namespace Stormproof
             {
                 return 0f;
             }
-            MapComponent_Stormproof comp = MapComponent_Stormproof.For(net.Map);
+            // Not net.Map: that getter throws on a net no PowerNetManager owns.
+            // Some mods build such nets for their own buildings, and vanilla's
+            // power inspect line asks every one of them for its gain rate.
+            Map map = net.powerNetManager?.map;
+            if (map == null)
+            {
+                return 0f;
+            }
+            MapComponent_Stormproof comp = MapComponent_Stormproof.For(map);
             return comp == null ? 0f : comp.BrownoutFor(net);
         }
 
@@ -66,11 +74,15 @@ namespace Stormproof
                 return;
             }
             List<CompPowerTrader> comps = __instance.powerComps;
+            if (comps == null)
+            {
+                return;
+            }
             float draw = 0f;
             for (int i = 0; i < comps.Count; i++)
             {
                 CompPowerTrader trader = comps[i];
-                if (trader.PowerOn && trader.PowerOutput < 0f)
+                if (trader != null && trader.PowerOn && trader.PowerOutput < 0f)
                 {
                     draw -= trader.PowerOutput;
                 }
