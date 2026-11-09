@@ -84,14 +84,38 @@
       "lifetime_favorited": 7,
       "nexus_downloads": 1,
       "nexus_endorsements": 0
+    },
+    "nanohive-reforged": {
+      "name": "NanoHive Reforged",
+      "publishedFileId": "3688108379",
+      "title": "NanoHive Reforged",
+      "subscriptions": 18,
+      "favorited": 2,
+      "views": 144,
+      "lifetime_subscriptions": 27,
+      "lifetime_favorited": 2,
+      "nexus_downloads": 0,
+      "nexus_endorsements": 0
+    },
+    "wave-survival-reforged": {
+      "name": "Wave Survival Reforged",
+      "publishedFileId": "3821001515",
+      "title": "Wave Survival Reforged",
+      "subscriptions": 35,
+      "favorited": 8,
+      "views": 291,
+      "lifetime_subscriptions": 48,
+      "lifetime_favorited": 9,
+      "nexus_downloads": 0,
+      "nexus_endorsements": 0
     }
   },
   "site_total": {
-    "subscriptions": 3536,
-    "favorited": 739,
-    "views": 23215,
-    "lifetime_subscriptions": 4665,
-    "lifetime_favorited": 806,
+    "subscriptions": 3589,
+    "favorited": 749,
+    "views": 23650,
+    "lifetime_subscriptions": 4740,
+    "lifetime_favorited": 817,
     "nexus_downloads": 701,
     "nexus_endorsements": 9
   }
