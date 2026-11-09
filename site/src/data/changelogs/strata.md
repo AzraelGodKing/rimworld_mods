@@ -37,6 +37,7 @@ AZR-468, AZR-469, AZR-470, AZR-458, AZR-484, AZR-467, AZR-496, AZR-503
 ### Changed
 - **Strata 4 ships for 1.6 and 1.7.** Azrael decided on 2026-11-05 not to freeze 1.6. This replaces the earlier plan of "1.7-only, with 1.6 frozen at 3.8.x". One source tree builds two DLLs: `1.6/Assemblies` (net472, Krafs 1.6, Harmony 2.x) and `1.7/Assemblies` (net10.0, Krafs 1.7, Harmony 3.x), which `LoadFolders.xml` already picks per game version. Defs, Patches, Textures and Languages stay shared at the root. Code that only exists in .NET 10 goes behind `#if NET9_0_OR_GREATER` (or a `using` alias), so the 1.6 build still compiles. `pack_mod.sh` already puts both DLLs into the zip.
 - The 4.0 line covers 3.12.1 through 3.19.2 (stair hold, modder API v2, settings tabs, logic tests, travel cost, magma layer, flooded level, lost floor, buried chambers fix, .NET 10 build, save compat guard).
+- **Dead leftovers:** dropped unused `StrataLevelCoords.RootMap`, `OffsetInSource`, `FootprintInSource`, and `LevelRoleUtility.SortLinksForWork` (plus its private `PreferredWorkRole` / `Consider` / `CookingWork`). None were on `StrataModderApi`, XML, Harmony, tests, or sister-mod reflection. No player-facing change.
 
 ## [3.19.2]
 

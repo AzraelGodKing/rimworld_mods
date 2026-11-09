@@ -36,6 +36,7 @@ Strata 4 is out for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting eve
 [b]Changed[/b]
 [list]
 [*] Automated tests now check that cave layouts, deep-level oxygen and the "leave for better work" choice stay the same between versions. No gameplay change.
+[*] Removed unused internal helpers. No gameplay change.
 [/list]
 
 [i]Build stamp (Player.log): storm-surge-v1[/i]

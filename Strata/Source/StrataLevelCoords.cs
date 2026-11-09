@@ -96,12 +96,6 @@ namespace Strata
             return FrameOf(map)?.hasFrame == true;
         }
 
-        public static IntVec3 OffsetInSource(Map map)
-        {
-            MapComponent_StrataLevelFrame frame = FrameOf(map);
-            return frame != null && frame.hasFrame ? frame.offset : IntVec3.Zero;
-        }
-
         private static MapComponent_StrataLevelFrame FrameOf(Map map)
         {
             if (map == null)
@@ -179,16 +173,6 @@ namespace Strata
         public const int MinLevelSize = 50;
         public const int DeckMargin = 15;
 
-        public static Map RootMap(Map map)
-        {
-            if (map == null)
-            {
-                return null;
-            }
-            RootInfo info = RootOf(map);
-            return info.valid ? info.root : null;
-        }
-
         // A B level covering `fraction` of the home map, centred on the stairwell
         // and kept inside the home map. False when the full source size should
         // be used (fraction 1, or the source sits on a legacy-sized chain).
@@ -262,17 +246,6 @@ namespace Strata
         public static string CellCostLabel(IntVec3 size)
         {
             return size.x + "x" + size.z + " (" + (size.x * size.z).ToStringCached() + " cells)";
-        }
-
-        // The level's footprint in its source map's cells (whole map when unframed).
-        public static CellRect FootprintInSource(Map level)
-        {
-            if (level == null)
-            {
-                return CellRect.Empty;
-            }
-            IntVec3 o = OffsetInSource(level);
-            return new CellRect(o.x, o.z, level.Size.x, level.Size.z);
         }
 
         // Walk sourceMap links summing frame offsets. A same-size unframed link

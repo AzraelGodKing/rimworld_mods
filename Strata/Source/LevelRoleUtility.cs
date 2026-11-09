@@ -65,11 +65,6 @@ namespace Strata
 
     public static class LevelRoleUtility
     {
-        private static WorkTypeDef cookingWork;
-
-        private static WorkTypeDef CookingWork =>
-            cookingWork ??= DefDatabase<WorkTypeDef>.GetNamedSilentFail("Cooking");
-
         // Display / cycle order (AZR-140). Enum values append Farm/Quarry so
         // existing saves that stored Storage as 5 stay Storage.
         private static readonly LevelRole[] AllRoles =
@@ -136,11 +131,6 @@ namespace Strata
                 return;
             }
             SortLinksByScore(links, map => RoleRankScore(map, ranked));
-        }
-
-        public static void SortLinksForWork(List<LevelGraph.LevelLink> links, Pawn pawn)
-        {
-            SortLinksByRole(links, PreferredWorkRole(pawn));
         }
 
         // Matching role first; when nothing matches, leave BFS order alone
@@ -262,46 +252,6 @@ namespace Strata
                 }
             }
             return 0;
-        }
-
-        private static LevelRole PreferredWorkRole(Pawn pawn)
-        {
-            if (pawn?.workSettings == null || !pawn.workSettings.EverWork)
-            {
-                return LevelRole.Workshop;
-            }
-
-            int bestPri = 100;
-            LevelRole best = LevelRole.None;
-            Consider(pawn, WorkTypeDefOf.Mining, LevelRole.Quarry, ref bestPri, ref best);
-            Consider(pawn, WorkTypeDefOf.Growing, LevelRole.Farm, ref bestPri, ref best);
-            Consider(pawn, WorkTypeDefOf.PlantCutting, LevelRole.Farm, ref bestPri, ref best);
-            // WorkTypeDefOf has no Cooking field; vanilla defName is still "Cooking".
-            Consider(pawn, CookingWork, LevelRole.Freezer, ref bestPri, ref best);
-            Consider(pawn, WorkTypeDefOf.Crafting, LevelRole.Workshop, ref bestPri, ref best);
-            Consider(pawn, WorkTypeDefOf.Construction, LevelRole.Workshop, ref bestPri, ref best);
-            Consider(pawn, WorkTypeDefOf.Doctor, LevelRole.Hospital, ref bestPri, ref best);
-            return best == LevelRole.None ? LevelRole.Workshop : best;
-        }
-
-        private static void Consider(
-            Pawn pawn,
-            WorkTypeDef work,
-            LevelRole role,
-            ref int bestPri,
-            ref LevelRole best)
-        {
-            if (work == null)
-            {
-                return;
-            }
-            int pri = pawn.workSettings.GetPriority(work);
-            if (pri <= 0 || pri >= bestPri)
-            {
-                return;
-            }
-            bestPri = pri;
-            best = role;
         }
 
         private static bool IsFoodish(ThingDef def)
