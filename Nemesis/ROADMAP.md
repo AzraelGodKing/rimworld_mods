@@ -12,8 +12,9 @@ Playable core is in. Remaining fantasy for later passes.
 - [x] Combat focus at create (Destroyer / Berserker / Sniper / Psycho / Survivor / Mechanitor)
 - [x] Post-escape action bias toward army returns; petty sabotage downweighted
 - [x] Soft animal escorts + Biotech mech retinue (Mechanitor)
-- [ ] Warcaskets (VFE Pirates) / vehicles (VRF) — later
-- [ ] Full tactic matrix (Siege / Breach / Commander) — later
+- [x] Warcaskets (VFE Pirates) — level 5+ Destroyer / Survivor escort
+- [ ] Vehicles (VRF) — later
+- [x] Full tactic matrix (Siege / Breach / Commander / Assault)
 - [ ] Cheat-death — **out of scope** (keep corner → killable)
 
 ---
@@ -22,11 +23,9 @@ Playable core is in. Remaining fantasy for later passes.
 
 Acceptance-oriented checklist for later implementation:
 
-- [ ] **Aggression gate** — camp / quest content only above hunt aggression threshold X (Mod Options). (AZR-304 — still open; needs site/quest defs.)
-- [ ] **Nemesis camp world site / quest** — offer at higher aggression; resolving may be:
-  - **Real** — confrontation with the nemesis (and retinue), or
-  - **False lead** — empty camp, planted evidence, or trap.
-- [x] **Progressive intel (first pass)** — dossier + bought leads (tile / gear / warning / false lead). Camp / site reveal still later.
+- [ ] **Aggression gate** — camp / quest content only above hunt aggression threshold X (Mod Options). (AZR-304 — still open.)
+- [x] **Nemesis camp world site** — a bought lead places `Nemesis_HuntSite` near the faction's settlement. Real: the nemesis waits with the camp; false lead: their people and a calling card (AZR-555).
+- [x] **Progressive intel** — dossier + bought leads (tile / gear / warning / false lead / camp).
 - [ ] **Caravan-route ambush** — encounter map tied to the active nemesis pawn / faction (not a Living World warband).
 - [ ] **Taunt cache** — abandoned stockpile / note on a route; do **not** reuse Living World generic war-site defs.
 
@@ -36,25 +35,25 @@ Shared tile rule (when Living World exists): if a LW war site already occupies a
 
 ## Multi-faction antagonists (Nemesis-owned)
 
-- [ ] Allow **one active nemesis per hostile faction**, with a **global cap of 1–2** hunts.
-- [ ] Reuse the same hunt component / letter pipeline; faction-colored taunt strings.
-- [ ] **Not** a Living World “warlord table” — still personal fixation targets.
-- [ ] **Living World listen (fail-open)** — if LW reports the nemesis’s faction crushed / fled the region: escalate aggression **or** end/dormant hunt (option). If LW absent, behavior unchanged.
+- [x] Allow **one active nemesis per hostile faction**, with a **global cap of 1–3** hunts (default 2).
+- [x] Reuse the same hunt component / letter pipeline; faction-colored letter titles.
+- **Not** a Living World “warlord table” — still personal fixation targets.
+- [x] **Living World listen (fail-open)** — `Collapse` escalates or goes dormant; `DecisiveVictory` emboldens or delays (AZR-556). If LW absent, behavior unchanged.
 
 ---
 
 ## More personal systems
 
 - [x] Nemesis relationship / social memory with the fixation target (opinion, social fight chance) — `NemesisSocial` + social-fight Harmony patch.
-- [ ] Apparel / weapon tint polish (focus gear upgrades already ship).
+- [x] Apparel tint + aura (level 3+ gear colour; battle-hardened aura) — AZR-536.
 - [x] Comms console interaction: reply options (taunt back / offer truce / demand surrender) — AZR-301.
 - [x] Colony mood fallout on repeat escapes (fixation target hit hardest) — AZR-388.
 
 ## Assault polish
 
-- [ ] Dedicated `LordJob` that prioritizes the fixation pawn, then flees to map edge when raid points collapse.
-- [x] Kidnap-attempt action for Pawn-mode hunts (vanilla kidnap duty; kidnapped target ends the hunt) — AZR-389. Target-only AI is the item above.
-- [ ] Shuttle drop + extract when Odyssey present (soft).
+- [x] Dedicated `LordJob_NemesisHunt` that prioritizes the fixation pawn, then flees when the raid collapses.
+- [x] Kidnap-attempt action for Pawn-mode hunts (vanilla kidnap duty; kidnapped target ends the hunt) — AZR-389.
+- [x] Shuttle drop + extract when Odyssey present (soft) — AZR-706.
 
 ## Soft compat depth
 
@@ -66,7 +65,7 @@ Shared tile rule (when Living World exists): if a LW war site already occupies a
 - [ ] Stormproof: optional ion-storm baiting when aggression is high (still fail-open).
 - [ ] Strata: harassment on underground levels via stairs awareness; don’t break pocket maps.
 - [x] Homesteader: target pantry / smokehouse stacks by defName list (AZR-303).
-- [ ] Living World: consume faction crushed / victory chronicle signals only (see above).
+- [x] Living World: consume `Collapse` / `DecisiveVictory` chronicle signals (see above).
 
 ## Content / UX
 
@@ -88,4 +87,4 @@ Shared tile rule (when Living World exists): if a LW war site already occupies a
 
 - [Series roadmap](../ROADMAP.md) — soft-compat web, Azrael storyteller, “The Deep Homestead”, Living World
 - [Living World design](../docs/ideas/living-world.md) — world news, settlement morph, NPC diplomacy (not personal hunts)
-- [Strata V4](../Strata/V4_ROADMAP.md) · [Homesteader](../Homesteader/ROADMAP.md) · [Stormproof](../Stormproof/ROADMAP.md)
+- [Homesteader](../Homesteader/ROADMAP.md) · [Stormproof](../Stormproof/ROADMAP.md)

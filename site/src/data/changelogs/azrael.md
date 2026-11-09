@@ -1,5 +1,8 @@
 # Changelog
 
+## [Unreleased]
+
+- Docs: Living World already reads `TrafficFactor`; series ROADMAP no longer says that side is open.
 
 ## [1.0.0]
 

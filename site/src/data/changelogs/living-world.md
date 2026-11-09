@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased]
+
+- Docs: GitHub zip is on `latest`; Azrael refugee/warband weights are ×4/×3; Nemesis N3 listen is live.
+
 ## [1.0.0]
 
 First public release, for RimWorld 1.6 and 1.7. Player-facing version **1.0.0** (`About.xml` `modVersion`). Stamp `waylith-v1`.

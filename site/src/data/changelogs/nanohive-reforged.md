@@ -4,6 +4,8 @@ Detailed notes for **NanoHive Reforged** only.
 
 ## [Unreleased]
 
+- Docs: README describes per-hive `HiveConfig`; Mod Options are new-save seeds only.
+
 ## [2.0.0]
 
 Player-facing version **2.0.0** (`About.xml` `modVersion`). Stamp `nanohive2-net10`. Ships for RimWorld **1.6** and **1.7** from the same source; 1.6 is not frozen. Saves from 1.x load with the same behaviour.

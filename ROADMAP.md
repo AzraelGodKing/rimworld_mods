@@ -3,7 +3,7 @@
 Cross-mod vision for Strata, Homesteader, Stormproof, Nemesis, Deep Colony, Living World, and Niceties.
 Per-mod later work lives in each mod’s roadmap:
 
-- [Strata V4 (RimWorld 1.7)](Strata/V4_ROADMAP.md)
+- Strata 4.0.0 shipped (RimWorld 1.6 / 1.7)
 - [Homesteader](Homesteader/ROADMAP.md) — next pool: [docs/ideas/homesteader-updates.md](docs/ideas/homesteader-updates.md)
 - [Stormproof](Stormproof/ROADMAP.md)
 - [Nemesis](Nemesis/ROADMAP.md)
@@ -31,7 +31,7 @@ Weekend Steam backlog and the general-fixes batch have shipped.
 
 ## Living World (Phase 1–2)
 
-Mod package in-repo. Owns world chronicle, settlement morph, NPC diplomacy, war fallout, and inter-settlement traffic (LW9 v1). Azrael side of the traffic weights is in (`Azrael.StorytellerIncidentWeights.TrafficFactor`); Living World reading it is still open.
+Mod package in-repo. Owns world chronicle, settlement morph, NPC diplomacy, war fallout, and inter-settlement traffic (LW9 v1). Living World reads Azrael traffic weights through `Azrael.StorytellerIncidentWeights.TrafficFactor`.
 
 - Personal antagonists / hunt sites → [Nemesis](Nemesis/ROADMAP.md)
 - Player goodwill memory → [Deep Colony](Deep%20Colony/ROADMAP.md) (listens to LW wars)

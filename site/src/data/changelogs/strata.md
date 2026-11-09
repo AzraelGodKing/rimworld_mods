@@ -5,6 +5,10 @@ Player-facing release notes for Strata (Steam Workshop style).
 
 **Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `storm-surge-v1` in `StrataBuildInfo.BuildStamp`.
 
+## [Unreleased]
+
+- Docs: dropped dangling links to the deleted `Strata/V4_ROADMAP.md`.
+
 ## [4.0.0]
 
 Player-facing version **4.0.0** (`About.xml` `modVersion`). Stamp `storm-surge-v1`. No save-format change. The shader work was first numbered 4.1.0; it ships together with the rest of Strata 4 as 4.0.0.

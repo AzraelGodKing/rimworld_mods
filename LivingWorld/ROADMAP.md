@@ -26,6 +26,7 @@ Design: [../docs/ideas/living-world.md](../docs/ideas/living-world.md) (§8b com
 
 ## Later
 
-- [ ] Sibling flavor (Homesteader HS1, Nemesis N3 listen)
+- [ ] Sibling flavor (Homesteader HS1)
+- [x] Nemesis N3 listen (`Collapse` / `DecisiveVictory` in `NemesisLivingWorld`)
 - [x] LW9 Inter-settlement traffic (v1: world-map caravans, chronicle arrivals, rare divert to the player)
-- [x] Azrael storyteller weights (series): refugees ×6, warband ×5 in Azrael's `Azrael_SeriesIncidentWeights`
+- [x] Azrael storyteller weights (series): refugees ×4, warband ×3 in Azrael's `Azrael_SeriesIncidentWeights`
