@@ -40,5 +40,17 @@
     "name": "Niceties",
     "publishedFileId": "3794727164",
     "nexusModId": "786"
+  },
+  {
+    "id": "nanohive-reforged",
+    "name": "NanoHive Reforged",
+    "publishedFileId": "3688108379",
+    "nexusModId": ""
+  },
+  {
+    "id": "wave-survival-reforged",
+    "name": "Wave Survival Reforged",
+    "publishedFileId": "3821001515",
+    "nexusModId": ""
   }
 ]

@@ -44,6 +44,7 @@ $mods = @(
     @{ Folder = 'Niceties'; ZipName = 'Niceties'; DllName = 'Niceties' },
     @{ Folder = 'Azrael'; ZipName = 'Azrael'; DllName = 'Azrael' },
     @{ Folder = 'WaveSurvivalReforged'; ZipName = 'WaveSurvivalReforged'; DllName = 'WaveSurvivalReforged' },
+    @{ Folder = 'NanoHiveReforged'; ZipName = 'NanoHiveReforged'; DllName = 'NanoHiveReforged' },
     @{ Folder = 'LivingWorld'; ZipName = 'LivingWorld'; DllName = 'LivingWorld' }
 )
 
