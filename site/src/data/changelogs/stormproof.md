@@ -4,6 +4,15 @@ Detailed notes for **Stormproof** only.
 
 ## [Unreleased]
 
+## [2.0.1]
+
+Player-facing version **2.0.1**. Stamp `stormproof2-netguard`.
+
+AZR-738
+
+### Fixed
+- **GetInspectString error on modded powered buildings** (AZR-738) — most likely cause (the report had no full stack trace): the brownout postfix on `PowerNet.CurrentEnergyGainRate` read `PowerNet.Map`, which throws when no `PowerNetManager` owns the net. Some mods build such nets for their own buildings, and vanilla's power inspect line asks every net for its gain rate, so each inspect of those buildings threw a NullReferenceException (reported on a modded electric smelter). Stormproof 1.7.x patched `CompPowerTrader.PowerOutput` instead and never touched the net's map. The map now comes from `powerNetManager?.map`, and an unowned net gets no brownout.
+
 ## [2.0.0]
 
 Player-facing version **2.0.0** (`About.xml` `modVersion`). Stamp `stormproof2-visuals`. Ships for RimWorld **1.6** and **1.7** from the same source; 1.6 is not frozen.

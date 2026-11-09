@@ -1,39 +1,10 @@
-2.0.0
-[h1]Stormproof — 2.0.0[/h1]
-Stormproof 2 ships for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting every update, and the same save carries over to 1.7.
-
-[b]Added[/b]
-[list]
-[*] [b]Load shedder[/b] — new Smart hold: it only reconnects when the forecast says the grid won't drop back to the cutoff.
-[*] [b]Grid monitor[/b] — opens the almanac too.
-[*] [b]Almanac[/b] — counts static pylon zaps and ion storm EMP bursts.
-[*] [b]Settings[/b] — storm caller recharge and storm length sliders, a one-time warning for an undefended grid in a storm, and (Biotech) EMP dampener cover for your own mechanoids.
-[*] [b]Compatibility list[/b]: a full table of what Stormproof works with on 1.6 and 1.7 (linked in the description).
-[*] [b]Azrael storyteller[/b]: settings show the combined incident rate when the Azrael storyteller also weights Stormproof incidents.
-[*] [b]Modder API[/b]: Strata, Nemesis and Deep Colony now read Stormproof through one public API instead of guessing at its buildings.
-[*] [b]See your defences work[/b]: shields, barriers, stabilizers, sky restorers and drought condensers show a glowing field while they protect, the EMP dampener shows its cover during an ion storm and flashes when it stops an EMP, capacitors glow with their charge, and a caught bolt arcs into the storm spire. Coverage rings show off, ready or working.
-[*] [b]See the weather[/b]: an aurora during ion storms, heat haze under a heat dome, frost at the screen edges in a polar front, and drifting toxic fog in a toxic surge. They soften while your defences counter them.
-[*] [b]Visual settings[/b]: turn all effects off, or use reduced intensity (no pulsing or flashes) for photosensitivity.
-[/list]
-
-[b]Changed[/b]
-[list]
-[*] [b]RimWorld 1.7[/b] — the 1.7 folder now has its own .NET 10 build made against the 1.7 game files. 1.6 keeps its own build from the same source.
-[*] [b]Weather forecaster[/b] — on 1.7 the weather timer is read directly instead of through reflection. If a game update renames it, forecasts go quiet with one warning.
-[*] [b]Performance[/b] — brownout, hazard checks and building ticks cost much less, especially on big grids and during toxic fallout.
-[*] [b]Workbenches[/b] — the brownout slowdown now shows in the work speed tooltip.
-[/list]
+2.0.1
+[h1]Stormproof — 2.0.1[/h1]
 
 [b]Fixed[/b]
 [list]
-[*] [b]Storm caller[/b] — calling a storm during a dry lightning front now breaks the front, so the rain actually comes.
-[*] [b]Ion storm[/b] — the purple sky now shows, and the storm can't hit underground maps.
-[*] [b]Storm spire[/b] — a caught bolt is now drawn on the spire, not where it would have landed.
-[*] [b]Mod settings[/b] — a defender switched off in settings stays at idle power and says so.
-[*] [b]Surge protector[/b] — catches every Zzzt, including the ion storm's and the spire's.
-[*] [b]Almanac[/b] — loading a save no longer resets the current weather's start time, and strikes with no spire count as missed.
-[*] [b]Translations[/b] — Russian and Chinese now cover condition end messages, the research tab and the Stormfront scenario.
+[*] [b]Inspect pane[/b] — powered buildings from some other mods (for example modded electric smelters) no longer throw a GetInspectString error with brownout on. Their grid is left out of brownout instead.
 [/list]
 
-[i]Build stamp (Player.log): stormproof2-visuals[/i]
+[i]Build stamp (Player.log): stormproof2-netguard[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/stormproof.md[/i]
