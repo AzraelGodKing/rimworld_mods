@@ -2,7 +2,7 @@
 
 A collection of RimWorld mods by AzraelGodKing.
 
-Each mod folder has a `mod.json` for the public mod website, except Wave Survival Reforged (in-repo only). It records the name, version, description, preview, and download links. It is not part of the Workshop zip.
+Each mod folder has a `mod.json` for the public mod website. It records the name, version, description, preview, and download links. It is not part of the Workshop zip.
 
 ## Mods
 
@@ -134,7 +134,7 @@ A raw git clone has **no** compiled DLLs (they are gitignored). Prefer a package
    - Linux: `~/.steam/steam/steamapps/common/RimWorld/Mods`
    - macOS: `~/Library/Application Support/Steam/steamapps/common/RimWorld/Mods`
 3. Enable the mod(s) in the in-game mod list.
-4. **Homesteader**, **Stormproof**, **Strata**, **Nemesis**, **Deep Colony**, **Date Night**, and **Niceties** require the **Harmony** mod. **NanoHive Reforged** does not. **Living World**, **Azrael**, and **Wave Survival Reforged** are in-repo but not release-ready (not in the GitHub Release zips).
+4. **Homesteader**, **Stormproof**, **Strata**, **Nemesis**, **Deep Colony**, **Date Night**, **Niceties**, **Living World**, and **Azrael** require the **Harmony** mod. **NanoHive Reforged** and **Wave Survival Reforged** do not. All eleven are packed on the rolling [`latest`](https://github.com/AzraelGodKing/rimworld_mods/releases/latest) GitHub Release.
 
 Developers: `dotnet build <Mod>/Source/<Mod>.csproj -c Release` writes `1.6/Assemblies/`; the sibling `<Mod>.1.7.csproj` writes `1.7/Assemblies/`. After the eleven builds, `dotnet test Tests/ModChecks/ModChecks.csproj -c Release` checks Harmony string targets, DefOf/defName literals, Scribe parity, Series hub roster, Keyed literals, and def XML fields against the Krafs ref pack (no RimWorld install).
 
@@ -144,7 +144,7 @@ Safe to add to an existing save. Before removing a mod from a save, deconstruct 
 
 Each mod's `About/changelog.txt` is **latest Steam notes only**. Full history is on the [docs site](https://azraelgodking.github.io/rimworld_mods/) changelog section of each mod page (source: `site/src/data/changelogs/`).
 
-Steam paste: [Homesteader](Homesteader/About/changelog.txt), [Stormproof](Stormproof/About/changelog.txt), [Strata](Strata/About/changelog.txt), [Nemesis](Nemesis/About/changelog.txt), [Deep Colony](Deep%20Colony/About/changelog.txt), [Date Night](DateNight/About/changelog.txt), [Azrael](Azrael/About/changelog.txt), [Living World](LivingWorld/About/changelog.txt), [Niceties](Niceties/About/changelog.txt).
+Steam paste: [Homesteader](Homesteader/About/changelog.txt), [Stormproof](Stormproof/About/changelog.txt), [Strata](Strata/About/changelog.txt), [Nemesis](Nemesis/About/changelog.txt), [Deep Colony](Deep%20Colony/About/changelog.txt), [Date Night](DateNight/About/changelog.txt), [Azrael](Azrael/About/changelog.txt), [Living World](LivingWorld/About/changelog.txt), [Niceties](Niceties/About/changelog.txt), [NanoHive Reforged](NanoHiveReforged/About/changelog.txt), [Wave Survival Reforged](WaveSurvivalReforged/About/changelog.txt).
 
 ## Website
 
@@ -153,7 +153,7 @@ Browse the rebuilt docs hub at the [GitHub Pages site](https://azraelgodking.git
 - **Direct downloads:** every listed mod has Steam Workshop **and** GitHub release zip buttons (hub `#downloads` + each mod page) for players who cannot use the Workshop. The rolling [`latest`](https://github.com/AzraelGodKing/rimworld_mods/releases/latest) tag is rebuilt on each relevant push to `main`. Each of those builds also keeps an immutable snapshot (`downloads-YYYY-MM-DD-<sha7>`). Versioned GitHub Releases (`Homesteader-v1.0.2`, …) and optional Nexus uploads are the **Release & Publish** workflow — see [docs/RELEASE.md](docs/RELEASE.md) and [docs/VERSIONING.md](docs/VERSIONING.md).
 - **Steam + Nexus tracker:** the Vue hub pulls on every visit ([`site/src/composables/useStats.js`](site/src/composables/useStats.js)). Steam and Nexus APIs block browser CORS, so the reliable numbers come from [`stats/live.json`](https://raw.githubusercontent.com/AzraelGodKing/rimworld_mods/stats/live.json) — refreshed every 15 minutes by [`.github/workflows/live-stats.yml`](.github/workflows/live-stats.yml) with a force-push to the `stats` branch only (never commits on `main`). [`docs/data/stats-cache.json`](docs/data/stats-cache.json) is last-resort offline fallback (`node scripts/fetch-workshop-stats.js --force`). localStorage paints the last snapshot instantly; it does not skip the live pull.
 - **Admin force refresh:** unlisted [`docs/admin-stats.html`](docs/admin-stats.html) (`noindex`, not in nav). Passphrase hash lives in [`docs/data/admin-gate.json`](docs/data/admin-gate.json) — rotate by replacing `passphraseSha256`. Can download or optionally publish the fallback JSON with a PAT you paste for that session only (held in memory, not `sessionStorage`).
-- **Legacy HTML keep-list (AZR-135):** `admin-stats.html`, unlisted `living-world.html` (until the mod is on the hub), and `homesteader-catalog.html`. `ledger.html` / `signal.html` / `strata-roadmap.html` redirect to Vue routes.
+- **Legacy HTML keep-list (AZR-135):** `admin-stats.html`, unlisted `living-world.html`, and `homesteader-catalog.html`. `ledger.html` / `signal.html` / `strata-roadmap.html` redirect to Vue routes.
 - **Accessibility:** skip link, landmarks, focus styles, keyboardable mobile nav, `prefers-reduced-motion`, and live regions for stats.
 
 ## License

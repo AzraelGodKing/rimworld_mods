@@ -4,6 +4,8 @@ Foundation by **Dredd (Misakabob)** — original design, persistent antagonist p
 
 ## [Unreleased]
 
+- Docs: ROADMAP checks off 2.0 items that already ship (warcaskets, tactic matrix, hunt camps, multi-faction hunts, tint/aura, hunt LordJob, Odyssey shuttle, Living World listen). Dropped the deleted Strata V4 roadmap link.
+
 ## [2.0.0]
 
 Player-facing version **2.0.0** (`About.xml` `modVersion`). Stamp `nemesis2-net10`. Ships for RimWorld **1.6** and **1.7** from the same source; 1.6 is not frozen.

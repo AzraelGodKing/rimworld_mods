@@ -35,7 +35,7 @@ Actions → **Release & Publish** → Run workflow:
 | Input | Typical ship |
 |---|---|
 | `dry_run` | **false** for a real ship (tick **true** to pack zips only) |
-| `mod` | `all` or one key (`homesteader`, `datenight`, `niceties`, …). Azrael is not in this list. |
+| `mod` | `all` or one key (`homesteader`, `azrael`, `livingworld`, …). |
 | `create_github_release` | **true** when you are ready to tag |
 | `publish_nexus` | **true** (default) to upload |
 | `release_anyway` | **false** unless you are re-publishing a version that GitHub and/or Nexus already have |
@@ -56,8 +56,6 @@ Nexus cannot create a mod page from CI. Once a page exists and you have uploaded
 Empty `nexus_file_id` → GitHub Release still works; Nexus is skipped with a warning.
 
 `"nexus_publish": false` keeps the IDs on the row but skips Nexus upload and the Nexus version gate (use after a manual Nexus drop). Flip it to `true` (or omit the key) when CI should upload again.
-
-Azrael has `"publish": false` in the matrix. It stays in-repo; **Release & Publish**, the rolling `latest` zips, and the public hub omit it until that flag is flipped. CI still compiles it so the repo does not rot.
 
 ## Local pack check
 

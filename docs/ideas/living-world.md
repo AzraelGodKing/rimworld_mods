@@ -1,7 +1,7 @@
 # Living World (design notes)
 
-**Status:** Phase 1–2 shipped in-repo (`LivingWorld/` package) — chronicle, settlement morph, NPC diplomacy, refugee/warband fallout, war sites. Soft DC goodwill consumer. Traffic / Azrael = later.  
-**Docs:** unlisted page [`docs/living-world.html`](../living-world.html) (`noindex`, not on hub).  
+**Status:** Phase 1–2 shipped in-repo (`LivingWorld/` package) — chronicle, settlement morph, NPC diplomacy, refugee/warband fallout, war sites, inter-settlement traffic. Soft DC goodwill consumer. Living World reads Azrael `TrafficFactor`.  
+**Docs:** unlisted page [`docs/living-world.html`](../living-world.html) (`noindex`, not on hub). GitHub zip on `latest`.  
 **Package:** `LivingWorld` / `azraelgodking.livingworld`.  
 **Series:** Azrael — see [ROADMAP.md](../../ROADMAP.md).
 

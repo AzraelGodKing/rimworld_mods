@@ -9,12 +9,17 @@ A faithful-plus rebuild of Nanohive2 for RimWorld.
 - Optionally repairs colonist inventory items in range
 - Uses a Rare ticker like the original mod
 
-## Faithful+ settings
+## Settings (2.0)
 
-- Repair points per TickRare (default: 1)
+Gameplay is per hive. Each hive has buttons for radius (1–30), repair rate (1–10 HP per target), and what it repairs (buildings, items, gear, inventory, only stored items, buildings first). Those values save with the hive (`HiveConfig`).
+
+Mod Options are only the seed for a **new** save (or a 1.x save the first time it loads). After that the save keeps its own colony default:
+
+- Repair HP per target per cycle (default: 1)
 - Toggle repairing colonist apparel/equipment
 - Toggle repairing colonist inventory items
-- Optional repair radius override (otherwise uses ThingDef radius)
+- Optional repair radius override (otherwise uses the building's default)
+- Repair shimmer (visual only)
 
 ## Install
 
