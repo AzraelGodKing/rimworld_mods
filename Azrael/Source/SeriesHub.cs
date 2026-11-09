@@ -68,14 +68,14 @@ namespace Azrael
         // sister build gets a hub warning so mixed waves are spotted before a bug report.
         private static readonly Dictionary<string, string> TestedWith = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
-            { "AzraelGodKing.Homesteader", "1.5.1" },
+            { "AzraelGodKing.Homesteader", "2.0.0" },
             { "AzraelGodKing.Strata", "4.0.0" },
             { "AzraelGodKing.Stormproof", "2.0.0" },
-            { "AzraelGodKing.Nemesis", "1.5.0" },
-            { "azraelgodking.DeepColony", "1.10.0" },
+            { "AzraelGodKing.Nemesis", "2.0.0" },
+            { "azraelgodking.DeepColony", "2.0.0" },
             { "azraelgodking.livingworld", "1.0.0" },
             { "azraelgodking.DateNight", "2.0.0" },
-            { "AzraelGodKing.Niceties", "1.6.1" },
+            { "AzraelGodKing.Niceties", "2.0.0" },
         };
 
         internal static readonly SeriesMod[] Series =
