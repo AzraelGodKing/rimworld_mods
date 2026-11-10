@@ -105,7 +105,7 @@ namespace Strata
             // ForceDestroy the landing underfoot when colonists EnterPortal.
             if (newThing is MapPortal
                 && newThing.def?.defName != null
-                && newThing.def.defName.StartsWith("Strata_")
+                && newThing.def.defName.StartsWith("Strata_", System.StringComparison.Ordinal)
                 && map != null
                 && (wipeMode == WipeMode.Vanish
                     || wipeMode == WipeMode.VanishOrMoveAside

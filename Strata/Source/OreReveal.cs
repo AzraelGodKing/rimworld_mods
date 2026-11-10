@@ -163,7 +163,7 @@ namespace Strata
                 return false;
             }
             // Vanilla resource veins are MineableSteel / MineableGold / etc.
-            if (m.def.defName.StartsWith("Mineable"))
+            if (m.def.defName.StartsWith("Mineable", System.StringComparison.Ordinal))
             {
                 return false;
             }

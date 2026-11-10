@@ -15,9 +15,8 @@ namespace Strata
     {
         public static void Postfix()
         {
-            // Tick-stamped / ID-keyed statics from a previously loaded save are
-            // garbage in this one. StrataSessionReset.Run() sweeps them.
-            StrataSessionReset.Run();
+            // Session statics were already reset before this game's maps loaded
+            // (Patch_SessionResetBeforeLoad).
             StrataIncompatibleMods.LetterIfNeeded();
 
             UpgradeVanillaCaveExits();

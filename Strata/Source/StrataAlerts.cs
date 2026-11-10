@@ -246,6 +246,7 @@ namespace Strata
     public class Alert_LowOxygen : Alert_Critical
     {
         private readonly List<GlobalTargetInfo> targets = new List<GlobalTargetInfo>();
+        private readonly HashSet<int> checkedRooms = new HashSet<int>();
         private AlertReport cachedReport = false;
         private int lastScanTick = -9999;
 
@@ -270,7 +271,7 @@ namespace Strata
             for (int i = 0; i < maps.Count; i++)
             {
                 Map map = maps[i];
-                if (!StrataMapUtility.IsUnderground(map) || StrataMapUtility.IsUpperLevel(map))
+                if (!StrataMapUtility.IsUnderground(map))
                 {
                     continue;
                 }
@@ -283,22 +284,12 @@ namespace Strata
                 {
                     continue;
                 }
-                var roomsWithColonists = new HashSet<int>();
+                // Only rooms a colonist stands in, each once.
+                checkedRooms.Clear();
                 foreach (Pawn p in map.mapPawns.FreeColonistsSpawned)
                 {
-                    Room r = p.GetRoom();
-                    if (r != null && !r.UsesOutdoorTemperature && !r.IsDoorway)
-                    {
-                        roomsWithColonists.Add(r.ID);
-                    }
-                }
-                foreach (Room room in map.regionGrid.AllRooms)
-                {
-                    if (room == null || room.UsesOutdoorTemperature || room.IsDoorway)
-                    {
-                        continue;
-                    }
-                    if (!roomsWithColonists.Contains(room.ID))
+                    Room room = p.GetRoom();
+                    if (room == null || room.UsesOutdoorTemperature || room.IsDoorway || !checkedRooms.Add(room.ID))
                     {
                         continue;
                     }
@@ -343,7 +334,7 @@ namespace Strata
             for (int i = 0; i < maps.Count; i++)
             {
                 Map map = maps[i];
-                if (!StrataMapUtility.IsUnderground(map) || StrataMapUtility.IsUpperLevel(map))
+                if (!StrataMapUtility.IsUnderground(map))
                 {
                     continue;
                 }

@@ -175,6 +175,12 @@ namespace Strata
                 + " after repeated errors"
                 + (detail.NullOrEmpty() ? "." : " while " + detail + ".")
                 + " Vanilla and the rest of Strata keep running. Mod options > Diagnostics can re-arm it; a restart also re-arms it.");
+            if (system == System.PowerShafts)
+            {
+                // Tripped shafts stop ticking: without this the last transfer
+                // stays on both nets as free power or a phantom drain.
+                CompPowerShaft.HoldAllIdle();
+            }
             if (Current.ProgramState == ProgramState.Playing)
             {
                 Messages.Message(

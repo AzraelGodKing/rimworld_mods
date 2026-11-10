@@ -190,6 +190,28 @@ namespace Strata
             return Mathf.Max(0f, balance);
         }
 
+        // Every shaft back to its own base load, no transfer (fault guard trip).
+        internal static void HoldAllIdle()
+        {
+            if (Current.Game == null)
+            {
+                return;
+            }
+            List<Map> maps = Find.Maps;
+            for (int m = 0; m < maps.Count; m++)
+            {
+                List<Building> buildings = maps[m].listerBuildings.allBuildingsColonist;
+                for (int i = 0; i < buildings.Count; i++)
+                {
+                    CompPowerShaft shaft = buildings[i].TryGetComp<CompPowerShaft>();
+                    if (shaft != null)
+                    {
+                        shaft.PowerOutput = -shaft.BaseLoad;
+                    }
+                }
+            }
+        }
+
         private void Idle(CompPowerShaft bottom)
         {
             lastTransferWatts = 0f;

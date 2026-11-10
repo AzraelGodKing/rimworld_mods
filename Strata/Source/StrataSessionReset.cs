@@ -1,8 +1,31 @@
 using System;
+using HarmonyLib;
 using Verse;
 
 namespace Strata
 {
+    // Tick-stamped / ID-keyed statics from a previously loaded save are garbage
+    // in the next one. They are swept before the new game's maps load or
+    // generate: Map.FinalizeInit (map components) and spawn/PostLoadInit hooks
+    // fill some of them, and all of that runs before Game.FinalizeInit.
+    [HarmonyPatch(typeof(Game), nameof(Game.LoadGame))]
+    public static class Patch_SessionResetBeforeLoad
+    {
+        public static void Prefix()
+        {
+            StrataSessionReset.Run();
+        }
+    }
+
+    [HarmonyPatch(typeof(Game), nameof(Game.InitNewGame))]
+    public static class Patch_SessionResetBeforeNewGame
+    {
+        public static void Prefix()
+        {
+            StrataSessionReset.Run();
+        }
+    }
+
     public static class StrataSessionReset
     {
         static readonly Action[] ResetAll =

@@ -1,5 +1,5 @@
-4.0.2
-[h1]Strata - 4.0.2[/h1]
+4.0.3
+[h1]Strata - 4.0.3[/h1]
 
 Strata 4 is out for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting every update, and a Strata save carries over to 1.7.
 
@@ -26,6 +26,8 @@ Strata 4 is out for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting eve
 
 [b]Fixed[/b]
 [list]
+[*] [b]Special levels stay special after loading[/b] — a magma, flooded or lost-floor level could act like a normal level after you loaded a save (the magma layer lost its heat, for example), and caged canaries were treated as loose birds. Both now keep their state when a save loads.
+[*] [b]Power shafts that shut down after errors stop moving power[/b] — before, the last transfer stayed on both floors as free power or a drain.
 [*] [b]Hidden chambers and rich ore seams are back[/b] — on newly dug levels the geothermal and gas chambers, and the big ore seams, were placed before the rock was laid, so the rock buried them. They are now placed after the rock. Levels you have already dug keep what they have.
 [*] [b]Colonists no longer stand idle after a work trip[/b] — a pawn sent to another floor for one kind of work refused every other job while that work was blocked (no materials, out of reach, taken by someone else), for up to half a day. They now do whatever local work they can, and give the trip up after about an hour.
 [*] [b]Fewer trips up and down the stairs[/b] — a floor a pawn just left empty-handed stays off their list until it actually gains work they do. Before, any change there (another colonist finishing a job, a stack being moved) sent them straight back.
@@ -40,5 +42,5 @@ Strata 4 is out for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting eve
 [*] Less work behind the scenes: gas spreading past sealed stairs, gas pipes, shaft water and fuel, cart and dock hauling, and a few alerts now remember what they looked up instead of checking again every time. No gameplay change.
 [/list]
 
-[i]Build stamp (Player.log): hot-path-cache-v1[/i]
+[i]Build stamp (Player.log): load-order-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]
