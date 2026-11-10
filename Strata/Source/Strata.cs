@@ -28,6 +28,8 @@ namespace Strata
 
         public static JobDef Strata_CrossLevelAttack;
 
+        public static JobDef Strata_DeepSurvey;
+
         static StrataDefOf()
         {
             DefOfHelper.EnsureInitializedInCtor(typeof(StrataDefOf));

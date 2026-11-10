@@ -84,4 +84,19 @@
     <prioritizeSustains>true</prioritizeSustains>
   </WorkGiverDef>
 
+  <WorkGiverDef>
+    <defName>Strata_DeepSurvey</defName>
+    <label>run deep surveys at seismographs</label>
+    <giverClass>Strata.WorkGiver_StrataDeepSurvey</giverClass>
+    <workType>Research</workType>
+    <verb>survey below</verb>
+    <gerund>surveying below at</gerund>
+    <!-- Above vanilla Research (bench work), so a flagged survey goes first. -->
+    <priorityInType>60</priorityInType>
+    <requiredCapacities>
+      <li>Manipulation</li>
+      <li>Sight</li>
+    </requiredCapacities>
+  </WorkGiverDef>
+
 </Defs>

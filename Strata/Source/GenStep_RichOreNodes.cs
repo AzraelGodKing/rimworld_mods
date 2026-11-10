@@ -37,7 +37,7 @@ namespace Strata
         {
 
             int depth = Mathf.Max(1, StrataDepth.CountLevelsBelowSurface(map));
-            int nodeCount = NodeCountForDepth(depth);
+            int nodeCount = DeepSurvey.AdjustOreNodeCount(map, NodeCountForDepth(depth));
             var placed = new List<IntVec3>();
             int totalCells = 0;
 

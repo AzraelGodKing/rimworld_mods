@@ -96,6 +96,39 @@ namespace Strata
                 return StrataLevelKind.Standard;
             }
             int depth = StrataDepth.CountLevelsBelowSurface(map);
+            bool surveyed = DeepSurvey.TryClaim(map, depth, out DeepSurveyRecord survey);
+            if (MagmaLayer.IsMagmaDepth(depth))
+            {
+                return StrataLevelKind.Magma;
+            }
+            if (surveyed)
+            {
+                return StillAllowed(survey.kind, depth) ? survey.kind : StrataLevelKind.Standard;
+            }
+            return PickForDepth(depth);
+        }
+
+        // A surveyed kind still has to suit the current settings (a magma
+        // roll whose depth is no longer the magma layer falls back to standard).
+        private static bool StillAllowed(StrataLevelKind kind, int depth)
+        {
+            switch (kind)
+            {
+                case StrataLevelKind.Flooded:
+                    return FloodedLevel.Enabled && depth >= FloodedLevel.MinDepth;
+                case StrataLevelKind.LostFloor:
+                    return LostFloor.Enabled && depth >= LostFloor.MinDepth;
+                case StrataLevelKind.Magma:
+                    return false;
+                default:
+                    return true;
+            }
+        }
+
+        // The roll for a new dig-down level at this depth (also used by the
+        // seismograph's deep survey).
+        internal static StrataLevelKind PickForDepth(int depth)
+        {
             if (MagmaLayer.IsMagmaDepth(depth))
             {
                 return StrataLevelKind.Magma;

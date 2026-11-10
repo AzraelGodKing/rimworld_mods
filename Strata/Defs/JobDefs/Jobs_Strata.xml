@@ -71,4 +71,11 @@
     <alwaysShowWeapon>true</alwaysShowWeapon>
   </JobDef>
 
+  <JobDef>
+    <defName>Strata_DeepSurvey</defName>
+    <driverClass>Strata.JobDriver_StrataDeepSurvey</driverClass>
+    <reportString>surveying the rock below with TargetA.</reportString>
+    <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
+  </JobDef>
+
 </Defs>

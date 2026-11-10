@@ -338,7 +338,17 @@ namespace Strata
                 }
 
                 Text.Anchor = TextAnchor.MiddleLeft;
-                Widgets.Label(new Rect(rowRect.x + 4f, rowRect.y, colColonists - 8f, RowHeight), LevelLabel(row));
+                Rect labelRect = new Rect(rowRect.x + 4f, rowRect.y, colColonists - 8f, RowHeight);
+                DeepSurveyRecord survey = row.altitude < 0 || row.stackHeader ? DeepSurvey.For(row.map) : null;
+                if (survey != null)
+                {
+                    Widgets.Label(labelRect, LevelLabel(row) + "  ▼ " + DeepSurvey.KindLabel(survey.kind));
+                    TooltipHandler.TipRegion(labelRect, "Strata_DeepSurvey_LevelsTabTip".Translate(DeepSurvey.Describe(survey)));
+                }
+                else
+                {
+                    Widgets.Label(labelRect, LevelLabel(row));
+                }
                 if (StrataMod.Settings?.showLevelPerfInTab == true || Prefs.DevMode)
                 {
                     LevelTickTier tier = StrataLevelPerfUtility.TickTier(row.map);

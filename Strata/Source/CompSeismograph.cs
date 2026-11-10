@@ -30,6 +30,8 @@ namespace Strata
         private bool alertLatch;
         private int lastOtherLevelsTick = -9999;
         private readonly List<string> otherLevelLines = new List<string>();
+        private bool surveyRequested;
+        private float surveyWork;
 
         public CompProperties_Seismograph Props => (CompProperties_Seismograph)props;
 
@@ -45,6 +47,80 @@ namespace Strata
         public float TremorRisk => EnsureFresh().tremorRisk;
         public float CaveInRisk => EnsureFresh().caveInRisk;
         public float InfestationPressure => EnsureFresh().infestationPressure;
+
+        // Deep Survey: set by the gizmo, done by a researcher (WorkGiver_StrataDeepSurvey).
+        public bool SurveyRequested => surveyRequested;
+
+        public float SurveyProgress => surveyWork / DeepSurvey.WorkAmount;
+
+        // True when a researcher can work this console now.
+        public bool CanSurveyNow(out string reason)
+        {
+            reason = null;
+            if (!Powered)
+            {
+                reason = "Strata_Seismograph_Unpowered".Translate();
+                return false;
+            }
+            Map target = DeepSurvey.TargetFor(parent.Map, out reason);
+            if (target == null)
+            {
+                return false;
+            }
+            if (DeepSurvey.For(target) != null)
+            {
+                reason = "Strata_DeepSurvey_AlreadyDone".Translate();
+                return false;
+            }
+            return true;
+        }
+
+        // Returns true when the work is finished.
+        internal bool AddSurveyWork(float amount, Pawn surveyor)
+        {
+            surveyWork += amount;
+            if (surveyWork < DeepSurvey.WorkAmount)
+            {
+                return false;
+            }
+            surveyWork = 0f;
+            surveyRequested = false;
+            DeepSurvey.Complete(parent, surveyor);
+            return true;
+        }
+
+        public override IEnumerable<Gizmo> CompGetGizmosExtra()
+        {
+            foreach (Gizmo gizmo in base.CompGetGizmosExtra())
+            {
+                yield return gizmo;
+            }
+            if (parent.Faction != Faction.OfPlayer)
+            {
+                yield break;
+            }
+            var command = new Command_Action
+            {
+                defaultLabel = surveyRequested
+                    ? "Strata_DeepSurvey_Cancel".Translate()
+                    : "Strata_DeepSurvey_Gizmo".Translate(),
+                defaultDesc = "Strata_DeepSurvey_GizmoDesc".Translate(),
+                icon = parent.def.uiIcon,
+                action = () =>
+                {
+                    surveyRequested = !surveyRequested;
+                    if (!surveyRequested)
+                    {
+                        surveyWork = 0f;
+                    }
+                },
+            };
+            if (!surveyRequested && !CanSurveyNow(out string reason))
+            {
+                command.Disable(reason);
+            }
+            yield return command;
+        }
 
         public bool AnyElevated =>
             Powered && (TremorRisk >= 0.55f || CaveInRisk >= 0.55f || InfestationPressure >= 0.55f);
@@ -75,6 +151,8 @@ namespace Strata
         {
             base.PostExposeData();
             Scribe_Values.Look(ref alertLatch, "strataSeismoAlertLatch", defaultValue: false);
+            Scribe_Values.Look(ref surveyRequested, "strataSurveyRequested", defaultValue: false);
+            Scribe_Values.Look(ref surveyWork, "strataSurveyWork", 0f);
         }
 
         public override string CompInspectStringExtra()
@@ -95,6 +173,7 @@ namespace Strata
                 sb.AppendLine();
                 sb.Append("Strata_Seismograph_Noise".Translate(noise.Pressure01.ToStringPercent()));
             }
+            AppendSurvey(sb);
             List<string> others = OtherLevelLines();
             if (others.Count > 0)
             {
@@ -107,6 +186,22 @@ namespace Strata
                 }
             }
             return sb.ToString();
+        }
+
+        private void AppendSurvey(StringBuilder sb)
+        {
+            Map target = DeepSurvey.TargetFor(parent.Map, out _);
+            DeepSurveyRecord record = target != null ? DeepSurvey.For(target) : null;
+            if (record != null)
+            {
+                sb.AppendLine();
+                sb.Append(DeepSurvey.Describe(record));
+            }
+            else if (surveyRequested)
+            {
+                sb.AppendLine();
+                sb.Append("Strata_DeepSurvey_Pending".Translate(SurveyProgress.ToStringPercent()));
+            }
         }
 
         // Shared hazard board: with Stormproof, the surface forecast and storm
