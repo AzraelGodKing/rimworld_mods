@@ -96,7 +96,6 @@ namespace Strata
 
         public static bool TryGetFresh(Map map, int maxAgeTicks, out BoardEntry entry)
         {
-            entry = null;
             if (!TryGet(map, out entry))
             {
                 return false;

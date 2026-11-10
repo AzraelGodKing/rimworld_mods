@@ -24,10 +24,6 @@ namespace Strata
 
         private CompProperties_CanaryCage CanaryProps => (CompProperties_CanaryCage)props;
 
-        public Pawn ContainedCanary => contained;
-
-        public bool HasLiveCanary => HasLiveBird;
-
         public bool NeedsAttention =>
             (HasLiveBird && distressed) || (contained != null && contained.Dead);
 

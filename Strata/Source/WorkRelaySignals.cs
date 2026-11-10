@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
-using Verse.AI;
 
 namespace Strata
 {
@@ -91,11 +90,6 @@ namespace Strata
                 }
             }
             workSeekingGiverMarkers.Add(typeNameContains);
-        }
-
-        public static void UnregisterWorkSeekingJobGiverMarker(string typeNameContains)
-        {
-            workSeekingGiverMarkers.Remove(typeNameContains);
         }
 
         internal static void ResetSession()
@@ -775,7 +769,7 @@ namespace Strata
 
             if (map != null)
             {
-                ScanModdedWorkTypes(entry, map);
+                ScanModdedWorkTypes(entry);
             }
             entry.signalStamp = ComputeStamp(entry);
         }
@@ -936,7 +930,7 @@ namespace Strata
             };
         }
 
-        private static void ScanModdedWorkTypes(WorkRelayBoard.BoardEntry entry, Map map)
+        private static void ScanModdedWorkTypes(WorkRelayBoard.BoardEntry entry)
         {
             List<WorkTypeDef> types = DefDatabase<WorkTypeDef>.AllDefsListForReading;
             for (int i = 0; i < types.Count; i++)
@@ -950,7 +944,7 @@ namespace Strata
                 {
                     continue;
                 }
-                int count = CountScannerWork(map, type);
+                int count = CountScannerWork(type);
                 if (count <= 0)
                 {
                     continue;
@@ -966,7 +960,7 @@ namespace Strata
             }
         }
 
-        private static int CountScannerWork(Map map, WorkTypeDef type)
+        private static int CountScannerWork(WorkTypeDef type)
         {
             if (type.workGiversByPriority == null)
             {

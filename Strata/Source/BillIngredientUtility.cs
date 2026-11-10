@@ -141,7 +141,7 @@ namespace Strata
                     {
                         continue;
                     }
-                    AccumulateShortfall(entry, map, building, bill);
+                    AccumulateShortfall(entry, building, bill);
                 }
             }
         }
@@ -152,7 +152,7 @@ namespace Strata
             return recipe?.ingredients != null && recipe.ingredients.Count > 0;
         }
 
-        private static void AccumulateShortfall(LevelDemand.Entry entry, Map map, Thing billGiver, Bill bill)
+        private static void AccumulateShortfall(LevelDemand.Entry entry, Thing billGiver, Bill bill)
         {
             RecipeDef recipe = bill.recipe;
             for (int i = 0; i < recipe.ingredients.Count; i++)

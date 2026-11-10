@@ -1,6 +1,3 @@
-using RimWorld;
-using Verse;
-
 namespace Strata
 {
     // Each stairwell landing drives shaft power ties once per cycle: upward

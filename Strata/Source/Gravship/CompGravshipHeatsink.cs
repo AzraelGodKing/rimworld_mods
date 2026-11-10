@@ -23,9 +23,6 @@ namespace Strata
 
         private float storedHeat;
 
-        public float StoredHeat => storedHeat;
-        public float MaxHeat => Props.maxHeat;
-
         public override void PostExposeData()
         {
             base.PostExposeData();

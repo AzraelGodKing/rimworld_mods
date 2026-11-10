@@ -22,8 +22,6 @@ namespace Strata
 
         private CompProperties_CageFoodStorage Props => (CompProperties_CageFoodStorage)props;
 
-        public ThingOwner InnerContainer => GetDirectlyHeldThings();
-
         public bool HasFood => innerContainer != null && innerContainer.Any;
 
         public static bool UsesSustainMode =>

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
-using UnityEngine;
 using Verse;
 
 namespace Strata
@@ -15,7 +14,6 @@ namespace Strata
 
         public static bool CanDigDownFromLanding(Building_StairsUp landing, out string reason)
         {
-            reason = null;
             if (landing == null || !landing.Spawned)
             {
                 reason = "Strata_Dig_InvalidStairwell".Translate();
@@ -67,7 +65,6 @@ namespace Strata
 
         public static bool CanDigDownFromEntrance(Building_StairsDown entrance, out string reason)
         {
-            reason = null;
             if (entrance == null || !entrance.Spawned)
             {
                 reason = "Strata_Dig_InvalidStairwell".Translate();
@@ -102,7 +99,6 @@ namespace Strata
 
         public static bool TryDigDownFromLanding(Building_StairsUp landing, out string message)
         {
-            message = null;
             if (!CanDigDownFromLanding(landing, out message))
             {
                 return false;
@@ -137,7 +133,6 @@ namespace Strata
 
         public static bool TryDigDownFromEntrance(Building_StairsDown entrance, out string message)
         {
-            message = null;
             if (!CanDigDownFromEntrance(entrance, out message))
             {
                 return false;
@@ -167,7 +162,6 @@ namespace Strata
 
         private static bool TryPlaceDigShaftBlueprint(IntVec3 center, Map map, Rot4 rot, out string message)
         {
-            message = null;
             ThingDef def = StrataThingDefOf.Strata_DigDownShaft ?? StrataThingDefOf.Strata_StairsDown;
             if (def == null)
             {

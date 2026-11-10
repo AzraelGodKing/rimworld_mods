@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using RimWorld;
-using UnityEngine;
 using Verse;
 
 namespace Strata
@@ -32,7 +31,7 @@ namespace Strata
                 return;
             }
 
-            IntVec3 spot = FindEntranceSpot(map, stairsDef);
+            IntVec3 spot = FindEntranceSpot(map);
             ClearArea(map, spot);
 
             Thing stairs = ThingMaker.MakeThing(stairsDef);
@@ -41,11 +40,11 @@ namespace Strata
             SpawnRuinShell(map, spot, stairsDef);
         }
 
-        private IntVec3 FindEntranceSpot(Map map, ThingDef stairs)
+        private IntVec3 FindEntranceSpot(Map map)
         {
             foreach (IntVec3 cell in GenRadial.RadialCellsAround(map.Center, 40f, useCenter: true))
             {
-                if (EntranceSpotOk(map, cell, stairs))
+                if (EntranceSpotOk(map, cell))
                 {
                     return cell;
                 }
@@ -53,7 +52,7 @@ namespace Strata
             return map.Center;
         }
 
-        private static bool EntranceSpotOk(Map map, IntVec3 center, ThingDef stairs)
+        private static bool EntranceSpotOk(Map map, IntVec3 center)
         {
             if (!center.InBounds(map) || center.DistanceToEdge(map) < ShellHalfSize + 6)
             {

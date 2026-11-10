@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -16,7 +15,6 @@ namespace Strata
     public static class AtmosphericMix
     {
         // Mole / volume fractions (sum ≈ 1.0).
-        public const float NitrogenFraction = 0.7808f;
         public const float OxygenFraction = AtmosphereDepth.OxygenFraction;
         public const float ArgonFraction = 0.0093f;
         public const float CarbonDioxideFraction = 0.0004f;
@@ -692,7 +690,6 @@ namespace Strata
             {
                 float take = Mathf.Min(density[ar], amount);
                 density[ar] -= take;
-                amount -= take;
             }
         }
 

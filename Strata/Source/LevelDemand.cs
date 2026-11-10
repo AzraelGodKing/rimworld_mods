@@ -129,8 +129,8 @@ namespace Strata
         private static Entry Build(Map map)
         {
             var entry = new Entry { tick = Find.TickManager.TicksGame };
-            AddConstructibles(entry, map, map.listerThings.ThingsInGroup(ThingRequestGroup.Blueprint));
-            AddConstructibles(entry, map, map.listerThings.ThingsInGroup(ThingRequestGroup.BuildingFrame));
+            AddConstructibles(entry, map.listerThings.ThingsInGroup(ThingRequestGroup.Blueprint));
+            AddConstructibles(entry, map.listerThings.ThingsInGroup(ThingRequestGroup.BuildingFrame));
             BillIngredientUtility.AddShortfalls(entry, map);
             if (entry.missing.Count > 0)
             {
@@ -342,7 +342,7 @@ namespace Strata
             return cell.IsValid;
         }
 
-        private static void AddConstructibles(Entry entry, Map map, List<Thing> things)
+        private static void AddConstructibles(Entry entry, List<Thing> things)
         {
             for (int i = 0; i < things.Count; i++)
             {

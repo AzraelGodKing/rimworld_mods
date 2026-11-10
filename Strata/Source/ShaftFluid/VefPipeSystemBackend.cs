@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using HarmonyLib;
-using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -432,27 +431,6 @@ namespace Strata
                 return spare + DrawableAmount(net);
             }
             return DrawableAmount(net);
-        }
-
-        // Partner has more drawable gas — trickle toward equal fill (incl. overflow).
-        private float EqualizeWant(object mine, object other)
-        {
-            float storedMine = DrawableAmount(mine);
-            float storedOther = DrawableAmount(other);
-            float capMine = storedMine + (float)availableCapacityProp.GetValue(mine, null);
-            float capOther = storedOther + (float)availableCapacityProp.GetValue(other, null);
-            // Overflow-only nets have AvailableCapacity 0; still allow export into partner room.
-            if (capOther <= 0f && storedOther <= FeedMin)
-            {
-                return 0f;
-            }
-            if (capMine <= FeedMin)
-            {
-                // No local capacity info — ask for a supply-sized charge instead.
-                return 0f;
-            }
-            float transfer = EqualizeDamping * (storedOther * capMine - storedMine * capOther) / Mathf.Max(FeedMin, capMine + capOther);
-            return transfer > EqualizeMinTransfer ? transfer : 0f;
         }
 
         private float SumOfflineDemand(object net)

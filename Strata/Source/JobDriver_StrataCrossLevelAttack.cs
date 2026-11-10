@@ -18,8 +18,6 @@ namespace Strata
         private int verbStaleAt;
         private int lofCheckIn;
 
-        public Thing AttackTarget => target;
-
         public override bool TryMakePreToilReservations(bool errorOnFailed) => true;
 
         public override string GetReport()

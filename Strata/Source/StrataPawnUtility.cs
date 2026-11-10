@@ -4,7 +4,6 @@ using System.Reflection;
 using HarmonyLib;
 using RimWorld;
 using Verse;
-using Verse.AI;
 
 namespace Strata
 {
@@ -88,8 +87,6 @@ namespace Strata
 
         private static void RefreshMiscRobotRechargeCache(Pawn pawn, out bool crossMap, out Map rechargeMap)
         {
-            crossMap = false;
-            rechargeMap = null;
             int pawnId = pawn.thingIDNumber;
             Map pawnMap = pawn.Map;
             if (miscRobotRechargeCache.TryGetValue(pawnId, out (Thing station, Map map, bool crossMap, Map cachedAtMap) cached))

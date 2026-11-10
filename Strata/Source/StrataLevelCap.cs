@@ -35,8 +35,6 @@ namespace Strata
         public static bool Unlimited =>
             StrataMod.Settings != null && StrataMod.Settings.unlimitedLevelsEnabled;
 
-        public static int MaxOffset => Unlimited ? int.MaxValue : HardMaxOffset;
-
         /// <summary>True if opening a brand-new level below <paramref name="map"/> is within the cap.</summary>
         public static bool AllowsNewLevelBelow(Map map, out string reason)
         {

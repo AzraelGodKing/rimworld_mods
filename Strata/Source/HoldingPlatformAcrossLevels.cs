@@ -50,7 +50,7 @@ namespace Strata
                         continue;
                     }
 
-                    if (!IsUsable(candidate, entity, link.arrivalCell, minStrength, ignoreReservations))
+                    if (!IsUsable(candidate, link.arrivalCell, minStrength, ignoreReservations))
                     {
                         continue;
                     }
@@ -119,7 +119,6 @@ namespace Strata
 
         private static bool IsUsable(
             Building_HoldingPlatform platform,
-            Thing entity,
             IntVec3 arrivalCell,
             float minStrength,
             bool ignoreReservations)
