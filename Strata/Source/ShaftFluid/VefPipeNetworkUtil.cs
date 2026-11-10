@@ -110,7 +110,7 @@ namespace Strata
                 {
                     continue;
                 }
-                if (tie.Props.channel.StartsWith("vef_auto_"))
+                if (tie.Props.channel.StartsWith("vef_auto_", System.StringComparison.Ordinal))
                 {
                     return true;
                 }

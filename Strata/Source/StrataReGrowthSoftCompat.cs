@@ -114,7 +114,7 @@ namespace Strata
             }
 
             MapGeneratorDef gen = map.generatorDef;
-            if (gen?.defName != null && gen.defName.StartsWith("Strata_"))
+            if (gen?.defName != null && gen.defName.StartsWith("Strata_", System.StringComparison.Ordinal))
             {
                 return true;
             }

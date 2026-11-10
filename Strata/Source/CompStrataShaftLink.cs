@@ -179,7 +179,7 @@ namespace Strata
             {
                 return false;
             }
-            if (!def.defName.StartsWith("Strata_"))
+            if (!def.defName.StartsWith("Strata_", System.StringComparison.Ordinal))
             {
                 return false;
             }

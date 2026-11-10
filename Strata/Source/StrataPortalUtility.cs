@@ -40,7 +40,7 @@ namespace Strata
             if (thing is MapPortal)
             {
                 string name = thing.def?.defName;
-                return !name.NullOrEmpty() && name.StartsWith("Strata_");
+                return !name.NullOrEmpty() && name.StartsWith("Strata_", System.StringComparison.Ordinal);
             }
             return false;
         }
@@ -217,7 +217,7 @@ namespace Strata
                     }
                     if (blocker is MapPortal
                         && blocker.def?.defName != null
-                        && blocker.def.defName.StartsWith("Strata_"))
+                        && blocker.def.defName.StartsWith("Strata_", System.StringComparison.Ordinal))
                     {
                         ForceDestroyPortal(blocker);
                     }

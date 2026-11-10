@@ -22,7 +22,7 @@ namespace Strata
             {
                 return true;
             }
-            if (portal.def?.defName == null || !portal.def.defName.StartsWith("Strata_"))
+            if (portal.def?.defName == null || !portal.def.defName.StartsWith("Strata_", System.StringComparison.Ordinal))
             {
                 return true;
             }

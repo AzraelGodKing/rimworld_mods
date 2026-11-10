@@ -30,6 +30,23 @@ namespace Strata
         private static readonly AccessTools.FieldRef<Thing, IntVec3> PositionRef =
             AccessTools.FieldRefAccess<Thing, IntVec3>("positionInt");
 
+        private static readonly AccessTools.FieldRef<PriorityWork, IntVec3> PriorityCellRef =
+            OptionalFieldRef<IntVec3>("prioritizedCell");
+
+        private static readonly AccessTools.FieldRef<PriorityWork, WorkGiverDef> PriorityGiverRef =
+            OptionalFieldRef<WorkGiverDef>("prioritizedWorkGiver");
+
+        private static readonly AccessTools.FieldRef<PriorityWork, int> PriorityTickRef =
+            OptionalFieldRef<int>("prioritizeTick");
+
+        // Null when a game update renames the field: the probe then just skips the restore.
+        private static AccessTools.FieldRef<PriorityWork, T> OptionalFieldRef<T>(string name)
+        {
+            return AccessTools.Field(typeof(PriorityWork), name) != null
+                ? AccessTools.FieldRefAccess<PriorityWork, T>(name)
+                : null;
+        }
+
         private static readonly MethodInfo TryGiveJobMethod =
             AccessTools.Method(typeof(ThinkNode_JobGiver), "TryGiveJob");
 
@@ -127,7 +144,7 @@ namespace Strata
                 {
                     continue;
                 }
-                if (found.def == JobDefOf.EnterPortal || found.def.defName.StartsWith("Strata_"))
+                if (found.def == JobDefOf.EnterPortal || found.def.defName.StartsWith("Strata_", System.StringComparison.Ordinal))
                 {
                     // A relay or cross-level carry from the other floor; never chain those.
                     JobMaker.ReturnToPool(found);
@@ -160,6 +177,18 @@ namespace Strata
             }
             sbyte oldIndex = MapIndexRef(pawn);
             IntVec3 oldPos = PositionRef(pawn);
+            // Vanilla givers also write pawn state while the pawn stands on the
+            // other floor: JobGiver_Work clears prioritized work it can't find
+            // there, wander flips nextMoveOrderIsWait. Put them back unless the
+            // probe found the job it is kept for.
+            Pawn_MindState mind = pawn.mindState;
+            PriorityWork priority = PriorityCellRef != null && PriorityGiverRef != null && PriorityTickRef != null
+                ? mind?.priorityWork
+                : null;
+            IntVec3 oldPriorityCell = priority != null ? PriorityCellRef(priority) : IntVec3.Invalid;
+            WorkGiverDef oldPriorityGiver = priority != null ? PriorityGiverRef(priority) : null;
+            int oldPriorityTick = priority != null ? PriorityTickRef(priority) : 0;
+            bool oldMoveIsWait = mind?.nextMoveOrderIsWait ?? false;
             int tick = Find.TickManager.TicksGame;
             Job job = null;
             scanningPawn = pawn;
@@ -181,6 +210,16 @@ namespace Strata
                 MapIndexRef(pawn) = oldIndex;
                 PositionRef(pawn) = oldPos;
                 scanningPawn = null;
+                if (mind != null)
+                {
+                    mind.nextMoveOrderIsWait = oldMoveIsWait;
+                    if (job == null && priority != null)
+                    {
+                        PriorityCellRef(priority) = oldPriorityCell;
+                        PriorityGiverRef(priority) = oldPriorityGiver;
+                        PriorityTickRef(priority) = oldPriorityTick;
+                    }
+                }
             }
             if (job != null && Find.TickManager.TicksGame != tick)
             {

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -41,30 +40,10 @@ namespace Strata
 
         private static readonly List<CompShaftFluidTie> NoTies = new List<CompShaftFluidTie>();
 
-        // Runs after Game.FinalizeInit, when every tie of the loaded game has
-        // already spawned: drop the old game's ties and re-read the current maps.
+        // Runs before the next game's maps load; their ties register on spawn.
         public static void ResetSession()
         {
             spawnedByMap.Clear();
-            List<Map> maps = Find.Maps;
-            for (int m = 0; m < maps.Count; m++)
-            {
-                List<Thing> buildings = maps[m].listerThings.ThingsInGroup(ThingRequestGroup.BuildingArtificial);
-                for (int i = 0; i < buildings.Count; i++)
-                {
-                    if (buildings[i] is not ThingWithComps twc)
-                    {
-                        continue;
-                    }
-                    for (int c = 0; c < twc.AllComps.Count; c++)
-                    {
-                        if (twc.AllComps[c] is CompShaftFluidTie tie)
-                        {
-                            tie.Register();
-                        }
-                    }
-                }
-            }
         }
 
         // Do not change the returned list.
@@ -76,11 +55,6 @@ namespace Strata
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
-            Register();
-        }
-
-        private void Register()
-        {
             Map map = parent.Map;
             if (!spawnedByMap.TryGetValue(map.uniqueID, out List<CompShaftFluidTie> ties))
             {
