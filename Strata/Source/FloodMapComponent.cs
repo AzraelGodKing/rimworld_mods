@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using AzraelCommon;
 using RimWorld;
-using UnityEngine;
 using Verse;
 
 namespace Strata
@@ -143,8 +142,6 @@ namespace Strata
                 map.terrainGrid.RemoveTopLayer(cell);
             }
         }
-
-        public bool AnyFlooded => floodedCells.Count > 0;
 
         public int FloodedCount => floodedCells.Count;
 

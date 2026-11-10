@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using HarmonyLib;
 using LudeonTK;
 using RimWorld;
-using RimWorld.Planet;
 using Verse;
 
 namespace Strata

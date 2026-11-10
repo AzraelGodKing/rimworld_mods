@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -674,7 +673,7 @@ namespace Strata
                 // any floor past it (drafted orders across several floors).
                 // Floors past it add the cheapest route there.
                 int returnsChecked = 0;
-                foreach ((MapPortal ret, IntVec3 retArrive, float beyond) in ReturnCandidates(exit, mid, midArrive, map))
+                foreach ((MapPortal ret, IntVec3 retArrive, float beyond) in ReturnCandidates(mid, midArrive, map))
                 {
                     if (ret == exit)
                     {
@@ -743,7 +742,7 @@ namespace Strata
         // itself), each with where the pawn arrives on that floor and the
         // route cost to get there from the exit's landing.
         private static IEnumerable<(MapPortal ret, IntVec3 arrive, float beyond)> ReturnCandidates(
-            MapPortal exit, Map mid, IntVec3 midArrive, Map home)
+            Map mid, IntVec3 midArrive, Map home)
         {
             foreach (Thing thing in mid.listerThings.ThingsInGroup(ThingRequestGroup.MapPortal))
             {

@@ -75,8 +75,6 @@ namespace Strata
         // Per-network shut-off: an unlinked tie stops this one network only.
         private bool linkEnabled = true;
 
-        public bool LinkEnabled => linkEnabled;
-
         public override System.Collections.Generic.IEnumerable<Gizmo> CompGetGizmosExtra()
         {
             ShaftFluidBackend backend = Backend;

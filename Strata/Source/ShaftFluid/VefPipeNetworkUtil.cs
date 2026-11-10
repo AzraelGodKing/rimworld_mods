@@ -45,8 +45,6 @@ namespace Strata
 
         private static bool bindLogged;
 
-        internal static bool IsAvailable => TryBind();
-
         internal static void ReconnectJunction(Thing thing)
         {
             if (!TryBind() || thing?.Spawned != true || !IsShaftVefJunction(thing))

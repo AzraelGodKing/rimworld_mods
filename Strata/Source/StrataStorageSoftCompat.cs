@@ -13,30 +13,13 @@ namespace Strata
     /// </summary>
     public static class StrataStorageSoftCompat
     {
-        public const string AdaptiveStorageId = "adaptive.storage.framework";
-
         private const int FailCooldownTicks = 5000;
-
-        private static bool? asfActive;
 
         // (map uniqueID, ThingDef shortHash) → tick until which we skip re-export
         private static readonly Dictionary<long, int> failUntilTick = new Dictionary<long, int>();
 
-        public static bool AdaptiveStorageActive
-        {
-            get
-            {
-                if (asfActive == null)
-                {
-                    asfActive = ModLister.GetActiveModWithIdentifier(AdaptiveStorageId, ignorePostfix: true) != null;
-                }
-                return asfActive.Value;
-            }
-        }
-
         public static void ResetCaches()
         {
-            asfActive = null;
             failUntilTick.Clear();
         }
 

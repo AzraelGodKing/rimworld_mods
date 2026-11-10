@@ -44,7 +44,7 @@ namespace Strata
                 return;
             }
             ClearArea(map, spot);
-            Thing stairs = GenSpawn.Spawn(StrataThingDefOf.Strata_AncientColonyStairsDown, spot, map);
+            GenSpawn.Spawn(StrataThingDefOf.Strata_AncientColonyStairsDown, spot, map);
             SpawnRubble(map, spot);
             Find.LetterStack.ReceiveLetter(
                 "Strata_AncientStairwellLetterTitle".Translate(),

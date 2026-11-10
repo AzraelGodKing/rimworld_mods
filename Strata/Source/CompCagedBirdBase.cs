@@ -3,7 +3,6 @@ using System.Linq;
 using RimWorld;
 using UnityEngine;
 using Verse;
-using Verse.AI;
 
 namespace Strata
 {
@@ -22,8 +21,6 @@ namespace Strata
         protected Pawn contained;
 
         protected CompProperties_CagedBird Props => (CompProperties_CagedBird)props;
-
-        public Pawn ContainedBird => contained;
 
         public bool HasLiveBird => contained != null && contained.Spawned && !contained.Dead;
 

@@ -1,9 +1,18 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `4.0.0` in `About.xml` `modVersion`. Player.log: `[Strata] v4.0.0 loaded from ... (modified ...); storm-surge-v1.` via `ModVersionLog.Write`.
+**Version:** `4.0.1` in `About.xml` `modVersion`. Player.log: `[Strata] v4.0.1 loaded from ... (modified ...); dead-code-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `storm-surge-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `dead-code-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [4.0.1]
+
+Player-facing version **4.0.1** (`About.xml` `modVersion`). Stamp `dead-code-v1`. No save-format change. 4.0.0 was never released, so the Workshop notes in `About/changelog.txt` still cover all of Strata 4.
+
+### Removed
+- Unused members with no caller in the repo: `AtmosphericMix.NitrogenFraction`, `CompCageFoodStorage.InnerContainer`, `CompCagedBirdBase.ContainedBird`, `CompCanaryCage.ContainedCanary` / `HasLiveCanary`, `CompPowerShaft.LastTransferWatts` / `MaxTransferWatts`, `FloodMapComponent.AnyFlooded`, `CompGravshipHeatsink.StoredHeat` / `MaxHeat`, `CompGravshipOxygenTank.MaxStored`, `StrataDeferredCellClear.HasWork`, `JobDriver_StrataCrossLevelAttack.AttackTarget`, `LevelExcavationUtility.SurfaceWorkToBuild`, `CompShaftFluidTie.LinkEnabled`, `VefPipeNetworkUtil.IsAvailable`, `VefPipeSystemBackend.EqualizeWant`, `StrataLevelCap.MaxOffset`, `StrataStorageSoftCompat.AdaptiveStorageActive` (and its id), `WorkRelaySignals.UnregisterWorkSeekingJobGiverMarker`, `StrataBelowSelection.lastClickThingId`.
+- About 80 unused `using` lines, 11 dead assignments, and 11 private-method parameters nothing read.
+- Kept on purpose: `StrataModderApi` (public API), Harmony `Prepare` / `TargetMethods`, debug actions, and game-required constructor parameters.
 
 ## [Unreleased]
 

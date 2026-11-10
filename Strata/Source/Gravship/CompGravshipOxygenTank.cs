@@ -31,7 +31,6 @@ namespace Strata
         private float stored;
 
         public float Stored => stored;
-        public float MaxStored => Props.maxStored;
 
         public override void PostExposeData()
         {

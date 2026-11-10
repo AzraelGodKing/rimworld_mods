@@ -32,7 +32,6 @@ namespace Strata
         private static float lastClickRealTime = -999f;
         private static ThingDef lastClickDef;
         private static ThingDef lastClickStuff;
-        private static int lastClickThingId = -1;
 
         public static bool TryGetBelowView(out Map sky, out Map lower)
         {
@@ -236,7 +235,6 @@ namespace Strata
             lastClickRealTime = now;
             lastClickDef = pick.def;
             lastClickStuff = pick.Stuff;
-            lastClickThingId = pick.thingIDNumber;
 
             if (doubleClick)
             {

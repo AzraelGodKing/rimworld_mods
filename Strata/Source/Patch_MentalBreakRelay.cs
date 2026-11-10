@@ -113,7 +113,7 @@ namespace Strata
                 {
                     continue;
                 }
-                int score = ScoreMapForMentalBreak(pawn, map);
+                int score = ScoreMapForMentalBreak(map);
                 if (score > bestScore)
                 {
                     bestScore = score;
@@ -315,7 +315,7 @@ namespace Strata
             return true;
         }
 
-        private static int ScoreMapForMentalBreak(Pawn pawn, Map map)
+        private static int ScoreMapForMentalBreak(Map map)
         {
             int score = 1;
             if (map.mapPawns != null)

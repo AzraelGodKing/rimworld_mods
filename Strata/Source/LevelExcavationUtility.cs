@@ -86,7 +86,6 @@ namespace Strata
             return true;
         }
 
-        public const float SurfaceWorkToBuild = 12000f;
         public const float DeepWorkOffset = 8000f;
     }
 }

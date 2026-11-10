@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using RimWorld;
 using RimWorld.Planet;
 using Verse;
 
@@ -23,8 +22,6 @@ namespace Strata
         }
 
         private static readonly List<MapQueue> queues = new List<MapQueue>();
-
-        public static bool HasWork => queues.Count > 0;
 
         public static void Enqueue(Map map, List<IntVec3> cells)
         {

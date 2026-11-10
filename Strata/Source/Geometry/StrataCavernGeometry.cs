@@ -53,7 +53,7 @@ namespace Strata
             int spurCount = Mathf.Max(2, Mathf.RoundToInt((2 + targetChambers * 0.55f) * mapScale));
             GrowSpurs(rng, mask, width, height, chambers, spurCount, edgeMargin, mapScale);
 
-            TryAddLoops(rng, mask, width, height, chambers, edgeMargin, mapScale);
+            TryAddLoops(rng, mask, width, height, chambers, mapScale);
 
             return new Result { carveMask = mask, chambers = chambers };
         }
@@ -229,7 +229,6 @@ namespace Strata
             int width,
             int height,
             List<IntVec3> chambers,
-            int edgeMargin,
             float mapScale)
         {
             if (chambers.Count < 4 || rng.NextDouble() > 0.45)

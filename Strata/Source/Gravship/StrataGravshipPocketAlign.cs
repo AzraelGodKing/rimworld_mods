@@ -122,7 +122,7 @@ namespace Strata
                     continue;
                 }
 
-                IntVec3 delta = ComputeSnapDelta(pocket, hostShafts, engine, engineDelta);
+                IntVec3 delta = ComputeSnapDelta(pocket, hostShafts, engineDelta);
                 if (delta == IntVec3.Zero)
                 {
                     continue;
@@ -155,7 +155,6 @@ namespace Strata
         private static IntVec3 ComputeSnapDelta(
             Map pocket,
             List<MapPortal> hostShafts,
-            Building_GravEngine engine,
             IntVec3 engineDelta)
         {
             // MultiFloors-style: translate by engine movement (engine-relative cargo

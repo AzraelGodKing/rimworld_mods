@@ -47,11 +47,6 @@ namespace Strata
             }
         }
 
-        public float LastTransferWatts => lastTransferWatts;
-
-        // -1 means unlimited.
-        public float MaxTransferWatts => maxTransferWatts;
-
         public bool HasTransferLimit => maxTransferWatts >= 0f;
 
         public override void PostExposeData()

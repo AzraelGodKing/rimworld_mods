@@ -535,7 +535,7 @@ namespace Strata
 
             // Direct hop onto destMap: re-verify landing → store (ancient shafts
             // are enterable but often dump into disconnected rock).
-            Map other = null;
+            Map other;
             try
             {
                 other = required.GetOtherMap();
