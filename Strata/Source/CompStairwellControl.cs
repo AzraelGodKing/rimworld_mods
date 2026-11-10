@@ -20,7 +20,14 @@ namespace Strata
 
         public bool Sealed => sealedShut;
 
-        public void Unseal() => sealedShut = false;
+        public void Unseal()
+        {
+            if (sealedShut)
+            {
+                sealedShut = false;
+                SealedPortalCells.Notify_SealChanged();
+            }
+        }
 
         public override void PostExposeData()
         {
@@ -38,7 +45,11 @@ namespace Strata
                 defaultDesc = "Strata_SealDesc".Translate(),
                 icon = ContentFinder<UnityEngine.Texture2D>.Get("UI/Commands/ForbidOff", reportFailure: false),
                 isActive = () => sealedShut,
-                toggleAction = () => sealedShut = !sealedShut,
+                toggleAction = () =>
+                {
+                    sealedShut = !sealedShut;
+                    SealedPortalCells.Notify_SealChanged();
+                },
             };
         }
 

@@ -84,7 +84,7 @@ namespace Strata
                 return false;
             }
             Building building = thing.Position.GetFirstBuilding(thing.Map);
-            return building?.def?.defName != null && building.def.defName.Contains("RootCellar");
+            return building?.def?.defName != null && building.def.defName.IndexOf("RootCellar", System.StringComparison.Ordinal) >= 0;
         }
     }
 
@@ -99,6 +99,13 @@ namespace Strata
         {
             public float rot;
             public bool apply;
+        }
+
+        // Runs on every rottable item's tick: only patch when Homesteader can
+        // place a root cellar. Patching runs before defs load, so check the mod.
+        public static bool Prepare()
+        {
+            return ModsConfig.IsActive("AzraelGodKing.Homesteader");
         }
 
         public static void Prefix(CompRottable __instance, out RotTickState __state)
@@ -141,6 +148,13 @@ namespace Strata
         private const string IrrigatedSoilDefName = "Wellspring_IrrigatedSoil";
 
         private const float UndergroundFertilityBonus = 0.05f;
+
+        // Runs for every plant's growth rate: only patch with the irrigated soil's mod.
+        public static bool Prepare()
+        {
+            return ModsConfig.IsActive("AzraelGodKing.Homesteader")
+                || ModsConfig.IsActive("AzraelGodKing.Wellspring");
+        }
 
         public static void Postfix(Plant __instance, ref float __result)
         {

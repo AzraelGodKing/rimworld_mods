@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -33,6 +35,73 @@ namespace Strata
 
         public float ShaftResourceBufferRoom => Mathf.Max(0f, MaxResourceBuffer - shaftResourceBuffer);
 
+        // Spawned ties per map, so per-net lookups don't walk every building.
+        private static readonly Dictionary<int, List<CompShaftFluidTie>> spawnedByMap =
+            new Dictionary<int, List<CompShaftFluidTie>>();
+
+        private static readonly List<CompShaftFluidTie> NoTies = new List<CompShaftFluidTie>();
+
+        // Runs after Game.FinalizeInit, when every tie of the loaded game has
+        // already spawned: drop the old game's ties and re-read the current maps.
+        public static void ResetSession()
+        {
+            spawnedByMap.Clear();
+            List<Map> maps = Find.Maps;
+            for (int m = 0; m < maps.Count; m++)
+            {
+                List<Thing> buildings = maps[m].listerThings.ThingsInGroup(ThingRequestGroup.BuildingArtificial);
+                for (int i = 0; i < buildings.Count; i++)
+                {
+                    if (buildings[i] is not ThingWithComps twc)
+                    {
+                        continue;
+                    }
+                    for (int c = 0; c < twc.AllComps.Count; c++)
+                    {
+                        if (twc.AllComps[c] is CompShaftFluidTie tie)
+                        {
+                            tie.Register();
+                        }
+                    }
+                }
+            }
+        }
+
+        // Do not change the returned list.
+        public static List<CompShaftFluidTie> SpawnedOn(Map map)
+        {
+            return map != null && spawnedByMap.TryGetValue(map.uniqueID, out List<CompShaftFluidTie> ties) ? ties : NoTies;
+        }
+
+        public override void PostSpawnSetup(bool respawningAfterLoad)
+        {
+            base.PostSpawnSetup(respawningAfterLoad);
+            Register();
+        }
+
+        private void Register()
+        {
+            Map map = parent.Map;
+            if (!spawnedByMap.TryGetValue(map.uniqueID, out List<CompShaftFluidTie> ties))
+            {
+                ties = new List<CompShaftFluidTie>();
+                spawnedByMap[map.uniqueID] = ties;
+            }
+            if (!ties.Contains(this))
+            {
+                ties.Add(this);
+            }
+        }
+
+        public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)
+        {
+            base.PostDeSpawn(map, mode);
+            if (map != null && spawnedByMap.TryGetValue(map.uniqueID, out List<CompShaftFluidTie> ties))
+            {
+                ties.Remove(this);
+            }
+        }
+
         public static CompShaftFluidTie FindOn(Thing thing, string channel)
         {
             if (thing is not ThingWithComps twc || channel.NullOrEmpty())
@@ -64,7 +133,7 @@ namespace Strata
             {
                 if (twc.AllComps[i] is CompShaftFluidTie tie
                     && tie.Props.channel != null
-                    && tie.Props.channel.StartsWith(prefix))
+                    && tie.Props.channel.StartsWith(prefix, System.StringComparison.Ordinal))
                 {
                     return true;
                 }

@@ -1,9 +1,25 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `4.0.1` in `About.xml` `modVersion`. Player.log: `[Strata] v4.0.1 loaded from ... (modified ...); dead-code-v1.` via `ModVersionLog.Write`.
+**Version:** `4.0.2` in `About.xml` `modVersion`. Player.log: `[Strata] v4.0.2 loaded from ... (modified ...); hot-path-cache-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `dead-code-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `hot-path-cache-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [4.0.2]
+
+Player-facing version **4.0.2** (`About.xml` `modVersion`). Stamp `hot-path-cache-v1`. No save-format change: every cache below is rebuilt on load.
+
+### Performance
+- **Gas past sealed portals:** `GasGrid.GasCanMoveTo`'s postfix no longer walks the cell's things with three `defName.StartsWith` per building. New `SealedPortalCells` keeps a per-map set of cells under sealed Strata portals, rebuilt when `LevelGraph.Epoch` (portal spawn/despawn) or `SealedPortalCells.SealVersion` (`CompStairwellControl` seal toggle or `Unseal`) changes.
+- **Gas pipe networks:** `GasPipeUtility.ForEachNetwork` caches each map's networks and rebuilds them only when a `Building_GasPipe` spawns or despawns, instead of scanning `AllThings` and flood-filling every atmosphere cycle. `CollectNetwork` is now breadth-first, so a long pipe run cannot overflow the stack.
+- **Shaft fluid:** `ShaftFluidBackend.IsActive` is resolved once (`ComputeIsActive`) instead of calling `ModLister.GetActiveModWithIdentifier` on every pulse and inspect. `CompShaftFluidTie` keeps a per-map list of spawned ties, so a failed Dubs Bad Hygiene `PullWater` no longer scans every artificial building.
+- **Odyssey check:** `StrataGravshipUtility.OdysseyActive` (34 call sites, including the `MapTemperature.OutdoorTemp` postfix) uses the game's cached `ModsConfig.OdysseyActive`.
+- **Sister-mod patches:** the root cellar rot patch (`CompRottable.TickInterval`) and the irrigated soil patch (`Plant.GrowthRateFactor_Fertility`) have `Prepare()`, so they are not applied, or fault-guard wrapped, without Homesteader or Wellspring.
+- **Loading dock bonus:** `HaulRelayCapacity.NearDock` (used by `MassUtility.Capacity` and `Pawn.TicksPerMove`) returns at once on maps without a loading dock.
+- **Fault guard:** `CompPowerShaft.CompTick` and `CompSumpPump.CompTick` guard themselves in code; they are no longer wrapped by a Harmony prefix and finalizer on every tick.
+- **Thing lookups by id:** six copies of find-by-id that each walked `AllThings` are replaced by `StrataThingLookup`, which remembers the last hit per id while it is still spawned.
+- **Alerts:** "Caravan goods below" now throttles on real time (the dialog pauses the game), reads the dialog's map through a cached field ref instead of `Traverse`, and stops at the first valuable item. "Canary warning" reads only things of canary-cage defs instead of every colony building.
+- `CrossFloorReserve.CanReserve` reuses one list instead of allocating per call. Ordinal string compares in `HaulRelayCapacity`, `SisterModBridges` and `CompShaftFluidTie`.
 
 ## [4.0.1]
 

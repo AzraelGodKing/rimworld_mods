@@ -111,6 +111,12 @@ namespace Strata
     // caravan is being packed.
     public class Alert_CaravanGoodsBelow : Alert
     {
+        // The caravan dialog pauses the game, so throttle on real time, not ticks.
+        private const float ScanSeconds = 1f;
+
+        private AlertReport cachedReport = false;
+        private float lastScanTime = -999f;
+
         public Alert_CaravanGoodsBelow()
         {
             defaultLabel = "Strata_Alert_CaravanGoods_Label".Translate();
@@ -124,14 +130,17 @@ namespace Strata
             {
                 return false;
             }
-            Map surface = StrataCaravanUtility.CaravanFormingMap;
-            if (surface == null)
+            float now = UnityEngine.Time.realtimeSinceStartup;
+            if (now - lastScanTime < ScanSeconds)
             {
-                return false;
+                return cachedReport;
             }
-            return StrataCaravanUtility.CountValuableBelow(surface) > 0
+            lastScanTime = now;
+            Map surface = StrataCaravanUtility.CaravanFormingMap;
+            cachedReport = surface != null && StrataCaravanUtility.AnyValuableBelow(surface)
                 ? AlertReport.CulpritIs(new GlobalTargetInfo(surface.Center, surface))
                 : false;
+            return cachedReport;
         }
     }
 
@@ -365,6 +374,26 @@ namespace Strata
     // A mine canary sick or dead from bad air — warns before colonists show hediffs.
     public class Alert_CanaryWarning : Alert
     {
+        // Defs that carry a canary cage, so the scan reads only those things
+        // instead of every colony building on every map.
+        private static List<ThingDef> canaryCageDefs;
+
+        private static List<ThingDef> CanaryCageDefs()
+        {
+            if (canaryCageDefs == null)
+            {
+                canaryCageDefs = new List<ThingDef>();
+                foreach (ThingDef def in DefDatabase<ThingDef>.AllDefsListForReading)
+                {
+                    if (def.HasComp(typeof(CompCanaryCage)))
+                    {
+                        canaryCageDefs.Add(def);
+                    }
+                }
+            }
+            return canaryCageDefs;
+        }
+
         private readonly List<GlobalTargetInfo> targets = new List<GlobalTargetInfo>();
         private AlertReport cachedReport = false;
         private int lastScanTick = -9999;
@@ -387,13 +416,18 @@ namespace Strata
             for (int i = 0; i < maps.Count; i++)
             {
                 Map map = maps[i];
-                List<Building> buildings = map.listerBuildings.allBuildingsColonist;
-                for (int b = 0; b < buildings.Count; b++)
+                List<ThingDef> cageDefs = CanaryCageDefs();
+                for (int d = 0; d < cageDefs.Count; d++)
                 {
-                    Building building = buildings[b];
-                    if (building.TryGetComp<CompCanaryCage>() is CompCanaryCage cage && cage.NeedsAttention)
+                    List<Thing> cages = map.listerThings.ThingsOfDef(cageDefs[d]);
+                    for (int c = 0; c < cages.Count; c++)
                     {
-                        targets.Add(new GlobalTargetInfo(building));
+                        Thing building = cages[c];
+                        if (building.Faction == Faction.OfPlayer
+                            && building.TryGetComp<CompCanaryCage>() is CompCanaryCage cage && cage.NeedsAttention)
+                        {
+                            targets.Add(new GlobalTargetInfo(building));
+                        }
                     }
                 }
             }

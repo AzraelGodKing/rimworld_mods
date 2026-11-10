@@ -425,7 +425,7 @@ namespace Strata
                 return false;
             }
 
-            Thing ingredient = FindThing(thingMap, fetch.thingId);
+            Thing ingredient = StrataThingLookup.FindOnMap(thingMap, fetch.thingId);
             if (ingredient == null || !ingredient.Spawned || !pawn.CanReserve(ingredient)
                 || !pawn.CanReach(ingredient, PathEndMode.ClosestTouch, Danger.Deadly))
             {
@@ -433,7 +433,7 @@ namespace Strata
             }
 
             Thing giver = fetch.giverId > 0
-                ? StrataPortalUtility.FindThingByIdAcrossMaps(fetch.giverId)
+                ? StrataThingLookup.FindAcrossMaps(fetch.giverId)
                 : null;
             MapPortal portal = LevelGraph.BestFirstStep(thingMap, destMap, pawn.Position, pawn);
             if (portal == null)
@@ -578,16 +578,6 @@ namespace Strata
                 }
             }
             return null;
-        }
-
-        private static Thing FindThing(Map map, int id)
-        {
-            if (id <= 0 || map == null)
-            {
-                return null;
-            }
-            Thing thing = StrataPortalUtility.FindThingByIdAcrossMaps(id);
-            return thing != null && thing.MapHeld == map ? thing : null;
         }
     }
 }

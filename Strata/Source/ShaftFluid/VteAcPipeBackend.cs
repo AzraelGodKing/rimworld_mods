@@ -75,7 +75,7 @@ namespace Strata
 
         public override string Label => "VTE air duct";
 
-        public override bool IsActive =>
+        protected override bool ComputeIsActive() =>
             ModsConfig.IsActive("VanillaExpanded.Temperature")
             && ModsConfig.IsActive("OskarPotocki.VanillaFactionsExpanded.Core")
             && TryBind()

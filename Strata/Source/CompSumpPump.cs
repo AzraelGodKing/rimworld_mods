@@ -32,12 +32,22 @@ namespace Strata
         public override void CompTick()
         {
             base.CompTick();
-            if (!parent.IsHashIntervalTick(Props.clearIntervalTicks) || !Active)
+            // Guarded here, not by a Harmony wrapper: this runs every tick for every pump.
+            if (!parent.IsHashIntervalTick(Props.clearIntervalTicks)
+                || StrataFaultGuard.IsTripped(StrataFaultGuard.System.Flood)
+                || !Active)
             {
                 return;
             }
-            FloodMapComponent flood = parent.Map.GetComponent<FloodMapComponent>();
-            flood?.ClearFloodsInRadius(parent.Position, Props.clearRadius);
+            try
+            {
+                FloodMapComponent flood = parent.Map.GetComponent<FloodMapComponent>();
+                flood?.ClearFloodsInRadius(parent.Position, Props.clearRadius);
+            }
+            catch (System.Exception e)
+            {
+                StrataFaultGuard.Report(StrataFaultGuard.System.Flood, "running CompSumpPump.CompTick", e);
+            }
         }
 
         public override string CompInspectStringExtra()

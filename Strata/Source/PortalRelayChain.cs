@@ -397,7 +397,7 @@ namespace Strata
                     : null;
                 if (intent.purpose == RelayPurpose.Containment && intent.preferredBedId > 0)
                 {
-                    Thing platform = FindThingById(destMap, intent.preferredBedId);
+                    Thing platform = StrataThingLookup.FindOnMap(destMap, intent.preferredBedId);
                     if (platform != null)
                     {
                         intent.preferArrivalNear = platform.Position;
@@ -754,7 +754,7 @@ namespace Strata
                 return;
             }
             Thing platform = preferredPlatformId > 0
-                ? FindThingById(hauler.Map, preferredPlatformId)
+                ? StrataThingLookup.FindOnMap(hauler.Map, preferredPlatformId)
                 : null;
             if (platform == null || !platform.Spawned || platform.Map != hauler.Map
                 || !hauler.CanReach(platform, PathEndMode.ClosestTouch, Danger.Deadly))
@@ -851,23 +851,6 @@ namespace Strata
             return null;
         }
 
-        private static Thing FindThingById(Map map, int thingId)
-        {
-            if (map == null || thingId <= 0)
-            {
-                return null;
-            }
-            List<Thing> all = map.listerThings.AllThings;
-            for (int i = 0; i < all.Count; i++)
-            {
-                if (all[i] != null && all[i].thingIDNumber == thingId)
-                {
-                    return all[i];
-                }
-            }
-            return null;
-        }
-
         private static Map FindMap(int uniqueId)
         {
             List<Map> maps = Find.Maps;
@@ -954,7 +937,7 @@ namespace Strata
                 }
                 if (record.purpose == RelayPurpose.Containment
                     && record.preferredBedId > 0
-                    && FindThingById(dest, record.preferredBedId) == null)
+                    && StrataThingLookup.FindOnMap(dest, record.preferredBedId) == null)
                 {
                     continue;
                 }

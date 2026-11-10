@@ -48,7 +48,7 @@ namespace Strata
 
         public override string Label => "DBH plumbing";
 
-        public override bool IsActive => ModLister.GetActiveModWithIdentifier(PackageId) != null && TryBind();
+        protected override bool ComputeIsActive() => ModLister.GetActiveModWithIdentifier(PackageId) != null && TryBind();
 
         public override object GetNetFromJunction(Thing junction)
         {

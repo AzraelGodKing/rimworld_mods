@@ -53,12 +53,12 @@ namespace Strata
                 __instance.components.Add(levelKind);
                 levelKind.FinalizeInit();
             }
-            if (ModsConfig.IsActive("Ludeon.RimWorld.Odyssey")
+            if (ModsConfig.OdysseyActive
                 && __instance.GetComponent<MapComponent_StrataGravshipUpperDeckSync>() == null)
             {
                 __instance.components.Add(new MapComponent_StrataGravshipUpperDeckSync(__instance));
             }
-            if (ModsConfig.IsActive("Ludeon.RimWorld.Odyssey")
+            if (ModsConfig.OdysseyActive
                 && StrataGravshipUtility.IsGravshipLinkedLevel(__instance)
                 && __instance.GetComponent<MapComponent_StrataProjectedSubstructure>() == null)
             {

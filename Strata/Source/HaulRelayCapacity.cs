@@ -129,13 +129,13 @@ namespace Strata
             foreach (Thing thing in pawn.inventory.innerContainer)
             {
                 string n = thing?.def?.defName;
-                if (n != null && n.StartsWith("Homesteader_") && n.IndexOf("Crate", System.StringComparison.Ordinal) >= 0)
+                if (n != null && n.StartsWith("Homesteader_", System.StringComparison.Ordinal) && n.IndexOf("Crate", System.StringComparison.Ordinal) >= 0)
                 {
                     return true;
                 }
             }
             return pawn.carryTracker?.CarriedThing?.def?.defName is string c
-                && c.StartsWith("Homesteader_")
+                && c.StartsWith("Homesteader_", System.StringComparison.Ordinal)
                 && c.IndexOf("Crate", System.StringComparison.Ordinal) >= 0;
         }
 
@@ -205,6 +205,11 @@ namespace Strata
         {
             ResolveDefs();
             if (map == null || loadingDockDef == null)
+            {
+                return false;
+            }
+            // Most maps have no dock: skip the 9-cell scan (ThingsOfDef is a lookup).
+            if (map.listerThings.ThingsOfDef(loadingDockDef).Count == 0)
             {
                 return false;
             }
