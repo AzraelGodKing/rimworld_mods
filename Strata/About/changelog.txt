@@ -1,5 +1,5 @@
-4.0.3
-[h1]Strata - 4.0.3[/h1]
+4.1.0
+[h1]Strata - 4.1.0[/h1]
 
 Strata 4 is out for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting every update, and a Strata save carries over to 1.7.
 
@@ -15,6 +15,7 @@ Strata 4 is out for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting eve
 [*] [b]Settings presets, tabs and search[/b] — Mod options now open on tabs (Levels, Commuting, Atmosphere, Threats, Performance, Visuals, Advanced, Diagnostics) with a search box that finds any option by name. Performance, Balanced and Immersive presets set the costly options in one click; change one yourself and it shows Custom.
 [*] [b]Modder API v2[/b] — other mods can ask which level a map is, its name, how many stairs away another level is, register their own work for the work relay, and hear when a level is created, removed or linked. Docs: https://github.com/AzraelGodKing/rimworld_mods/blob/main/Strata/API.md
 [*] [b]Storms reach underground (with Stormproof)[/b] — with Stormproof 2, rain, thunderstorms and ion storms on the surface make seep floods bigger on levels without a running sump pump, and the seismograph shows the surface weather, how long it will hold, and the storm surge.
+[*] [b]Deep Survey[/b] — a powered seismograph can now survey the rock under your deepest level. Press "Survey below" and a researcher works the console for about an hour. It tells you what the next level dug there will be (ordinary rock, an underground lake, sealed old rooms or the magma layer), with a rough reading of ore and gas, and the dig will match it. The survey shows on the seismograph and in the Levels tab.
 [/list]
 
 [b]Changed[/b]
@@ -42,5 +43,5 @@ Strata 4 is out for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting eve
 [*] Less work behind the scenes: gas spreading past sealed stairs, gas pipes, shaft water and fuel, cart and dock hauling, and a few alerts now remember what they looked up instead of checking again every time. No gameplay change.
 [/list]
 
-[i]Build stamp (Player.log): load-order-v1[/i]
+[i]Build stamp (Player.log): deep-survey-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]

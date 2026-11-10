@@ -56,10 +56,15 @@ namespace Strata
                 }
             }
 
-            int gasCount = 0;
-            if (depth > 1 && Rand.Chance(Mathf.Min(0.5f + 0.15f * (depth - 1), 0.95f)))
+            // A deep survey locks the gas reading; otherwise roll as usual.
+            int gasCount = DeepSurvey.GasChamberCount(map, depth);
+            if (gasCount < 0)
             {
-                gasCount = Rand.RangeInclusive(1, Mathf.Min(1 + depth, 4));
+                gasCount = 0;
+                if (depth > 1 && Rand.Chance(Mathf.Min(0.5f + 0.15f * (depth - 1), 0.95f)))
+                {
+                    gasCount = Rand.RangeInclusive(1, Mathf.Min(1 + depth, 4));
+                }
             }
             for (int i = 0; i < gasCount; i++)
             {

@@ -57,6 +57,7 @@ namespace Strata
             StrataLevelCoords.ResetSession,
             StrataDeferredGenUtility.ResetSession,
             StrataLevelKinds.ResetSession,
+            DeepSurvey.ResetSession,
             LevelWalkCost.ResetSession,
             WorkRelayAntiLoop.ResetSession,
             StrataRobotDiagnostics.ResetSession,

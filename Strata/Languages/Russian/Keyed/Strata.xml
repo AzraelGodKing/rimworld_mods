@@ -571,4 +571,20 @@
   <Strata_LevelSizeGizmoDesc>Размер уровня, который откроет эта лестница: {0}. Нажмите, чтобы переключать 100% / 75% / 50%. Размер задаёт только первая лестница глубины.</Strata_LevelSizeGizmoDesc>
   <Strata_RoofPastDeck>Эта крыша за пределами палубы выше, поэтому палубы над ней нет. Палубы крыш сохраняют размер, с которым открылись.</Strata_RoofPastDeck>
 
+  <!-- Deep Survey (seismograph) -->
+  <Strata_DeepSurvey_Gizmo>Survey below</Strata_DeepSurvey_Gizmo>
+  <Strata_DeepSurvey_Cancel>Cancel survey</Strata_DeepSurvey_Cancel>
+  <Strata_DeepSurvey_GizmoDesc>Have a researcher work this seismograph for about an hour to read the rock under the deepest level of this colony. The survey shows what the next level dug there will be, with a rough reading of ore and gas, and that result is locked in: the dig will match it.</Strata_DeepSurvey_GizmoDesc>
+  <Strata_DeepSurvey_NoStack>No colony level below to survey from here.</Strata_DeepSurvey_NoStack>
+  <Strata_DeepSurvey_Bottom>Nothing can be dug below the deepest level.</Strata_DeepSurvey_Bottom>
+  <Strata_DeepSurvey_AlreadyDone>The rock below is already surveyed. Dig the next level to survey again.</Strata_DeepSurvey_AlreadyDone>
+  <Strata_DeepSurvey_Pending>Deep survey requested: {0} done.</Strata_DeepSurvey_Pending>
+  <Strata_DeepSurvey_Result>Survey of {0}: {1}, ore {2}, gas {3}</Strata_DeepSurvey_Result>
+  <Strata_DeepSurvey_Done>{0} finished the deep survey. {1}</Strata_DeepSurvey_Done>
+  <Strata_DeepSurvey_KindStandard>ordinary rock</Strata_DeepSurvey_KindStandard>
+  <Strata_DeepSurvey_KindMagma>the magma layer</Strata_DeepSurvey_KindMagma>
+  <Strata_DeepSurvey_KindFlooded>an underground lake</Strata_DeepSurvey_KindFlooded>
+  <Strata_DeepSurvey_KindLostFloor>sealed old rooms</Strata_DeepSurvey_KindLostFloor>
+  <Strata_DeepSurvey_LevelsTabTip>Deep survey of the next level below: {0}</Strata_DeepSurvey_LevelsTabTip>
+
 </LanguageData>

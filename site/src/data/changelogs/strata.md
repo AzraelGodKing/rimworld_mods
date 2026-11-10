@@ -1,9 +1,18 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `4.0.3` in `About.xml` `modVersion`. Player.log: `[Strata] v4.0.3 loaded from ... (modified ...); load-order-v1.` via `ModVersionLog.Write`.
+**Version:** `4.1.0` in `About.xml` `modVersion`. Player.log: `[Strata] v4.1.0 loaded from ... (modified ...); deep-survey-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `load-order-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `deep-survey-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [4.1.0]
+
+Player-facing version **4.1.0** (`About.xml` `modVersion`). Stamp `deep-survey-v1`. Additive save change only: old saves load with no survey.
+
+### Added
+- **Deep Survey:** a powered seismograph has a "Survey below" gizmo. A researcher (Research work type, `WorkGiver_StrataDeepSurvey`, about 2500 work at research speed 1) works the console, and the result is locked for the next level under the deepest dig-down level of that colony stack: level kind (`StrataLevelKinds.PickForDepth`), rich ore grade and gas grade. It shows in the seismograph inspect pane and next to that level in the Levels tab.
+- The dig uses the locked roll: `GenStep_StrataLevelKind` claims it (`DeepSurvey.TryClaim`), `GenStep_RichOreNodes` adjusts its node count (low = 1, high = one more), and `GenStep_HiddenChambers` uses the gas grade (low = none, moderate = 1 to 2, high = 3 or more chambers). The magma layer still wins at its depth, and a surveyed flooded or lost-floor kind falls back to standard if that kind was turned off since.
+- Saved: `GameComponent_StrataDeepSurvey` (`strataDeepSurveys`, one record per stack) and the seismograph's `strataSurveyRequested` / `strataSurveyWork`. New `JobDef` and `WorkGiverDef` `Strata_DeepSurvey`; new `Strata_DeepSurvey_*` keyed strings (English text in the Chinese and Russian files for now).
 
 ## [4.0.3]
 
