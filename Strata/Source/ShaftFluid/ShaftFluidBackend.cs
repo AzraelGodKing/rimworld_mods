@@ -15,7 +15,13 @@ namespace Strata
 
         public abstract string Label { get; }
 
-        public abstract bool IsActive { get; }
+        private bool? isActive;
+
+        // The mod list and the framework types cannot change while the game runs,
+        // so this is resolved once instead of on every pulse and inspect.
+        public bool IsActive => isActive ??= ComputeIsActive();
+
+        protected abstract bool ComputeIsActive();
 
         public abstract object GetNetFromJunction(Thing junction);
 

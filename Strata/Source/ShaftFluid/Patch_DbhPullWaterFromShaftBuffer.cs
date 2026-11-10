@@ -88,16 +88,15 @@ namespace Strata
             }
             ResolveFields();
             int wantId = NetId(plumbingNet);
-            List<Thing> buildings = map.listerThings.ThingsInGroup(ThingRequestGroup.BuildingArtificial);
-            for (int i = 0; i < buildings.Count; i++)
+            List<CompShaftFluidTie> ties = CompShaftFluidTie.SpawnedOn(map);
+            for (int i = 0; i < ties.Count; i++)
             {
-                Thing building = buildings[i];
-                CompShaftFluidTie tie = CompShaftFluidTie.FindOn(building, Channel);
-                if (tie == null || tie.ShaftResourceBuffer < 0.0001f)
+                CompShaftFluidTie tie = ties[i];
+                if (tie.Props.channel != Channel || tie.ShaftResourceBuffer < 0.0001f)
                 {
                     continue;
                 }
-                object net = backend.GetNetFromJunction(building);
+                object net = backend.GetNetFromJunction(tie.parent);
                 if (net == null)
                 {
                     continue;

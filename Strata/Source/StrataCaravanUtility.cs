@@ -18,6 +18,9 @@ namespace Strata
 
         public static bool CaravanDialogOpen => Find.WindowStack.IsOpen(typeof(Dialog_FormCaravan));
 
+        private static readonly AccessTools.FieldRef<Dialog_FormCaravan, Map> FormCaravanMap =
+            AccessTools.FieldRefAccess<Dialog_FormCaravan, Map>("map");
+
         public static Map CaravanFormingMap
         {
             get
@@ -27,33 +30,34 @@ namespace Strata
                 {
                     return null;
                 }
-                return Traverse.Create(dialog).Field("map").GetValue<Map>();
+                return FormCaravanMap(dialog);
             }
         }
 
-        public static int CountValuableBelow(Map surface)
+        public static bool AnyValuableBelow(Map surface)
         {
             if (surface == null || !StrataMapUtility.IsSurfacePlayerHome(surface))
             {
-                return 0;
+                return false;
             }
-            int count = 0;
             foreach (LevelGraph.LevelLink link in LevelGraph.ReachableLevels(surface))
             {
                 if (!StrataMapUtility.IsUnderground(link.map) && !StrataMapUtility.IsUpperLevel(link.map))
                 {
                     continue;
                 }
-                foreach (Thing thing in link.map.listerThings.AllThings)
+                List<Thing> haulables = link.map.listerThings.ThingsInGroup(ThingRequestGroup.HaulableEver);
+                for (int i = 0; i < haulables.Count; i++)
                 {
+                    Thing thing = haulables[i];
                     if (thing.def.category == ThingCategory.Item
                         && thing.MarketValue * thing.stackCount >= MinMarketValue)
                     {
-                        count++;
+                        return true;
                     }
                 }
             }
-            return count;
+            return false;
         }
 
         public static void TickCaravanPull()

@@ -58,9 +58,21 @@ namespace Strata
         public override void CompTick()
         {
             base.CompTick();
-            if (PowerNet != null && FlickUtility.WantsToBeOn(parent) && !parent.IsBrokenDown())
+            // Guarded here, not by a Harmony wrapper: this runs every tick for every shaft.
+            if (StrataFaultGuard.IsTripped(StrataFaultGuard.System.PowerShafts))
             {
-                PowerOn = true;
+                return;
+            }
+            try
+            {
+                if (PowerNet != null && FlickUtility.WantsToBeOn(parent) && !parent.IsBrokenDown())
+                {
+                    PowerOn = true;
+                }
+            }
+            catch (System.Exception e)
+            {
+                StrataFaultGuard.Report(StrataFaultGuard.System.PowerShafts, "running CompPowerShaft.CompTick", e);
             }
         }
 

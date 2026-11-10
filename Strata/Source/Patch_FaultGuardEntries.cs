@@ -52,14 +52,12 @@ namespace Strata
             Add(StrataFaultGuard.System.CrossLevelCombat, typeof(MapComponent_CrossLevelThreatWatch), nameof(MapComponent.MapComponentTick));
             Add(StrataFaultGuard.System.CrossLevelCombat, typeof(StrataCrossLevelTurret), nameof(StrataCrossLevelTurret.TickPair));
             // Flood
-            Add(StrataFaultGuard.System.Flood, typeof(CompSumpPump), nameof(ThingComp.CompTick));
             Add(StrataFaultGuard.System.Flood, typeof(FloodMapComponent), nameof(FloodMapComponent.FloodCell));
             // Gravship stacks
             Add(StrataFaultGuard.System.GravshipStacks, typeof(WorldComponent_StrataGravshipStacks), nameof(RimWorld.Planet.WorldComponent.WorldComponentTick));
             Add(StrataFaultGuard.System.GravshipStacks, typeof(MapComponent_StrataGravshipUpperDeckSync), nameof(MapComponent.MapComponentTick));
             // Power shafts
             Add(StrataFaultGuard.System.PowerShafts, typeof(StairwellPowerUtility), nameof(StairwellPowerUtility.MaintainVerticalTie));
-            Add(StrataFaultGuard.System.PowerShafts, typeof(CompPowerShaft), nameof(ThingComp.CompTick));
             // Pick Up And Haul inventory drop-off across levels
             Add(StrataFaultGuard.System.PuahCompat, typeof(StrataPuahSoftCompat), nameof(StrataPuahSoftCompat.TryDeliverInventory));
 

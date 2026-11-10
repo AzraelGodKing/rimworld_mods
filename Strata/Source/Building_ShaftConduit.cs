@@ -46,7 +46,7 @@ namespace Strata
                 Building_ShaftConduit above = parentAbove;
                 if (above == null && parentAboveId >= 0)
                 {
-                    above = FindConduitById(parentAboveId);
+                    above = StrataThingLookup.FindAcrossMaps(parentAboveId) as Building_ShaftConduit;
                 }
                 return above?.GetComp<CompPowerShaft>();
             }
@@ -157,7 +157,7 @@ namespace Strata
 
             if (parentAboveId >= 0 && (parentAbove == null || parentAbove.Destroyed))
             {
-                parentAbove = FindConduitById(parentAboveId);
+                parentAbove = StrataThingLookup.FindAcrossMaps(parentAboveId) as Building_ShaftConduit;
             }
 
             if (parentAbove != null && !parentAbove.Destroyed)
@@ -169,7 +169,7 @@ namespace Strata
 
             if (partnerBelowId >= 0 && (partnerBelow == null || partnerBelow.Destroyed))
             {
-                partnerBelow = FindConduitById(partnerBelowId);
+                partnerBelow = StrataThingLookup.FindAcrossMaps(partnerBelowId) as Building_ShaftConduit;
             }
 
             if (partnerBelow == null || partnerBelow.Destroyed)
@@ -228,28 +228,6 @@ namespace Strata
             }
 
             return best;
-        }
-
-        private static Building_ShaftConduit FindConduitById(int thingId)
-        {
-            if (thingId < 0)
-            {
-                return null;
-            }
-            List<Map> maps = Find.Maps;
-            for (int m = 0; m < maps.Count; m++)
-            {
-                Map map = maps[m];
-                List<Thing> things = map.listerThings.AllThings;
-                for (int i = 0; i < things.Count; i++)
-                {
-                    if (things[i].thingIDNumber == thingId && things[i] is Building_ShaftConduit conduit)
-                    {
-                        return conduit;
-                    }
-                }
-            }
-            return null;
         }
 
         internal static void ReconcileAllAfterLoad()

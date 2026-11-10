@@ -57,7 +57,7 @@ namespace Strata
                     && destMap != null)
                 {
                     Thing site = constructibleId > 0
-                        ? StrataPortalUtility.FindThingByIdAcrossMaps(constructibleId)
+                        ? StrataThingLookup.FindAcrossMaps(constructibleId)
                         : null;
                     PortalRelayChain.Mark(
                         pawn,

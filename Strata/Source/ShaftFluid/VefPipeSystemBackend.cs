@@ -97,7 +97,7 @@ namespace Strata
 
         public override string Label { get; }
 
-        public override bool IsActive =>
+        protected override bool ComputeIsActive() =>
             ModsConfig.IsActive("OskarPotocki.VanillaFactionsExpanded.Core")
             && TryBind()
             && GetNetDef() != null;

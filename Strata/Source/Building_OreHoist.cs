@@ -99,7 +99,7 @@ namespace Strata
             }
             if (parentAboveId >= 0 && (parentAbove == null || parentAbove.Destroyed))
             {
-                parentAbove = FindHoistById(parentAboveId);
+                parentAbove = StrataThingLookup.FindAcrossMaps(parentAboveId) as Building_OreHoist;
             }
             if (parentAbove != null && !parentAbove.Destroyed)
             {
@@ -109,7 +109,7 @@ namespace Strata
             }
             if (partnerId >= 0 && (partner == null || partner.Destroyed))
             {
-                partner = FindHoistById(partnerId);
+                partner = StrataThingLookup.FindAcrossMaps(partnerId) as Building_OreHoist;
             }
             if (partner == null || partner.Destroyed)
             {
@@ -301,27 +301,6 @@ namespace Strata
                 {
                     if (building is Building_OreHoist hoist
                         && (hoist.parentAboveId == thingIDNumber || hoist.parentAbove == this))
-                    {
-                        return hoist;
-                    }
-                }
-            }
-            return null;
-        }
-
-        private static Building_OreHoist FindHoistById(int thingId)
-        {
-            if (thingId < 0)
-            {
-                return null;
-            }
-            List<Map> maps = Find.Maps;
-            for (int m = 0; m < maps.Count; m++)
-            {
-                List<Thing> things = maps[m].listerThings.AllThings;
-                for (int i = 0; i < things.Count; i++)
-                {
-                    if (things[i].thingIDNumber == thingId && things[i] is Building_OreHoist hoist)
                     {
                         return hoist;
                     }

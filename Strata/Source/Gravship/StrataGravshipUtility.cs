@@ -8,7 +8,7 @@ namespace Strata
     // Odyssey helpers: is this map / portal part of a gravship stack?
     public static class StrataGravshipUtility
     {
-        public static bool OdysseyActive => ModsConfig.IsActive("Ludeon.RimWorld.Odyssey");
+        public static bool OdysseyActive => ModsConfig.OdysseyActive;
 
         // Grav engine physically on this map (ship deck / host surface).
         // With Vanilla Gravship Expanded, prefer the engine that actually owns substructure

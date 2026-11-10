@@ -492,7 +492,7 @@ namespace Strata
                 return false;
             }
 
-            Thing mat = FindThing(matMap, fetch.matThingId);
+            Thing mat = StrataThingLookup.FindOnMap(matMap, fetch.matThingId);
             if (mat == null || !mat.Spawned || !pawn.CanReserve(mat)
                 || !pawn.CanReach(mat, PathEndMode.ClosestTouch, Danger.Deadly))
             {
@@ -513,7 +513,7 @@ namespace Strata
                 if (pawn.Map != matMap)
                 {
                     Thing siteForHop = fetch.siteThingId > 0
-                        ? StrataPortalUtility.FindThingByIdAcrossMaps(fetch.siteThingId)
+                        ? StrataThingLookup.FindAcrossMaps(fetch.siteThingId)
                         : null;
                     if (siteForHop == null || siteForHop.Map == null)
                     {
@@ -532,7 +532,7 @@ namespace Strata
             }
 
             Thing site = fetch.siteThingId > 0
-                ? StrataPortalUtility.FindThingByIdAcrossMaps(fetch.siteThingId)
+                ? StrataThingLookup.FindAcrossMaps(fetch.siteThingId)
                 : null;
 
             // Materials landed on the build floor — deliver into the frame directly.
@@ -593,16 +593,6 @@ namespace Strata
             for (int i = 0; i < maps.Count; i++)
             {
                 if (maps[i].uniqueID == id) return maps[i];
-            }
-            return null;
-        }
-
-        private static Thing FindThing(Map map, int id)
-        {
-            List<Thing> things = map.listerThings.AllThings;
-            for (int i = 0; i < things.Count; i++)
-            {
-                if (things[i].thingIDNumber == id) return things[i];
             }
             return null;
         }

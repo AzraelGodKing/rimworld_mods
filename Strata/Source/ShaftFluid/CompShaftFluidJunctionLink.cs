@@ -211,7 +211,7 @@ namespace Strata
 
             if (partnerBelowId >= 0 && (partnerBelow == null || partnerBelow.Destroyed))
             {
-                partnerBelow = FindBuildingById(partnerBelowId);
+                partnerBelow = StrataThingLookup.FindAcrossMaps(partnerBelowId) as Building;
             }
 
             if (partnerBelow == null || partnerBelow.Destroyed)
@@ -296,30 +296,9 @@ namespace Strata
             return best;
         }
 
-        private static Building FindBuildingById(int thingId)
-        {
-            if (thingId < 0)
-            {
-                return null;
-            }
-            List<Map> maps = Find.Maps;
-            for (int m = 0; m < maps.Count; m++)
-            {
-                List<Thing> things = maps[m].listerThings.AllThings;
-                for (int i = 0; i < things.Count; i++)
-                {
-                    if (things[i].thingIDNumber == thingId && things[i] is Building building)
-                    {
-                        return building;
-                    }
-                }
-            }
-            return null;
-        }
-
         private static CompShaftFluidJunctionLink FindLinkCompById(int thingId)
         {
-            Building building = FindBuildingById(thingId);
+            Building building = StrataThingLookup.FindAcrossMaps(thingId) as Building;
             return building?.TryGetComp<CompShaftFluidJunctionLink>();
         }
 

@@ -107,6 +107,9 @@ namespace Strata
         private static readonly AccessTools.FieldRef<ReservationManager, List<ReservationManager.Reservation>> reservationList =
             AccessTools.FieldRefAccess<ReservationManager, List<ReservationManager.Reservation>>("reservations");
 
+        // Reused by CanReserve (main thread only, not re-entered).
+        private static readonly List<Pawn> holdersScratch = new List<Pawn>();
+
         public static Map ThingMap(Pawn pawn, LocalTargetInfo target)
         {
             if (pawn == null || !pawn.Spawned || pawn.Map == null)
@@ -191,7 +194,8 @@ namespace Strata
                 return true;
             }
 
-            var holders = new List<Pawn>();
+            List<Pawn> holders = holdersScratch;
+            holders.Clear();
             int pawns = 0;
             int stacks = 0;
             for (int i = 0; i < reservations.Count; i++)

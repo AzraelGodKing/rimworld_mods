@@ -831,7 +831,7 @@ namespace Strata
 
         private static Job TryMakeConstructionJobFor(Pawn pawn, Thing cargo, int constructibleId)
         {
-            Thing site = FindThingByIdOnMap(pawn.Map, constructibleId);
+            Thing site = StrataThingLookup.FindOnMap(pawn.Map, constructibleId);
             if (site == null || site is not IConstructible constructible)
             {
                 return null;
@@ -862,41 +862,6 @@ namespace Strata
             job.count = cargo.stackCount;
             job.haulMode = HaulMode.ToContainer;
             return job;
-        }
-
-        private static Thing FindThingByIdOnMap(Map map, int thingId)
-        {
-            if (map == null || thingId <= 0)
-            {
-                return null;
-            }
-            List<Thing> things = map.listerThings.AllThings;
-            for (int i = 0; i < things.Count; i++)
-            {
-                if (things[i].thingIDNumber == thingId)
-                {
-                    return things[i];
-                }
-            }
-            return null;
-        }
-
-        public static Thing FindThingByIdAcrossMaps(int thingId)
-        {
-            if (thingId <= 0)
-            {
-                return null;
-            }
-            List<Map> maps = Find.Maps;
-            for (int i = 0; i < maps.Count; i++)
-            {
-                Thing t = FindThingByIdOnMap(maps[i], thingId);
-                if (t != null)
-                {
-                    return t;
-                }
-            }
-            return null;
         }
 
         private static Thing FindNearbyHaulCargo(Pawn pawn)
@@ -1292,29 +1257,7 @@ namespace Strata
 
         public static bool CellBlockedBySealedPortal(Map map, IntVec3 cell)
         {
-            if (!cell.InBounds(map))
-            {
-                return false;
-            }
-            List<Thing> things = cell.GetThingList(map);
-            for (int i = 0; i < things.Count; i++)
-            {
-                Thing thing = things[i];
-                if (thing.def.building == null)
-                {
-                    continue;
-                }
-                if (thing.def.defName.StartsWith("Strata_Stairs")
-                    || thing.def.defName.StartsWith("Strata_Elevator")
-                    || thing.def.defName.StartsWith("Strata_Gravship"))
-                {
-                    if (IsSealedPortal(thing))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
+            return SealedPortalCells.Contains(map, cell);
         }
     }
 }
