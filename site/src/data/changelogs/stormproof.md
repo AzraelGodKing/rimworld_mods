@@ -4,6 +4,11 @@ Detailed notes for **Stormproof** only.
 
 ## [Unreleased]
 
+AZR-741
+
+### Fixed
+- **Workshop DLL missing `StatPart_Brownout`** (AZR-741) — live Steam Workshop 2.0.1 still had the brownout XML patch (`Patches/Stormproof_Brownout.xml` → `WorkTableWorkSpeedFactor` / vanilla `Stats_Building_Special.xml`) but both `1.6/Assemblies` and `1.7/Assemblies` held the **same pre-2.0 DLL** (Harmony `Patch_Brownout_WorkSpeed`, no `Stormproof.StatPart_Brownout`). GitHub CI zips already ship matching DLLs; ModChecks now fails if an XML `Class="Stormproof.…"` type is missing from a built versioned DLL, or if the two version DLLs are byte-identical. Re-upload Workshop from a CI / Release zip after the next `modVersion` bump.
+
 ## [2.0.1]
 
 Player-facing version **2.0.1**. Stamp `stormproof2-netguard`.
