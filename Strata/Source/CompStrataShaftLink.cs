@@ -140,8 +140,9 @@ namespace Strata
         }
     }
 
-    // Ensure every Strata MapPortal def carries CompStrataShaftLink (including
-    // ancient/quest shafts that have no comps block in XML).
+    // Ensure every Strata MapPortal def carries CompStrataShaftLink and the
+    // one-way CompStairPassage switch (including ancient/quest shafts that have
+    // no comps block in XML).
     [StaticConstructorOnStartup]
     public static class CompStrataShaftLinkInjector
     {
@@ -169,6 +170,10 @@ namespace Strata
                 if (!has)
                 {
                     def.comps.Add(new CompProperties_StrataShaftLink());
+                }
+                if (!def.HasComp(typeof(CompStairPassage)))
+                {
+                    def.comps.Add(new CompProperties_StairPassage());
                 }
             }
         }

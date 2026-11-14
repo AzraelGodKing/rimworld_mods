@@ -522,6 +522,12 @@ namespace Strata
                 return false;
             }
 
+            // Fuel fetched from another floor for one building: refuel that one.
+            if (TryStartJobIfReservable(pawn, RefuelAcrossLevels.TryMakeDeliveryJob(pawn, cargo)))
+            {
+                return true;
+            }
+
             // Force-build / cross-level deliver: hit the remembered blueprint/frame
             // before any stockpile steal. If that fails, reassign to storage so the
             // stack is not stuck in their arms.

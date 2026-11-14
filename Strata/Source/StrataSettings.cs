@@ -59,6 +59,9 @@ namespace Strata
         public float noiseInfestationScale = 1f;
         public float noiseHalfLifeHours = 4f;
         public bool crossLevelRitualsEnabled = true;
+        public bool crossLevelSelectionEnabled = true;
+        public bool crossLevelGatheringsEnabled = true;
+        public bool crossLevelRefuelEnabled = true;
         public bool crossLevelCaravansEnabled = true;
         public bool mergedAbandonWarning = true;
         public bool showLinkedColonistsInWorkScheduleTabs = true;
@@ -161,6 +164,9 @@ namespace Strata
             Scribe_Values.Look(ref noiseInfestationScale, "noiseInfestationScale", 1f);
             Scribe_Values.Look(ref noiseHalfLifeHours, "noiseHalfLifeHours", 4f);
             Scribe_Values.Look(ref crossLevelRitualsEnabled, "crossLevelRitualsEnabled", defaultValue: true);
+            Scribe_Values.Look(ref crossLevelSelectionEnabled, "crossLevelSelectionEnabled", defaultValue: true);
+            Scribe_Values.Look(ref crossLevelGatheringsEnabled, "crossLevelGatheringsEnabled", defaultValue: true);
+            Scribe_Values.Look(ref crossLevelRefuelEnabled, "crossLevelRefuelEnabled", defaultValue: true);
             Scribe_Values.Look(ref crossLevelCaravansEnabled, "crossLevelCaravansEnabled", defaultValue: true);
             Scribe_Values.Look(ref mergedAbandonWarning, "mergedAbandonWarning", defaultValue: true);
             Scribe_Values.Look(ref showLinkedColonistsInWorkScheduleTabs, "showLinkedColonistsInWorkScheduleTabs", defaultValue: true);
@@ -602,6 +608,9 @@ namespace Strata
             Check(listing, "Strata_Settings_GenericScan", ref Settings.genericCrossFloorScan, "Strata_Settings_GenericScanDesc");
             Check(listing, "Strata_Settings_CaravanPull", ref Settings.caravanPullEnabled, "Strata_Settings_CaravanPullDesc");
             Check(listing, "Strata_Settings_CrossLevelRituals", ref Settings.crossLevelRitualsEnabled, "Strata_Settings_CrossLevelRitualsDesc");
+            Check(listing, "Strata_Settings_CrossLevelGatherings", ref Settings.crossLevelGatheringsEnabled, "Strata_Settings_CrossLevelGatheringsDesc");
+            Check(listing, "Strata_Settings_CrossLevelRefuel", ref Settings.crossLevelRefuelEnabled, "Strata_Settings_CrossLevelRefuelDesc");
+            Check(listing, "Strata_Settings_CrossLevelSelection", ref Settings.crossLevelSelectionEnabled, "Strata_Settings_CrossLevelSelectionDesc");
             Check(listing, "Strata_Settings_CrossLevelCaravans", ref Settings.crossLevelCaravansEnabled, "Strata_Settings_CrossLevelCaravansDesc");
             Check(listing, "Strata_Settings_CageSustainHunger", ref Settings.cageSustainHunger, "Strata_Settings_CageSustainHungerDesc");
             Check(listing, "Strata_Settings_ForeignPortals", ref Settings.foreignPortalLevelsEnabled, "Strata_Settings_ForeignPortalsDesc");

@@ -74,6 +74,12 @@
   <Strata_Settings_CaravanPullDesc>While forming a caravan on the surface, colonists haul high-value goods up from linked underground levels.</Strata_Settings_CaravanPullDesc>
   <Strata_Settings_CrossLevelRituals>Cross-level rituals</Strata_Settings_CrossLevelRituals>
   <Strata_Settings_CrossLevelRitualsDesc>The ritual menu lists colonists from every linked level; those elsewhere walk to the ritual and join when they arrive.</Strata_Settings_CrossLevelRitualsDesc>
+  <Strata_Settings_CrossLevelGatherings>Cross-level gatherings</Strata_Settings_CrossLevelGatherings>
+  <Strata_Settings_CrossLevelGatheringsDesc>Colonists on other levels walk over to join a party, concert or other gathering anyone can join, as they would on their own level.</Strata_Settings_CrossLevelGatheringsDesc>
+  <Strata_Settings_CrossLevelRefuel>Fetch fuel from other levels</Strata_Settings_CrossLevelRefuel>
+  <Strata_Settings_CrossLevelRefuelDesc>When a building's level has no fuel left, the refueller walks to a level that has some and carries a load back to it.</Strata_Settings_CrossLevelRefuelDesc>
+  <Strata_Settings_CrossLevelSelection>Select and order across levels</Strata_Settings_CrossLevelSelection>
+  <Strata_Settings_CrossLevelSelectionDesc>Selected colonists stay selected while you view another level. Clicking a portrait selects a colonist on another level without moving the camera (double-click still jumps). Drafted colonists ordered to a spot on the level in view walk there through the stairs, alone or as a group.</Strata_Settings_CrossLevelSelectionDesc>
   <Strata_Settings_CrossLevelCaravans>Cross-level caravans</Strata_Settings_CrossLevelCaravans>
   <Strata_Settings_CrossLevelCaravansDesc>The form-caravan dialog lists colonists, prisoners, and colony animals from every linked level; those elsewhere walk to the surface gathering and join when they arrive. Downed pawns on other levels cannot climb and are left out.</Strata_Settings_CrossLevelCaravansDesc>
   <Strata_Settings_CageSustainHunger>Sustain caged bird hunger</Strata_Settings_CageSustainHunger>
@@ -255,6 +261,9 @@
   <Strata_SealElevator>Seal elevator</Strata_SealElevator>
   <Strata_SealDesc>Seal this passage shut. Nobody can pass, no air or gas moves between the levels — use it to contain tox gas, smoke, or an infestation on one level.</Strata_SealDesc>
   <Strata_Sealed>Sealed</Strata_Sealed>
+  <Strata_StairPassage_Allow>Allow going through</Strata_StairPassage_Allow>
+  <Strata_StairPassage_AllowDesc>Turn off to stop your colonists, slaves, mechs and animals from stepping in from this side, on their own or when ordered. The other end has its own switch, so you can keep people from going down while those below can still come up. Air, heat and raiders still pass.</Strata_StairPassage_AllowDesc>
+  <Strata_StairPassage_Closed>Closed to the colony from this side</Strata_StairPassage_Closed>
   <Strata_DigDownLabel>Dig down</Strata_DigDownLabel>
   <Strata_DigDownFromLandingDesc>Designate a dig shaft beside this landing. Colonists must finish carving it — same work as an excavated stairwell — before the next level opens. Below the first underground level requires deep excavation research.</Strata_DigDownFromLandingDesc>
   <Strata_DigDownFromEntranceDesc>Break through to the level below once this stairwell is fully built, or use it if construction finished before research was available.</Strata_DigDownFromEntranceDesc>

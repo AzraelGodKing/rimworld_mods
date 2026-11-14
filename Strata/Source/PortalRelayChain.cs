@@ -481,7 +481,9 @@ namespace Strata
             if (intent.purpose == RelayPurpose.ForcedOrder)
             {
                 if (StrataConstructAcrossLevels.TryFinishFetch(pawn)
-                    || BillIngredientUtility.TryFinishFetch(pawn))
+                    || BillIngredientUtility.TryFinishFetch(pawn)
+                    || RefuelAcrossLevels.TryFinishFetch(pawn)
+                    || CrossFloorDraftedMove.TryFinish(pawn))
                 {
                     return;
                 }

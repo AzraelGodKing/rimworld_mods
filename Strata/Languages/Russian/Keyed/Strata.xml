@@ -587,4 +587,13 @@
   <Strata_DeepSurvey_KindLostFloor>sealed old rooms</Strata_DeepSurvey_KindLostFloor>
   <Strata_DeepSurvey_LevelsTabTip>Deep survey of the next level below: {0}</Strata_DeepSurvey_LevelsTabTip>
 
+  <Strata_Settings_CrossLevelGatherings>Cross-level gatherings</Strata_Settings_CrossLevelGatherings>
+  <Strata_Settings_CrossLevelGatheringsDesc>Colonists on other levels walk over to join a party, concert or other gathering anyone can join, as they would on their own level.</Strata_Settings_CrossLevelGatheringsDesc>
+  <Strata_Settings_CrossLevelRefuel>Fetch fuel from other levels</Strata_Settings_CrossLevelRefuel>
+  <Strata_Settings_CrossLevelRefuelDesc>When a building's level has no fuel left, the refueller walks to a level that has some and carries a load back to it.</Strata_Settings_CrossLevelRefuelDesc>
+  <Strata_Settings_CrossLevelSelection>Select and order across levels</Strata_Settings_CrossLevelSelection>
+  <Strata_Settings_CrossLevelSelectionDesc>Selected colonists stay selected while you view another level. Clicking a portrait selects a colonist on another level without moving the camera (double-click still jumps). Drafted colonists ordered to a spot on the level in view walk there through the stairs, alone or as a group.</Strata_Settings_CrossLevelSelectionDesc>
+  <Strata_StairPassage_Allow>Allow going through</Strata_StairPassage_Allow>
+  <Strata_StairPassage_AllowDesc>Turn off to stop your colonists, slaves, mechs and animals from stepping in from this side, on their own or when ordered. The other end has its own switch, so you can keep people from going down while those below can still come up. Air, heat and raiders still pass.</Strata_StairPassage_AllowDesc>
+  <Strata_StairPassage_Closed>Closed to the colony from this side</Strata_StairPassage_Closed>
 </LanguageData>
