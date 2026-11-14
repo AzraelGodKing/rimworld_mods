@@ -247,6 +247,13 @@ namespace Strata
                 return false;
             }
 
+            // A stair end the player closed to the colony is out for everyone,
+            // pets and robots included.
+            if (StairPassage.ClosedTo(portal, pawn))
+            {
+                return false;
+            }
+
             if (RobotShouldBypassAllowedAreaForWork(pawn))
             {
                 return true;

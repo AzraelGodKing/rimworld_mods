@@ -1,5 +1,5 @@
-4.1.0
-[h1]Strata - 4.1.0[/h1]
+4.2.0
+[h1]Strata - 4.2.0[/h1]
 
 Strata 4 is out for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting every update, and a Strata save carries over to 1.7.
 
@@ -16,6 +16,10 @@ Strata 4 is out for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting eve
 [*] [b]Modder API v2[/b] — other mods can ask which level a map is, its name, how many stairs away another level is, register their own work for the work relay, and hear when a level is created, removed or linked. Docs: https://github.com/AzraelGodKing/rimworld_mods/blob/main/Strata/API.md
 [*] [b]Storms reach underground (with Stormproof)[/b] — with Stormproof 2, rain, thunderstorms and ion storms on the surface make seep floods bigger on levels without a running sump pump, and the seismograph shows the surface weather, how long it will hold, and the storm surge.
 [*] [b]Deep Survey[/b] — a powered seismograph can now survey the rock under your deepest level. Press "Survey below" and a researcher works the console for about an hour. It tells you what the next level dug there will be (ordinary rock, an underground lake, sealed old rooms or the magma layer), with a rough reading of ore and gas, and the dig will match it. The survey shows on the seismograph and in the Levels tab.
+[*] [b]Order colonists on other floors[/b] — selected colonists stay selected when you look at another floor, and clicking a portrait selects a colonist on another floor without moving the camera (double-click still jumps there). Right-click to send them: drafted colonists walk through the stairs to the spot you clicked, on their own or dragged into a line as a group, and shift-clicks add more stops. Turn it off with "Select and order across levels" in the Commuting settings.
+[*] [b]Parties across floors[/b] — colonists on other floors walk over to join a party, concert or other gathering, as they would on their own floor. Setting: "Cross-level gatherings".
+[*] [b]Fuel from another floor[/b] — when a generator, torch or other fuelled building has no fuel left on its floor, the refueller walks to a floor that has some and carries a load back to it. Setting: "Fetch fuel from other levels".
+[*] [b]One-way stairs[/b] — every stairwell and elevator end has an "Allow going through" switch. Turn it off and your colonists, slaves, mechs and animals won't step in from that side, on their own or when ordered. Each end is separate, so you can keep people from going down while those below can still come up. Unlike sealing, air, heat and raiders still pass.
 [/list]
 
 [b]Changed[/b]

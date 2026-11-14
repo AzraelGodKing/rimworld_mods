@@ -1,9 +1,19 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `4.1.0` in `About.xml` `modVersion`. Player.log: `[Strata] v4.1.0 loaded from ... (modified ...); deep-survey-v1.` via `ModVersionLog.Write`.
+**Version:** `4.2.0` in `About.xml` `modVersion`. Player.log: `[Strata] v4.2.0 loaded from ... (modified ...); floor-orders-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `deep-survey-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `floor-orders-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [4.2.0]
+
+Player-facing version **4.2.0** (`About.xml` `modVersion`). Stamp `floor-orders-v1`. Additive save change only: stair ends load as open. Ideas taken from how Seamless Pockets treats pocket maps; no code from it.
+
+### Added
+- **Select and order across floors** (`CrossFloorSelection`, `CrossFloorDraftedMove`, setting `crossLevelSelectionEnabled`, default on): `MapInterface.Notify_SwitchedMap` keeps selected colony pawns that can use level portals and stand on a floor linked to the new view. `Selector.SelectInternal` selects such a pawn in place instead of switching maps (portrait single-click; double-click still jumps), and a shift-add on the viewed floor keeps the linked ones. `SelectionDrawer.DrawSelectionOverlays` leaves out selected things on other floors (see-below ones still draw). Drafted move for a pawn on another floor (`PawnCanGoto` / `PawnGotoAction`, the single-pawn "Go here" option and `MultiPawnGotoController.RecomputeDestinations`) becomes a `ForcedOrder` stair trip that stays drafted and ends in a Goto to the clicked cell; shift-clicks on the same floor queue more stops.
+- **Gatherings across floors** (`CrossFloorGatherings`, setting `crossLevelGatheringsEnabled`): when `ThinkNode_JoinVoluntarilyJoinableLord` finds nothing on the pawn's map, it looks at linked floors (rituals excluded, `RitualTravel` handles those) at most every 300 ticks per pawn and relays the pawn there with `RelayPurpose.Joy`; vanilla adds them to the lord on arrival.
+- **Fuel from another floor** (`RefuelAcrossLevels`, setting `crossLevelRefuelEnabled`): `RefuelWorkGiverUtility.CanRefuel` passes when only local fuel is missing and a linked floor has a reachable stack; `RefuelJob` then sends the pawn there, `PortalRelayChain` hands the arrival to `RefuelAcrossLevels.TryFinishFetch` (HaulToLevel back), and `TryStartHaulDelivery` refuels that building first. A failed fetch cools down for 2500 ticks per building.
+- **One-way stair ends** (`CompStairPassage`, injected on every Strata portal def next to `CompStrataShaftLink`, saved as `strataClosedToColony`): "Allow going through" toggle per end. Closed ends are skipped by `StrataPawnUtility.PortalInAllowedArea` (so `LevelGraph.BestFirstStep` and every relay), `DraftedPortalPathing` detours, the vanilla Enter gizmo and float-menu option, and any `JobDriver_EnterPortal` fails into them. Applies to player-faction pawns not in a mental state.
 
 ## [4.1.0]
 

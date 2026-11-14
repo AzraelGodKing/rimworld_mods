@@ -13,7 +13,22 @@ namespace Strata
     {
         public static void Postfix(Pawn pawn, IntVec3 gotoLoc, ref AcceptanceReport __result)
         {
-            if (__result.Accepted || pawn == null)
+            if (pawn == null)
+            {
+                return;
+            }
+
+            // Ordered from another floor: vanilla checked the cell against the
+            // pawn's own map. Answer for the floor in view instead.
+            if (CrossFloorDraftedMove.OrderingFromOtherFloor(pawn, out Map viewed))
+            {
+                __result = CrossFloorDraftedMove.CanGo(pawn, viewed, gotoLoc)
+                    ? (AcceptanceReport)true
+                    : (AcceptanceReport)"CannotGoNoPath".Translate();
+                return;
+            }
+
+            if (__result.Accepted)
             {
                 return;
             }
@@ -42,6 +57,11 @@ namespace Strata
             if (pawn == null || !pawn.Spawned || !pawn.Drafted)
             {
                 return true;
+            }
+
+            if (CrossFloorDraftedMove.TryOrder(clickCell, pawn, gotoLoc))
+            {
+                return false;
             }
 
             IntVec3 intended = DraftedPortalPathing.ResolveIntendedDest(pawn, clickCell, gotoLoc);
@@ -75,7 +95,7 @@ namespace Strata
                 return;
             }
 
-            if (!StrataPawnUtility.CanUseLevelPortals(pawn))
+            if (!StrataPawnUtility.CanUseLevelPortals(pawn) || StairPassage.ClosedTo(portal, pawn))
             {
                 return;
             }

@@ -98,6 +98,7 @@ namespace Strata
                 MapPortal stair = stairs[i];
                 if (stair == null || !stair.Spawned || stair.Map != pawn.Map
                     || StrataPortalUtility.IsSealedPortal(stair)
+                    || StairPassage.ClosedTo(stair, pawn)
                     || !stair.IsEnterable(out _))
                 {
                     continue;
@@ -227,6 +228,7 @@ namespace Strata
                 MapPortal stair = stairs[i];
                 if (stair == null || !stair.Spawned || stair.Map != pawn.Map
                     || StrataPortalUtility.IsSealedPortal(stair)
+                    || StairPassage.ClosedTo(stair, pawn)
                     || !stair.IsEnterable(out _))
                 {
                     continue;
@@ -426,6 +428,7 @@ namespace Strata
                 MapPortal ret = FindPortalAnywhere(route.returnPortalId);
                 if (ret == null || !ret.Spawned || !ret.IsEnterable(out _)
                     || StrataPortalUtility.IsSealedPortal(ret)
+                    || StairPassage.ClosedTo(ret, pawn)
                     || LevelGraph.OtherMapSafe(ret) != route.destMap)
                 {
                     routes.Remove(pawnId);
@@ -490,6 +493,7 @@ namespace Strata
                     MapPortal stair = FindPortalById(pawn.Map, route.destPortalId);
                     if (stair == null || !stair.Spawned || !stair.IsEnterable(out _)
                         || StrataPortalUtility.IsSealedPortal(stair)
+                        || StairPassage.ClosedTo(stair, pawn)
                         || !pawn.CanReach(stair, PathEndMode.Touch, Danger.Deadly))
                     {
                         return;
@@ -522,6 +526,7 @@ namespace Strata
 
                     if (stair == null || !stair.Spawned || !stair.IsEnterable(out _)
                         || StrataPortalUtility.IsSealedPortal(stair)
+                        || StairPassage.ClosedTo(stair, pawn)
                         || !pawn.CanReach(stair, PathEndMode.Touch, Danger.Deadly)
                         || bedMap == null || bed == null)
                     {
@@ -642,7 +647,7 @@ namespace Strata
                     continue;
                 }
 
-                if (StrataPortalUtility.IsSealedPortal(exit) || !exit.IsEnterable(out _))
+                if (StrataPortalUtility.IsSealedPortal(exit) || StairPassage.ClosedTo(exit, pawn) || !exit.IsEnterable(out _))
                 {
                     continue;
                 }
@@ -680,7 +685,7 @@ namespace Strata
                         continue;
                     }
 
-                    if (StrataPortalUtility.IsSealedPortal(ret) || !ret.IsEnterable(out _))
+                    if (StrataPortalUtility.IsSealedPortal(ret) || StairPassage.ClosedTo(ret, pawn) || !ret.IsEnterable(out _))
                     {
                         continue;
                     }
