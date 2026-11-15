@@ -766,6 +766,12 @@ namespace Strata
                 }
             }
 
+            if (job.def == StrataDefOf.Strata_HaulToLevel
+                && MapOfTarget(job.targetA) == pawn.Map && MapOfTarget(job.targetB) == pawn.Map)
+            {
+                return pawn.Map;
+            }
+
             // Cell-only orders while the camera is on another linked floor.
             if (Find.CurrentMap != null
                 && Find.CurrentMap != pawn.Map
