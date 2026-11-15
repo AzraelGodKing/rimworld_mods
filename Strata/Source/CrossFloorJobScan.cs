@@ -147,7 +147,7 @@ namespace Strata
                 if (found.def == JobDefOf.EnterPortal || found.def.defName.StartsWith("Strata_", System.StringComparison.Ordinal))
                 {
                     // A relay or cross-level carry from the other floor; never chain those.
-                    JobMaker.ReturnToPool(found);
+                    DiscardJob(pawn, found);
                     continue;
                 }
 
@@ -155,7 +155,7 @@ namespace Strata
                     intendedWork: found.workGiverDef?.workType);
                 if (hop == null)
                 {
-                    JobMaker.ReturnToPool(found);
+                    DiscardJob(pawn, found);
                     continue;
                 }
                 pawn.jobs.jobQueue.EnqueueLast(found, purpose == RelayPurpose.Work ? JobTag.MiscWork : JobTag.SatisfyingNeeds);
@@ -164,6 +164,15 @@ namespace Strata
                 return hop;
             }
             return null;
+        }
+
+        private static void DiscardJob(Pawn pawn, Job job)
+        {
+            foreach (Map map in Find.Maps)
+            {
+                map.reservationManager.ReleaseClaimedBy(pawn, job);
+            }
+            JobMaker.ReturnToPool(job);
         }
 
         // Swap, run, restore - all inside this call, on the main thread, so no
@@ -223,7 +232,7 @@ namespace Strata
             }
             if (job != null && Find.TickManager.TicksGame != tick)
             {
-                JobMaker.ReturnToPool(job);
+                DiscardJob(pawn, job);
                 return null;
             }
             return job;
