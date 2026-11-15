@@ -39,11 +39,10 @@ namespace Strata
             {
                 if (Baby.Spawned && Baby.Map == pawn.Map)
                 {
-                    pawn.carryTracker.TryStartCarry(Baby);
+                    pawn.carryTracker.TryStartCarry(Baby, 1);
                 }
             };
             carry.defaultCompleteMode = ToilCompleteMode.Instant;
-            carry.AddFailCondition(() => pawn.carryTracker.CarriedThing != Baby);
             yield return carry;
 
             yield return Toils_Goto.GotoThing(TargetIndex.B, PathEndMode.Touch)
