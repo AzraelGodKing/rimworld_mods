@@ -14,11 +14,21 @@ namespace Azrael.ModChecks
     /// can load. AZR-741: Workshop Stormproof 2.0.1 shipped Patches that name
     /// StatPart_Brownout while both Assemblies folders held the same pre-2.0 DLL
     /// that still used Harmony workbench brownout and lacked the type.
+    /// AZR-745: same for Strata 4.0.0 on 1.7, where most missing types were
+    /// element text (compClass, placeWorkers) rather than Class attributes.
     /// </summary>
     public class XmlClassTypes
     {
         static readonly Regex ClassAttr = new Regex(
             @"Class\s*=\s*""([A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)+)""",
+            RegexOptions.Compiled);
+
+        // Type names written as element text: <compClass>, <thingClass>,
+        // <workerClass>, <placeWorkers><li>, etc. AZR-745: Workshop Strata 4.0.0
+        // shipped a 1.7 DLL without CompMagmaVent / PlaceWorker_OnMagmaVent /
+        // CompLostDiary, which only appear this way and slipped past ClassAttr.
+        static readonly Regex ElementText = new Regex(
+            @">\s*([A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)+)\s*</",
             RegexOptions.Compiled);
 
         [Fact]
@@ -96,6 +106,12 @@ namespace Azrael.ModChecks
                     continue;
                 }
                 foreach (Match m in ClassAttr.Matches(text))
+                {
+                    string full = m.Groups[1].Value;
+                    if (full.StartsWith(prefix, StringComparison.Ordinal))
+                        needed.Add(full);
+                }
+                foreach (Match m in ElementText.Matches(text))
                 {
                     string full = m.Groups[1].Value;
                     if (full.StartsWith(prefix, StringComparison.Ordinal))
