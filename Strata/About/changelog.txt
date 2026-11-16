@@ -31,6 +31,7 @@ Strata 4 is out for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting eve
 
 [b]Fixed[/b]
 [list]
+[*] [b]Hungry pawns keep their work trip when there is no food[/b] — a hungry miner or hauler arriving on another floor dropped the trip even when no food could be reached on any floor. Hunger now only cuts a trip short when there is something to eat.
 [*] [b]Special levels stay special after loading[/b] — a magma, flooded or lost-floor level could act like a normal level after you loaded a save (the magma layer lost its heat, for example), and caged canaries were treated as loose birds. Both now keep their state when a save loads.
 [*] [b]Power shafts that shut down after errors stop moving power[/b] — before, the last transfer stayed on both floors as free power or a drain.
 [*] [b]Hidden chambers and rich ore seams are back[/b] — on newly dug levels the geothermal and gas chambers, and the big ore seams, were placed before the rock was laid, so the rock buried them. They are now placed after the rock. Levels you have already dug keep what they have.

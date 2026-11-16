@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RimWorld;
 using Verse;
 
@@ -42,7 +43,47 @@ namespace Strata
                 return false;
             }
 
-            return food.CurLevelPercentage < pawn.RaceProps.FoodLevelPercentageWantEat;
+            if (food.CurLevelPercentage >= pawn.RaceProps.FoodLevelPercentageWantEat)
+            {
+                return false;
+            }
+
+            // Hunger alone is not a reason to drop work: with nothing to eat
+            // here or on a linked floor, vanilla keeps them working.
+            return CanFindFood(pawn, food);
+        }
+
+        private static bool CanFindFood(Pawn pawn, Need_Food food)
+        {
+            if (!pawn.Spawned || pawn.Map == null)
+            {
+                return true;
+            }
+
+            bool desperate = food.CurCategory == HungerCategory.Starving;
+            if (FoodUtility.TryFindBestFoodSourceFor(pawn, pawn, desperate, out _, out _,
+                    canRefillDispenser: true, canUseInventory: true, canUsePackAnimalInventory: true,
+                    allowForbidden: false, allowCorpse: pawn.AnimalOrWildMan()))
+            {
+                return true;
+            }
+
+            if (StrataMod.Settings != null && !StrataMod.Settings.foodRelayEnabled)
+            {
+                return false;
+            }
+
+            List<LevelGraph.LevelLink> links = LevelGraph.ReachableLevels(pawn.Map);
+            for (int i = 0; i < links.Count; i++)
+            {
+                Map map = links[i].map;
+                if (map != null && map != pawn.Map && PawnRelay.HasFoodFor(pawn, map))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         // Mirrors JobGiver_GetRest's schedule. Work hours do not send them to
