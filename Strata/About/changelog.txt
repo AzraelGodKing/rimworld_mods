@@ -1,51 +1,25 @@
 4.2.0
 [h1]Strata - 4.2.0[/h1]
 
-Strata 4 is out for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting every update, and a Strata save carries over to 1.7.
-
 [b]Added[/b]
 [list]
-[*] [b]New look on RimWorld 1.7[/b] — Strata draws with its own shaders on 1.7. Gas clouds blend smoothly and drift instead of sitting in squares, the holes you look down through have soft edges, underground levels darken at the screen edges the deeper you go, and underground water shimmers with moving light. The depth vignette and water light can be turned off in the Visuals settings. RimWorld 1.6 looks the same as before.
-[*] [b]Built for RimWorld 1.7 on .NET 10[/b] — the 1.7 version of Strata is now built against the 1.7 game files and the new .NET runtime it uses, instead of reusing the 1.6 build. Nothing changes on 1.6.
-[*] [b]Drafted orders across several floors[/b] — when a drafted pawn cannot walk to the spot you clicked, it can now go down, cross more than one linked floor, and come back up a stair that reaches it. Before, only a single floor in between was tried.
-[*] [b]Lost floors[/b] — rarely, a newly dug level from B2 down hides sealed rooms cut long ago by people who dug down before you. Break in to find their remains, their loot, and what killed them: insects still nest in the far rooms. Their diaries tell the story, and the lesson: noise underground draws infestations. Part of "Special levels" in the Levels settings.
-[*] [b]Flooded levels[/b] — a newly dug level from B2 down sometimes holds an underground lake in the rock. Once your miners break into it, the water seeps out across the level unless a powered sump pump is running somewhere on that level, and it spreads faster while it rains hard on the surface. Anyone lying in the flood water, downed or asleep, can drown. With Odyssey you can fish the lake, and with Homesteader a well on the level above draws twice the water. Turn it off with "Special levels" in the Levels settings.
-[*] [b]The magma layer, the bottom of the world[/b] — dig one level past the usual limit (B3, after the new deep bore research) and you reach the magma layer. Nothing can be dug below it. The rock sits at 52°C, so colonists need cooling down there. Magma pools light up the dark and set fire to anything flammable left beside them. Build a geothermal tap on a magma vent for 6000 W of free power, and a lot of heat and steam. Mine the obsidian seams beside the pools for obsidian, a tough and beautiful building stone. With Unlimited levels on, choose how deep the magma layer is (B8 by default), or turn it off in the Levels settings.
-[*] [b]Pawns take the shorter way between floors[/b] — floors and stairwells are now picked by how far a pawn actually walks on the floors in between (walls, doors and slow ground included), not by how many stairwells it passes. A stair that cannot be walked to from where the pawn lands is not used at all. With two shafts down, they use the one whose stairs line up instead of a closer stair that means crossing a whole level. Elevators count as a quicker ride than stairs.
-[*] [b]Settings presets, tabs and search[/b] — Mod options now open on tabs (Levels, Commuting, Atmosphere, Threats, Performance, Visuals, Advanced, Diagnostics) with a search box that finds any option by name. Performance, Balanced and Immersive presets set the costly options in one click; change one yourself and it shows Custom.
-[*] [b]Modder API v2[/b] — other mods can ask which level a map is, its name, how many stairs away another level is, register their own work for the work relay, and hear when a level is created, removed or linked. Docs: https://github.com/AzraelGodKing/rimworld_mods/blob/main/Strata/API.md
-[*] [b]Storms reach underground (with Stormproof)[/b] — with Stormproof 2, rain, thunderstorms and ion storms on the surface make seep floods bigger on levels without a running sump pump, and the seismograph shows the surface weather, how long it will hold, and the storm surge.
-[*] [b]Deep Survey[/b] — a powered seismograph can now survey the rock under your deepest level. Press "Survey below" and a researcher works the console for about an hour. It tells you what the next level dug there will be (ordinary rock, an underground lake, sealed old rooms or the magma layer), with a rough reading of ore and gas, and the dig will match it. The survey shows on the seismograph and in the Levels tab.
-[*] [b]Order colonists on other floors[/b] — selected colonists stay selected when you look at another floor, and clicking a portrait selects a colonist on another floor without moving the camera (double-click still jumps there). Right-click to send them: drafted colonists walk through the stairs to the spot you clicked, on their own or dragged into a line as a group, and shift-clicks add more stops. Turn it off with "Select and order across levels" in the Commuting settings.
-[*] [b]Parties across floors[/b] — colonists on other floors walk over to join a party, concert or other gathering, as they would on their own floor. Setting: "Cross-level gatherings".
-[*] [b]Fuel from another floor[/b] — when a generator, torch or other fuelled building has no fuel left on its floor, the refueller walks to a floor that has some and carries a load back to it. Setting: "Fetch fuel from other levels".
-[*] [b]One-way stairs[/b] — every stairwell and elevator end has an "Allow going through" switch. Turn it off and your colonists, slaves, mechs and animals won't step in from that side, on their own or when ordered. Each end is separate, so you can keep people from going down while those below can still come up. Unlike sealing, air, heat and raiders still pass.
-[/list]
-
-[b]Changed[/b]
-[list]
-[*] [b]Moving a colony from 1.6 to 1.7[/b] — Strata reads every save field that 3.8 and later wrote, so a Strata save from 1.6 loads on 1.7 as far as Strata is concerned. Whether the whole save moves also depends on RimWorld itself and your other mods, so keep a backup.
-[*] [b]Lighter gas overlay[/b] — the gas overlay keeps its colours in a quarter of the memory, and new levels plan their caves without a needless hand-off to another thread.
-[*] [b]Multiplayer[/b] — Strata is not Multiplayer compatible. The Workshop page and mod description now say so.
-[*] Automated tests now check that cave layouts, deep-level oxygen and the "leave for better work" choice stay the same between versions. No gameplay change.
-[*] Unused code removed and tidied. No gameplay change.
-[*] Less work behind the scenes: gas spreading past sealed stairs, gas pipes, shaft water and fuel, cart and dock hauling, and a few alerts now remember what they looked up instead of checking again every time. No gameplay change.
+[*] [b]Storms reach underground (with Stormproof)[/b] — rain, thunderstorms and ion storms make seep floods bigger without a running sump pump; the seismograph shows surface weather and storm surge.
+[*] [b]Deep Survey[/b] — a powered seismograph can survey the rock under your deepest level and lock what the next dig will find (lake, lost rooms, magma, ore, gas).
+[*] [b]Order colonists on other floors[/b] — keep selection when you change floors; drafted Go-here walks the stairs. Setting: "Select and order across levels".
+[*] [b]Parties across floors[/b] — colonists on other floors join parties and gatherings. Setting: "Cross-level gatherings".
+[*] [b]Fuel from another floor[/b] — refuellers fetch fuel from a linked floor. Setting: "Fetch fuel from other levels".
+[*] [b]One-way stairs[/b] — each stair/elevator end can block colony traffic one way without sealing air or heat.
 [/list]
 
 [b]Fixed[/b]
 [list]
-[*] [b]Hungry pawns keep their work trip when there is no food[/b] — a hungry miner or hauler arriving on another floor dropped the trip even when no food could be reached on any floor. Hunger now only cuts a trip short when there is something to eat.
-[*] [b]Pick Up And Haul keeps your personal supplies[/b] — a pawn delivering cargo on another floor also dropped the medicine, drugs and food it was carrying for itself. Now only the things it picked up to haul are unloaded.
-[*] [b]Materials for a build on this floor actually get carried[/b] — hauling steel or wood to a local blueprint through the stairs no longer treats the job as a trip to another floor, and a failed look for work on another floor no longer leaves that stack reserved forever.
-[*] [b]Babysitters pick the baby up before climbing[/b] — carrying a baby to a crib on another floor no longer fails the first step before the baby is in arms.
-[*] [b]Special levels stay special after loading[/b] — a magma, flooded or lost-floor level could act like a normal level after you loaded a save (the magma layer lost its heat, for example), and caged canaries were treated as loose birds. Both now keep their state when a save loads.
-[*] [b]Power shafts that shut down after errors stop moving power[/b] — before, the last transfer stayed on both floors as free power or a drain.
-[*] [b]Hidden chambers and rich ore seams are back[/b] — on newly dug levels the geothermal and gas chambers, and the big ore seams, were placed before the rock was laid, so the rock buried them. They are now placed after the rock. Levels you have already dug keep what they have.
-[*] [b]Colonists no longer stand idle after a work trip[/b] — a pawn sent to another floor for one kind of work refused every other job while that work was blocked (no materials, out of reach, taken by someone else), for up to half a day. They now do whatever local work they can, and give the trip up after about an hour.
-[*] [b]Fewer trips up and down the stairs[/b] — a floor a pawn just left empty-handed stays off their list until it actually gains work they do. Before, any change there (another colonist finishing a job, a stack being moved) sent them straight back.
-[*] [b]No endless detours[/b] — when a job is only reachable by going around through another floor and the detour still can't reach it (for example walls going up on the upper floor), the pawn stops trying that detour for a while.
-[*] [b]Turning the work relay off now takes effect at once[/b] — pawns already assigned to another floor, including ones from your save, are let go.
-[*] [b]RimWorld 1.7 Workshop build[/b] — an earlier Workshop pack shipped an old 1.7 DLL, so magma vents, lost-floor diaries, level kinds and Deep Survey threw errors at startup while 1.6 was fine. This version's release zip ships matching 1.6 and 1.7 builds from the same source.
+[*] [b]Hungry pawns keep their work trip when there is no food[/b]
+[*] [b]Pick Up And Haul keeps your personal supplies[/b]
+[*] [b]Materials for a build on this floor actually get carried[/b]
+[*] [b]Babysitters pick the baby up before climbing[/b]
+[*] [b]Special levels stay special after loading[/b]
+[*] [b]Power shafts that shut down after errors stop moving power[/b]
+[*] [b]RimWorld 1.7 Workshop build[/b] — release zip ships matching 1.6 and 1.7 DLLs (old Workshop 1.7 DLL caused startup errors).
 [/list]
 
 [i]Build stamp (Player.log): floor-orders-v1[/i]
