@@ -27,11 +27,17 @@ Strata 4 is out for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting eve
 [*] [b]Moving a colony from 1.6 to 1.7[/b] — Strata reads every save field that 3.8 and later wrote, so a Strata save from 1.6 loads on 1.7 as far as Strata is concerned. Whether the whole save moves also depends on RimWorld itself and your other mods, so keep a backup.
 [*] [b]Lighter gas overlay[/b] — the gas overlay keeps its colours in a quarter of the memory, and new levels plan their caves without a needless hand-off to another thread.
 [*] [b]Multiplayer[/b] — Strata is not Multiplayer compatible. The Workshop page and mod description now say so.
+[*] Automated tests now check that cave layouts, deep-level oxygen and the "leave for better work" choice stay the same between versions. No gameplay change.
+[*] Unused code removed and tidied. No gameplay change.
+[*] Less work behind the scenes: gas spreading past sealed stairs, gas pipes, shaft water and fuel, cart and dock hauling, and a few alerts now remember what they looked up instead of checking again every time. No gameplay change.
 [/list]
 
 [b]Fixed[/b]
 [list]
 [*] [b]Hungry pawns keep their work trip when there is no food[/b] — a hungry miner or hauler arriving on another floor dropped the trip even when no food could be reached on any floor. Hunger now only cuts a trip short when there is something to eat.
+[*] [b]Pick Up And Haul keeps your personal supplies[/b] — a pawn delivering cargo on another floor also dropped the medicine, drugs and food it was carrying for itself. Now only the things it picked up to haul are unloaded.
+[*] [b]Materials for a build on this floor actually get carried[/b] — hauling steel or wood to a local blueprint through the stairs no longer treats the job as a trip to another floor, and a failed look for work on another floor no longer leaves that stack reserved forever.
+[*] [b]Babysitters pick the baby up before climbing[/b] — carrying a baby to a crib on another floor no longer fails the first step before the baby is in arms.
 [*] [b]Special levels stay special after loading[/b] — a magma, flooded or lost-floor level could act like a normal level after you loaded a save (the magma layer lost its heat, for example), and caged canaries were treated as loose birds. Both now keep their state when a save loads.
 [*] [b]Power shafts that shut down after errors stop moving power[/b] — before, the last transfer stayed on both floors as free power or a drain.
 [*] [b]Hidden chambers and rich ore seams are back[/b] — on newly dug levels the geothermal and gas chambers, and the big ore seams, were placed before the rock was laid, so the rock buried them. They are now placed after the rock. Levels you have already dug keep what they have.
@@ -39,15 +45,8 @@ Strata 4 is out for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting eve
 [*] [b]Fewer trips up and down the stairs[/b] — a floor a pawn just left empty-handed stays off their list until it actually gains work they do. Before, any change there (another colonist finishing a job, a stack being moved) sent them straight back.
 [*] [b]No endless detours[/b] — when a job is only reachable by going around through another floor and the detour still can't reach it (for example walls going up on the upper floor), the pawn stops trying that detour for a while.
 [*] [b]Turning the work relay off now takes effect at once[/b] — pawns already assigned to another floor, including ones from your save, are let go.
-[*] [b]Pick Up And Haul keeps your personal supplies[/b] — a pawn delivering cargo on another floor also dropped the medicine, drugs and food it was carrying for itself. Now only the things it picked up to haul are unloaded.
+[*] [b]RimWorld 1.7 Workshop build[/b] — an earlier Workshop pack shipped an old 1.7 DLL, so magma vents, lost-floor diaries, level kinds and Deep Survey threw errors at startup while 1.6 was fine. This version's release zip ships matching 1.6 and 1.7 builds from the same source.
 [/list]
 
-[b]Changed[/b]
-[list]
-[*] Automated tests now check that cave layouts, deep-level oxygen and the "leave for better work" choice stay the same between versions. No gameplay change.
-[*] Unused code removed and tidied. No gameplay change.
-[*] Less work behind the scenes: gas spreading past sealed stairs, gas pipes, shaft water and fuel, cart and dock hauling, and a few alerts now remember what they looked up instead of checking again every time. No gameplay change.
-[/list]
-
-[i]Build stamp (Player.log): deep-survey-v1[/i]
+[i]Build stamp (Player.log): floor-orders-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]
