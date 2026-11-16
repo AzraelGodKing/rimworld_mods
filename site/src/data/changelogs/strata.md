@@ -5,6 +5,11 @@ Player-facing release notes for Strata (Steam Workshop style).
 
 **Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `floor-orders-v1` in `StrataBuildInfo.BuildStamp`.
 
+## [Unreleased]
+
+### Fixed
+- **1.7 startup errors for magma vents, lost diaries and level kinds** (AZR-745): the Steam Workshop 4.0.0 upload had a `1.7/Assemblies/Strata.dll` built on Oct 29, before 4.0.0. It lacked `GenStep_StrataLevelKind`, `CompMagmaVent`, `PlaceWorker_OnMagmaVent`, `CompLostDiary` (and, for 4.1.0, the Deep Survey job and work giver). The 1.6 DLL and the source were fine. A local build cannot refresh it: `Strata.1.7.csproj` targets `net10.0` and the .NET 8 SDK fails with NETSDK1045, which leaves the old 1.7 DLL in place. ModChecks `XmlClassTypes` now also checks type names written as element text (`<compClass>`, `<placeWorkers><li>`, `<thingClass>`, …), not only `Class="…"` attributes, so CI fails on this. Re-upload to the Workshop from a CI / Release zip, or build with a .NET 10 SDK.
+
 ## [4.2.0]
 
 Player-facing version **4.2.0** (`About.xml` `modVersion`). Stamp `floor-orders-v1`. Additive save change only: stair ends load as open. Ideas taken from how Seamless Pockets treats pocket maps; no code from it.
