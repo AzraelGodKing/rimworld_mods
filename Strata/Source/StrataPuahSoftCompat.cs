@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 using RimWorld;
 using Verse;
 
@@ -19,6 +21,11 @@ namespace Strata
         };
 
         private static bool? active;
+
+        // Both mods tag what they pick up for hauling in a comp of this name
+        // with a public GetHashSet(). Read it by reflection: no hard dependency.
+        private const string HauledCompName = "CompHauledToInventory";
+        private static readonly Dictionary<Type, MethodInfo> hashSetGetters = new Dictionary<Type, MethodInfo>();
 
         public static bool Active
         {
@@ -43,6 +50,45 @@ namespace Strata
         public static void ResetCaches()
         {
             active = null;
+            hashSetGetters.Clear();
+        }
+
+        // Things the haul mod picked up for delivery. Medicine, drugs and
+        // packed food the pawn carries for itself are not in it.
+        private static HashSet<Thing> HauledThings(Pawn pawn)
+        {
+            List<ThingComp> comps = pawn.AllComps;
+            if (comps == null)
+            {
+                return null;
+            }
+
+            for (int i = 0; i < comps.Count; i++)
+            {
+                ThingComp comp = comps[i];
+                Type type = comp?.GetType();
+                if (type == null || type.Name != HauledCompName)
+                {
+                    continue;
+                }
+
+                if (!hashSetGetters.TryGetValue(type, out MethodInfo getter))
+                {
+                    getter = type.GetMethod("GetHashSet", BindingFlags.Public | BindingFlags.Instance, null, Type.EmptyTypes, null);
+                    if (getter != null && !typeof(HashSet<Thing>).IsAssignableFrom(getter.ReturnType))
+                    {
+                        getter = null;
+                    }
+                    hashSetGetters[type] = getter;
+                }
+
+                if (getter != null && getter.Invoke(comp, null) is HashSet<Thing> set)
+                {
+                    return set;
+                }
+            }
+
+            return null;
         }
 
         public static void TryDeliverInventory(Pawn pawn)
@@ -58,10 +104,19 @@ namespace Strata
                 return;
             }
 
+            HashSet<Thing> hauled = HauledThings(pawn);
+            if (hauled == null || hauled.Count == 0)
+            {
+                return;
+            }
+
             List<Thing> items = new List<Thing>(inv.Count);
             for (int i = 0; i < inv.Count; i++)
             {
-                items.Add(inv[i]);
+                if (hauled.Contains(inv[i]))
+                {
+                    items.Add(inv[i]);
+                }
             }
 
             for (int i = 0; i < items.Count; i++)

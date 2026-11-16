@@ -38,6 +38,7 @@ Strata 4 is out for both RimWorld 1.6 and 1.7. Your 1.6 colony keeps getting eve
 [*] [b]Fewer trips up and down the stairs[/b] — a floor a pawn just left empty-handed stays off their list until it actually gains work they do. Before, any change there (another colonist finishing a job, a stack being moved) sent them straight back.
 [*] [b]No endless detours[/b] — when a job is only reachable by going around through another floor and the detour still can't reach it (for example walls going up on the upper floor), the pawn stops trying that detour for a while.
 [*] [b]Turning the work relay off now takes effect at once[/b] — pawns already assigned to another floor, including ones from your save, are let go.
+[*] [b]Pick Up And Haul keeps your personal supplies[/b] — a pawn delivering cargo on another floor also dropped the medicine, drugs and food it was carrying for itself. Now only the things it picked up to haul are unloaded.
 [/list]
 
 [b]Changed[/b]
