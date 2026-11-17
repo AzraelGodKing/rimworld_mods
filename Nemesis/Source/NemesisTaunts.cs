@@ -90,7 +90,14 @@ namespace Nemesis
         {
             string name = data.nemesisName ?? "Nemesis_Phrase_Someone".Translate();
             stage = UnityEngine.Mathf.Clamp(stage, 1, 5);
-            return $"Nemesis_Letter_VengeanceReturnTitle{stage}".Translate(name);
+            return stage switch
+            {
+                1 => "Nemesis_Letter_VengeanceReturnTitle1".Translate(name),
+                2 => "Nemesis_Letter_VengeanceReturnTitle2".Translate(name),
+                3 => "Nemesis_Letter_VengeanceReturnTitle3".Translate(name),
+                4 => "Nemesis_Letter_VengeanceReturnTitle4".Translate(name),
+                _ => "Nemesis_Letter_VengeanceReturnTitle5".Translate(name),
+            };
         }
 
         public static string VengeanceReturnBody(NemesisData data, int stage)
@@ -100,7 +107,14 @@ namespace Nemesis
             stage = UnityEngine.Mathf.Clamp(stage, 1, 5);
             string focus = data.FocusLabelKey.Translate();
             int tier = data.progressionLevel;
-            string body = $"Nemesis_Letter_VengeanceReturnBody{stage}".Translate(name, target);
+            string body = stage switch
+            {
+                1 => "Nemesis_Letter_VengeanceReturnBody1".Translate(name, target),
+                2 => "Nemesis_Letter_VengeanceReturnBody2".Translate(name, target),
+                3 => "Nemesis_Letter_VengeanceReturnBody3".Translate(name, target),
+                4 => "Nemesis_Letter_VengeanceReturnBody4".Translate(name, target),
+                _ => "Nemesis_Letter_VengeanceReturnBody5".Translate(name, target),
+            };
             if (tier > 0)
                 body += "\n\n" + "Nemesis_Letter_VengeanceCaptainLine".Translate(name, tier, focus);
             return body;

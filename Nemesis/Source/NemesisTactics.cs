@@ -19,6 +19,15 @@ namespace Nemesis
 
     public static class NemesisTactics
     {
+        /// <summary>Keyed line for the assault letter. Whole key names so each language entry is referenced.</summary>
+        public static string DescriptionKey(NemesisTactic tactic) => tactic switch
+        {
+            NemesisTactic.Breach => "Nemesis_Tactic_Desc_Breach",
+            NemesisTactic.Siege => "Nemesis_Tactic_Desc_Siege",
+            NemesisTactic.Commander => "Nemesis_Tactic_Desc_Commander",
+            _ => "Nemesis_Tactic_Desc_Assault",
+        };
+
         public static NemesisTactic Choose(NemesisData data)
         {
             switch (data.combatFocus)

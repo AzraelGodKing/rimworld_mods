@@ -91,8 +91,6 @@
   <!-- Letters: harassment -->
   <Nemesis_Letter_CommsTitle>Сообщение с консоли связи</Nemesis_Letter_CommsTitle>
   <Nemesis_Letter_CommsBody>Ваша консоль связи ловит незапланированную передачу.\n\n{0}</Nemesis_Letter_CommsBody>
-  <Nemesis_Letter_NoteTitle>Записка от {0}</Nemesis_Letter_NoteTitle>
-  <Nemesis_Letter_NoteBody>Где-то, где колонисты обязательно найдут, оставили записку. Никто не видел, кто её положил.\n\n{0}</Nemesis_Letter_NoteBody>
   <Nemesis_Letter_RaidTitle>Рейд: {0}</Nemesis_Letter_RaidTitle>
   <Nemesis_Letter_RaidBody>{0} отправил этот рейд. Они хотят, чтобы {1} знал, кто приказал.</Nemesis_Letter_RaidBody>
 

@@ -296,7 +296,7 @@ namespace Nemesis
                 : data.targetMode == NemesisTargetMode.Pawn && data.targetPawnName != null
                     ? "Nemesis_Letter_AssaultPawn".Translate(data.nemesisName, data.targetPawnName)
                     : "Nemesis_Letter_AssaultColony".Translate(data.nemesisName);
-            body += "\n\n" + ("Nemesis_Tactic_Desc_" + tactic).Translate(data.nemesisName);
+            body += "\n\n" + NemesisTactics.DescriptionKey(tactic).Translate(data.nemesisName);
             if (byShuttle && !nemesis.Spawned)
                 body += "\n\n" + "Nemesis_Letter_ShuttleNote".Translate(data.nemesisName);
 

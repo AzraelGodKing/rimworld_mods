@@ -7,6 +7,7 @@ Foundation by **Dredd (Misakabob)** — original design, persistent antagonist p
 Player-facing version **2.0.1** (`About.xml` `modVersion`). Stamp `nemesis2-net10` (unchanged). No save-format change.
 
 - **Fixed: invisible pawns when a nemesis raids** (AZR-742) — the red aura no longer draws while vanilla bakes the shared pawn texture atlas. Baking a MoteGlow node with immediate `DrawMeshNow` could bleed into other atlas cells and leave the cache camera rect unrestored (everyone invisible, map edge flickering). Live (zoomed-in) draws still show the aura; MaterialPropertyBlock tinting is guarded so a failure never suppresses vanilla pawn drawing.
+- **Translation keys** — vengeance-return letters and tactic lines use their full key names, so each language entry is referenced from the DLL. Removed the unused note-letter keys (`Nemesis_Letter_NoteTitle`, `Nemesis_Letter_NoteBody`).
 - Docs: ROADMAP checks off 2.0 items that already ship (warcaskets, tactic matrix, hunt camps, multi-faction hunts, tint/aura, hunt LordJob, Odyssey shuttle, Living World listen). Dropped the deleted Strata V4 roadmap link.
 
 ## [2.0.0]
