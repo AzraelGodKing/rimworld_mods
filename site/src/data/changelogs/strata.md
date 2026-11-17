@@ -1,9 +1,16 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `4.2.0` in `About.xml` `modVersion`. Player.log: `[Strata] v4.2.0 loaded from ... (modified ...); floor-orders-v1.` via `ModVersionLog.Write`.
+**Version:** `4.2.1` in `About.xml` `modVersion`. Player.log: `[Strata] v4.2.1 loaded from ... (modified ...); floor-orders-v1.` via `ModVersionLog.Write`.
 
 **Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `floor-orders-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [4.2.1]
+
+Player-facing version **4.2.1** (`About.xml` `modVersion`). Stamp `floor-orders-v1`. No save-format change.
+
+### Fixed
+- **RimWorld 1.7 Workshop DLL:** the 4.2.0 Workshop upload still contained the pre-4.0 `1.7/Assemblies/Strata.dll` (`portal-keep-v1`). It was missing `WorkGiver_StrataDeepSurvey`, `JobDriver_StrataDeepSurvey`, `GenStep_StrataLevelKind`, `CompMagmaVent`, `PlaceWorker_OnMagmaVent`, and `CompLostDiary`, so those defs failed at startup and `WorkGiverDef.get_Worker()` threw `ArgumentNullException` while pawns looked for jobs. The GitHub `Strata-v4.2.0` zip already had the matching .NET 10 DLL. 4.2.1 is that assembly, with the package version bumped so Workshop replaces the old file.
 
 ## [4.2.0]
 
@@ -22,7 +29,7 @@ AZR-743 AZR-744 AZR-745
 - **Pick Up And Haul keeps personal supplies** (AZR-743): cross-floor `TryDeliverInventory` dropped every haulable in inventory (medicine, drugs, packed food). It now unloads only items tagged in the haul mod's `CompHauledToInventory` set, still by reflection with no hard dependency.
 - **Materials for a local build get carried:** `Strata_HaulToLevel` with both targets on the pawn's map stayed treated as a cross-floor order, and a discarded other-floor work scan left the stack reserved. Same-floor hauls stay local, and failed scans release reservations before the job is pooled.
 - **Babysitters pick the baby up before climbing:** `JobDriver_BringBabyToLevel` no longer fails the carry toil before `TryStartCarry` finishes.
-- **RimWorld 1.7 Workshop DLL matches 4.2.0** (AZR-745): an earlier Workshop pack shipped a pre-4.0.0 `1.7/Assemblies/Strata.dll`, so magma vents, lost diaries, level kinds and Deep Survey threw missing-type errors at startup while 1.6 was fine. This upload ships a 1.7 DLL built from the same source. ModChecks `XmlClassTypes` now also checks element-text type names (`<compClass>`, `<placeWorkers><li>`, …) so CI catches the mismatch.
+- **RimWorld 1.7 Workshop DLL matches 4.2.0** (AZR-745): an earlier Workshop pack shipped a pre-4.0.0 `1.7/Assemblies/Strata.dll`, so magma vents, lost diaries, level kinds and Deep Survey threw missing-type errors at startup while 1.6 was fine. The GitHub release zip ships a 1.7 DLL built from the same source. The Workshop item uploaded from the local tree still had the old DLL; 4.2.1 replaces it. ModChecks `XmlClassTypes` now also checks element-text type names (`<compClass>`, `<placeWorkers><li>`, …) so CI catches the mismatch.
 
 ## [4.1.0]
 
