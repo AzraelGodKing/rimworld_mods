@@ -87,6 +87,9 @@ Player-facing version **4.0.1** (`About.xml` `modVersion`). Stamp `dead-code-v1`
 
 ## [Unreleased]
 
+### Fixed
+- **Rimefeller shaft junctions load without XML errors** (AZR-748): Strata patched `Rimefeller.CompProperties_Pipe` with `<mode>Crude</mode>` / `<mode>Fuel</mode>`, but `Rimefeller.PipeType` only has `Oil` (Workshop DLLs 1.0–1.7). Defs now use `Oil`; crude vs chemfuel transfer still uses the matching `PipelineNet` APIs.
+
 - Docs: dropped dangling links to the deleted `Strata/V4_ROADMAP.md`.
 
 ## [4.0.0]

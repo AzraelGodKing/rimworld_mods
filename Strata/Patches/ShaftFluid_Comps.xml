@@ -178,6 +178,10 @@
     </match>
   </Operation>
 
+  <!-- Rimefeller.PipeType has only Oil (confirmed on Workshop DLLs 1.0–1.7).
+       Crude oil and chemfuel share one pipe net; PipelineNet still exposes
+       separate PushCrude/PushFuel and PullOil/PullFuel. Both shaft channels
+       attach with mode Oil; C# picks oil vs fuel transfer via fuelMode. -->
   <Operation Class="PatchOperationFindMod">
     <mods>
       <li>Rimefeller</li>
@@ -189,7 +193,7 @@
           <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_RimefellerCrude"]/comps</xpath>
           <value>
             <li Class="Rimefeller.CompProperties_Pipe">
-              <mode>Crude</mode>
+              <mode>Oil</mode>
             </li>
           </value>
         </li>
@@ -197,7 +201,7 @@
           <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_RimefellerFuel"]/comps</xpath>
           <value>
             <li Class="Rimefeller.CompProperties_Pipe">
-              <mode>Fuel</mode>
+              <mode>Oil</mode>
             </li>
           </value>
         </li>
@@ -205,10 +209,7 @@
           <xpath>/Defs/ThingDef[defName="Strata_ShaftFluid_Omni"]/comps</xpath>
           <value>
             <li Class="Rimefeller.CompProperties_Pipe">
-              <mode>Crude</mode>
-            </li>
-            <li Class="Rimefeller.CompProperties_Pipe">
-              <mode>Fuel</mode>
+              <mode>Oil</mode>
             </li>
           </value>
         </li>
