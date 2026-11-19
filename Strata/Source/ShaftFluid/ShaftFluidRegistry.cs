@@ -16,8 +16,9 @@ namespace Strata
             Register(new RimatomicsCoolingBackend());
             Register(new VefPipeSystemBackend("vhge_helixien", "Helixien gas", "VHGE_HelixienNet"));
             Register(new VteAcPipeBackend());
-            Register(new RimefellerPipelineBackend("rimefeller_crude", "Rimefeller crude", "Crude", fuelMode: false));
-            Register(new RimefellerPipelineBackend("rimefeller_fuel", "Rimefeller chemfuel", "Fuel", fuelMode: true));
+            // PipeType is Oil-only; fuelMode selects PipelineNet oil vs chemfuel APIs.
+            Register(new RimefellerPipelineBackend("rimefeller_crude", "Rimefeller crude", "Oil", fuelMode: false));
+            Register(new RimefellerPipelineBackend("rimefeller_fuel", "Rimefeller chemfuel", "Oil", fuelMode: true));
             foreach (VefPipeSystemBackend backend in VefPipeNetDiscovery.DiscoverBackends())
             {
                 if (!byChannel.ContainsKey(backend.ChannelId))

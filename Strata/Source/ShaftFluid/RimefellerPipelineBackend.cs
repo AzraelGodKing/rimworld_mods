@@ -5,7 +5,8 @@ using Verse;
 
 namespace Strata
 {
-    // Rimefeller crude-oil and chemfuel pipe nets (PipelineNet + CompPipe).
+    // Rimefeller oil pipe net (PipelineNet + CompPipe). Crude and chemfuel share
+    // PipeType.Oil; fuelMode picks PushCrude/PullOil vs PushFuel/PullFuel.
     public sealed class RimefellerPipelineBackend : ShaftFluidBackend
     {
         private const string PackageId = "dubwise.rimefeller";
@@ -14,6 +15,7 @@ namespace Strata
 
         private readonly string label;
 
+        // Must match Rimefeller.PipeType (Oil is the only member on Workshop 1.0–1.7).
         private readonly string modeName;
 
         private readonly bool fuelMode;
