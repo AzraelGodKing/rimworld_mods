@@ -57,6 +57,10 @@ Empty `nexus_file_id` → GitHub Release still works; Nexus is skipped with a wa
 
 `"nexus_publish": false` keeps the IDs on the row but skips Nexus upload and the Nexus version gate (use after a manual Nexus drop). Flip it to `true` (or omit the key) when CI should upload again.
 
+## Workshop uploads
+
+Ship Steam Workshop from the **Release & Publish** (or **Build mod DLLs**) zip, or Modwright pointed at that zip — not from a local checkout whose `1.7/Assemblies` was left over from an older build. Assemblies are gitignored; ModChecks `XmlClassTypes` fails CI when a freshly built versioned DLL is missing an XML type (including element-text `giverClass` / `compClass`), but it never inspects a SteamCMD upload folder. Strata Workshop **4.2.0** on RimWorld 1.7 was the known miss (stale pre-4.0 `1.7` DLL); **4.2.1** replaced it from the CI zip.
+
 ## Local pack check
 
 ```bash

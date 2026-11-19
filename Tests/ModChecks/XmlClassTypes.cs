@@ -15,7 +15,12 @@ namespace Azrael.ModChecks
     /// StatPart_Brownout while both Assemblies folders held the same pre-2.0 DLL
     /// that still used Harmony workbench brownout and lacked the type.
     /// AZR-745: same for Strata 4.0.0 on 1.7, where most missing types were
-    /// element text (compClass, placeWorkers) rather than Class attributes.
+    /// element text (compClass, placeWorkers, giverClass, driverClass) rather than
+    /// Class attributes.
+    /// Runs against Assemblies on disk after CI builds them (before pack_mod.sh).
+    /// That catches a stale 1.7 DLL in the build output. It cannot see a Steam
+    /// Workshop folder uploaded by hand from an older local tree — ship Workshop
+    /// from the Release & Publish / CI zip only (see docs/RELEASE.md).
     /// </summary>
     public class XmlClassTypes
     {
