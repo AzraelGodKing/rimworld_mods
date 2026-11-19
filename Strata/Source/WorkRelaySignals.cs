@@ -970,7 +970,7 @@ namespace Strata
             for (int i = 0; i < type.workGiversByPriority.Count; i++)
             {
                 WorkGiverDef giver = type.workGiversByPriority[i];
-                if (giver?.Worker is not WorkGiver_Scanner scanner)
+                if (WorkGiverDefGuard.TryGetWorker(giver) is not WorkGiver_Scanner scanner)
                 {
                     continue;
                 }

@@ -48,6 +48,9 @@ namespace Strata
             StrataCombatExtendedSoftCompat.TryPatch(new Harmony("azraelgodking.strata.ce"));
             StrataGuardsForMeSoftCompat.TryPatch(new Harmony("azraelgodking.strata.gfm"));
             StrataOpenTheWindowsSoftCompat.TryPatch(new Harmony("azraelgodking.strata.otw"));
+            // Before maps/pawns cache work givers: drop defs whose class never resolved
+            // so JobGiver_Work (and Hospitality) cannot ArgumentNullException each tick.
+            WorkGiverDefGuard.ScrubMissingGiverClasses();
             LongEventHandler.ExecuteWhenFinished(() =>
             {
                 StrataBuildInfo.LogStartup();
