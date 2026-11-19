@@ -591,7 +591,7 @@ namespace Strata
             int best = int.MaxValue;
             for (int i = 0; i < type.workGiversByPriority.Count; i++)
             {
-                if (type.workGiversByPriority[i]?.Worker is not WorkGiver_Scanner scanner)
+                if (WorkGiverDefGuard.TryGetWorker(type.workGiversByPriority[i]) is not WorkGiver_Scanner scanner)
                 {
                     continue;
                 }
@@ -681,7 +681,7 @@ namespace Strata
 
             for (int i = 0; i < type.workGiversByPriority.Count; i++)
             {
-                WorkGiver giver = type.workGiversByPriority[i]?.Worker;
+                WorkGiver giver = WorkGiverDefGuard.TryGetWorker(type.workGiversByPriority[i]);
                 if (giver == null || !GiverUsable(pawn, giver) || giver.ShouldSkip(pawn))
                 {
                     continue;

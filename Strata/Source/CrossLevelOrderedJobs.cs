@@ -279,7 +279,8 @@ namespace Strata
                 WorkGiver giver = null;
                 if (!string.IsNullOrEmpty(record.giverDefName))
                 {
-                    giver = DefDatabase<WorkGiverDef>.GetNamedSilentFail(record.giverDefName)?.Worker;
+                    giver = WorkGiverDefGuard.TryGetWorker(
+                        DefDatabase<WorkGiverDef>.GetNamedSilentFail(record.giverDefName));
                 }
                 if (!pending.TryGetValue(record.pawnId, out Pending order))
                 {
