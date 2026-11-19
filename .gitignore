@@ -25,6 +25,9 @@ Strata/Tools/_reflect_tmp/
 # to do, and these are throwaway anyway.
 .tmp/
 
+# Graphify code-graph cache (local tool output; never commit)
+graphify-out/
+
 # Local editor config — not part of the public repo
 .cursor/
 
