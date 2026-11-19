@@ -47,12 +47,6 @@ namespace Strata
             }
         }
 
-        public static void ResetCaches()
-        {
-            active = null;
-            hashSetGetters.Clear();
-        }
-
         // Things the haul mod picked up for delivery. Medicine, drugs and
         // packed food the pawn carries for itself are not in it.
         private static HashSet<Thing> HauledThings(Pawn pawn)
