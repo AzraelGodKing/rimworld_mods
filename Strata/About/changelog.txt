@@ -1,3 +1,11 @@
+Unreleased
+[h1]Strata - Unreleased[/h1]
+
+[b]Fixed[/b]
+[list]
+[*] [b]Rimefeller shaft junctions[/b] (AZR-748) — pipe comps used invalid PipeType values Crude/Fuel (only Oil exists). Junctions load cleanly with Rimefeller again; crude and chemfuel still transfer via the oil pipe net APIs.
+[/list]
+
 4.2.1
 [h1]Strata - 4.2.1[/h1]
 
