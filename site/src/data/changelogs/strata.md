@@ -7,10 +7,11 @@ Player-facing release notes for Strata (Steam Workshop style).
 
 ## [Unreleased]
 
-AZR-747
+AZR-747 AZR-749
 
 ### Fixed
 - **Null WorkGiver classes no longer throw every job tick** (AZR-747): when a `WorkGiverDef` has no `giverClass` (XML names a type the loaded DLL does not contain — the Workshop 4.2.0 1.7 package did this for `Strata_DeepSurvey`), `WorkGiverDef.get_Worker()` throws `ArgumentNullException` and pawns stop taking jobs. Strata now drops those defs from each work type's giver list once at startup and uses a null-safe worker lookup in work relay / ordered-job code. Log one warning per def. This does not replace shipping a matching 1.7 DLL; use Workshop **4.2.1+** (or the GitHub `Strata-v4.2.1` zip). ModChecks `XmlClassTypes` still fails CI if a built versioned DLL is missing an XML type.
+- **Surface lakes no longer get the underwater light pattern** (AZR-749): with **Water caustics (1.7)** on, the moving caustics overlay was drawn on every unfogged water cell of every map, so surface lakes, rivers, shallow/deep water and marsh were covered too. `MapComponent_StrataShaderEffects.WriteWaterMask` now marks ordinary water only on underground levels, as the setting description says; flood water still gets caustics on any level.
 
 ## [4.2.1]
 
