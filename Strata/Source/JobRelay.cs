@@ -50,6 +50,12 @@ namespace Strata
                 return;
             }
 
+            if (StrataTrace.On)
+            {
+                StrataTrace.Log(pawn, "assigned to m" + map.uniqueID + " for " + type.defName
+                    + " via " + StrataTrace.Caller(2));
+            }
+
             assigned[pawn.thingIDNumber] = new Assignment
             {
                 mapId = map.uniqueID,
@@ -74,6 +80,7 @@ namespace Strata
                 mapId = mapId,
                 workDefName = workDefName,
             };
+
         }
 
         // True when this pawn was sent to this floor for work and should stay.
@@ -107,6 +114,10 @@ namespace Strata
                 WorkTypeDef issued = result.Job?.workGiverDef?.workType;
                 if (issued != WorkTypeDefOf.Firefighter && issued != WorkTypeDefOf.Doctor)
                 {
+                    StrataTrace.Log(pawn, "need break (food " + NeedsBreak.WantsFood(pawn) + ", rest "
+                        + NeedsBreak.WantsRest(pawn) + ", joy " + NeedsBreak.WantsJoy(pawn) + ", chem "
+                        + NeedsBreak.WantsChemical(pawn) + "); dropping work result "
+                        + StrataTrace.DescribeJob(result.Job));
                     PortalRelayChain.ReleaseWorkCommute(pawn);
                     result = default;
                     return;
@@ -344,6 +355,7 @@ namespace Strata
             {
                 WorkRelayAntiLoop.Blacklist(pawn, pawn.Map);
             }
+            StrataTrace.Log(pawn, "assignment released: stuck " + (now - assignment.stuckSince) + " ticks");
             assigned.Remove(pawn.thingIDNumber);
             return true;
         }

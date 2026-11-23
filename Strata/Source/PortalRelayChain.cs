@@ -321,6 +321,11 @@ namespace Strata
             }
 
             Pawn pawn = FindPawn(pawnId);
+            if (StrataTrace.On && pawn != null)
+            {
+                StrataTrace.Log(pawn, "arrived, intent " + intent.purpose + " dest m" + intent.destMapId
+                    + (string.IsNullOrEmpty(intent.intendedWorkDefName) ? "" : " work=" + intent.intendedWorkDefName));
+            }
             if (pawn?.jobs == null || !pawn.Spawned || pawn.Downed || pawn.Dead)
             {
                 intents.Remove(pawnId);
@@ -340,6 +345,7 @@ namespace Strata
                     || intent.purpose == RelayPurpose.ForcedOrder)
                 && NeedsBreak.ShouldBreak(pawn))
             {
+                StrataTrace.Log(pawn, "intent dropped for a need break");
                 intents.Remove(pawnId);
                 StrataConstructAcrossLevels.ClearPending(pawn);
                 BillIngredientUtility.ClearPending(pawn);
