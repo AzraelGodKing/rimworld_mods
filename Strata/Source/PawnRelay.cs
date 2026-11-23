@@ -352,6 +352,11 @@ namespace Strata
 
         public static bool HasFoodFor(Pawn pawn, Map map)
         {
+            if (FoodTripMemory.RecentlyMissed(pawn, map))
+            {
+                return false;
+            }
+            bool desperate = pawn.needs?.food?.CurCategory == HungerCategory.Starving;
             foreach (Thing thing in map.listerThings.ThingsInGroup(ThingRequestGroup.FoodSourceNotPlantOrTree))
             {
                 if (thing.IsForbidden(pawn) || thing.Position.Fogged(map))
@@ -359,6 +364,23 @@ namespace Strata
                     continue;
                 }
                 if (thing.def.IsIngestible && !pawn.WillEat(thing))
+                {
+                    continue;
+                }
+                // Vanilla only lets animals and wild men eat corpses, and a
+                // colonist only eats raw food when starving. Counting those sent
+                // hungry pawns up the stairs to food vanilla would not let them eat.
+                if (thing is Corpse && !pawn.AnimalOrWildMan())
+                {
+                    continue;
+                }
+                if (thing.def.IsIngestible && pawn.foodRestriction?.CurrentFoodPolicy != null
+                    && !pawn.foodRestriction.CurrentFoodPolicy.Allows(thing))
+                {
+                    continue;
+                }
+                if (!desperate && pawn.RaceProps.Humanlike && thing.def.IsIngestible
+                    && thing.def.ingestible.preferability < FoodPreferability.RawBad)
                 {
                     continue;
                 }
@@ -504,6 +526,78 @@ namespace Strata
                 }
             }
             return false;
+        }
+    }
+
+    // A food trip that ended with nothing eaten. Vanilla found no food it
+    // would let the pawn eat on that floor, so the food relay must stop
+    // sending them back there for a while (the up-for-food, down-for-work
+    // stair loop).
+    public static class FoodTripMemory
+    {
+        private const int ArrivalWindowTicks = 600;
+        private const int MissTicks = 5000;
+
+        private static readonly Dictionary<int, int> arrivedMap = new Dictionary<int, int>();
+        private static readonly Dictionary<int, int> arrivedTick = new Dictionary<int, int>();
+        private static readonly Dictionary<long, int> missedUntil = new Dictionary<long, int>();
+
+        internal static void ResetSession()
+        {
+            arrivedMap.Clear();
+            arrivedTick.Clear();
+            missedUntil.Clear();
+        }
+
+        private static long Key(Pawn pawn, Map map) => ((long)pawn.thingIDNumber << 20) ^ map.uniqueID;
+
+        internal static void Arrived(Pawn pawn)
+        {
+            if (pawn?.Map == null)
+            {
+                return;
+            }
+            arrivedMap[pawn.thingIDNumber] = pawn.Map.uniqueID;
+            arrivedTick[pawn.thingIDNumber] = Find.TickManager.TicksGame;
+        }
+
+        // Called when vanilla's food giver came up empty on the pawn's floor.
+        internal static void NoteNoFoodHere(Pawn pawn)
+        {
+            if (CrossFloorJobScan.IsScanning || pawn?.Map == null
+                || !arrivedMap.TryGetValue(pawn.thingIDNumber, out int mapId)
+                || mapId != pawn.Map.uniqueID
+                || !arrivedTick.TryGetValue(pawn.thingIDNumber, out int tick))
+            {
+                return;
+            }
+            int now = Find.TickManager.TicksGame;
+            if (now - tick > ArrivalWindowTicks)
+            {
+                return;
+            }
+            arrivedMap.Remove(pawn.thingIDNumber);
+            missedUntil[Key(pawn, pawn.Map)] = now + MissTicks;
+            StrataTrace.Log(pawn, "food trip found nothing to eat here; no food trips to this floor for "
+                + MissTicks + " ticks");
+        }
+
+        internal static void Ate(Pawn pawn)
+        {
+            if (pawn != null)
+            {
+                arrivedMap.Remove(pawn.thingIDNumber);
+            }
+        }
+
+        public static bool RecentlyMissed(Pawn pawn, Map map)
+        {
+            if (pawn == null || map == null || missedUntil.Count == 0)
+            {
+                return false;
+            }
+            return missedUntil.TryGetValue(Key(pawn, map), out int until)
+                && Find.TickManager.TicksGame < until;
         }
     }
 }

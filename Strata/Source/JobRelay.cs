@@ -116,9 +116,19 @@ namespace Strata
                 {
                     StrataTrace.Log(pawn, "need break (food " + NeedsBreak.WantsFood(pawn) + ", rest "
                         + NeedsBreak.WantsRest(pawn) + ", joy " + NeedsBreak.WantsJoy(pawn) + ", chem "
-                        + NeedsBreak.WantsChemical(pawn) + "); dropping work result "
+                        + NeedsBreak.WantsChemical(pawn) + "); work result "
                         + StrataTrace.DescribeJob(result.Job));
                     PortalRelayChain.ReleaseWorkCommute(pawn);
+                    // Outside the emergency node vanilla already tried the need
+                    // givers before work, so a local job it found stays.
+                    // Throwing it away left pawns wandering when joy was low
+                    // but no joy source was available.
+                    if (!emergency && result.Job != null
+                        && result.Job.def != JobDefOf.EnterPortal
+                        && result.Job.def != StrataDefOf.Strata_HaulToLevel)
+                    {
+                        return;
+                    }
                     result = default;
                     return;
                 }

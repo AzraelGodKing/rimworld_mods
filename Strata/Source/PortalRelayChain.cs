@@ -435,6 +435,11 @@ namespace Strata
                 StageArrivalWork(pawn.thingIDNumber, intent.intendedWorkDefName, pawn.Map.uniqueID);
             }
 
+            if (intent.purpose == RelayPurpose.Food)
+            {
+                FoodTripMemory.Arrived(pawn);
+            }
+
             int returnMapId = intent.returnMapId;
             int haulConstructibleId = intent.purpose == RelayPurpose.Haul
                 ? intent.preferredBedId
