@@ -1,14 +1,21 @@
-4.2.2
-[h1]Strata - 4.2.2[/h1]
+4.4.0
+[h1]Strata - 4.4.0[/h1]
 
-[b]Fixed[/b]
+[b]Added[/b]
 [list]
-[*] [b]No more stair loops while hungry or bored[/b] — pawns sent upstairs for food they were not allowed to eat (forbidden meals, raw food, corpses) were sent straight back down to work, over and over. Food trips now follow vanilla's eating rules, and a floor where a pawn found nothing to eat is skipped for food trips for a while. Low recreation also no longer blocks all work when no recreation is available.
-[*] [b]Job search no longer breaks on a missing work type class[/b] — if a work giver points at a class the loaded DLL does not have (the old 4.2.0 Workshop 1.7 file did this for Deep Survey), Strata skips it with one warning instead of pawns erroring every tick while looking for jobs.
-[*] [b]Rimefeller shaft junctions[/b] — no more XML errors about PipeType Crude/Fuel at startup. Crude oil and chemfuel still move through the junctions.
-[*] [b]Water caustics[/b] — the moving underwater light pattern now shows only on underground water and flood water, not on surface lakes, rivers and marsh.
-[*] [b]Loading a save[/b] — a storage cooldown cache is now cleared between games, so a fresh load cannot inherit stale "skip this stockpile" timers.
+[*] [b]Heat shimmer (RimWorld 1.7)[/b] — rising waves of hot air over magma, magma vents, geothermal taps and steam geysers on underground levels. Turn it off in Mod options > Strata > Visuals.
+[*] [b]Performance timing (4.3.0)[/b] — Mod options > Strata > Diagnostics has a "Start performance timing" button. It times every Strata tick, update and patch while it runs, and when you stop it writes the slowest ones to Player.log and Logs/StrataPerf.log. It costs nothing until you start it. Handy for bug reports about lag.
 [/list]
 
-[i]Build stamp (Player.log): need-grace-v1[/i]
+[b]Changed (4.3.0)[/b]
+[list]
+[*] [b]Faster on RimWorld 1.7[/b] — the reservation checks, see-below drawing and cross-floor job checks read game data directly instead of through reflection, and gas clouds use one lookup instead of two.
+[/list]
+
+[b]Fixed (4.2.3)[/b]
+[list]
+[*] [b]Haulers no longer carry the same items up and down the stairs[/b] — shortfall trips carry only what the other floor is missing, and items carried to another floor are not auto-hauled back for a few hours (prioritised hauls still can).
+[/list]
+
+[i]Build stamp (Player.log): heat-shimmer-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]

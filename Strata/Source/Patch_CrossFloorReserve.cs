@@ -101,12 +101,6 @@ namespace Strata
 
     public static class CrossFloorReserve
     {
-        private static readonly AccessTools.FieldRef<ReservationManager, Map> mapOf =
-            AccessTools.FieldRefAccess<ReservationManager, Map>("map");
-
-        private static readonly AccessTools.FieldRef<ReservationManager, List<ReservationManager.Reservation>> reservationList =
-            AccessTools.FieldRefAccess<ReservationManager, List<ReservationManager.Reservation>>("reservations");
-
         // Reused by CanReserve (main thread only, not re-entered).
         private static readonly List<Pawn> holdersScratch = new List<Pawn>();
 
@@ -134,7 +128,7 @@ namespace Strata
                 return false;
             }
 
-            Map map = mapOf(manager);
+            Map map = GameAccess.ReservationMap(manager);
             Thing thing = target.Thing;
             if (map == null || claimant.Map == map || thing?.MapHeld != map)
             {
@@ -159,7 +153,7 @@ namespace Strata
                 return false;
             }
 
-            Map map = mapOf(manager);
+            Map map = GameAccess.ReservationMap(manager);
             if (map == null || !target.IsValid || target.ThingDestroyed)
             {
                 return false;
@@ -188,7 +182,7 @@ namespace Strata
                 return false;
             }
 
-            List<ReservationManager.Reservation> reservations = reservationList(manager);
+            List<ReservationManager.Reservation> reservations = GameAccess.Reservations(manager);
             if (AlreadyReserved(reservations, claimant, target, layer, want))
             {
                 return true;

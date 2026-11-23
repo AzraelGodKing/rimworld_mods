@@ -161,6 +161,8 @@
   <Strata_Settings_DepthVignetteDesc>在地下层压暗屏幕边缘，层越深越暗。仅限 RimWorld 1.7。</Strata_Settings_DepthVignetteDesc>
   <Strata_Settings_WaterCaustics>水面焦散（1.7）</Strata_Settings_WaterCaustics>
   <Strata_Settings_WaterCausticsDesc>在地下水体和积水上显示流动的光纹。仅限 RimWorld 1.7。</Strata_Settings_WaterCausticsDesc>
+  <Strata_Settings_HeatShimmer>热浪扭曲（1.7）</Strata_Settings_HeatShimmer>
+  <Strata_Settings_HeatShimmerDesc>在地下层的岩浆、岩浆喷口、地热分接器和蒸汽间歇泉上方显示升腾的热空气波纹。仅限 RimWorld 1.7。</Strata_Settings_HeatShimmerDesc>
   <Strata_Settings_SeeBelow>透过开阔天空看见下层</Strata_Settings_SeeBelow>
   <Strata_Settings_SeeBelowDesc>在 A+ 甲板上，透过 Strata 开阔天空格绘制下层真实地图（地形、水面、建筑、迷雾）。</Strata_Settings_SeeBelowDesc>
   <Strata_Settings_SeeBelowLive>绘制下层活体与抛射物</Strata_Settings_SeeBelowLive>
@@ -552,6 +554,11 @@
   <Strata_Settings_PresetImmersiveDesc>全部开启：天然与污染气体、地下气体事件、气体房间标签、高大气质量、实时下层视图、深度变暗、洪水与噪音虫害。</Strata_Settings_PresetImmersiveDesc>
   <Strata_Diag_Header>Strata 的每个系统在反复出错后会自行关闭。原版和其他系统继续运行。"重新启用"会让该系统再试一次；重启游戏会重新启用所有系统。已知问题：About/known-issues.json。</Strata_Diag_Header>
   <Strata_Diag_RearmAll>全部重新启用</Strata_Diag_RearmAll>
+  <Strata_Diag_ProbeStart>开始性能计时</Strata_Diag_ProbeStart>
+  <Strata_Diag_ProbeStop>停止计时并写入报告</Strata_Diag_ProbeStop>
+  <Strata_Diag_ProbeRunning>正在为 {0} 个 Strata 方法计时。玩几分钟后再停止。</Strata_Diag_ProbeRunning>
+  <Strata_Diag_ProbeHint>未开启。启动前不消耗任何性能。</Strata_Diag_ProbeHint>
+  <Strata_Diag_ProbeDesc>运行期间为 Strata 的每个 tick、更新和 Harmony 补丁计时。停止后会把最慢的方法写入 Player.log 以及同目录的 Logs/StrataPerf.log。读取其他存档会自动停止。</Strata_Diag_ProbeDesc>
   <Strata_Diag_Rearm>重新启用</Strata_Diag_Rearm>
   <Strata_Diag_Healthy>正常</Strata_Diag_Healthy>
   <Strata_Diag_Errors>{0} 个错误，仍在运行</Strata_Diag_Errors>

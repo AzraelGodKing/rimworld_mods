@@ -264,7 +264,7 @@ namespace Azrael.ModChecks
             return null;
         }
 
-        static IEnumerable<string> NugetRoots()
+        internal static IEnumerable<string> NugetRoots()
         {
             string env = Environment.GetEnvironmentVariable("NUGET_PACKAGES");
             if (!string.IsNullOrEmpty(env))

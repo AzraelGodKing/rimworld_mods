@@ -69,6 +69,7 @@ namespace Strata
                         preferredThing: site);
                 }
 
+                HaulBounceMemory.NoteCarriedOff(pawn.carryTracker?.CarriedThing, pawn.Map);
                 Job enterJob = JobMaker.MakeJob(JobDefOf.EnterPortal, Portal);
                 pawn.jobs.jobQueue.EnqueueFirst(enterJob, JobTag.Misc);
             };
