@@ -28,7 +28,7 @@ namespace Strata
             {
                 return;
             }
-            int tick = Find.TickManager?.TicksGame ?? -1;
+            int tick = Current.Game?.tickManager?.TicksGame ?? -1;
             string map = pawn.MapHeld != null ? pawn.MapHeld.uniqueID.ToString() : "-";
             Write("t" + tick + " " + pawn.LabelShort + "@m" + map + " " + pawn.Position + ": " + text);
         }
@@ -40,7 +40,11 @@ namespace Strata
         // after its limit, and a stair loop fills that fast.
         internal static void WriteRaw(string line)
         {
-            Write("t" + (Find.TickManager?.TicksGame ?? -1) + " " + line);
+            if (Current.Game == null)
+            {
+                return;
+            }
+            Write("t" + (Current.Game?.tickManager?.TicksGame ?? -1) + " " + line);
         }
 
         private static void Write(string line)
