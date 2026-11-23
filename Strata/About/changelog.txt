@@ -1,12 +1,13 @@
-4.3.0
-[h1]Strata - 4.3.0[/h1]
+4.4.0
+[h1]Strata - 4.4.0[/h1]
 
 [b]Added[/b]
 [list]
-[*] [b]Performance timing[/b] — Mod options > Strata > Diagnostics has a "Start performance timing" button. It times every Strata tick, update and patch while it runs, and when you stop it writes the slowest ones to Player.log and Logs/StrataPerf.log. It costs nothing until you start it. Handy for bug reports about lag.
+[*] [b]Heat shimmer (RimWorld 1.7)[/b] — rising waves of hot air over magma, magma vents, geothermal taps and steam geysers on underground levels. Turn it off in Mod options > Strata > Visuals.
+[*] [b]Performance timing (4.3.0)[/b] — Mod options > Strata > Diagnostics has a "Start performance timing" button. It times every Strata tick, update and patch while it runs, and when you stop it writes the slowest ones to Player.log and Logs/StrataPerf.log. It costs nothing until you start it. Handy for bug reports about lag.
 [/list]
 
-[b]Changed[/b]
+[b]Changed (4.3.0)[/b]
 [list]
 [*] [b]Faster on RimWorld 1.7[/b] — the reservation checks, see-below drawing and cross-floor job checks read game data directly instead of through reflection, and gas clouds use one lookup instead of two.
 [/list]
@@ -16,5 +17,5 @@
 [*] [b]Haulers no longer carry the same items up and down the stairs[/b] — shortfall trips carry only what the other floor is missing, and items carried to another floor are not auto-hauled back for a few hours (prioritised hauls still can).
 [/list]
 
-[i]Build stamp (Player.log): perf-probe-v1[/i]
+[i]Build stamp (Player.log): heat-shimmer-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]

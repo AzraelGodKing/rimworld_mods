@@ -1,9 +1,18 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `4.3.0` in `About.xml` `modVersion`. Player.log: `[Strata] v4.3.0 loaded from ... (modified ...); perf-probe-v1.` via `ModVersionLog.Write`.
+**Version:** `4.4.0` in `About.xml` `modVersion`. Player.log: `[Strata] v4.4.0 loaded from ... (modified ...); heat-shimmer-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `perf-probe-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `heat-shimmer-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [4.4.0]
+
+Player-facing version **4.4.0** (`About.xml` `modVersion`). Stamp `heat-shimmer-v1`. No save-format change.
+
+AZR-470
+
+### Added
+- **Heat shimmer (1.7)** (`MapComponent_StrataShaderEffects.DrawShimmer`, `StrataHeatShimmer.frag.glsl`, ShaderDef `Strata_HeatShimmer`, setting `heatShimmer`, default on): the last AZR-470 depth effect. Underground levels only. A map-sized mask (rescanned every 2500 ticks like the caustics mask) marks unfogged `Strata_MagmaPool` cells at full heat and a 3-cell soft disc around `Strata_MagmaVent`, `Strata_GeothermalTap` and `SteamGeyser`; the shader draws rising, sideways-wobbling warm bands additively at queue 3050 on the Gas altitude. It is a haze, not a refraction: a scene-grab distortion pass is not available to mod shaders on Waylith without engine hooks. Off = nothing built or drawn.
 
 ## [4.3.0]
 
