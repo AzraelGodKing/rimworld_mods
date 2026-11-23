@@ -44,7 +44,31 @@ namespace Strata
                 }
             }
 
-            Rect outRect = new Rect(rect.x, header.yMax + 4f, rect.width, rect.height - header.height - 4f);
+            Rect probe = new Rect(rect.x, header.yMax, rect.width, 32f);
+            Rect probeButton = new Rect(probe.x, probe.y, 220f, 28f);
+            if (Widgets.ButtonText(probeButton, StrataPerfProbe.Running
+                    ? "Strata_Diag_ProbeStop".Translate()
+                    : "Strata_Diag_ProbeStart".Translate()))
+            {
+                if (StrataPerfProbe.Running)
+                {
+                    StrataPerfProbe.StopAndReport();
+                }
+                else
+                {
+                    StrataPerfProbe.Start();
+                }
+            }
+            GUI.color = Color.gray;
+            Widgets.Label(new Rect(probeButton.xMax + 10f, probe.y + 4f, probe.width - probeButton.width - 10f, 28f),
+                StrataPerfProbe.Running
+                    ? "Strata_Diag_ProbeRunning".Translate(StrataPerfProbe.MethodCount)
+                    : "Strata_Diag_ProbeHint".Translate());
+            GUI.color = Color.white;
+            TooltipHandler.TipRegion(probeButton, "Strata_Diag_ProbeDesc".Translate());
+
+            float top = probe.yMax + 4f;
+            Rect outRect = new Rect(rect.x, top, rect.width, rect.yMax - top);
             Rect view = new Rect(0f, 0f, outRect.width - 16f, Systems.Length * RowHeight);
             Widgets.BeginScrollView(outRect, ref scroll, view);
             int now = Find.TickManager?.TicksGame ?? 0;

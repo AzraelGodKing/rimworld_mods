@@ -38,6 +38,17 @@
   </ShaderDef>
 
   <ShaderDef>
+    <defName>Strata_HeatShimmer</defName>
+    <shaderProgram>
+      <vertexShaderFileName>StrataOverlay.vert.glsl</vertexShaderFileName>
+      <fragmentShaderFileName>StrataHeatShimmer.frag.glsl</fragmentShaderFileName>
+      <blendMode>Additive</blendMode>
+      <depthWrite>false</depthWrite>
+      <renderQueue>3050</renderQueue>
+    </shaderProgram>
+  </ShaderDef>
+
+  <ShaderDef>
     <defName>Strata_DepthVignette</defName>
     <shaderProgram>
       <vertexShaderFileName>StrataOverlay.vert.glsl</vertexShaderFileName>

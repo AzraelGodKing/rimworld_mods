@@ -1,12 +1,15 @@
 #if RIMWORLD_1_7
+using System.Collections.Generic;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
 namespace Strata
 {
     // 1.7 depth effects on underground levels: screen-edge darkening that
-    // grows with depth, and moving caustics on water. Each has a setting, and
-    // nothing is built or drawn while it is off.
+    // grows with depth, moving caustics on water, and heat shimmer over magma
+    // and geothermal sources. Each has a setting, and nothing is built or
+    // drawn while it is off.
     public class MapComponent_StrataShaderEffects : MapComponent
     {
         private const int WaterRescanTicks = 2500;
@@ -14,6 +17,9 @@ namespace Strata
         private StrataMapTexture caustics;
         private int lastWaterScanTick = -WaterRescanTicks;
         private bool anyWater;
+        private StrataMapTexture shimmer;
+        private int lastHeatScanTick = -WaterRescanTicks;
+        private bool anyHeat;
         private Material vignette;
         private bool vignetteFailed;
 
@@ -31,6 +37,10 @@ namespace Strata
             if (settings.waterCaustics)
             {
                 DrawCaustics();
+            }
+            if (settings.heatShimmer)
+            {
+                DrawShimmer();
             }
             if (settings.depthVignette)
             {
@@ -79,6 +89,94 @@ namespace Strata
                 found = true;
             }
             caustics.Upload(map);
+            return found;
+        }
+
+        private const int ShimmerRadius = 3;
+
+        private void DrawShimmer()
+        {
+            if (!StrataMapUtility.IsUnderground(map))
+            {
+                return;
+            }
+            shimmer ??= new StrataMapTexture(StrataShaders17.HeatShimmer, new Color(1f, 0.55f, 0.25f, 0.22f));
+            if (!shimmer.Available)
+            {
+                return;
+            }
+            int now = Find.TickManager.TicksGame;
+            if (!shimmer.HasTexture || now - lastHeatScanTick >= WaterRescanTicks)
+            {
+                lastHeatScanTick = now;
+                anyHeat = WriteHeatMask();
+            }
+            if (anyHeat)
+            {
+                shimmer.Draw(map, AltitudeLayer.Gas.AltitudeFor(), 1f);
+            }
+        }
+
+        // Unfogged magma pool cells at full heat, and a soft disc around
+        // magma vents, geothermal taps and steam geysers.
+        private bool WriteHeatMask()
+        {
+            Color32[] pixels = shimmer.BeginWrite(map);
+            TerrainGrid terrain = map.terrainGrid;
+            FogGrid fog = map.fogGrid;
+            CellIndices indices = map.cellIndices;
+            TerrainDef magma = StrataMagmaDefOf.Strata_MagmaPool;
+            bool found = false;
+            if (magma != null)
+            {
+                for (int i = 0; i < pixels.Length; i++)
+                {
+                    if (terrain.TerrainAt(i) == magma && !fog.IsFogged(indices.IndexToCell(i)))
+                    {
+                        pixels[i] = new Color32(255, 255, 255, 255);
+                        found = true;
+                    }
+                }
+            }
+            found |= MarkSources(pixels, StrataMagmaDefOf.Strata_MagmaVent);
+            found |= MarkSources(pixels, StrataMagmaDefOf.Strata_GeothermalTap);
+            found |= MarkSources(pixels, ThingDefOf.SteamGeyser);
+            shimmer.Upload(map);
+            return found;
+        }
+
+        private bool MarkSources(Color32[] pixels, ThingDef def)
+        {
+            if (def == null)
+            {
+                return false;
+            }
+            List<Thing> things = map.listerThings.ThingsOfDef(def);
+            bool found = false;
+            for (int t = 0; t < things.Count; t++)
+            {
+                Thing thing = things[t];
+                if (!thing.Spawned || map.fogGrid.IsFogged(thing.Position))
+                {
+                    continue;
+                }
+                found = true;
+                Vector3 center = thing.TrueCenter();
+                CellRect area = thing.OccupiedRect().ExpandedBy(ShimmerRadius).ClipInsideMap(map);
+                foreach (IntVec3 cell in area)
+                {
+                    float dx = cell.x + 0.5f - center.x;
+                    float dz = cell.z + 0.5f - center.z;
+                    float dist = Mathf.Sqrt(dx * dx + dz * dz);
+                    float heat = Mathf.Clamp01(1f - dist / (ShimmerRadius + 1f));
+                    int i = map.cellIndices.CellToIndex(cell);
+                    byte a = (byte)(heat * 255f);
+                    if (a > pixels[i].a)
+                    {
+                        pixels[i] = new Color32(255, 255, 255, a);
+                    }
+                }
+            }
             return found;
         }
 

@@ -79,6 +79,34 @@ namespace Strata
         }
 
         private readonly Dictionary<int, Cloud> clouds = new Dictionary<int, Cloud>();
+
+        // AZR-473: one hash lookup for get-or-add on .NET 10 instead of a
+        // TryGetValue miss followed by an insert.
+        private Cloud CloudFor(Room room, IntVec3 sample)
+        {
+#if NET5_0_OR_GREATER
+            ref Cloud slot = ref System.Runtime.InteropServices.CollectionsMarshal.GetValueRefOrAddDefault(
+                clouds, room.ID, out _);
+            return slot ??= NewCloud(room, sample);
+#else
+            if (!clouds.TryGetValue(room.ID, out Cloud c))
+            {
+                c = NewCloud(room, sample);
+                clouds[room.ID] = c;
+            }
+            return c;
+#endif
+        }
+
+        private static Cloud NewCloud(Room room, IntVec3 sample)
+        {
+            return new Cloud
+            {
+                density = new float[DefDatabase<StrataGasDef>.DefCount],
+                cells = Mathf.Max(room.CellCount, 1),
+                sample = sample,
+            };
+        }
         private readonly List<int> cloudKeyScratch = new List<int>();
 
         // Gas injected before rooms exist (map generation seeds pressurized
@@ -389,16 +417,7 @@ namespace Strata
             {
                 return;
             }
-            if (!clouds.TryGetValue(room.ID, out Cloud c))
-            {
-                c = new Cloud
-                {
-                    density = new float[DefDatabase<StrataGasDef>.DefCount],
-                    cells = Mathf.Max(room.CellCount, 1),
-                    sample = cell,
-                };
-                clouds[room.ID] = c;
-            }
+            Cloud c = CloudFor(room, cell);
             c.density[gas.index] = ClampGasDensity(gas, Mathf.Max(0f, density));
             AtmosphericMix.FinalizeMix(c.density, map);
             c.sample = cell;
@@ -902,15 +921,7 @@ namespace Strata
             {
                 return false;
             }
-            if (!clouds.TryGetValue(room.ID, out c))
-            {
-                c = new Cloud
-                {
-                    density = new float[DefDatabase<StrataGasDef>.DefCount],
-                    cells = Mathf.Max(room.CellCount, 1),
-                };
-                clouds[room.ID] = c;
-            }
+            c = CloudFor(room, default);
             if (!sample.IsValid || !sample.InBounds(map) || sample.GetRoom(map) != room)
             {
                 TryGetSampleCell(room, out sample);
