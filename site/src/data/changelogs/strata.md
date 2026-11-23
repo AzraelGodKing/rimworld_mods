@@ -5,6 +5,13 @@ Player-facing release notes for Strata (Steam Workshop style).
 
 **Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `floor-orders-v1` in `StrataBuildInfo.BuildStamp`.
 
+## [Unreleased]
+
+AZR-749
+
+### Fixed
+- **Surface lakes no longer get the underwater light pattern** (AZR-749): with **Water caustics (1.7)** on, the moving caustics overlay was drawn on every unfogged water cell of every map, so surface lakes, rivers, shallow/deep water and marsh were covered too. `MapComponent_StrataShaderEffects.WriteWaterMask` now marks ordinary water only on underground levels, as the setting description says; flood water still gets caustics on any level.
+
 ## [4.2.1]
 
 Player-facing version **4.2.1** (`About.xml` `modVersion`). Stamp `floor-orders-v1`. No save-format change.

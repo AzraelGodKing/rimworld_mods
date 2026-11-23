@@ -57,19 +57,21 @@ namespace Strata
             }
         }
 
-        // Water and flood cells that are not fogged.
+        // Unfogged flood cells on any level, plus ordinary water on underground
+        // levels only. Surface lakes, rivers and marsh stay untouched (AZR-749).
         private bool WriteWaterMask()
         {
             Color32[] pixels = caustics.BeginWrite(map);
             TerrainGrid terrain = map.terrainGrid;
             FogGrid fog = map.fogGrid;
             CellIndices indices = map.cellIndices;
+            bool underground = StrataMapUtility.IsUnderground(map);
             bool found = false;
             for (int i = 0; i < pixels.Length; i++)
             {
                 IntVec3 cell = indices.IndexToCell(i);
                 TerrainDef t = terrain.TerrainAt(i);
-                if (t == null || !(t.IsWater || FloodUtility.IsFlooded(t)) || fog.IsFogged(cell))
+                if (t == null || !((underground && t.IsWater) || FloodUtility.IsFlooded(t)) || fog.IsFogged(cell))
                 {
                     continue;
                 }
