@@ -260,6 +260,11 @@ namespace Strata
             {
                 PortalRelayChain.Mark(pawn, destMap, purpose, preferredBed, preferArrivalNear: preferArrivalNear);
             }
+            if (StrataTrace.On)
+            {
+                StrataTrace.Log(pawn, "relay " + purpose + " -> m" + destMap.uniqueID
+                    + (job == null ? " (no stair job)" : "") + " via " + StrataTrace.Caller(2));
+            }
 
             return job;
         }

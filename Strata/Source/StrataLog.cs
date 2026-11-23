@@ -16,6 +16,7 @@ namespace Strata
                 return;
             }
             Log.Message(text);
+            StrataTrace.WriteRaw(text);
         }
 
         public static void Message(string text)
