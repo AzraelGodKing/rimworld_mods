@@ -161,6 +161,8 @@
   <Strata_Settings_DepthVignetteDesc>在地下层压暗屏幕边缘，层越深越暗。仅限 RimWorld 1.7。</Strata_Settings_DepthVignetteDesc>
   <Strata_Settings_WaterCaustics>水面焦散（1.7）</Strata_Settings_WaterCaustics>
   <Strata_Settings_WaterCausticsDesc>在地下水体和积水上显示流动的光纹。仅限 RimWorld 1.7。</Strata_Settings_WaterCausticsDesc>
+  <Strata_Settings_HeatShimmer>热浪扭曲（1.7）</Strata_Settings_HeatShimmer>
+  <Strata_Settings_HeatShimmerDesc>在地下层的岩浆、岩浆喷口、地热分接器和蒸汽间歇泉上方显示升腾的热空气波纹。仅限 RimWorld 1.7。</Strata_Settings_HeatShimmerDesc>
   <Strata_Settings_SeeBelow>透过开阔天空看见下层</Strata_Settings_SeeBelow>
   <Strata_Settings_SeeBelowDesc>在 A+ 甲板上，透过 Strata 开阔天空格绘制下层真实地图（地形、水面、建筑、迷雾）。</Strata_Settings_SeeBelowDesc>
   <Strata_Settings_SeeBelowLive>绘制下层活体与抛射物</Strata_Settings_SeeBelowLive>
