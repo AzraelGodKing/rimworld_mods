@@ -1,9 +1,27 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `4.2.3` in `About.xml` `modVersion`. Player.log: `[Strata] v4.2.3 loaded from ... (modified ...); haul-bounce-v1.` via `ModVersionLog.Write`.
+**Version:** `4.3.0` in `About.xml` `modVersion`. Player.log: `[Strata] v4.3.0 loaded from ... (modified ...); perf-probe-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `haul-bounce-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `perf-probe-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [4.3.0]
+
+Player-facing version **4.3.0** (`About.xml` `modVersion`). Stamp `perf-probe-v1`. No save-format change.
+
+AZR-471 AZR-463 AZR-462 AZR-473 AZR-464
+
+### Added
+- **Performance probe** (`StrataPerfProbe`, Mod options > Diagnostics): opt-in timing for the AZR-471 baseline, on 1.6 and 1.7, without Dubs Performance Analyzer. Start patches a timing prefix (`Priority.First`) and postfix (`Priority.Last`) onto every Strata `MapComponent`/`GameComponent`/`WorldComponent` tick, update and OnGUI, and onto every prefix, postfix and finalizer owned by a `azraelgodking.strata*` / `azrael.strata*` Harmony id. Stop unpatches them and writes the top 40 methods (total ms, calls, avg and max µs, inclusive) to Player.log and `Logs/StrataPerf.log`. Nothing is patched while it is off. Counters use `Interlocked`, since some patched methods run on render workers. Loading another save stops it and writes the report. Tiny patch methods the JIT already inlined into a patched vanilla method may not show.
+
+### Changed
+- **`[UnsafeAccessor]` on 1.7** (AZR-462, `GameAccess`): private fields read on hot paths (`ReservationManager.map` / `reservations` in every cross-floor `CanReserve`, `Thing.mapIndexOrState` / `positionInt` in cross-floor job probes, `Section.layers` and `MapDrawer.sections` every see-below frame) are `UnsafeAccessor` externs in the net10 build and Harmony `FieldRef`s in the net472 build, with one call shape. New ModChecks test `UnsafeAccessorNames` fails CI when an accessor in a built 1.7 DLL names a member its target type does not declare in the 1.7 Krafs refs.
+- **Cross-floor job probe** (`CrossFloorJobScan`): `ThinkNode_JobGiver.TryGiveJob` is called through an open-instance delegate instead of `MethodInfo.Invoke` with a new argument array per probe.
+- **Gas clouds** (AZR-473, `AtmosphereMapComponent.CloudFor`): get-or-add uses `CollectionsMarshal.GetValueRefOrAddDefault` on .NET 10, one hash lookup instead of two.
+
+### Not changed, on purpose
+- AZR-473 flat `cellDensity`: gas planes are only allocated for gases present, so a flat cell × gas array would use about 10x the memory. `Vector256` blending waits for a probe report that shows the overlay bake near the top.
+- AZR-464 `Parallel` partitioning, `CancellationToken` and `Channel` for the work board: its worker job is one pass over a byte array, stale results are already dropped by `workVersion` and the 600-tick age check, and `CancelMap` drops a removed map's job. Revisit only if the probe shows `WorkRelayBoardBuilder` near the top.
 
 ## [4.2.3]
 

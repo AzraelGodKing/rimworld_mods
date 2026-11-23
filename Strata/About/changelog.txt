@@ -1,10 +1,20 @@
-4.2.3
-[h1]Strata - 4.2.3[/h1]
+4.3.0
+[h1]Strata - 4.3.0[/h1]
 
-[b]Fixed[/b]
+[b]Added[/b]
 [list]
-[*] [b]Haulers no longer carry the same items up and down the stairs[/b] — a floor short of a few items for a bill or construction got a whole stack, and the surplus was hauled straight back to better storage on the other floor. Shortfall trips now carry only what is missing, several haulers no longer all answer the same shortfall, and items carried to another floor are not auto-hauled back to the floor they came from for a few hours (prioritised hauls still can).
+[*] [b]Performance timing[/b] — Mod options > Strata > Diagnostics has a "Start performance timing" button. It times every Strata tick, update and patch while it runs, and when you stop it writes the slowest ones to Player.log and Logs/StrataPerf.log. It costs nothing until you start it. Handy for bug reports about lag.
 [/list]
 
-[i]Build stamp (Player.log): haul-bounce-v1[/i]
+[b]Changed[/b]
+[list]
+[*] [b]Faster on RimWorld 1.7[/b] — the reservation checks, see-below drawing and cross-floor job checks read game data directly instead of through reflection, and gas clouds use one lookup instead of two.
+[/list]
+
+[b]Fixed (4.2.3)[/b]
+[list]
+[*] [b]Haulers no longer carry the same items up and down the stairs[/b] — shortfall trips carry only what the other floor is missing, and items carried to another floor are not auto-hauled back for a few hours (prioritised hauls still can).
+[/list]
+
+[i]Build stamp (Player.log): perf-probe-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]

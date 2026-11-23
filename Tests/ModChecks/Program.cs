@@ -108,7 +108,7 @@ namespace Azrael.ModChecks
             @"""((?:Strata_|DC_|HS_|Stormproof_|Nemesis_|DateNight_|LivingWorld_|Niceties_|Azrael_|Homesteader_|WSR_)[A-Za-z0-9_]+)""",
             RegexOptions.Compiled);
 
-        static string FindRepoRoot()
+        internal static string FindRepoRoot()
         {
             string dir = AppContext.BaseDirectory;
             for (int i = 0; i < 10 && !string.IsNullOrEmpty(dir); i++)

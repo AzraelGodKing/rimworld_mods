@@ -24,12 +24,6 @@ namespace Strata
     {
         private const int MaxProbesPerCall = 3;
 
-        private static readonly AccessTools.FieldRef<Thing, sbyte> MapIndexRef =
-            AccessTools.FieldRefAccess<Thing, sbyte>("mapIndexOrState");
-
-        private static readonly AccessTools.FieldRef<Thing, IntVec3> PositionRef =
-            AccessTools.FieldRefAccess<Thing, IntVec3>("positionInt");
-
         private static readonly AccessTools.FieldRef<PriorityWork, IntVec3> PriorityCellRef =
             OptionalFieldRef<IntVec3>("prioritizedCell");
 
@@ -47,8 +41,18 @@ namespace Strata
                 : null;
         }
 
-        private static readonly MethodInfo TryGiveJobMethod =
-            AccessTools.Method(typeof(ThinkNode_JobGiver), "TryGiveJob");
+        // Open-instance delegate: virtual dispatch like a normal call, without
+        // MethodInfo.Invoke's argument array and reflection cost per probe.
+        private static readonly Func<ThinkNode_JobGiver, Pawn, Job> TryGiveJob = BindTryGiveJob();
+
+        private static Func<ThinkNode_JobGiver, Pawn, Job> BindTryGiveJob()
+        {
+            MethodInfo method = AccessTools.Method(typeof(ThinkNode_JobGiver), "TryGiveJob");
+            return method != null
+                ? (Func<ThinkNode_JobGiver, Pawn, Job>)Delegate.CreateDelegate(
+                    typeof(Func<ThinkNode_JobGiver, Pawn, Job>), method)
+                : null;
+        }
 
         private static Pawn scanningPawn;
 
@@ -85,11 +89,11 @@ namespace Strata
 
         public static Job TryScanJobGiver(Pawn pawn, ThinkNode_JobGiver giver, RelayPurpose purpose, int cap)
         {
-            if (giver == null || TryGiveJobMethod == null)
+            if (giver == null || TryGiveJob == null)
             {
                 return null;
             }
-            return TryScan(pawn, purpose, cap, () => (Job)TryGiveJobMethod.Invoke(giver, new object[] { pawn }));
+            return TryScan(pawn, purpose, cap, () => TryGiveJob(giver, pawn));
         }
 
         public static Job TryScanWork(Pawn pawn, JobGiver_Work giver, JobIssueParams jobParams)
@@ -184,8 +188,8 @@ namespace Strata
             {
                 return null;
             }
-            sbyte oldIndex = MapIndexRef(pawn);
-            IntVec3 oldPos = PositionRef(pawn);
+            sbyte oldIndex = GameAccess.MapIndexOrState(pawn);
+            IntVec3 oldPos = GameAccess.PositionInt(pawn);
             // Vanilla givers also write pawn state while the pawn stands on the
             // other floor: JobGiver_Work clears prioritized work it can't find
             // there, wander flips nextMoveOrderIsWait. Put them back unless the
@@ -203,8 +207,8 @@ namespace Strata
             scanningPawn = pawn;
             try
             {
-                MapIndexRef(pawn) = (sbyte)index;
-                PositionRef(pawn) = cell;
+                GameAccess.MapIndexOrState(pawn) = (sbyte)index;
+                GameAccess.PositionInt(pawn) = cell;
                 job = scanHere();
             }
             catch (Exception e)
@@ -216,8 +220,8 @@ namespace Strata
             }
             finally
             {
-                MapIndexRef(pawn) = oldIndex;
-                PositionRef(pawn) = oldPos;
+                GameAccess.MapIndexOrState(pawn) = oldIndex;
+                GameAccess.PositionInt(pawn) = oldPos;
                 scanningPawn = null;
                 if (mind != null)
                 {
