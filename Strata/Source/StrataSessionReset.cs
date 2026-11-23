@@ -74,6 +74,8 @@ namespace Strata
             StrataPocketMapOpen.ResetSession,
             StrataCrossLevelThreatNotify.ResetSession,
             PawnRelay.ResetSession,
+            NeedsBreak.ResetSession,
+            FoodTripMemory.ResetSession,
             WorkGiver_HaulAcrossLevels.ResetSession,
         };
 

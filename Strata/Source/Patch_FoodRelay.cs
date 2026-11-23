@@ -12,7 +12,12 @@ namespace Strata
     {
         public static void Postfix(JobGiver_GetFood __instance, Pawn pawn, ref Job __result)
         {
-            if (__result != null || !PawnRelay.CanLeaveWorkForNeed(pawn))
+            if (__result != null)
+            {
+                return;
+            }
+            FoodTripMemory.NoteNoFoodHere(pawn);
+            if (!PawnRelay.CanLeaveWorkForNeed(pawn))
             {
                 return;
             }
