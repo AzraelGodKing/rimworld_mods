@@ -1,17 +1,20 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `4.2.2` in `About.xml` `modVersion`. Player.log: `[Strata] v4.2.2 loaded from ... (modified ...); job-guard-v1.` via `ModVersionLog.Write`.
+**Version:** `4.2.2` in `About.xml` `modVersion`. Player.log: `[Strata] v4.2.2 loaded from ... (modified ...); need-grace-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `job-guard-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `need-grace-v1` in `StrataBuildInfo.BuildStamp`.
 
 ## [4.2.2]
 
-Player-facing version **4.2.2** (`About.xml` `modVersion`). Stamp `job-guard-v1`. No save-format change.
+Player-facing version **4.2.2** (`About.xml` `modVersion`). Stamp `need-grace-v1`. No save-format change.
 
 AZR-747 AZR-748 AZR-749
 
 ### Fixed
+- **Stair loop on food trips** (`FoodTripMemory`): `PawnRelay.HasFoodFor` counted food vanilla would never let a colonist eat (corpses, raw food when not starving, items the food policy forbids). On a lower floor `Patch_FoodRelay` sent hungry pawns up for it, vanilla `JobGiver_GetFood` found nothing, and `JobRelay.TryHold` sent them straight back down for work, every few seconds. `HasFoodFor` now applies those rules, and a food trip that ends with no food job (`Patch_FoodRelay` postfix within 600 ticks of a Food arrival) blocks food trips by that pawn to that floor for 5000 ticks.
+- **Low needs no longer stall all work** (`NeedsBreak`): `JobRelay.Apply` discarded every work result, local ones included, while any need (usually joy) read low, so pawns wandered for hours when vanilla found no joy source. A need break now lasts 1250 ticks and only continues while the pawn keeps starting need jobs (eat, sleep, joy, meditate). Outside the emergency work node a local vanilla job is kept.
+- **Verbose logging trace** (`StrataTrace`): with Verbose logging on, every colonist job start/end, stair relay (with the Strata caller) and relay arrival is written to `Logs/StrataTrace.log` next to Player.log.
 - **Null WorkGiver classes no longer throw every job tick** (AZR-747): when a `WorkGiverDef` has no `giverClass` (XML names a type the loaded DLL does not contain — the Workshop 4.2.0 1.7 package did this for `Strata_DeepSurvey`), `WorkGiverDef.get_Worker()` throws `ArgumentNullException` and pawns stop taking jobs. Strata now drops those defs from each work type's giver list once at startup and uses a null-safe worker lookup in work relay / ordered-job code. Log one warning per def. This does not replace shipping a matching 1.7 DLL; use Workshop **4.2.1+** (or the GitHub `Strata-v4.2.1` zip). ModChecks `XmlClassTypes` still fails CI if a built versioned DLL is missing an XML type.
 - **Surface lakes no longer get the underwater light pattern** (AZR-749): with **Water caustics (1.7)** on, the moving caustics overlay was drawn on every unfogged water cell of every map, so surface lakes, rivers, shallow/deep water and marsh were covered too. `MapComponent_StrataShaderEffects.WriteWaterMask` now marks ordinary water only on underground levels, as the setting description says; flood water still gets caustics on any level.
 - **Rimefeller shaft junctions load without XML errors** (AZR-748): Strata patched `Rimefeller.CompProperties_Pipe` with `<mode>Crude</mode>` / `<mode>Fuel</mode>`, but `Rimefeller.PipeType` only has `Oil` (Workshop DLLs 1.0–1.7). Defs now use `Oil`; crude vs chemfuel transfer still uses the matching `PipelineNet` APIs.

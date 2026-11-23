@@ -3,11 +3,12 @@
 
 [b]Fixed[/b]
 [list]
+[*] [b]No more stair loops while hungry or bored[/b] — pawns sent upstairs for food they were not allowed to eat (forbidden meals, raw food, corpses) were sent straight back down to work, over and over. Food trips now follow vanilla's eating rules, and a floor where a pawn found nothing to eat is skipped for food trips for a while. Low recreation also no longer blocks all work when no recreation is available.
 [*] [b]Job search no longer breaks on a missing work type class[/b] — if a work giver points at a class the loaded DLL does not have (the old 4.2.0 Workshop 1.7 file did this for Deep Survey), Strata skips it with one warning instead of pawns erroring every tick while looking for jobs.
 [*] [b]Rimefeller shaft junctions[/b] — no more XML errors about PipeType Crude/Fuel at startup. Crude oil and chemfuel still move through the junctions.
 [*] [b]Water caustics[/b] — the moving underwater light pattern now shows only on underground water and flood water, not on surface lakes, rivers and marsh.
 [*] [b]Loading a save[/b] — a storage cooldown cache is now cleared between games, so a fresh load cannot inherit stale "skip this stockpile" timers.
 [/list]
 
-[i]Build stamp (Player.log): job-guard-v1[/i]
+[i]Build stamp (Player.log): need-grace-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]
