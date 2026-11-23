@@ -6,6 +6,10 @@ folder="$1"
 zip_name="$2"
 dll_name="$3"
 dest_dir="${4:-docs/downloads}"
+if [[ "$(git check-attr export-ignore -- "${folder}/About/About.xml" | awk '{print $NF}')" == "set" ]]; then
+  echo "${folder} is export-ignored in .gitattributes (unreleased); not packing it." >&2
+  exit 1
+fi
 mkdir -p "$dest_dir"
 zip_path="${dest_dir}/${zip_name}.zip"
 git archive --format=zip -o "$zip_path" HEAD "$folder"

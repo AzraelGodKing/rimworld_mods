@@ -1,0 +1,7 @@
+# Build output (also covered by the repo root .gitignore)
+1.6/Assemblies/*.dll
+1.7/Assemblies/*.dll
+Source/obj/
+Source/bin/
+# Local model logs or prompt dumps from testing
+*.log

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LLMStoryteller_SettingsCategory>LLM Storyteller</LLMStoryteller_SettingsCategory>
+
+  <LLMStoryteller_UseModel>Use the model</LLMStoryteller_UseModel>
+  <LLMStoryteller_UseModelTip>Off: the storyteller plays as Cassandra Classic and never contacts the server.</LLMStoryteller_UseModelTip>
+  <LLMStoryteller_Presets>Server presets:</LLMStoryteller_Presets>
+  <LLMStoryteller_PresetOllama>Ollama (port 11434)</LLMStoryteller_PresetOllama>
+  <LLMStoryteller_PresetLmStudio>LM Studio (port 1234)</LLMStoryteller_PresetLmStudio>
+  <LLMStoryteller_Endpoint>Server address</LLMStoryteller_Endpoint>
+  <LLMStoryteller_Model>Model name</LLMStoryteller_Model>
+  <LLMStoryteller_ApiKey>API key (usually blank)</LLMStoryteller_ApiKey>
+  <LLMStoryteller_TestConnection>Test connection</LLMStoryteller_TestConnection>
+  <LLMStoryteller_Testing>Asking {0} ...</LLMStoryteller_Testing>
+  <LLMStoryteller_TestFound>Connected. The server has "{0}".</LLMStoryteller_TestFound>
+  <LLMStoryteller_TestMissing>Connected, but the server has no model called "{0}". It has:</LLMStoryteller_TestMissing>
+  <LLMStoryteller_TestFailed>Could not reach the server:</LLMStoryteller_TestFailed>
+  <LLMStoryteller_BadEndpoint>"{0}" is not a server address. Use something like http://localhost:11434/v1</LLMStoryteller_BadEndpoint>
+
+  <LLMStoryteller_Timeout>Give up on an answer after: {0} seconds</LLMStoryteller_Timeout>
+  <LLMStoryteller_Interval>Hours between decisions: {0}</LLMStoryteller_Interval>
+  <LLMStoryteller_MaxIntensity>Max threat intensity: {0}x normal</LLMStoryteller_MaxIntensity>
+  <LLMStoryteller_Temperature>Model temperature: {0}</LLMStoryteller_Temperature>
+  <LLMStoryteller_MaxOptions>Incidents offered per decision: {0}</LLMStoryteller_MaxOptions>
+  <LLMStoryteller_ReasoningLetters>Show the storyteller's reasons</LLMStoryteller_ReasoningLetters>
+  <LLMStoryteller_Personality>Personality (sent to the model):</LLMStoryteller_Personality>
+  <LLMStoryteller_ResetPersonality>Reset personality</LLMStoryteller_ResetPersonality>
+
+  <LLMStoryteller_LetterLabel>{0} decides</LLMStoryteller_LetterLabel>
+  <LLMStoryteller_LetterText>{0} chose: {1}\n\n"{2}"</LLMStoryteller_LetterText>
+  <LLMStoryteller_QuietDay>{0} lets the day pass quietly: "{1}"</LLMStoryteller_QuietDay>
+  <LLMStoryteller_Offline>LLM Storyteller: the model could not decide ({0}). Cassandra Classic covers until the next decision.</LLMStoryteller_Offline>
+</LanguageData>
