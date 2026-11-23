@@ -1,9 +1,21 @@
 # Changelog
 
 Player-facing release notes for Strata (Steam Workshop style).
-**Version:** `4.2.2` in `About.xml` `modVersion`. Player.log: `[Strata] v4.2.2 loaded from ... (modified ...); need-grace-v1.` via `ModVersionLog.Write`.
+**Version:** `4.2.3` in `About.xml` `modVersion`. Player.log: `[Strata] v4.2.3 loaded from ... (modified ...); haul-bounce-v1.` via `ModVersionLog.Write`.
 
-**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `need-grace-v1` in `StrataBuildInfo.BuildStamp`.
+**Build stamp:** each DLL logs the stamp as extra text after the path. Current stamp is `haul-bounce-v1` in `StrataBuildInfo.BuildStamp`.
+
+## [4.2.3]
+
+Player-facing version **4.2.3** (`About.xml` `modVersion`). Stamp `haul-bounce-v1`. No save-format change.
+
+AZR-632
+
+### Fixed
+- **Cross-floor haul ping-pong** (`WorkGiver_HaulAcrossLevels`, `LevelDemand`, `HaulBounceMemory`): a hard shortfall pull (bill, construction, refuel) carried the whole stack (`CountForStairHaul`), so a level short of 10 steel got 75, and the 65 extra was exported back to better storage on the source floor by the priority-upgrade or "needs haul" path. Three changes:
+  - A hard shortfall pull now carries `min(capacity, HardMissingOn)`.
+  - `LevelDemand.NoteCommitted` lowers the cached destination shortfall and the source floor's `hardSpare` as soon as a hauler takes the job. Before, every idle hauler answered the same shortfall within the 250-tick cache, and several stacks could leave a floor that needed them.
+  - `HaulBounceMemory`: the thing carried through a stair by `JobDriver_HaulToLevel` remembers its source floor for 15000 ticks, and automatic cross-floor hauls skip sending it back there. Forced (prioritised) hauls and hard shortfalls on the source floor still go. Not saved; cleared by `StrataSessionReset`.
 
 ## [4.2.2]
 
