@@ -1,18 +1,13 @@
-Unreleased
-[h1]Strata - Unreleased[/h1]
+4.2.2
+[h1]Strata - 4.2.2[/h1]
 
 [b]Fixed[/b]
 [list]
-[*] [b]Rimefeller shaft junctions[/b] (AZR-748) — pipe comps used invalid PipeType values Crude/Fuel (only Oil exists). Junctions load cleanly with Rimefeller again; crude and chemfuel still transfer via the oil pipe net APIs.
+[*] [b]Job search no longer breaks on a missing work type class[/b] — if a work giver points at a class the loaded DLL does not have (the old 4.2.0 Workshop 1.7 file did this for Deep Survey), Strata skips it with one warning instead of pawns erroring every tick while looking for jobs.
+[*] [b]Rimefeller shaft junctions[/b] — no more XML errors about PipeType Crude/Fuel at startup. Crude oil and chemfuel still move through the junctions.
+[*] [b]Water caustics[/b] — the moving underwater light pattern now shows only on underground water and flood water, not on surface lakes, rivers and marsh.
+[*] [b]Loading a save[/b] — a storage cooldown cache is now cleared between games, so a fresh load cannot inherit stale "skip this stockpile" timers.
 [/list]
 
-4.2.1
-[h1]Strata - 4.2.1[/h1]
-
-[b]Fixed[/b]
-[list]
-[*] [b]RimWorld 1.7 Workshop DLL[/b] — the 4.2.0 Workshop file still loaded an old 1.7 assembly (portal-keep-v1). The game could not find Deep Survey, magma vents, lost diaries, or special level kinds, and pawns errored while looking for jobs. This update ships the matching 1.7 DLL.
-[/list]
-
-[i]Build stamp (Player.log): floor-orders-v1[/i]
+[i]Build stamp (Player.log): job-guard-v1[/i]
 [i]Full notes: https://github.com/AzraelGodKing/rimworld_mods/blob/main/site/src/data/changelogs/strata.md[/i]
