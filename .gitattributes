@@ -5,3 +5,7 @@
 **/*.md export-ignore
 # Optional Homesteader art (~7 MB). Stays in git; TextureRefresh.PackPresent() detects it.
 Homesteader/Textures/HomesteaderRefresh/ export-ignore
+# Unreleased prototype: nothing in it ships until Azrael says it is ready. git archive (CI zips,
+# Modwright's Launch Pad) leaves the whole folder out, and pack_mod.sh refuses it by name.
+# Remove this line when it is ready to release.
+LLMStoryteller/** export-ignore

@@ -23,6 +23,7 @@ on:
       - "Niceties/Source/**"
       - "WaveSurvivalReforged/Source/**"
       - "NanoHiveReforged/Source/**"
+      - "LLMStoryteller/Source/**"
       - "Common/**"
       - "Tests/**"
       - "scripts/build_downloads.ps1"
@@ -44,6 +45,7 @@ on:
       - "Niceties/Source/**"
       - "WaveSurvivalReforged/Source/**"
       - "NanoHiveReforged/Source/**"
+      - "LLMStoryteller/Source/**"
       - "Common/**"
       - "Tests/**"
       - "scripts/build_downloads.ps1"
@@ -142,6 +144,12 @@ jobs:
           dotnet build NanoHiveReforged/Source/NanoHiveReforged.csproj -c Release --nologo
           dotnet build NanoHiveReforged/Source/NanoHiveReforged.1.7.csproj -c Release --nologo
 
+      # Unreleased prototype: built and tested here, never packed or published (export-ignored).
+      - name: Build LLM Storyteller
+        run: |
+          dotnet build LLMStoryteller/Source/LLMStoryteller.csproj -c Release --nologo
+          dotnet build LLMStoryteller/Source/LLMStoryteller.1.7.csproj -c Release --nologo
+
       - name: Headless mod checks
         run: dotnet test Tests/ModChecks/ModChecks.csproj -c Release --nologo
 
@@ -162,6 +170,9 @@ jobs:
 
       - name: Homesteader logic tests
         run: dotnet test Tests/Homesteader.Tests/Homesteader.Tests.csproj -c Release --nologo
+
+      - name: LLM Storyteller logic tests
+        run: dotnet test Tests/LLMStoryteller.Tests/LLMStoryteller.Tests.csproj -c Release --nologo
 
       - name: Pack docs/downloads zips (with DLLs)
         if: github.event_name != 'pull_request'

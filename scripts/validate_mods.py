@@ -32,8 +32,8 @@ SKIP_DIR_NAMES = {
 TEXTURE_SUFFIXES = (".png", ".jpg", ".jpeg")
 DIRECTIONAL = ("_north", "_south", "_east", "_west")
 EXPECTED_LANGUAGES = ("ChineseSimplified", "Russian")
-# Mods that may ship English-only. Empty after AZR-134.
-ENGLISH_ONLY_MODS: set[str] = set()
+# Mods that may ship English-only. LLMStoryteller is an unreleased prototype.
+ENGLISH_ONLY_MODS: set[str] = {"LLMStoryteller"}
 
 # Mods whose every translatable def field must be injected in every shipped
 # language (not just a matching file). Add a mod once its translations are complete.

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>LLM Storyteller (prototype)</name>
+  <author>AzraelGodKing</author>
+  <packageId>azraelgodking.llmstoryteller</packageId>
+  <supportedVersions>
+    <li>1.6</li>
+    <li>1.7</li>
+  </supportedVersions>
+  <modVersion IgnoreIfNoMatchingField="True">0.1.0</modVersion>
+  <loadAfter>
+    <li>Ludeon.RimWorld</li>
+  </loadAfter>
+  <description>Prototype. A storyteller, the Oracle, run by a language model on your own computer through Ollama or LM Studio. About once a day it reads a short colony report and picks the next incident from the ones that can happen right now, and a letter tells you why.
+
+The model only names an incident from that list: the mod checks it can fire, caps its size, and fires it through the normal incident worker. If the model is offline, slow, or answers badly twice, Cassandra Classic takes over until the next decision.
+
+Needs a local OpenAI-compatible server (Ollama or LM Studio, setup guides in the mod folder). Set the address and model in Mod Options. RimWorld 1.6 and 1.7. Multiplayer is not supported.</description>
+</ModMetaData>

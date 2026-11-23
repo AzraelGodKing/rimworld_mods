@@ -1,0 +1,12 @@
+0.1.0
+[h1]LLM Storyteller - 0.1.0[/h1]
+
+Prototype, not released.
+
+[b]Added[/b]
+[list]
+[*] [b]The Oracle[/b] - a storyteller that asks a local model (Ollama or LM Studio, OpenAI-compatible API) once a day which incident happens next, from the ones that can fire now. Threats are capped by a max intensity setting.
+[*] [b]Reasoning letters[/b] - the storyteller's reason for each pick, in character. Quiet days show as a message.
+[*] [b]Cassandra fallback[/b] - when the model is offline, slow, or answers badly twice, Cassandra Classic's comps run until the next decision.
+[*] [b]Mod Options[/b] - server address with Ollama and LM Studio presets, model, optional API key, connection test, timeout, decision interval, max intensity, temperature, list size, and the storyteller's personality.
+[/list]
