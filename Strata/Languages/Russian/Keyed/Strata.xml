@@ -160,6 +160,8 @@
   <Strata_Settings_DepthVignetteDesc>Затемняет края экрана на подземных уровнях, тем сильнее, чем глубже уровень. Только RimWorld 1.7.</Strata_Settings_DepthVignetteDesc>
   <Strata_Settings_WaterCaustics>Блики на воде (1.7)</Strata_Settings_WaterCaustics>
   <Strata_Settings_WaterCausticsDesc>Движущиеся световые узоры на подземной воде и в затопленных местах. Только RimWorld 1.7.</Strata_Settings_WaterCausticsDesc>
+  <Strata_Settings_HeatShimmer>Марево от жара (1.7)</Strata_Settings_HeatShimmer>
+  <Strata_Settings_HeatShimmerDesc>Поднимающиеся волны горячего воздуха над магмой, магматическими жерлами, геотермальными отводами и паровыми гейзерами на подземных уровнях. Только RimWorld 1.7.</Strata_Settings_HeatShimmerDesc>
   <Strata_Settings_SeeBelow>Видеть этаж ниже через открытое небо</Strata_Settings_SeeBelow>
   <Strata_Settings_SeeBelowDesc>На палубах A+ рисует настоящую карту снизу через клетки открытого неба Strata (рельеф, вода, здания, туман войны).</Strata_Settings_SeeBelowDesc>
   <Strata_Settings_SeeBelowLive>Живые пешки и снаряды снизу</Strata_Settings_SeeBelowLive>
@@ -551,6 +553,11 @@
   <Strata_Settings_PresetImmersiveDesc>Всё включено: природные и загрязняющие газы, подземные газовые события, подписи газа в комнатах, высокое качество атмосферы, живой вид снизу, затемнение глубины, наводнения и заражения от шума.</Strata_Settings_PresetImmersiveDesc>
   <Strata_Diag_Header>Каждая система Strata отключается сама после повторных ошибок. Ваниль и остальные системы продолжают работать. «Перезапустить» даёт системе ещё одну попытку; перезапуск игры включает всё снова. Известные проблемы: About/known-issues.json.</Strata_Diag_Header>
   <Strata_Diag_RearmAll>Перезапустить все</Strata_Diag_RearmAll>
+  <Strata_Diag_ProbeStart>Начать замер производительности</Strata_Diag_ProbeStart>
+  <Strata_Diag_ProbeStop>Остановить замер и записать отчёт</Strata_Diag_ProbeStop>
+  <Strata_Diag_ProbeRunning>Замеряется методов Strata: {0}. Поиграйте несколько минут, затем остановите.</Strata_Diag_ProbeRunning>
+  <Strata_Diag_ProbeHint>Выключено. Ничего не стоит, пока не запущено.</Strata_Diag_ProbeHint>
+  <Strata_Diag_ProbeDesc>Пока работает, замеряет каждый тик, обновление и патч Harmony из Strata. При остановке самые медленные методы записываются в Player.log и в Logs/StrataPerf.log рядом с ним. Загрузка другого сохранения останавливает замер.</Strata_Diag_ProbeDesc>
   <Strata_Diag_Rearm>Перезапустить</Strata_Diag_Rearm>
   <Strata_Diag_Healthy>ОК</Strata_Diag_Healthy>
   <Strata_Diag_Errors>Ошибок: {0}, работает</Strata_Diag_Errors>

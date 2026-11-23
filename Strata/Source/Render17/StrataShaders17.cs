@@ -14,6 +14,7 @@ namespace Strata
         public const string GasOverlay = "Strata_GasOverlay";
         public const string Caustics = "Strata_Caustics";
         public const string DepthVignette = "Strata_DepthVignette";
+        public const string HeatShimmer = "Strata_HeatShimmer";
 
         public static Material Make(string shaderDefName, Color color)
         {

@@ -31,12 +31,6 @@ namespace Strata
         private static readonly Matrix4x4 BelowMatrixConst =
             Matrix4x4.Translate(new Vector3(0f, BelowOffset, 0f));
 
-        private static readonly AccessTools.FieldRef<Section, List<SectionLayer>> LayersRef =
-            AccessTools.FieldRefAccess<Section, List<SectionLayer>>("layers");
-
-        private static readonly AccessTools.FieldRef<MapDrawer, Section[,]> SectionsRef =
-            AccessTools.FieldRefAccess<MapDrawer, Section[,]>("sections");
-
         private static AccessTools.FieldRef<DynamicDrawManager, List<Thing>> drawThingsRef;
         private static bool drawThingsRefFailed;
 
@@ -231,7 +225,7 @@ namespace Strata
 
         private static void DrawSections(Map lower, CellRect view)
         {
-            Section[,] sections = SectionsRef(lower.mapDrawer);
+            Section[,] sections = GameAccess.Sections(lower.mapDrawer);
             if (sections == null) return;
 
             int maxX = sections.GetUpperBound(0);
@@ -245,7 +239,7 @@ namespace Strata
             {
                 for (int j = minSz; j <= maxSz; j++)
                 {
-                    List<SectionLayer> layers = LayersRef(sections[i, j]);
+                    List<SectionLayer> layers = GameAccess.SectionLayers(sections[i, j]);
                     for (int k = 0; k < layers.Count; k++)
                     {
                         SectionLayer layer = layers[k];

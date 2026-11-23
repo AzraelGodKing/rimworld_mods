@@ -79,6 +79,7 @@ namespace Strata
 #if RIMWORLD_1_7
         public bool depthVignette = true;
         public bool waterCaustics = true;
+        public bool heatShimmer = true;
 #endif
         public bool combinedLevelResources = false;
         public bool crossLevelCombatEnabled = true;
@@ -184,6 +185,7 @@ namespace Strata
 #if RIMWORLD_1_7
             Scribe_Values.Look(ref depthVignette, "depthVignette", defaultValue: true);
             Scribe_Values.Look(ref waterCaustics, "waterCaustics", defaultValue: true);
+            Scribe_Values.Look(ref heatShimmer, "heatShimmer", defaultValue: true);
 #endif
             Scribe_Values.Look(ref combinedLevelResources, "combinedLevelResources", defaultValue: false);
             Scribe_Values.Look(ref crossLevelCombatEnabled, "crossLevelCombatEnabled", defaultValue: true);
@@ -710,6 +712,7 @@ namespace Strata
 #if RIMWORLD_1_7
             Check(listing, "Strata_Settings_DepthVignette", ref Settings.depthVignette, "Strata_Settings_DepthVignetteDesc");
             Check(listing, "Strata_Settings_WaterCaustics", ref Settings.waterCaustics, "Strata_Settings_WaterCausticsDesc");
+            Check(listing, "Strata_Settings_HeatShimmer", ref Settings.heatShimmer, "Strata_Settings_HeatShimmerDesc");
 #endif
             Gap(listing);
 
