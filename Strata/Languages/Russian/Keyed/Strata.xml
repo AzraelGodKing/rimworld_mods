@@ -551,6 +551,11 @@
   <Strata_Settings_PresetImmersiveDesc>Всё включено: природные и загрязняющие газы, подземные газовые события, подписи газа в комнатах, высокое качество атмосферы, живой вид снизу, затемнение глубины, наводнения и заражения от шума.</Strata_Settings_PresetImmersiveDesc>
   <Strata_Diag_Header>Каждая система Strata отключается сама после повторных ошибок. Ваниль и остальные системы продолжают работать. «Перезапустить» даёт системе ещё одну попытку; перезапуск игры включает всё снова. Известные проблемы: About/known-issues.json.</Strata_Diag_Header>
   <Strata_Diag_RearmAll>Перезапустить все</Strata_Diag_RearmAll>
+  <Strata_Diag_ProbeStart>Начать замер производительности</Strata_Diag_ProbeStart>
+  <Strata_Diag_ProbeStop>Остановить замер и записать отчёт</Strata_Diag_ProbeStop>
+  <Strata_Diag_ProbeRunning>Замеряется методов Strata: {0}. Поиграйте несколько минут, затем остановите.</Strata_Diag_ProbeRunning>
+  <Strata_Diag_ProbeHint>Выключено. Ничего не стоит, пока не запущено.</Strata_Diag_ProbeHint>
+  <Strata_Diag_ProbeDesc>Пока работает, замеряет каждый тик, обновление и патч Harmony из Strata. При остановке самые медленные методы записываются в Player.log и в Logs/StrataPerf.log рядом с ним. Загрузка другого сохранения останавливает замер.</Strata_Diag_ProbeDesc>
   <Strata_Diag_Rearm>Перезапустить</Strata_Diag_Rearm>
   <Strata_Diag_Healthy>ОК</Strata_Diag_Healthy>
   <Strata_Diag_Errors>Ошибок: {0}, работает</Strata_Diag_Errors>
