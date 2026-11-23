@@ -77,6 +77,7 @@ namespace Strata
             NeedsBreak.ResetSession,
             FoodTripMemory.ResetSession,
             WorkGiver_HaulAcrossLevels.ResetSession,
+            HaulBounceMemory.ResetSession,
         };
 
         public static void Run()
