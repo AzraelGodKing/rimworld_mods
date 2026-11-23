@@ -180,19 +180,22 @@ namespace Strata
 
         public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false)
         {
-            return TryFindHaulTarget(pawn, t, forced, out _, out _, out _);
+            return TryFindHaulTarget(pawn, t, forced, out _, out _, out _, out _);
         }
 
         public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false)
         {
-            if (!TryFindHaulTarget(pawn, t, forced, out MapPortal portal, out Map destMap, out IntVec3 storeCell))
+            if (!TryFindHaulTarget(pawn, t, forced, out MapPortal portal, out Map destMap, out IntVec3 storeCell, out int wanted))
             {
                 return null;
             }
 
             HaulToLevelTargets.Remember(pawn, destMap, pawn.Map, preferArrivalNear: storeCell);
             Job job = JobMaker.MakeJob(StrataDefOf.Strata_HaulToLevel, t, portal);
-            job.count = HaulRelayCapacity.CountForStairHaul(pawn, t, portal);
+            // A shortfall pull carries what the level is short of, not the
+            // whole stack: the surplus was hauled straight back (AZR-632).
+            job.count = System.Math.Min(HaulRelayCapacity.CountForStairHaul(pawn, t, portal), wanted);
+            LevelDemand.NoteCommitted(pawn.Map, destMap, t.def, job.count);
             return job;
         }
 
@@ -202,11 +205,13 @@ namespace Strata
             bool forced,
             out MapPortal portal,
             out Map destMap,
-            out IntVec3 storeCell)
+            out IntVec3 storeCell,
+            out int wanted)
         {
             portal = null;
             destMap = null;
             storeCell = IntVec3.Invalid;
+            wanted = int.MaxValue;
             if (t == null || !t.Spawned || t.Map != pawn.Map)
             {
                 return false;
@@ -251,9 +256,14 @@ namespace Strata
                     continue;
                 }
 
-                bool hardNeed = LevelDemand.HardMissingOn(link.map, t.def) > 0;
+                int hardMissing = LevelDemand.HardMissingOn(link.map, t.def);
+                bool hardNeed = hardMissing > 0;
                 bool softNeed = !hardNeed && LevelDemand.MissingOn(link.map, t.def) > 0;
                 if (!hardNeed && !softNeed)
+                {
+                    continue;
+                }
+                if (!forced && !hardNeed && HaulBounceMemory.WouldBounce(t, link.map))
                 {
                     continue;
                 }
@@ -280,6 +290,10 @@ namespace Strata
                 portal = step;
                 destMap = link.map;
                 storeCell = cell;
+                if (hardNeed)
+                {
+                    wanted = hardMissing;
+                }
                 return true;
             }
 
@@ -319,6 +333,11 @@ namespace Strata
             {
                 LevelGraph.LevelLink link = links[i];
                 if (!forced && StrataStorageSoftCompat.IsDestCoolingDown(link.map, t.def))
+                {
+                    continue;
+                }
+
+                if (!forced && HaulBounceMemory.WouldBounce(t, link.map))
                 {
                     continue;
                 }

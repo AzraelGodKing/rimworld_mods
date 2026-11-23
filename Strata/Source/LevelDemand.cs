@@ -74,6 +74,44 @@ namespace Strata
                 && spare < t.stackCount;
         }
 
+        // A hauler just committed 'count' of 'def' from 'from' to 'to'. The
+        // cached shortfall and spare would otherwise stay stale for up to
+        // CacheTicks, so every idle hauler answered the same 10-steel need
+        // and the surplus was hauled straight back (AZR-632).
+        public static void NoteCommitted(Map from, Map to, ThingDef def, int count)
+        {
+            if (def == null || count <= 0)
+            {
+                return;
+            }
+            if (to != null && cache.TryGetValue(to, out Entry dest))
+            {
+                Reduce(dest.missing, def, count);
+                Reduce(dest.hardMissing, def, count);
+            }
+            if (from != null && cache.TryGetValue(from, out Entry src)
+                && src.hardSpare.TryGetValue(def, out int spare))
+            {
+                src.hardSpare[def] = spare - count;
+            }
+        }
+
+        private static void Reduce(Dictionary<ThingDef, int> counts, ThingDef def, int by)
+        {
+            if (!counts.TryGetValue(def, out int left))
+            {
+                return;
+            }
+            if (left > by)
+            {
+                counts[def] = left - by;
+            }
+            else
+            {
+                counts.Remove(def);
+            }
+        }
+
         // Whether any site that needs the def can be reached from a cell -
         // used with the arrival landing so materials are never shipped to a
         // level where they can only pile up.
