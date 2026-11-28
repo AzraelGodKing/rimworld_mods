@@ -1,0 +1,122 @@
+{
+  "lastFetched": "2026-11-28T12:23:47.045Z",
+  "mods": {
+    "homesteader": {
+      "name": "Homesteader",
+      "publishedFileId": "3759238501",
+      "title": "Homesteader",
+      "subscriptions": 461,
+      "favorited": 92,
+      "views": 5251,
+      "lifetime_subscriptions": 761,
+      "lifetime_favorited": 101,
+      "nexus_downloads": 533,
+      "nexus_endorsements": 6
+    },
+    "stormproof": {
+      "name": "Stormproof",
+      "publishedFileId": "3760021127",
+      "title": "Stormproof",
+      "subscriptions": 422,
+      "favorited": 56,
+      "views": 2082,
+      "lifetime_subscriptions": 636,
+      "lifetime_favorited": 65,
+      "nexus_downloads": 384,
+      "nexus_endorsements": 9
+    },
+    "strata": {
+      "name": "Strata",
+      "publishedFileId": "3762844292",
+      "title": "Strata",
+      "subscriptions": 2748,
+      "favorited": 613,
+      "views": 16482,
+      "lifetime_subscriptions": 4350,
+      "lifetime_favorited": 681,
+      "nexus_downloads": 434,
+      "nexus_endorsements": 3
+    },
+    "nemesis": {
+      "name": "Nemesis",
+      "publishedFileId": "3773562126",
+      "title": "Nemesis",
+      "subscriptions": 346,
+      "favorited": 73,
+      "views": 2977,
+      "lifetime_subscriptions": 546,
+      "lifetime_favorited": 84,
+      "nexus_downloads": 103,
+      "nexus_endorsements": 1
+    },
+    "deep-colony": {
+      "name": "Deep Colony",
+      "publishedFileId": "3773568314",
+      "title": "Deep Colony",
+      "subscriptions": 338,
+      "favorited": 101,
+      "views": 3649,
+      "lifetime_subscriptions": 521,
+      "lifetime_favorited": 109,
+      "nexus_downloads": 421,
+      "nexus_endorsements": 6
+    },
+    "date-night": {
+      "name": "Date Night",
+      "publishedFileId": "3774158903",
+      "title": "Date Night",
+      "subscriptions": 570,
+      "favorited": 85,
+      "views": 2813,
+      "lifetime_subscriptions": 777,
+      "lifetime_favorited": 93,
+      "nexus_downloads": 188,
+      "nexus_endorsements": 5
+    },
+    "niceties": {
+      "name": "Niceties",
+      "publishedFileId": "3794727164",
+      "title": "Niceties",
+      "subscriptions": 73,
+      "favorited": 23,
+      "views": 1183,
+      "lifetime_subscriptions": 120,
+      "lifetime_favorited": 25,
+      "nexus_downloads": 63,
+      "nexus_endorsements": 0
+    },
+    "nanohive-reforged": {
+      "name": "NanoHive Reforged",
+      "publishedFileId": "3688108379",
+      "title": "NanoHive Reforged",
+      "subscriptions": 22,
+      "favorited": 5,
+      "views": 156,
+      "lifetime_subscriptions": 32,
+      "lifetime_favorited": 5,
+      "nexus_downloads": 0,
+      "nexus_endorsements": 0
+    },
+    "wave-survival-reforged": {
+      "name": "Wave Survival Reforged",
+      "publishedFileId": "3821001515",
+      "title": "Wave Survival Reforged",
+      "subscriptions": 41,
+      "favorited": 9,
+      "views": 362,
+      "lifetime_subscriptions": 63,
+      "lifetime_favorited": 10,
+      "nexus_downloads": 0,
+      "nexus_endorsements": 0
+    }
+  },
+  "site_total": {
+    "subscriptions": 5021,
+    "favorited": 1057,
+    "views": 34955,
+    "lifetime_subscriptions": 7806,
+    "lifetime_favorited": 1173,
+    "nexus_downloads": 2126,
+    "nexus_endorsements": 30
+  }
+}
